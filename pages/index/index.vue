@@ -1,10 +1,9 @@
 <template>
 	<view>
 		<view v-if="PageCur=='basics'">
-			<wb-icon type="cart"></wb-icon>
-			<wb-icon type="good"></wb-icon>
+			<wb-grid></wb-grid>
 		</view>
-		<view v-if="PageCur=='component'">2</view>
+		<view v-if="PageCur=='component'">22</view>
 		<view v-if="PageCur=='plugin'">3</view>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="basics">
@@ -31,8 +30,9 @@
 
 <script>
 	import WbIcon from "../../components/wanbo/wb-icon/wb-icon";
+	import WbGrid from "../../components/wanbo/wb-grid/wb-grid";
 	export default {
-		components: {WbIcon},
+		components: {WbGrid, WbIcon},
 		data() {
 			return {
 				PageCur: 'basics'

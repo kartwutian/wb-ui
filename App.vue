@@ -4,7 +4,6 @@
     onLaunch() {
       const systemInfo = uni.getSystemInfoSync();
       const language = systemInfo.language;
-
       switch (language) {
         case "en":
           this.$i18n.locale = "en-US";
@@ -40,6 +39,12 @@
   @import "./colorui/main.css";
   @import "./colorui/icon.css";
   @import "./colorui/animation.css";
+  .test{
+    .wb-icon{
+      padding: 20rpx;
+      font-size: 60rpx;
+    }
+  }
   .app-container{
     background-color: #F3F7FA;
     padding: 30rpx;

@@ -1,7 +1,10 @@
 <template>
   <view
       :class="'wb-icon icon-' + type"
-      :style="{ color: color, 'font-size': size + 'rpx' }"
+      :style="{
+          color: color ? color : 'inherit',
+          'font-size': size ? size + 'rpx' : 'inherit'
+        }"
       @click="onClick"
   />
 </template>
@@ -16,15 +19,13 @@
       },
       color: {
         type: String,
-        default: '#333333'
       },
       size: {
         type: [Number, String],
-        default: 32
       }
     },
     methods: {
-      onClick () {
+      onClick() {
         this.$emit('click')
       }
     }

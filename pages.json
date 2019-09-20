@@ -5,6 +5,12 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},
+		{
+			"path": "pages/tabbar/tabbar",
+			"style": {
+				"navigationBarTitleText": "tabbar"
+			}
 		}
 	],
 	"globalStyle": {
