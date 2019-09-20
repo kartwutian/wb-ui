@@ -1,48 +1,56 @@
 <template>
 	<view>
-		<view v-if="PageCur=='basics'">
-			<wb-grid></wb-grid>
+		<view v-show="currentTabIndex === 0">
+			<wb-grid :grids="grids"></wb-grid>
 		</view>
-		<view v-if="PageCur=='component'">22</view>
-		<view v-if="PageCur=='plugin'">3</view>
-		<view class="cu-bar tabbar bg-white shadow foot">
-			<view class="action" @click="NavChange" data-cur="basics">
-				<view class='cuIcon-cu-image'>
-					<wb-icon type="setting"></wb-icon>
-				</view>
-				<view :class="PageCur=='basics'?'text-green':'text-gray'">元素</view>
-			</view>
-			<view class="action" @click="NavChange" data-cur="component">
-				<view class='cuIcon-cu-image'>
-					<wb-icon type="good"></wb-icon>
-				</view>
-				<view :class="PageCur=='component'?'text-green':'text-gray'">组件</view>
-			</view>
-			<view class="action" @click="NavChange" data-cur="plugin">
-				<view class='cuIcon-cu-image'>
-					<wb-icon type="cart"></wb-icon>
-				</view>
-				<view :class="PageCur=='plugin'?'text-green':'text-gray'">扩展</view>
-			</view>
+		<view v-show="currentTabIndex === 1">
+			1
 		</view>
+		<view v-show="currentTabIndex === 2">
+			2
+		</view>
+
+		<wb-tabbar
+				type="bottom"
+				:tabs="tabs"
+				:current="currentTabIndex"
+				@change="handleTabChange"
+		></wb-tabbar>
 	</view>
 </template>
 
 <script>
+	import { mapGetters, mapMutations, mapActions } from 'vuex'; // 节省代码量
 	import WbIcon from "../../components/wanbo/wb-icon/wb-icon";
 	import WbGrid from "../../components/wanbo/wb-grid/wb-grid";
+	import WbTabbar from "../../components/wanbo/wb-tabbar/wb-tabbar";
 	export default {
-		components: {WbGrid, WbIcon},
-		data() {
-			return {
-				PageCur: 'basics'
-			}
+		components: {WbTabbar, WbGrid, WbIcon},
+		computed: {
+			...mapGetters('home', ['tabs', 'currentTabIndex', 'grids'])
+		},
+		onUnload(){
+			this.resetState();
 		},
 		methods: {
-			NavChange: function(e) {
-				this.PageCur = e.currentTarget.dataset.cur
-			}
-		}
+			handleDelayTabChange(index){
+				this.delayChange({
+					currentTabIndex: index,
+				})
+			},
+			handleTabChange(index){
+				this.updateShallowState({
+					currentTabIndex: index,
+				})
+			},
+			...mapMutations('home', {
+				resetState: 'reset',
+				updateShallowState: 'updateShallowState'
+			}),
+			...mapActions('home', {
+				delayChange: 'delayChange'
+			})
+		},
 	}
 </script>
 

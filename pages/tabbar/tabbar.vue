@@ -15,13 +15,12 @@
 </template>
 
 <script>
+  import { mapGetters, mapMutations, mapActions } from 'vuex'; // 节省代码量
   import WbTabbar from "../../components/wanbo/wb-tabbar/wb-tabbar";
-  import { mapGetters, mapMutations, mapActions } from 'vuex';
   export default {
     components: {WbTabbar},
     computed: {
       ...mapGetters('tabbar', ['tabs', 'currentTabIndex'])
-
     },
     onUnload(){
       this.resetState();

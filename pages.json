@@ -11,6 +11,12 @@
 			"style": {
 				"navigationBarTitleText": "tabbar"
 			}
+		},
+		{
+			"path": "pages/btn/btn",
+			"style": {
+				"navigationBarTitleText": "btn"
+			}
 		}
 	],
 	"globalStyle": {

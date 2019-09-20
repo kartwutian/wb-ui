@@ -31,23 +31,6 @@
         type: Array,
         default(){
           return [
-            {
-              icon: 'good',
-              name: 'tabbar',
-              url: '/pages/tabbar/tabbar',
-            },
-            {
-              icon: 'good',
-              name: 'grid'
-            },
-            {
-              icon: 'good',
-              name: 'grid'
-            },
-            {
-              icon: 'good',
-              name: 'grid'
-            },
           ]
         }
       }
