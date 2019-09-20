@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import config from '../config/config';
+import {login} from "../services/saler/login";
 /**
  * 通用延时函数
  * @param timeout
@@ -205,4 +206,70 @@ export function fetchErrorMsg(data) {
     return data[errField[0]];
   }
   return false
+}
+
+/**
+ * 生成model
+ * @param options
+ * @returns {{mutations: (options.mutations|{}|{updateShallowState(Object, Object): void}), state: (Uint8Array|BigInt64Array|any[]|Float64Array|Int8Array|Float32Array|Int32Array|Uint32Array|Uint8ClampedArray|BigUint64Array|Int16Array|Uint16Array|{}|*), getters: U, actions: (options.actions|{}), namespaced: boolean}}
+ */
+export const modelGenerate = (options = {
+  namespaced: true,
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {},
+}) => {
+  const {namespaced, state:initialState, mutations, actions, getters} = options;
+  return {
+    namespaced: namespaced || true,
+
+    state: {
+      ...deepCopy(initialState),
+    },
+    mutations: {
+      /**
+       * 浅更新，只改变一级状态
+       * @param {Object} state
+       * @param {Object} payload
+       */
+      updateShallowState(state, payload) {
+        let realPayload = payload;
+        if(payload.payload){
+          realPayload = payload.payload
+        }
+        Object.keys(realPayload).forEach(key => {
+          state[key] = realPayload[key]
+        })
+      },
+      reset(state) {
+        // 重置state
+        resetState(state, initialState);
+      },
+      ...mutations
+    },
+    actions: {
+      ...actions
+    },
+    getters: gettersGenerate(initialState, getters),
+  }
+}
+
+/**
+ * 生成 getters
+ * @param initialState
+ * @param getters
+ * @returns {U}
+ */
+export function gettersGenerate(initialState,getters) {
+  const normalGetters = Object.keys(initialState).reduce((res, next)=>{
+    res[next] = function (state) {
+      return state[next]
+    };
+    return res
+  },{});
+  return {
+    ...normalGetters,
+    ...getters,
+  }
 }

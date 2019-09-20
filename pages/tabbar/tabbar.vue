@@ -1,14 +1,50 @@
 <template>
   <view>
-    <wb-tabbar></wb-tabbar>
-    <wb-tabbar type="bottom"></wb-tabbar>
+    <wb-tabbar
+        :tabs="tabs"
+        :current="currentTabIndex"
+        @change="handleDelayTabChange"
+    ></wb-tabbar>
+    <wb-tabbar
+        type="bottom"
+        :tabs="tabs"
+        :current="currentTabIndex"
+        @change="handleTabChange"
+    ></wb-tabbar>
   </view>
 </template>
 
 <script>
   import WbTabbar from "../../components/wanbo/wb-tabbar/wb-tabbar";
+  import { mapGetters, mapMutations, mapActions } from 'vuex';
   export default {
-    components: {WbTabbar}
+    components: {WbTabbar},
+    computed: {
+      ...mapGetters('tabbar', ['tabs', 'currentTabIndex'])
+
+    },
+    onUnload(){
+      this.resetState();
+    },
+    methods: {
+      handleDelayTabChange(index){
+        this.delayChange({
+          currentTabIndex: index,
+        })
+      },
+      handleTabChange(index){
+        this.updateShallowState({
+          currentTabIndex: index,
+        })
+      },
+      ...mapMutations('tabbar', {
+        resetState: 'reset',
+        updateShallowState: 'updateShallowState'
+      }),
+      ...mapActions('tabbar', {
+        delayChange: 'delayChange'
+      })
+    },
   }
 </script>
 
