@@ -9,6 +9,23 @@ const pages = generatePagesObj().pages;
 
 const paths = pages.map(item => item.path);
 
+const template = `<template>
+  <view>
+  
+  </view>
+</template>
+
+<script>
+  export default {
+
+  }
+</script>
+
+<style lang="less">
+
+</style>
+
+`;
 
 /**
  * 读取路径信息
@@ -74,14 +91,16 @@ const generatePages = async (route) => {
   arr.forEach(async(item, index) => {
     const realPath = path.resolve(__dirname, '../', arr.slice(0, index+1).join('/'));
     console.log(realPath)
-    await dirExists(realPath)
+    await dirExists(realPath);
+    if(index === arr.length - 1){
+      const realLastFileStat = await getStat(realLastFile);
+      console.log(!!realLastFileStat)
+      if(!realLastFileStat){
+        fs.writeFileSync(realLastFile, template)
+      }
+    }
   });
-
-  const realLastFileStat = await getStat(realLastFile);
-  if(!realLastFileStat){
-    fs.writeFileSync(realLastFile, '好迪真好，大家好才是真的好')
-  }
-}
+};
 
 paths.forEach( async currentPath =>{
   await generatePages(currentPath)
