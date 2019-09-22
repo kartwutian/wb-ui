@@ -9,23 +9,9 @@ const pages = generatePagesObj().pages;
 
 const paths = pages.map(item => item.path);
 
-const template = `<template>
-  <view>
-  
-  </view>
-</template>
-
-<script>
-  export default {
-
-  }
-</script>
-
-<style lang="less">
-
-</style>
-
-`;
+const templatePage = fs.readFileSync(path.resolve(__dirname, './template/template.page.vue'));
+const templateModels = fs.readFileSync(path.resolve(__dirname, './template/template.models.js'));
+const templateServices = fs.readFileSync(path.resolve(__dirname, './template/template.services.js'));
 
 /**
  * 读取路径信息
@@ -96,7 +82,15 @@ const generatePages = async (route) => {
       const realLastFileStat = await getStat(realLastFile);
       console.log(!!realLastFileStat)
       if(!realLastFileStat){
-        fs.writeFileSync(realLastFile, template)
+        fs.writeFileSync(realLastFile, templatePage)
+        const modelsDir = [...arr, 'models'];
+        const modelsFile = [...arr, 'models', last + '.js'];
+        const servicesDir = [...arr, 'services'];
+        const servicesFile = [...arr, 'services', last + '.js'];
+        await dirExists(path.resolve(__dirname, '../', modelsDir.join('/')));
+        await dirExists(path.resolve(__dirname, '../', servicesDir.join('/')));
+        fs.writeFileSync(path.resolve(__dirname, '../', modelsFile.join('/')), templateModels)
+        fs.writeFileSync(path.resolve(__dirname, '../', servicesFile.join('/')), templateServices)
       }
     }
   });
