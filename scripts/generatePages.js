@@ -10,9 +10,9 @@ const pages = generatePagesObj().pages;
 
 const paths = pages.map(item => item.path);
 
-const templatePage = fs.readFileSync(path.resolve(__dirname, './template/template.page.vue'));
-const templateModels = fs.readFileSync(path.resolve(__dirname, './template/template.models.js'));
-const templateServices = fs.readFileSync(path.resolve(__dirname, './template/template.services.js'));
+const templatePage = fs.readFileSync(path.resolve(__dirname, './template/template.page.ejs'));
+const templateModels = fs.readFileSync(path.resolve(__dirname, './template/template.models.ejs'));
+const templateServices = fs.readFileSync(path.resolve(__dirname, './template/template.services.ejs'));
 const templateStore = fs.readFileSync(path.resolve(__dirname, './template/template.store.index.ejs'));
 const models = [];
 
@@ -80,31 +80,50 @@ const generatePages = async (route) => {
     route = route.slice(0, -4);
   }
   const arr = route.split('/');
-  const last = arr.pop();
-  const realLastFile = path.resolve(__dirname, '../', route + '.vue');
-  models.push({
-    name: last,
-    path: path.relative(path.resolve(process.cwd(), './store'), path.resolve(__dirname, '../', [...arr, 'models', last].join('/'))).split('\\').join('/')
+  const last = arr.pop(); // 最后一个要生成的文件
+  const modelsName = arr[1]; // 模块的名称，从pages下面的一级文件取名字
+  const realLastFilePath = path.resolve(__dirname, '../', route + '.vue');
+  const isCommonModels = models.map(item => item.path).some(relativePath => {
+    return relativePath.indexOf(path.relative(path.resolve(process.cwd(), './store'), path.resolve(__dirname, '../', [...arr.slice(0,2), 'models'].join('/'))).split('\\').join('/')) >= 0
   });
-
-  console.log(realLastFile)
+  console.log('isCommonModels:' + isCommonModels);
+  if(!isCommonModels){
+    models.push({
+      name: modelsName,
+      path: path.relative(path.resolve(process.cwd(), './store'), path.resolve(__dirname, '../', [...arr.slice(0,2), 'models', modelsName].join('/'))).split('\\').join('/')
+    });
+  }
+  // console.log(realLastFilePath)
   arr.forEach(async(item, index) => {
     const realPath = path.resolve(__dirname, '../', arr.slice(0, index+1).join('/'));
-    console.log(realPath)
+    // console.log(realPath)
     await dirExists(realPath);
     if(index === arr.length - 1){
-      const realLastFileStat = await getStat(realLastFile);
+      const realLastFileStat = await getStat(realLastFilePath);
       console.log(!!realLastFileStat)
       if(!realLastFileStat){
-        fs.writeFileSync(realLastFile, templatePage)
-        const modelsDir = [...arr, 'models'];
-        const modelsFile = [...arr, 'models', last + '.js'];
-        const servicesDir = [...arr, 'services'];
-        const servicesFile = [...arr, 'services', last + '.js'];
-        await dirExists(path.resolve(__dirname, '../', modelsDir.join('/')));
-        await dirExists(path.resolve(__dirname, '../', servicesDir.join('/')));
-        fs.writeFileSync(path.resolve(__dirname, '../', modelsFile.join('/')), templateModels)
-        fs.writeFileSync(path.resolve(__dirname, '../', servicesFile.join('/')), templateServices)
+        fs.writeFileSync(realLastFilePath, ejs.render(templatePage.toString(), {
+          name: last,
+        }));
+
+        // 判断有没有对应的models及services目录，没有则创建并写入文件
+        const modelsDir = [...arr.slice(0,2), 'models'];
+        const modelsFile = [...arr.slice(0,2), 'models', modelsName + '.js'];
+        const servicesDir = [...arr.slice(0,2), 'services'];
+        const servicesFile = [...arr.slice(0,2), 'services', modelsName + '.js'];
+
+        const isExistModels = await dirExists(path.resolve(__dirname, '../', modelsDir.join('/')));
+        const isExistServices = await dirExists(path.resolve(__dirname, '../', servicesDir.join('/')));
+        if(!isExistModels){
+          fs.writeFileSync(path.resolve(__dirname, '../', modelsFile.join('/')), ejs.render(templateModels.toString(), {
+            name: last,
+          }))
+        }
+        if(!isExistServices){
+          fs.writeFileSync(path.resolve(__dirname, '../', servicesFile.join('/')),  ejs.render(templateServices.toString(), {
+            name: last,
+          }))
+        }
       }
     }
   });
@@ -114,10 +133,11 @@ paths.forEach( async currentPath =>{
   await generatePages(currentPath)
 });
 
-console.log(models)
-console.log(path.resolve(__dirname, '../store/index.js'))
+// console.log(models)
+// console.log(path.resolve(__dirname, '../store/index.js'))
 
 fs.writeFileSync(path.resolve(__dirname, '../store/index.js'), ejs.render(templateStore.toString(), {
   models,
 }));
 
+console.log('ok！')

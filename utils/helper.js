@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import config from '../config/config';
-import {login} from "../services/saler/login";
+
 /**
  * 通用延时函数
  * @param timeout

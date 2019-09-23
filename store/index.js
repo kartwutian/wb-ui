@@ -6,10 +6,9 @@ import state from './state';
 import mutations from './mutations';
 import loadingPlugin from "./plugins/loading/loadingPlugin";
 
-import home from '../pages/index/models/home';
+import home from '../pages/home/models/home';
 import tabbar from '../pages/tabbar/models/tabbar';
-import btn from '../pages/btn/models/btn';
-import test from '../pages/test/models/test';
+import login from '../pages/login/models/login';
 
 
 Vue.use(Vuex);
@@ -22,8 +21,7 @@ export default new Vuex.Store({
   modules: {
     home,
     tabbar,
-    btn,
-    test,
+    login,
 
   },
 });
