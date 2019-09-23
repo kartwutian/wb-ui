@@ -6,11 +6,8 @@ import state from './state';
 import mutations from './mutations';
 import loadingPlugin from "./plugins/loading/loadingPlugin";
 
-import home from '../pages/index/models/home';
-import tabbar from '../pages/tabbar/models/tabbar';
-import btn from '../pages/btn/models/btn';
-import test from '../pages/test/models/test';
-
+<% models.forEach(function(item){ %>import <%= item.name %> from '<%= item.path %>';
+<% }) %>
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -20,10 +17,7 @@ export default new Vuex.Store({
   mutations,
   plugins: [loadingPlugin],
   modules: {
-    home,
-    tabbar,
-    btn,
-    test,
-
+<% models.forEach(function(item){ %>    <%= item.name %>,
+<% }) %>
   },
 });

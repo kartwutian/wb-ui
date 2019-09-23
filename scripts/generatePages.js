@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const ejs = require('ejs');
 
 const str = fs.readFileSync(path.resolve(__dirname, '../pages.json'));
 const fakeScript = 'return ' + str.toString();
@@ -12,6 +13,8 @@ const paths = pages.map(item => item.path);
 const templatePage = fs.readFileSync(path.resolve(__dirname, './template/template.page.vue'));
 const templateModels = fs.readFileSync(path.resolve(__dirname, './template/template.models.js'));
 const templateServices = fs.readFileSync(path.resolve(__dirname, './template/template.services.js'));
+const templateStore = fs.readFileSync(path.resolve(__dirname, './template/template.store.index.ejs'));
+const models = [];
 
 /**
  * 读取路径信息
@@ -70,9 +73,20 @@ async function dirExists(dir) {
 
 const generatePages = async (route) => {
   console.log(route)
+  if(route.startsWith('/')){
+    route = route.slice(1);
+  }
+  if(route.endsWith('.vue')){
+    route = route.slice(0, -4);
+  }
   const arr = route.split('/');
   const last = arr.pop();
   const realLastFile = path.resolve(__dirname, '../', route + '.vue');
+  models.push({
+    name: last,
+    path: path.relative(path.resolve(process.cwd(), './store'), path.resolve(__dirname, '../', [...arr, 'models', last].join('/'))).split('\\').join('/')
+  });
+
   console.log(realLastFile)
   arr.forEach(async(item, index) => {
     const realPath = path.resolve(__dirname, '../', arr.slice(0, index+1).join('/'));
@@ -99,4 +113,11 @@ const generatePages = async (route) => {
 paths.forEach( async currentPath =>{
   await generatePages(currentPath)
 });
+
+console.log(models)
+console.log(path.resolve(__dirname, '../store/index.js'))
+
+fs.writeFileSync(path.resolve(__dirname, '../store/index.js'), ejs.render(templateStore.toString(), {
+  models,
+}));
 

@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "vue-i18n": "^8.14.1"
+  },
+  "devDependencies": {
+    "ejs": "^2.7.1"
   }
 }
