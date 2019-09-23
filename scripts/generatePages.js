@@ -116,12 +116,12 @@ const generatePages = async (route) => {
         const isExistServices = await dirExists(path.resolve(__dirname, '../', servicesDir.join('/')));
         if(!isExistModels){
           fs.writeFileSync(path.resolve(__dirname, '../', modelsFile.join('/')), ejs.render(templateModels.toString(), {
-            name: last,
+            name: modelsName,
           }))
         }
         if(!isExistServices){
           fs.writeFileSync(path.resolve(__dirname, '../', servicesFile.join('/')),  ejs.render(templateServices.toString(), {
-            name: last,
+            name: modelsName,
           }))
         }
       }
