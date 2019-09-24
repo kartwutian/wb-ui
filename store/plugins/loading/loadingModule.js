@@ -6,7 +6,8 @@ export default {
   },
   mutations: {
     $$updateLoading(state, payload) {
-      Vue.set(state.actions, payload.actionName.type, payload.loading)
+      const actionName = payload.actionName.type || payload.actionName;
+      Vue.set(state.actions, actionName, payload.loading)
     }
   },
   getters: {
