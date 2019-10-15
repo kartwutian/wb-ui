@@ -34,16 +34,5 @@ export default {
     $$isShouldReloadRoutes(state) {
       return state.isShouldReloadRoutes;
     },
-    $$isNeedReload(state){
-      const pages = getCurrentPages();
-      let currentRoute = pages[pages.length-1].route;
-      if(currentRoute.startsWith('/')){
-        currentRoute = currentRoute.substring(1)
-      }
-      if(state.isShouldReloadRoutes[currentRoute]){
-        return true
-      }
-      return false
-    },
   }
 };
