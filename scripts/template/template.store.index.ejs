@@ -5,19 +5,20 @@ import * as getters from './getters';
 import state from './state';
 import mutations from './mutations';
 import loadingPlugin from "./plugins/loading/loadingPlugin";
+import reloadPlugin from "./plugins/reload/reloadPlugin";
 
 <% models.forEach(function(item){ %>import <%= item.name %> from '<%= item.path %>';
 <% }) %>
 
 Vue.use(Vuex);
 export default new Vuex.Store({
-  actions,
-  getters,
-  state,
-  mutations,
-  plugins: [loadingPlugin],
-  modules: {
+actions,
+getters,
+state,
+mutations,
+plugins: [loadingPlugin, reloadPlugin],
+modules: {
 <% models.forEach(function(item){ %>    <%= item.name %>,
 <% }) %>
-  },
+},
 });

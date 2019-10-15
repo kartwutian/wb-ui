@@ -5,6 +5,7 @@ import * as getters from './getters';
 import state from './state';
 import mutations from './mutations';
 import loadingPlugin from "./plugins/loading/loadingPlugin";
+import reloadPlugin from "./plugins/reload/reloadPlugin";
 
 import home from '../pages/home/models/home';
 import tabbar from '../pages/tabbar/models/tabbar';
@@ -17,7 +18,7 @@ export default new Vuex.Store({
   getters,
   state,
   mutations,
-  plugins: [loadingPlugin],
+  plugins: [loadingPlugin, reloadPlugin],
   modules: {
     home,
     tabbar,
