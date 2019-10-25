@@ -1,5 +1,9 @@
 import {delay, modelGenerate} from "../../../utils/helper";
-import { postTest } from '../services/<%= name%>'
+import {<% if(list.length === 0) { %>
+  postTest,
+  <% } %>
+  <% list.forEach(function(item){ %><%=item.name%>,
+  <% }) %>} from '../services/<%= name%>'
 
 export default modelGenerate({
   state: {
@@ -16,10 +20,18 @@ export default modelGenerate({
 
   },
   actions: {
+    <% if(list.length === 0) { %>
     async query({commit}, payload){
       await delay(2);
       await postTest(payload);
-    }
+    },
+    <% } %>
+    <% list.forEach(function(item){ %>
+    async <%=item.name%>({commit}, {payload}){
+      const res = await <%=item.name%>(payload);
+      return res.data;
+    },
+    <% }) %>
   },
   getters: {
 

@@ -10,19 +10,21 @@ import reloadPlugin from "./plugins/reload/reloadPlugin";
 import home from '../pages/home/models/home';
 import tabbar from '../pages/tabbar/models/tabbar';
 import login from '../pages/login/models/login';
+import test from '../pages/test/models/test';
 
 
 Vue.use(Vuex);
 export default new Vuex.Store({
-  actions,
-  getters,
-  state,
-  mutations,
-  plugins: [loadingPlugin, reloadPlugin],
-  modules: {
+actions,
+getters,
+state,
+mutations,
+plugins: [loadingPlugin, reloadPlugin],
+modules: {
     home,
     tabbar,
     login,
+    test,
 
-  },
+},
 });

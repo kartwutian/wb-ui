@@ -1,8 +1,7 @@
-import { stringify } from 'qs';
 import request from '../../../utils/request'
-
+<% if(list.length === 0){ %>
 export function getDemo(params) {
-  return request(`/api/ftts/user/login?${stringify(params)}`, {
+    return request(`/api/ftts/user/login?${stringify(params)}`, {
     method: 'get',
   }, false)
 }
@@ -13,3 +12,17 @@ export function postTest(params) {
     data: params,
   })
 }
+<% } %>
+
+<% list.forEach(function(item){ %>
+/**
+*<%=item.desc%>
+* @param params
+**/
+export function <%=item.name%>(params) {
+  return request(`<%=item.path%>`, {
+    method: '<%=item.method.toUpperCase()%>',
+    data: params,
+  })
+}
+<% }) %>

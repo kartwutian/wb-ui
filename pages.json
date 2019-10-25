@@ -17,6 +17,12 @@
 			"style": {
 				"navigationBarTitleText": "login"
 			}
+		},
+		{
+			"path": "pages/test/test",
+			"style": {
+				"navigationBarTitleText": "test"
+			}
 		}
 	],
 	"globalStyle": {
