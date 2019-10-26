@@ -4,7 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "generatePages": "node ./scripts/generatePages.js"
+    "generatePages": "node ./scripts/generatePages.js",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
     "vue-i18n": "^8.14.1"
   },
   "devDependencies": {
-    "ejs": "^2.7.1"
+    "ejs": "^2.7.1",
+    "vuepress": "^1.2.0"
   }
 }
