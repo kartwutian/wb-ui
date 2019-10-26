@@ -1,5 +1,5 @@
 import {delay, modelGenerate} from "../../../utils/helper";
-
+import {getData} from '../services/home'
 export default modelGenerate({
   state: {
     grids: [
@@ -34,6 +34,9 @@ export default modelGenerate({
     async delayChange({commit}, payload){
       await delay(2);
       commit('updateShallowState', payload)
-    }
+    },
+    async getData({commit}, payload){
+      return  await getData(payload);
+    },
   }
 });

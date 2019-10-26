@@ -29,6 +29,9 @@
 		computed: {
 			...mapGetters('home', ['tabs', 'currentTabIndex', 'grids'])
 		},
+		onLoad(){
+			this.getData({});
+		},
 		onUnload(){
 			this.resetState();
 		},
@@ -48,7 +51,8 @@
 				updateShallowState: 'updateShallowState'
 			}),
 			...mapActions('home', {
-				delayChange: 'delayChange'
+				delayChange: 'delayChange',
+				getData: 'getData'
 			})
 		},
 	}

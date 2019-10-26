@@ -76,5 +76,23 @@
     },
     "mp-toutiao" : {
         "usingComponents" : true
-    }
+    },
+		"h5": {
+		//    "router": {
+		//      "base": "/IIIS_H5/"
+		//    },
+		"devServer": {
+			"disableHostCheck": true,
+			"proxy": {
+				"/proxy": {
+					"target": "http://183.131.202.93:9071/mock/107", // mock数据地址
+					"changeOrigin": true,
+					"pathRewrite": {
+						"^/proxy": ""
+					},
+					"secure": false
+				}
+			}
+		}
+	}
 }

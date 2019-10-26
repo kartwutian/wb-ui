@@ -97,6 +97,7 @@
     const realLastFileStat = await getStat(realLastFilePath);
     const realDirPath = path.resolve(__dirname, '../', arr.join('/')); // 最后一个文件所在目录的绝对路径
     const storePath = path.resolve(__dirname, '../store'); // store目录的绝对路径
+    const utilsPath = path.resolve(__dirname, '../utils'); // store目录的绝对路径
     const modelFilePath = path.resolve(__dirname, '../', [...arr, 'models', modelsName].join('/')); // 模块文件的绝对路径
     const modelFilePathFullName = modelFilePath + '.js'; // 模块文件的绝对路径全名
     const modelFilePathStat = await getStat(modelFilePathFullName);
@@ -106,6 +107,7 @@
     const servicesFilePathStat = await getStat(servicesFilePathFullName);
     const serviceDirPath = path.resolve(__dirname, '../', [...arr, 'services'].join('/')); // services目录的绝对路径
     const modelFileRelativePathInStore = path.relative(storePath, modelFilePath).split('\\').join('/'); // 模块文件相对于在store目录中的相对路径
+    const modelFileRelativePathInUtils = path.relative(modelDirPath, utilsPath).split('\\').join('/'); // 模块文件相对于在store目录中的相对路径
     const isCommonModels = models.map(item => item.path).some(relativePath => {
       return relativePath.indexOf(modelFileRelativePathInStore) >= 0; // 判断是否是同一个文件夹下的文件，是则共用一个模块
     });
@@ -130,12 +132,14 @@
         fs.writeFileSync(modelFilePathFullName, ejs.render(templateModels.toString(), {
           name: modelsName,
           list: api[modelsName] || [],
+          utilsPath: modelFileRelativePathInUtils,
         }))
       }
       if(!servicesFilePathStat){
         fs.writeFileSync(servicesFilePathFullName,  ejs.render(templateServices.toString(), {
           name: modelsName,
           list: api[modelsName] || [],
+          utilsPath: modelFileRelativePathInUtils,
         }))
       }
     }

@@ -1,8 +1,9 @@
-import request from '../../../utils/request'
+import request from '<%=utilsPath%>/request'
 <% if(list.length === 0){ %>
 export function getDemo(params) {
-    return request(`/api/ftts/user/login?${stringify(params)}`, {
-    method: 'get',
+    return request(`/api/ftts/user/login}`, {
+    method: 'GET',
+    data: params,
   }, false)
 }
 
