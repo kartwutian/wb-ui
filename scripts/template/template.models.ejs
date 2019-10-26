@@ -3,7 +3,8 @@ import {<% if(list.length === 0) { %>
   postTest,
   <% } %>
   <% list.forEach(function(item){ %><%=item.name%>,
-  <% }) %>} from '../services/<%= name%>'
+  <% })
+  -%>} from '../services/<%= name%>'
 
 export default modelGenerate({
   state: {
@@ -27,6 +28,7 @@ export default modelGenerate({
     },
     <% } %>
     <% list.forEach(function(item){ %>
+    // <%=item.desc%>
     async <%=item.name%>({commit}, {payload}){
       const res = await <%=item.name%>(payload);
       return res.data;

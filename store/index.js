@@ -11,6 +11,7 @@ import home from '../pages/home/models/home';
 import tabbar from '../pages/tabbar/models/tabbar';
 import login from '../pages/login/models/login';
 import test from '../pages/test/models/test';
+import demi from '../pages/test/demi/models/demi';
 
 
 Vue.use(Vuex);
@@ -25,6 +26,7 @@ modules: {
     tabbar,
     login,
     test,
+    demi,
 
 },
 });

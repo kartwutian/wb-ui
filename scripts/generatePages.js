@@ -19,6 +19,8 @@
 
   const api = require('./fetch/api.json');
 
+  const taskQueue = []; // 存放promise
+
   /**
    * 读取路径信息
    * @param {string} path 路径
@@ -72,80 +74,80 @@
     if (status) {
       mkdirStatus = await mkdir(dir);
     }
-    console.log('do -----------------')
+    // console.log('do -----------------')
     return mkdirStatus;
   }
 
   const generatePages = async (route) => {
     console.log(route)
+    // 做一些初始路由处理
     if(route.startsWith('/')){
       route = route.slice(1);
     }
     if(route.endsWith('.vue')){
       route = route.slice(0, -4);
     }
+
     const arr = route.split('/');
     const last = arr.pop(); // 最后一个要生成的文件
-    const modelsName = arr[1]; // 模块的名称，从pages下面的一级文件取名字
+    // 此时arr为目录数组
+    let len = arr.length;
+    const modelsName = arr[len-1]; // 模块的名称，以.vue文件所在目录的目录名作为model的名字
     const realLastFilePath = path.resolve(__dirname, '../', route + '.vue');
+    const realLastFileStat = await getStat(realLastFilePath);
+    const realDirPath = path.resolve(__dirname, '../', arr.join('/')); // 最后一个文件所在目录的绝对路径
+    const storePath = path.resolve(__dirname, '../store'); // store目录的绝对路径
+    const modelFilePath = path.resolve(__dirname, '../', [...arr, 'models', modelsName].join('/')); // 模块文件的绝对路径
+    const modelFilePathFullName = modelFilePath + '.js'; // 模块文件的绝对路径全名
+    const modelFilePathStat = await getStat(modelFilePathFullName);
+    const modelDirPath = path.resolve(__dirname, '../', [...arr, 'models'].join('/')); // 模块目录文件的绝对路径
+    const servicesFilePath = path.resolve(__dirname, '../', [...arr, 'services', modelsName].join('/')); // services文件的绝对路径
+    const servicesFilePathFullName = servicesFilePath + '.js'; // services文件的绝对路径全名
+    const servicesFilePathStat = await getStat(servicesFilePathFullName);
+    const serviceDirPath = path.resolve(__dirname, '../', [...arr, 'services'].join('/')); // services目录的绝对路径
+    const modelFileRelativePathInStore = path.relative(storePath, modelFilePath).split('\\').join('/'); // 模块文件相对于在store目录中的相对路径
     const isCommonModels = models.map(item => item.path).some(relativePath => {
-      return relativePath.indexOf(path.relative(path.resolve(process.cwd(), './store'), path.resolve(__dirname, '../', [...arr.slice(0,2), 'models'].join('/'))).split('\\').join('/')) >= 0
+      return relativePath.indexOf(modelFileRelativePathInStore) >= 0; // 判断是否是同一个文件夹下的文件，是则共用一个模块
     });
     // console.log('isCommonModels:' + isCommonModels);
     if(!isCommonModels){
       models.push({
         name: modelsName,
-        path: path.relative(path.resolve(process.cwd(), './store'), path.resolve(__dirname, '../', [...arr.slice(0,2), 'models', modelsName].join('/'))).split('\\').join('/')
+        path: modelFileRelativePathInStore
       });
     }
-    // console.log(realLastFilePath)
-    console.log(arr)
-    arr.forEach(async(item, index) => {
-      const realPath = path.resolve(__dirname, '../', arr.slice(0, index+1).join('/'));
-      console.log(realPath)
-      await dirExists(realPath);
-      if(index === arr.length - 1){
-        const realLastFileStat = await getStat(realLastFilePath);
-        console.log(!!realLastFileStat)
-        if(!realLastFileStat){
-          fs.writeFileSync(realLastFilePath, ejs.render(templatePage.toString(), {
-            name: last,
-          }));
 
-          // 判断有没有对应的models及services目录，没有则创建并写入文件
-          const modelsDir = [...arr.slice(0,2), 'models'];
-          const modelsFile = [...arr.slice(0,2), 'models', modelsName + '.js'];
-          const servicesDir = [...arr.slice(0,2), 'services'];
-          const servicesFile = [...arr.slice(0,2), 'services', modelsName + '.js'];
+    await dirExists(realDirPath); // 没有目录则递归创建,有则什么都不干
 
-          const isExistModels = await dirExists(path.resolve(__dirname, '../', modelsDir.join('/'))); // 创建model目录
-          const isExistServices = await dirExists(path.resolve(__dirname, '../', servicesDir.join('/'))); // 创建service目录
-          // console.log(api[modelsName])
-          // console.log(isExistModels)
-          if(!await getStat(path.resolve(__dirname, '../', modelsFile.join('/')))){
-            fs.writeFileSync(path.resolve(__dirname, '../', modelsFile.join('/')), ejs.render(templateModels.toString(), {
-              name: modelsName,
-              list: api[modelsName] || [],
-            }))
-          }
-          if(!await getStat(path.resolve(__dirname, '../', servicesFile.join('/')))){
-            fs.writeFileSync(path.resolve(__dirname, '../', servicesFile.join('/')),  ejs.render(templateServices.toString(), {
-              name: modelsName,
-              list: api[modelsName] || [],
-            }))
-          }
-        }
+    if(!realLastFileStat){
+      fs.writeFileSync(realLastFilePath, ejs.render(templatePage.toString(), {
+        name: last,
+      }));
+
+      await dirExists(modelDirPath); // 创建model目录
+      await dirExists(serviceDirPath); // 创建service目录
+      if(!modelFilePathStat){
+        fs.writeFileSync(modelFilePathFullName, ejs.render(templateModels.toString(), {
+          name: modelsName,
+          list: api[modelsName] || [],
+        }))
       }
-    });
+      if(!servicesFilePathStat){
+        fs.writeFileSync(servicesFilePathFullName,  ejs.render(templateServices.toString(), {
+          name: modelsName,
+          list: api[modelsName] || [],
+        }))
+      }
+    }
   };
 
-  await paths.forEach( async currentPath =>{
-    await generatePages(currentPath)
-  });
+  // 注意forEach不支持async await
+  for (let i = 0; i <paths.length ; i++) {
+    await generatePages(paths[i])
+  }
 
-// console.log(models)
-// console.log(path.resolve(__dirname, '../store/index.js'))
-
+  console.log(models);
+  // 生成store下的index文件
   fs.writeFileSync(path.resolve(__dirname, '../store/index.js'), ejs.render(templateStore.toString(), {
     models,
   }));
