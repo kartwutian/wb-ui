@@ -295,18 +295,12 @@
       "desc": "退出登录"
     }
   ],
-  "test": [
+  "login": [
     {
       "name": "login",
       "method": "GET",
       "path": "/api/user/login",
       "desc": "小程序登录"
-    },
-    {
-      "name": "signOut",
-      "method": "GET",
-      "path": "/api/ftts/user/signOut",
-      "desc": "退出登录"
     }
   ]
 }

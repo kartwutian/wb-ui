@@ -4,20 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "init:vant": "gulp -f ./scripts/gulp/compiler.js",
+    "init:vant:less": "gulp less -f ./scripts/gulp/compiler.js",
     "generateApis": "node ./scripts/fetch/index.js",
-    "generatePages": "node ./scripts/generatePages.js",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "qs": "^6.9.0",
-    "vue-i18n": "^8.14.1"
-  },
-  "devDependencies": {
-    "ejs": "^2.7.1",
-    "vuepress": "^1.2.0"
-  }
-}
+    "generatePages": "node ./s
