@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "generateApis": "node ./scripts/fetch/index.js",
     "generatePages": "node ./scripts/generatePages.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"

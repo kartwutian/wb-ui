@@ -1,3 +1,7 @@
+/**
+ * 这个文件用于生成api.json
+ */
+
 const http = require('http');
 const fs = require('fs');
 const { generateApi } = require('./utils');
