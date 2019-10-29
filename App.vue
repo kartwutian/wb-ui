@@ -36,6 +36,7 @@
 <style lang="less">
   /*每个页面公共css */
   @import "./components/wanbo/styles/index.less";
+  @import "./components/vant/index.less";
   @import "./colorui/main.css";
   @import "./colorui/icon.css";
   @import "./colorui/animation.css";

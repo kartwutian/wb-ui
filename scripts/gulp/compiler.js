@@ -15,23 +15,18 @@ function filterLess(done) {
   done();
 }
 
+/**
+ * 过滤出less文件
+ * @returns {*}
+ */
+function filterMarkdown(done) {
+  src(['packages/**/*.md',])
+    .pipe(dest('g/'));
+  done();
+}
+
 function filterWxml(done) {
-  src(['packages/**/*.wxml',])
-    .pipe(header(`<template>\n`))
-    .pipe(footer(`\n</template>\n
-<script>
-
-  export default {
-    name: '*****',
-  }
-
-</script>
-
-<style lang="less">
-
-</style>
-      
-    `))
+  src(['vant/**/*.vue',])
     .pipe(replace(/\s(\S+=)\"{{([^{]+)}}\"/g, ' :$1"$2"'))
     .pipe(replace(/:wx:if/g, 'v-if'))
     .pipe(replace(/:wx:for/g, 'v-for'))
@@ -39,12 +34,9 @@ function filterWxml(done) {
     .pipe(replace(/:wx:else/g, 'v-else'))
     .pipe(replace(/wx:key/g, ':key'))
     .pipe(replace(/bind:/g, '@'))
-    .pipe(rename({
-      extname: '.vue',
-    }))
-    .pipe(dest('vant/'));
+    .pipe(dest('g/'));
   done();
 }
 
-exports.default = series(filterWxml);
+exports.default = series(filterWxml, filterMarkdown);
 exports.less = filterLess;
