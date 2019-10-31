@@ -8,12 +8,12 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { nextTick } from '../common/utils';
 
 type Position = 'top' | 'bottom' | '';
 
-VantComponent({
+export default {
   props: {
     zIndex: {
       type: Number,
@@ -149,7 +149,7 @@ VantComponent({
   destroyed() {
     this.createIntersectionObserver({}).disconnect();
   }
-});
+};
 
 </script>
 

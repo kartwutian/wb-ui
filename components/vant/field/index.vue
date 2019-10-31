@@ -1,5 +1,5 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
+
 
 <van-cell
   :size=" size "
@@ -42,7 +42,7 @@
     >
     </textarea>
     <input
-      wx:else
+      v-else
       class="input-class {{ utils.bem('field__input', [inputAlign, { disabled, error }]) }}"
       :type=" type "
       :focus=" focus "
@@ -94,11 +94,12 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 import { getSystemInfoSync } from '../common/utils';
 
-VantComponent({
+export default {
   field: true,
 
   classes: ['input-class', 'right-icon-class'],
@@ -213,7 +214,7 @@ VantComponent({
       this.$emit('change', value);
     }
   }
-});
+};
 
 </script>
 

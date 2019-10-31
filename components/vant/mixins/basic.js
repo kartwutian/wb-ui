@@ -1,8 +1,8 @@
-export const basic = Behavior({
+export const basic = {
   methods: {
-    $emit(...args) {
-      this.triggerEvent(...args);
-    },
+    // $emit(...args) {
+    //   this.triggerEvent(...args);
+    // },
 
     getRect(selector, all) {
       return new Promise(resolve => {
@@ -21,4 +21,4 @@ export const basic = Behavior({
       });
     }
   }
-});
+};

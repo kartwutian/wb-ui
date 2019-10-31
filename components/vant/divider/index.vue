@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="custom-class {{ utils.bem('divider', [{dashed, hairline}, contentPosition]) }}"
@@ -11,9 +10,10 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
 
-VantComponent({
+
+export default {
   props: {
     dashed: {
       type: Boolean,
@@ -44,7 +44,7 @@ VantComponent({
       value: ''
     }
   }
-});
+};
 
 </script>
 

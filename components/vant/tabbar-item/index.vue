@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="{{ utils.bem('tabbar-item', { active }) }} custom-class"
@@ -12,12 +11,12 @@
       :name=" icon "
       customStyle="display: block"
     />
-    <block wx:else>
+    <block v-else>
       <slot
         v-if=" active "
         name="icon-active"
       />
-      <slot wx:else name="icon" />
+      <slot v-else name="icon" />
     </block>
     <van-info
       v-if=" info !== null "
@@ -33,9 +32,10 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
 
-VantComponent({
+
+export default {
   props: {
     info: null,
     name: null,
@@ -87,7 +87,7 @@ VantComponent({
         : Promise.resolve();
     }
   }
-});
+};
 
 </script>
 

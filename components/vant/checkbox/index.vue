@@ -1,11 +1,10 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="van-checkbox custom-class">
   <view class="van-checkbox__icon-wrap" bindtap="toggle">
     <slot v-if=" useIconSlot " name="icon" />
     <van-icon
-      wx:else
+      v-else
       name="success"
       size="0.8em"
       class="{{ utils.bem('checkbox__icon', [shape, { disabled, checked: value }]) }}"
@@ -22,7 +21,8 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { addUnit } from '../common/utils';
 
 function emit(target: WechatMiniprogram.Component.TrivialInstance, value: boolean | any[]) {
@@ -30,7 +30,7 @@ function emit(target: WechatMiniprogram.Component.TrivialInstance, value: boolea
   target.$emit('change', value);
 }
 
-VantComponent({
+export default {
   field: true,
 
   relation: {
@@ -119,7 +119,7 @@ VantComponent({
       });
     },
   }
-});
+};
 
 </script>
 

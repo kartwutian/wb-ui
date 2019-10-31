@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="custom-class van-card">
   <view class="{{ utils.bem('card__header', { center: centered }) }}">
@@ -24,10 +23,10 @@
 
     <view class="van-card__content">
       <view v-if=" title " class="van-card__title title-class">{{ title }}</view>
-      <slot wx:else name="title" />
+      <slot v-else name="title" />
 
       <view v-if=" desc " class="van-card__desc desc-class">{{ desc }}</view>
-      <slot wx:else name="desc" />
+      <slot v-else name="desc" />
 
       <slot name="tags" />
 
@@ -48,10 +47,10 @@
 </template>
 
 <script>
+  import utils from '../wxs/utils';
     import { link } from '../mixins/link';
-import { VantComponent } from '../common/component';
 
-VantComponent({
+export default {
   classes: [
     'num-class',
     'desc-class',
@@ -89,7 +88,7 @@ VantComponent({
       this.jumpLink('thumbLink');
     }
   }
-});
+};
 
 </script>
 

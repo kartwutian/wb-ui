@@ -1,5 +1,5 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
+
 <wxs src="./index.wxs" module="wxs" />
 
 <view
@@ -44,12 +44,13 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 
 const ITEM_HEIGHT = 44;
 
-VantComponent({
+export default {
   classes: [
     'main-item-class',
     'content-item-class',
@@ -148,7 +149,7 @@ VantComponent({
       return this.setData({ itemHeight });
     }
   }
-});
+};
 
 </script>
 

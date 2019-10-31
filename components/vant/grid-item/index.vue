@@ -1,19 +1,18 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="{{ utils.bem('grid-item', { square }) }}" :style=" style " bindtap="onClick">
   <view class="{{ utils.bem('grid-item__content', { center, square, clickable, surround: border && gutter }) }} {{ border ? 'van-hairline--surround' : '' }}">
     <block v-if=" useSlot ">
       <slot />
     </block>
-    <block wx:else>
+    <block v-else>
       <view class="van-grid-item__icon">
         <van-icon v-if=" icon " :name=" icon " :dot=" dot " :info=" info " />
-        <slot wx:else name="icon"></slot>
+        <slot v-else name="icon"></slot>
       </view>
       <view class="van-grid-item__text">
         <text v-if=" text ">{{ text }}</text>
-        <slot wx:else name="text"></slot>
+        <slot v-else name="text"></slot>
       </view>
     </block>
   </view>
@@ -22,10 +21,11 @@
 </template>
 
 <script>
+  import utils from '../wxs/utils';
     import { link } from '../mixins/link';
-import { VantComponent } from '../common/component';
 
-VantComponent({
+
+export default {
   relation: {
     name: 'grid',
     type: 'ancestor',
@@ -89,7 +89,7 @@ VantComponent({
       this.jumpLink();
     }
   }
-});
+};
 
 </script>
 

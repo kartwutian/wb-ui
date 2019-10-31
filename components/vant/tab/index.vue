@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   v-if=" animated || inited "
@@ -12,9 +11,10 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
 
-VantComponent({
+
+export default {
   relation: {
     name: 'tabs',
     type: 'ancestor'
@@ -60,7 +60,7 @@ VantComponent({
       }
     }
   }
-});
+};
 
 </script>
 

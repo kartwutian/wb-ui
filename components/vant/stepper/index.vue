@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="van-stepper custom-class">
   <view
@@ -40,7 +39,8 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 import { addUnit, isDef } from '../common/utils';
 
@@ -53,7 +53,7 @@ function add(num1: number, num2: number): number {
   return Math.round((num1 + num2) * cardinal) / cardinal;
 }
 
-VantComponent({
+export default {
   field: true,
 
   classes: ['input-class', 'plus-class', 'minus-class'],
@@ -248,7 +248,7 @@ VantComponent({
       return style;
     }
   }
-});
+};
 
 </script>
 

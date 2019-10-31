@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="custom-class {{ utils.bem('tabs', [type]) }}">
   <view style="z-index: {{ zIndex }}; {{ wrapStyle }}" class="{{ utils.bem('tabs__wrap', { scrollable }) }} {{ type === 'line' && border ? 'van-hairline--top-bottom' : '' }}">
@@ -53,7 +52,8 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { touch } from '../mixins/touch';
 import { Weapp } from 'definitions/weapp';
 import { nextTick, isDef, addUnit } from '../common/utils';
@@ -68,7 +68,7 @@ type TabItemData = {
 
 type Position = 'top' | 'bottom' | '';
 
-VantComponent({
+export default {
   mixins: [touch],
 
   classes: ['nav-class', 'tab-class', 'tab-active-class', 'line-class'],
@@ -469,7 +469,7 @@ VantComponent({
       }
     }
   }
-});
+};
 
 </script>
 

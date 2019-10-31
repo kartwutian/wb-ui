@@ -19,15 +19,9 @@
 			}
 		},
 		{
-			"path": "pages/test/test",
+			"path": "pages/vant/button/index",
 			"style": {
-				"navigationBarTitleText": "login"
-			}
-		},
-		{
-			"path": "pages/test/demi/dem",
-			"style": {
-				"navigationBarTitleText": "login"
+				"navigationBarTitleText": "button"
 			}
 		}
 	],

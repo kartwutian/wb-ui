@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="custom-class {{ utils.bem('col', [span]) }} {{ offset ? 'van-col--offset-' + offset : '' }}"
@@ -11,9 +10,10 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
 
-VantComponent({
+
+export default {
   relation: {
     name: 'row',
     type: 'ancestor'
@@ -38,7 +38,7 @@ VantComponent({
       }
     }
   }
-});
+};
 
 </script>
 

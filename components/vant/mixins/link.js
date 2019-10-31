@@ -3,15 +3,15 @@ export const link = {
     url: String,
     linkType: {
       type: String,
-      value: 'navigateTo'
+      default: 'navigateTo'
     }
   },
 
   methods: {
     jumpLink(urlKey = 'url') {
-      const url = this.data[urlKey];
+      const url = this[urlKey];
       if (url) {
-        wx[this.data.linkType]({ url });
+        uni[this.linkType]({ url });
       }
     }
   }

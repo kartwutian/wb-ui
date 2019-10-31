@@ -6,9 +6,9 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
 
-VantComponent({
+
+export default {
   relation: {
     name: 'grid-item',
     type: 'descendant',
@@ -75,7 +75,7 @@ VantComponent({
       );
     }
   }
-});
+};
 
 </script>
 

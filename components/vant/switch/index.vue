@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="custom-class {{ utils.bem('switch', { on: value === activeValue, disabled }) }}"
@@ -14,10 +13,11 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { BLUE, GRAY_DARK } from '../common/color';
 
-VantComponent({
+export default {
   field: true,
 
   classes: ['node-class'],
@@ -72,7 +72,7 @@ VantComponent({
       }
     }
   }
-});
+};
 
 </script>
 

@@ -6,9 +6,9 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
 
-VantComponent({
+
+export default {
   relation: {
     name: 'sidebar-item',
     type: 'descendant',
@@ -58,7 +58,7 @@ VantComponent({
       return Promise.all(stack);
     }
   }
-});
+};
 
 </script>
 

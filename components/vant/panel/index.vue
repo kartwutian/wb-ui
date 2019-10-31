@@ -1,6 +1,6 @@
 <template>
     <view class="van-panel van-hairline--top-bottom custom-class">
-  <van-cell 
+  <van-cell
     v-if=" title || desc || status "
     :title=" title "
     :label=" desc "
@@ -8,7 +8,7 @@
     custom-class="header-class"
     value-class="van-panel__header-value"
   />
-  <slot wx:else name="header" />
+  <slot v-else name="header" />
 
   <view class="van-panel__content">
     <slot />
@@ -22,9 +22,9 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
 
-VantComponent({
+
+export default {
   classes: ['header-class', 'footer-class'],
 
   props: {
@@ -33,7 +33,7 @@ VantComponent({
     status: String,
     useFooterSlot: Boolean
   }
-});
+};
 
 </script>
 

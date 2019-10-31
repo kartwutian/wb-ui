@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <button
   :id=" id "
@@ -38,7 +37,7 @@
       {{ loadingText }}
     </view>
   </block>
-  <block wx:else>
+  <block v-else>
     <van-icon
       v-if=" icon "
       size="1.2em"
@@ -55,11 +54,11 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
 import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
 
-VantComponent({
+export default {
   mixins: [button, openType],
 
   classes: ['hover-class', 'loading-class'],
@@ -130,7 +129,7 @@ VantComponent({
       }
     }
   }
-});
+};
 
 </script>
 

@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="custom-class {{ border ? 'van-hairline--top-bottom' : '' }} {{ utils.bem('tabbar', { fixed, safe: safeAreaInsetBottom }) }}"
@@ -11,9 +10,10 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
 
-VantComponent({
+
+export default {
   relation: {
     name: 'tabbar-item',
     type: 'descendant',
@@ -86,7 +86,7 @@ VantComponent({
       }
     }
   }
-});
+};
 
 </script>
 

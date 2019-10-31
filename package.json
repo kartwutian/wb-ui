@@ -7,4 +7,26 @@
     "init:vant": "gulp -f ./scripts/gulp/compiler.js",
     "init:vant:less": "gulp less -f ./scripts/gulp/compiler.js",
     "generateApis": "node ./scripts/fetch/index.js",
-    "generatePages": "node ./s
+    "generatePages": "node ./scripts/generatePages.js",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vant/icons": "^1.1.15",
+    "qs": "^6.9.0",
+    "vue-i18n": "^8.14.1"
+  },
+  "devDependencies": {
+    "ejs": "^2.7.1",
+    "gulp": "^4.0.2",
+    "gulp-file-include": "^2.1.0",
+    "gulp-footer": "^2.0.2",
+    "gulp-header": "^2.0.9",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
+    "vuepress": "^1.2.0"
+  }
+}

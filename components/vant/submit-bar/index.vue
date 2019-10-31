@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="van-submit-bar custom-class">
   <slot name="top" />
@@ -45,10 +44,11 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 
-VantComponent({
+export default {
   classes: [
     'bar-class',
     'price-class',
@@ -107,7 +107,7 @@ VantComponent({
       this.$emit('submit', event.detail);
     }
   }
-});
+};
 
 </script>
 

@@ -33,9 +33,10 @@ export default{
     },
     color: String,
     customStyle: String,
+    customClass: String,
     classPrefix: {
       type: String,
-      value: 'van-icon'
+      default: 'van-icon'
     },
     name: {
       type: String,
@@ -53,7 +54,7 @@ export default{
       return this.name.indexOf('/') !== -1;
     },
     classes(){
-      return `custom-class ${this.classPrefix} ${this.isImageName ? 'van-icon--image' : this.classPrefix + '-' + this.name}`;
+      return `${this.customClass} ${this.classPrefix} ${this.isImageName ? 'van-icon--image' : this.classPrefix + '-' + this.name}`;
     },
     styles(){
       return `${this.color ? 'color: ' + this.color + ';' : ''}${this.size ? 'font-size: ' + this.sizeWithUnit + ';' : ''}${this.customStyle}`

@@ -16,8 +16,8 @@
       />
     </view>
   </view>
-  <view 
-    style="font-size: {{textSizeWithUnit}};" 
+  <view
+    style="font-size: {{textSizeWithUnit}};"
     class="van-loading__text {{vertical ? 'van-loading__text--vertical' : ''}}"
   >
     <slot />
@@ -26,10 +26,10 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { addUnit } from '../common/utils';
 
-VantComponent({
+export default {
   props: {
     size: {
       type: String,
@@ -68,7 +68,7 @@ VantComponent({
       });
     }
   }
-});
+};
 
 </script>
 

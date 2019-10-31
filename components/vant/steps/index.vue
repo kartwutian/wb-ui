@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="custom-class {{ utils.bem('steps', [direction]) }}">
   <view class="van-step__wrapper">
@@ -21,13 +20,13 @@
             custom-class="van-step__icon"
           />
           <view
-            wx:else
+            v-else
             class="van-step__circle"
             :style=" index < active ? 'background-color: ' + activeColor : '' "
           />
         </block>
 
-        <van-icon wx:else :name=" activeIcon " :color=" activeColor " custom-class="van-step__icon" />
+        <van-icon v-else :name=" activeIcon " :color=" activeColor " custom-class="van-step__icon" />
       </view>
       <view
         v-if=" index !== steps.length - 1 "
@@ -54,10 +53,11 @@ module.exports = get;
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { GREEN } from '../common/color';
 
-VantComponent({
+export default {
   props: {
     icon: String,
     steps: Array,
@@ -76,7 +76,7 @@ VantComponent({
     },
     inactiveIcon: String
   }
-});
+};
 
 </script>
 

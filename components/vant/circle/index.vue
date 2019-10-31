@@ -4,12 +4,12 @@
   <view v-if=" !text " class="van-circle__text">
     <slot></slot>
   </view>
-  <cover-view wx:else class="van-circle__text">{{ text }}</cover-view>
+  <cover-view v-else class="van-circle__text">{{ text }}</cover-view>
 </view>
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { isObj } from '../common/utils';
 import { BLUE, WHITE } from '../common/color';
 
@@ -20,7 +20,7 @@ const PERIMETER = 2 * Math.PI;
 const BEGIN_ANGLE = -Math.PI / 2;
 const STEP = 1;
 
-VantComponent({
+export default {
   props: {
     text: String,
     lineCap: {
@@ -188,7 +188,7 @@ VantComponent({
     this.ctx = null;
     this.clearInterval();
   }
-});
+};
 
 </script>
 

@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   v-if=" info !== null && info !== '' || dot "
@@ -10,15 +9,16 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+    import utils from '../wxs/utils';
 
-VantComponent({
+
+export default {
   props: {
     dot: Boolean,
     info: null,
     customStyle: String
   }
-});
+};
 
 </script>
 

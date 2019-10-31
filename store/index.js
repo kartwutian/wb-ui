@@ -10,8 +10,7 @@ import reloadPlugin from "./plugins/reload/reloadPlugin";
 import home from '../pages/home/models/home';
 import tabbar from '../pages/tabbar/models/tabbar';
 import login from '../pages/login/models/login';
-import test from '../pages/test/models/test';
-import demi from '../pages/test/demi/models/demi';
+import button from '../pages/vant/button/models/button';
 
 
 Vue.use(Vuex);
@@ -25,8 +24,7 @@ modules: {
     home,
     tabbar,
     login,
-    test,
-    demi,
+    button,
 
 },
 });

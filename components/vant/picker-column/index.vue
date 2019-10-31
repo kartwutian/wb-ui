@@ -25,13 +25,13 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { isObj, range } from '../common/utils';
 import { Weapp } from 'definitions/weapp';
 
 const DEFAULT_DURATION = 200;
 
-VantComponent({
+export default {
   classes: ['active-class'],
 
   props: {
@@ -172,7 +172,7 @@ VantComponent({
       return data.options[data.currentIndex];
     }
   }
-});
+};
 
 </script>
 

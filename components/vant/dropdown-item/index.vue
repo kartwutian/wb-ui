@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   v-if=" showWrapper "
@@ -47,10 +46,11 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 
-VantComponent({
+export default {
   field: true,
 
   relation: {
@@ -131,7 +131,7 @@ VantComponent({
       this.parent.toggleItem(childIndex);
     }
   }
-});
+};
 
 </script>
 

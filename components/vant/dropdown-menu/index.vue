@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="van-dropdown-menu van-dropdown-menu--top-bottom">
   <view
@@ -26,7 +25,8 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 import { addUnit } from '../common/utils';
 
@@ -36,7 +36,7 @@ interface ToggleOptions {
 
 let ARRAY: WechatMiniprogram.Component.TrivialInstance[] = [];
 
-VantComponent({
+export default {
   field: true,
 
   relation: {
@@ -209,7 +209,7 @@ VantComponent({
       }
     }
   }
-});
+};
 
 </script>
 

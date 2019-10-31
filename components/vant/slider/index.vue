@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="custom-class {{ utils.bem('slider', { disabled }) }}"
@@ -22,7 +21,7 @@
         name="button"
       />
       <view
-        wx:else
+        v-else
         class="van-slider__button"
       />
     </view>
@@ -32,12 +31,13 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { touch } from '../mixins/touch';
 import { Weapp } from 'definitions/weapp';
 import { addUnit } from '../common/utils';
 
-VantComponent({
+export default {
   mixins: [touch],
 
   props: {
@@ -156,7 +156,7 @@ VantComponent({
       return Math.round(Math.max(min, Math.min(value, max)) / step) * step;
     }
   }
-});
+};
 
 </script>
 

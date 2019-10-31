@@ -21,18 +21,14 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
-import { pickerProps } from '../picker/shared';
-import { Weapp } from 'definitions/weapp';
 
-type AreaItem = {
-  name: string;
-  code: string;
-};
+import { pickerProps } from '../picker/shared';
+
+
 
 const COLUMNSPLACEHOLDERCODE = '000000';
 
-VantComponent({
+export default {
   classes: ['active-class', 'toolbar-class', 'column-class'],
 
   props: {
@@ -67,14 +63,14 @@ VantComponent({
   },
 
   watch: {
-    value(value: string) {
+    value(value) {
       this.code = value;
       this.setValues();
     },
 
     areaList: 'setValues',
 
-    columnsNum(value: number) {
+    columnsNum(value) {
       this.setData({
         displayColumns: this.data.columns.slice(0, +value)
       });
@@ -106,7 +102,7 @@ VantComponent({
       this.emit('confirm', { value, index });
     },
 
-    emit(type: string, detail) {
+    emit(type, detail) {
       detail.values = detail.value;
       delete detail.value;
       this.$emit(type, detail);
@@ -142,12 +138,12 @@ VantComponent({
       });
     },
 
-    getConfig(type: string) {
+    getConfig(type) {
       const { areaList } = this.data;
       return (areaList && areaList[`${type}_list`]) || {};
     },
 
-    getList(type: string, code?: string): AreaItem[] {
+    getList(type, code) {
       const { typeToColumnsPlaceholder } = this.data;
       let result = [];
       if (type !== 'province' && !code) {
@@ -181,7 +177,7 @@ VantComponent({
       return result;
     },
 
-    getIndex(type: string, code: string): number {
+    getIndex(type, code) {
       let compareNum = type === 'province' ? 2 : type === 'city' ? 4 : 6;
       const list = this.getList(type, code.slice(0, compareNum - 2));
 
@@ -271,7 +267,7 @@ VantComponent({
         return area;
       }
 
-      const names = values.map((item: AreaItem) => item.name);
+      const names = values.map((item) => item.name);
       area.code = values[values.length - 1].code;
       if (area.code[0] === '9') {
         area.country = names[1] || '';
@@ -290,7 +286,7 @@ VantComponent({
       return this.setValues();
     }
   }
-});
+};
 
 </script>
 

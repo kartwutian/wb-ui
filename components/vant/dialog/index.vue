@@ -72,7 +72,7 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
 import { addUnit } from '../common/utils';
@@ -80,7 +80,7 @@ import { GRAY, BLUE } from '../common/color';
 
 type Action = 'confirm' | 'cancel' | 'overlay';
 
-VantComponent({
+export default {
   mixins: [button, openType],
 
   props: {
@@ -207,7 +207,7 @@ VantComponent({
       });
     }
   }
-});
+};
 
 </script>
 

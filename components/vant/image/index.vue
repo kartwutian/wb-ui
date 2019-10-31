@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="custom-class {{ utils.bem('image', { round })}}"
@@ -26,7 +25,7 @@
       name="loading"
     />
     <van-icon
-      wx:else
+      v-else
       name="photo-o"
       size="22"
     />
@@ -40,7 +39,7 @@
       name="error"
     />
     <van-icon
-      wx:else
+      v-else
       name="warning-o"
       size="22"
     />
@@ -50,12 +49,13 @@
 </template>
 
 <script>
+  import utils from '../wxs/utils';
     import { addUnit, isDef } from '../common/utils';
-import { VantComponent } from '../common/component';
+
 import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
 
-VantComponent({
+export default {
   mixins: [button, openType],
 
   classes: ['custom-class', 'loading-class', 'error-class', 'image-class'],
@@ -159,7 +159,7 @@ VantComponent({
       this.$emit('click', event.detail);
     },
   }
-});
+};
 
 </script>
 

@@ -41,13 +41,13 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { link } from '../mixins/link';
 import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
 import { Weapp } from 'definitions/weapp';
 
-VantComponent({
+export default {
   classes: ['icon-class', 'text-class'],
 
   mixins: [link, button, openType],
@@ -67,7 +67,7 @@ VantComponent({
       this.jumpLink();
     }
   }
-});
+};
 
 </script>
 

@@ -11,10 +11,10 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { transition } from '../mixins/transition';
 
-VantComponent({
+export default {
   classes: [
     'enter-class',
     'enter-active-class',
@@ -25,7 +25,7 @@ VantComponent({
   ],
 
   mixins: [transition(true)]
-});
+};
 
 </script>
 

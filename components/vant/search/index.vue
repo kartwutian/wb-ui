@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="{{ utils.bem('search', { withaction: showAction || useActionSlot }) }} custom-class"
@@ -7,7 +6,7 @@
 >
   <view :class=" utils.bem('search__content', [shape]) ">
     <view class="van-search__label" v-if=" label ">{{ label }}</view>
-    <slot wx:else name="label" />
+    <slot v-else name="label" />
 
     <van-field
       type="search"
@@ -46,17 +45,18 @@
     hover-stay-time="70"
   >
     <slot v-if=" useActionSlot " name="action" />
-    <view wx:else @tap="onCancel" class="cancel-class">{{ actionText }}</view>
+    <view v-else @tap="onCancel" class="cancel-class">{{ actionText }}</view>
   </view>
 </view>
 
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 
-VantComponent({
+export default {
   field: true,
 
   classes: ['field-class', 'input-class', 'cancel-class'],
@@ -135,7 +135,7 @@ VantComponent({
       this.$emit('clear');
     },
   }
-});
+};
 
 </script>
 

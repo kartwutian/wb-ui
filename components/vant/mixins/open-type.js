@@ -1,6 +1,6 @@
 
-export const openType = Behavior({
-  properties: {
+export const openType = {
+  props: {
     openType: String
   },
 
@@ -29,4 +29,4 @@ export const openType = Behavior({
       this.$emit('opensetting', event.detail);
     },
   }
-});
+};

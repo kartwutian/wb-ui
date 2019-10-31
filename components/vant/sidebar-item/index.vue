@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="{{ utils.bem('sidebar-item', { active }) }} van-hairline custom-class"
@@ -21,9 +20,10 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
 
-VantComponent({
+
+export default {
   relation: {
     type: 'ancestor',
     name: 'sidebar',
@@ -58,7 +58,7 @@ VantComponent({
       return this.setData({ active });
     }
   }
-});
+};
 
 </script>
 

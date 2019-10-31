@@ -23,14 +23,14 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { touch } from '../mixins/touch';
 import { Weapp } from 'definitions/weapp';
 
 const THRESHOLD = 0.3;
 let ARRAY: WechatMiniprogram.Component.TrivialInstance[] = [];
 
-VantComponent({
+export default {
   props: {
     disabled: Boolean,
     leftWidth: {
@@ -179,7 +179,7 @@ VantComponent({
       }
     }
   }
-});
+};
 
 </script>
 

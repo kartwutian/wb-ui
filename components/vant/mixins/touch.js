@@ -1,5 +1,5 @@
 
-export const touch = Behavior({
+export const touch = {
   methods: {
     touchStart(event) {
       const touch = event.touches[0];
@@ -26,4 +26,4 @@ export const touch = Behavior({
             : '';
     }
   }
-});
+};

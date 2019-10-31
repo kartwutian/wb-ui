@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { isDef } from '../common/utils';
 import { pickerProps } from '../picker/shared';
 
@@ -61,7 +61,7 @@ function getMonthEndDay(year: number, month: number): number {
 
 const defaultFormatter = (_, value) => value;
 
-VantComponent({
+export default {
   classes: ['active-class', 'toolbar-class', 'column-class'],
 
   props: {
@@ -384,7 +384,7 @@ VantComponent({
       this.$emit('input', innerValue);
     });
   }
-});
+};
 
 </script>
 

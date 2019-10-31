@@ -11,10 +11,10 @@
 </template>
 
 <script>
-    
-import { VantComponent } from '../common/component';
 
-VantComponent({
+
+
+export default {
   props: {
     show: Boolean,
     customStyle: String,
@@ -36,7 +36,7 @@ VantComponent({
     // for prevent touchmove
     noop() {}
   }
-});
+};
 
 </script>
 

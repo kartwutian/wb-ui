@@ -18,14 +18,14 @@
     <text v-if=" type === 'text' ">{{ message }}</text>
 
     <!-- with icon -->
-    <block wx:else>
+    <block v-else>
       <van-loading
         v-if=" type === 'loading' "
         color="white"
         :type=" loadingType "
         custom-class="van-toast__loading"
       />
-      <van-icon wx:else class="van-toast__icon" :name=" type " />
+      <van-icon v-else class="van-toast__icon" :name=" type " />
       <text v-if=" message " class="van-toast__text">{{ message }}</text>
     </block>
 

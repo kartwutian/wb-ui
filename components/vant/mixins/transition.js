@@ -1,6 +1,6 @@
 import { isObj } from '../common/utils';
 
-const getClassNames = (name: string) => ({
+const getClassNames = (name) => ({
   enter: `van-${name}-enter van-${name}-enter-active enter-class enter-active-class`,
   'enter-to': `van-${name}-enter-to van-${name}-enter-active enter-to-class enter-active-class`,
   leave: `van-${name}-leave van-${name}-leave-active leave-class leave-active-class`,
@@ -9,7 +9,7 @@ const getClassNames = (name: string) => ({
 
 const nextTick = () => new Promise(resolve => setTimeout(resolve, 1000 / 30));
 
-export const transition = function(showDefaultValue: boolean) {
+export const transition = function(showDefaultValue) {
   return Behavior({
     properties: {
       customStyle: String,
@@ -44,7 +44,7 @@ export const transition = function(showDefaultValue: boolean) {
     },
 
     methods: {
-      observeShow(value: boolean) {
+      observeShow(value) {
         value ? this.enter() : this.leave();
       },
 
@@ -117,7 +117,7 @@ export const transition = function(showDefaultValue: boolean) {
           .catch(() => {});
       },
 
-      checkStatus(status: 'enter' | 'leave') {
+      checkStatus(status) {
         if (status !== this.status) {
           throw new Error(`incongruent status: ${status}`);
         }

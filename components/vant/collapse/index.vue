@@ -1,6 +1,6 @@
 <template>
   <view :class="classes">
-    <slot/>
+    <slot />
   </view>
 
 </template>
@@ -32,18 +32,25 @@
       },
       border: {
         type: Boolean,
-        value: true
+        default: true
+      },
+      customClass: {
+        type: String,
+        default: ''
       }
     },
 
     computed: {
       classes() {
-        return `custom-class van-collapse ${this.border ? 'van-hairline--top-bottom' : ''}`
+        return `${this.customClass} van-collapse ${this.border ? 'van-hairline--top-bottom' : ''}`
       },
     },
 
     beforeCreate() {
       this.children = [];
+    },
+    mounted(){
+      console.log(this)
     },
 
     methods: {

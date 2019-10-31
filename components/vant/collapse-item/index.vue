@@ -3,7 +3,7 @@
 <view :class="classesCol">
   <van-cell
     :title=" title "
-    title-class="title-class"
+    :title-class="titleClass"
     :icon=" icon "
     :value=" value "
     :label=" label "
@@ -16,19 +16,25 @@
     hover-class="van-cell--hover"
     @click="onClick"
   >
-    <slot
-      name="title"
-      slot="title"
-    />
-    <slot
-      name="icon"
-      slot="icon"
-    />
-    <slot name="value" />
-    <slot
-      name="right-icon"
-      slot="right-icon"
-    />
+    <view slot="title">
+      <slot
+          name="title"
+      />
+    </view>
+    <view slot="icon">
+      <slot
+         name="icon"
+      />
+    </view>
+    <view slot="value">
+      <slot name="value" />
+    </view>
+    <view slot="right-icon">
+      <slot
+          name="right-icon"
+      />
+    </view>
+
   </van-cell>
   <view
     :class="classesTrans"
@@ -36,7 +42,7 @@
     @transitionend="onTransitionEnd"
   >
     <view
-      class="van-collapse-item__content content-class"
+      :class="'van-collapse-item__content ' + contentClass"
     >
       <slot />
     </view>
@@ -47,6 +53,7 @@
 <script>
 import utils from '../wxs/utils';
 import VanCell from "../cell/index";
+import {basic} from '../mixins/basic';
 
 const nextTick = () => new Promise(resolve => setTimeout(resolve, 20));
 
@@ -71,13 +78,26 @@ export default {
     label: String,
     disabled: Boolean,
     clickable: Boolean,
+    customClass: String,
+    titleClass: {
+      type: String,
+      default: '',
+    },
+    contentClass: {
+      type: String,
+      default: '',
+    },
     border: {
       type: Boolean,
-      value: true
+      default: true
     },
     isLink: {
       type: Boolean,
-      value: true
+      default: true
+    },
+    transition: { // 控制是否展示过度动画
+      type: Boolean,
+      default: true,
     }
   },
 
@@ -85,13 +105,12 @@ export default {
     return {
       contentHeight: 0,
       expanded: false,
-      transition: false
     };
   },
 
   computed: {
     classesCol(){
-      return `van-collapse-item custom-class ${this.index !== 0 ? 'van-hairline--top' : ''}`
+      return `van-collapse-item ${this.customClass} ${this.index !== 0 ? 'van-hairline--top' : ''}`
     },
     classes(){
       return `${utils.bem('collapse-item__title', {disabled: this.disabled, expanded: this.expanded })}`
@@ -102,77 +121,93 @@ export default {
   },
 
   mounted() {
-    this.updateExpanded()
-      .then(nextTick)
-      .then(() => {
-        const data = { transition: true };
-
-        if (this.data.expanded) {
-          data.contentHeight = 'auto';
-        }
-
-      });
+    // this.updateExpanded()
+    //   .then(nextTick)
+    //   .then(() => {
+    //     const data = { transition: true };
+    //
+    //     if (this.expanded) {
+    //       data.contentHeight = 'auto';
+    //     }
+    //
+    //   });
   },
 
   methods: {
-    updateExpanded() {
-      if (!this.parent) {
-        return Promise.resolve();
-      }
-
-      const { value, accordion } = this.parent.data;
-      const { children = [] } = this.parent;
-      const { name } = this.data;
-
-      const index = children.indexOf(this);
-      const currentName = name == null ? index : name;
-
-      const expanded = accordion
-        ? value === currentName
-        : (value || []).some((name) => name === currentName);
-
-      const stack = [];
-
-      if (expanded !== this.data.expanded) {
-        stack.push(this.updateStyle(expanded));
-      }
-
-      stack.push(this.set({ index, expanded }));
-
-      return Promise.all(stack);
-    },
-
+    ...basic.methods,
+    // updateExpanded() {
+    //   if (!this.parent) {
+    //     return Promise.resolve();
+    //   }
+    //
+    //   const { value, accordion } = this.parent.data;
+    //   const { children = [] } = this.parent;
+    //   const { name } = this.data;
+    //
+    //   const index = children.indexOf(this);
+    //   const currentName = name == null ? index : name;
+    //
+    //   const expanded = accordion
+    //     ? value === currentName
+    //     : (value || []).some((name) => name === currentName);
+    //
+    //   const stack = [];
+    //
+    //   if (expanded !== this.data.expanded) {
+    //     stack.push(this.updateStyle(expanded));
+    //   }
+    //
+    //   stack.push(this.set({ index, expanded }));
+    //
+    //   return Promise.all(stack);
+    // },
+    //
     updateStyle(expanded) {
       return this.getRect('.van-collapse-item__content')
         .then((rect) => rect.height)
         .then((height) => {
-          if (expanded) {
-            return this.set({
-              contentHeight: height ? `${height}px` : 'auto'
-            });
+          console.log(height)
+          if(expanded){
+            this.contentHeight = height
+          }else{
+            this.contentHeight = 0
           }
+          // if (expanded) {
+          //   return this.contentHeight = height ? `${height}px` : 'auto'
+          // }
 
-          return this.set({ contentHeight: `${height}px` })
-            .then(nextTick)
-            .then(() => this.set({ contentHeight: 0 }));
+          // return this.set({ contentHeight: `${height}px` })
+          //   .then(nextTick)
+          //   .then(() => this.set({ contentHeight: 0 }));
         });
     },
 
-    onClick() {
-      if (this.data.disabled) {
+    async onClick() {
+      if (this.disabled) {
         return;
       }
-
-      const { name, expanded } = this.data;
-      const index = this.parent.children.indexOf(this);
+      console.log(this)
+      const { name, expanded } = this;
+      const index = this.$parent.$children.indexOf(this);
       const currentName = name == null ? index : name;
+      console.log(index)
+      console.log(currentName)
+      this.expanded = !expanded;
+      this.updateStyle(this.expanded)
+      // if(this.expanded){
+      //   this.contentHeight = 100
+      // }else{
+      //   await nextTick();
+      //
+      //   this.contentHeight = 0
+      // }
 
-      this.parent.switch(currentName, !expanded);
+      // this.parent.switch(currentName, !expanded);
     },
 
     onTransitionEnd() {
-      if (this.data.expanded) {
-        this.data.contentHeight = 'auto'
+      if (this.expanded) {
+        this.contentHeight = 'auto'
       }
     }
   }

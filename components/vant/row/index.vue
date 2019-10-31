@@ -6,9 +6,9 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
 
-VantComponent({
+
+export default {
   relation: {
     name: 'col',
     type: 'descendant',
@@ -47,7 +47,7 @@ VantComponent({
       });
     }
   }
-});
+};
 
 </script>
 

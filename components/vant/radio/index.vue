@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="van-radio custom-class">
   <view
@@ -12,7 +11,7 @@
   <view class="van-radio__icon-wrap" style="font-size: {{ iconSizeWithUnit }};" bindtap="onChange">
     <slot v-if=" useIconSlot " name="icon" />
     <van-icon
-      wx:else
+      v-else
       name="success"
       class="{{ utils.bem('radio__icon', [shape, { disabled, checked: value === name }]) }}"
       :style=" checkedColor && !disabled && value === name ? 'border-color:' + checkedColor + '; background-color:' + checkedColor + ';' : '' "
@@ -32,11 +31,12 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 import { addUnit } from '../common/utils';
 
-VantComponent({
+export default {
   field: true,
 
   relation: {
@@ -101,7 +101,7 @@ VantComponent({
       }
     }
   }
-});
+};
 
 </script>
 

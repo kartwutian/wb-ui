@@ -2,7 +2,7 @@
 
 <view
   :class="classes"
-  hover-class="van-cell--hover hover-class"
+  :hover-class="'van-cell--hover ' + hoverClass"
   hover-stay-time="70"
   :style=" customStyle "
   @tap="onClick"
@@ -17,18 +17,18 @@
 
   <view
     :style=" titleWidth ? 'max-width:' + titleWidth + ';min-width:' + titleWidth : '' "
-    class="van-cell__title title-class"
+    :class="'van-cell__title ' + titleClass "
   >
     <block v-if=" title ">{{ title }}</block>
     <slot v-else name="title" />
 
-    <view v-if=" label || useLabelSlot " class="van-cell__label label-class">
+    <view v-if=" label || useLabelSlot " :class="'van-cell__label ' + labelClass">
       <slot v-if=" useLabelSlot " name="label" />
       <block v-else-if=" label ">{{ label }}</block>
     </view>
   </view>
 
-  <view class="van-cell__value value-class">
+  <view :class="'van-cell__value ' + valueClass">
     <block v-if=" value || value === 0 ">{{ value }}</block>
     <slot v-else />
   </view>
@@ -36,11 +36,10 @@
   <van-icon
     v-if=" isLink "
     :name=" arrowDirection ? 'arrow' + '-' + arrowDirection : 'arrow' "
-    class="van-cell__right-icon-wrap right-icon-class"
+    :class="'van-cell__right-icon-wrap ' + rightIconClass"
     custom-class="van-cell__right-icon"
   />
   <slot v-else name="right-icon" />
-
   <slot name="extra" />
 </view>
 
@@ -49,6 +48,7 @@
 <script>
 import utils from '../wxs/utils';
 import { link } from '../mixins/link';
+import VanIcon from "../icon/index";
 
 export default{
   // classes: [
@@ -60,7 +60,7 @@ export default{
   // ],
 
   name: 'van-cell',
-
+  components: {VanIcon},
   // mixins: [link],
 
   props: {
@@ -76,6 +76,27 @@ export default{
     clickable: Boolean,
     titleWidth: String,
     customStyle: String,
+    customClass: String,
+    titleClass: {
+      type: String,
+      default: '',
+    },
+    labelClass: {
+      type: String,
+      default: '',
+    },
+    valueClass: {
+      type: String,
+      default: '',
+    },
+    rightIconClass: {
+      type: String,
+      default: '',
+    },
+    hoverClass: {
+      type: String,
+      default: '',
+    },
     arrowDirection: String,
     useLabelSlot: Boolean,
     border: {
@@ -86,13 +107,14 @@ export default{
 
   computed: {
     classes(){
-      return `custom-class ${utils.bem('cell', [this.size, { center: this.center, required: this.required, borderless: !this.border, clickable: this.isLink || this.clickable }])}`
+      return `${this.customClass} ${utils.bem('cell', [this.size, { center: this.center, required: this.required, borderless: !this.border, clickable: this.isLink || this.clickable }])}`
     }
   },
 
   methods: {
     ...link.methods,
     onClick(event) {
+      console.log(event)
       this.$emit('click', event.detail);
       this.jumpLink();
     }

@@ -22,11 +22,11 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+
 import { BLUE } from '../common/color';
 import { addUnit } from '../common/utils';
 
-VantComponent({
+export default {
   props: {
     inactive: Boolean,
     percentage: Number,
@@ -62,7 +62,7 @@ VantComponent({
       });
     }
   }
-});
+};
 
 </script>
 

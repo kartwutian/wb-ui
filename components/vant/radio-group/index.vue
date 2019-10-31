@@ -4,9 +4,9 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
 
-VantComponent({
+
+export default {
   field: true,
 
   relation: {
@@ -50,7 +50,7 @@ VantComponent({
       });
     }
   }
-});
+};
 
 </script>
 

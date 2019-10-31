@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="van-rate custom-class"
@@ -35,11 +34,12 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 import { addUnit } from '../common/utils';
 
-VantComponent({
+export default {
   field: true,
 
   classes: ['icon-class'],
@@ -145,7 +145,7 @@ VantComponent({
       );
     }
   }
-});
+};
 
 </script>
 

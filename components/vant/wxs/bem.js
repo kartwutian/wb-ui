@@ -1,5 +1,5 @@
 
-const REGEXP = /{\|}\|"/g;
+const REGEXP = /\{|\}|\"/g;
 
 function keys(obj) {
   return JSON.stringify(obj)
@@ -33,6 +33,7 @@ function traversing(mods, conf) {
       traversing(mods, item);
     });
   } else if (typeof conf === 'object') {
+    // console.log( keys(conf))
     keys(conf).forEach(function(key) {
       conf[key] && mods.push(key);
     });
@@ -40,10 +41,10 @@ function traversing(mods, conf) {
 }
 
 function bem(name, conf) {
-  console.log(conf)
+  // console.log(conf)
   var mods = [];
   traversing(mods, conf);
-  console.log(mods)
+  // console.log(mods)
   return join(name, mods);
 }
 

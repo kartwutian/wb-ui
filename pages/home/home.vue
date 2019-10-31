@@ -10,7 +10,6 @@
 					<view class="title-text">Vant Weapp</view>
 				</view>
 				<view class="desc">轻量、可靠的小程序 UI 组件库</view>
-
 				<van-collapse
 						v-for="group in list"
 						:key="group.title"
@@ -27,20 +26,21 @@
 							:title="group.groupName"
 							:name="group.groupName"
 					>
-						<van-icon
-								:name="group.icon"
-								slot="right-icon"
-								custom-class="mobile-nav__icon"
-						/>
 						<van-cell
 								v-for="item in group.list"
 								:key="item.title"
 								is-link
-								:url="`/pages${item.path}}/index`"
-								:data-url="`/pages${item.path}}/index`"
+								:url="`/pages/vant${item.path}/index`"
+								:data-url="`/pages/vant${item.path}/index`"
 								:data-switch-tab="true"
 								:title="`${item.title}`"
+								:border="true"
 								@click="onClick"
+						/>
+						<van-icon
+								:name="group.icon"
+								slot="right-icon"
+								custom-class="mobile-nav__icon"
 						/>
 					</van-collapse-item>
 				</van-collapse>
@@ -55,6 +55,29 @@
 <!--						线上拓客，随时预约，贴心顺手的开单收银-->
 <!--					</van-collapse-item>-->
 <!--				</van-collapse>-->
+			<!--	<van-cell-group>
+					<van-cell  value="内容" size="large" >
+						<view slot="title" @tap.stop="onClick">1231</view>
+					</van-cell>
+				</van-cell-group>
+				<app-slot>
+					<van-cell  value="内容" size="large" >
+						<view slot="title" @tap.stop="onClick">1231</view>
+					</van-cell>
+				</app-slot>
+				<app-slot
+						v-for="group in list"
+						:key="group.groupName"
+				>
+					<van-cell-group
+							v-for="item in group.list"
+							:key="item.title"
+					>
+						<van-cell  value="内容" size="large" >
+							<view slot="title" @tap.stop="onClick">{{item.title}}</view>
+						</van-cell>
+					</van-cell-group>
+				</app-slot>-->
 			</view>
 		</view>
 		<view v-show="currentTabIndex === 2">
@@ -81,8 +104,9 @@
 	import VanCollapseItem from "../../components/vant/collapse-item/index";
 	import VanIcon from "../../components/vant/icon/index";
 	import VanCellGroup from "../../components/vant/cell-group/index";
+	import AppSlot from "../../components/app/slot";
 	export default {
-		components: {VanCellGroup, VanIcon, VanCell, VanCollapseItem, VanCollapse, VanTag, WbTabbar, WbGrid, WbIcon},
+		components: {AppSlot, VanCellGroup, VanIcon, VanCell, VanCollapseItem, VanCollapse, VanTag, WbTabbar, WbGrid, WbIcon},
 		data(){
 			return {
 				activeNames: [],
@@ -320,11 +344,20 @@
 			this.resetState();
 		},
 		methods: {
+			...mapMutations('home', {
+				resetState: 'reset',
+				updateShallowState: 'updateShallowState'
+			}),
+			...mapActions('home', {
+				delayChange: 'delayChange',
+				getData: 'getData'
+			}),
 			onChangeCollapse(event) {
 				this.activeNames = event.detail;
 			},
-
 			onClick(event) {
+				console.log('slot')
+				console.log(event)
 				// const { switchTab, url } = event.currentTarget.dataset;
 				// if (switchTab) {
 				// 	wx.switchTab({ url });
@@ -340,79 +373,11 @@
 					currentTabIndex: index,
 				})
 			},
-			...mapMutations('home', {
-				resetState: 'reset',
-				updateShallowState: 'updateShallowState'
-			}),
-			...mapActions('home', {
-				delayChange: 'delayChange',
-				getData: 'getData'
-			})
+
 		},
 	}
 </script>
 
 <style lang="less">
-	page {
-		padding-bottom: 0;
-	}
-
-	.container {
-		padding: 45px 20px 20px;
-	}
-
-	.title {
-		padding-left: 15px;
-		margin-bottom: 10px;
-	}
-
-	.logo,
-	.title-text {
-		display: inline-block;
-		vertical-align: middle;
-	}
-
-	.title-text {
-		font-size: 32px;
-		font-weight: 500;
-		margin-left: 15px;
-	}
-
-	.logo {
-		width: 36px;
-		height: 36px;
-	}
-
-	.desc {
-		font-size: 14px;
-		color: #7d7e80;
-		margin: 0 0 45px;
-		padding-left: 15px;
-	}
-
-	.mobile-nav {
-		margin-bottom: 16px;
-	}
-
-	.mobile-nav__title {
-		font-size: 16px;
-		font-weight: 500;
-		line-height: 40px;
-		align-items: center;
-		border-radius: 2px;
-	}
-
-	.mobile-nav__content {
-		padding: 0 !important;
-	}
-
-	.mobile-nav__icon {
-		font-size: 24px !important;
-		margin-top: 8px;
-	}
-
-	.mobile-nav__icon image {
-		width: 100%;
-	}
 
 </style>

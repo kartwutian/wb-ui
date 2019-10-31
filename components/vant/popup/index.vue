@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <van-overlay
   v-if=" overlay "
@@ -27,10 +26,11 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { transition } from '../mixins/transition';
 
-VantComponent({
+export default {
   classes: [
     'enter-class',
     'enter-active-class',
@@ -117,7 +117,7 @@ VantComponent({
       this.setData(updateData);
     }
   }
-});
+};
 
 </script>
 

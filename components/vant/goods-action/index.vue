@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view class="custom-class {{ utils.bem('goods-action', { safe: safeAreaInsetBottom }) }}">
   <slot />
@@ -8,9 +7,10 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
 
-VantComponent({
+
+export default {
   relation: {
     type: 'descendant',
     name: 'goods-action-button',
@@ -30,7 +30,7 @@ VantComponent({
       value: true
     }
   }
-});
+};
 
 </script>
 

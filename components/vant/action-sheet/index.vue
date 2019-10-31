@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <van-popup
   :show=" show "
@@ -39,7 +38,7 @@
         {{ item.name }}
         <text v-if=" item.subname " class="van-action-sheet__subname" >{{ item.subname }}</text>
       </block>
-      <van-loading wx:else size="20px" />
+      <van-loading v-else size="20px" />
     </button>
   </view>
   <slot />
@@ -57,10 +56,9 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
-import { Weapp } from 'definitions/weapp';
+import utils from '../wxs/utils';
 
-VantComponent({
+export default {
   props: {
     show: Boolean,
     title: String,
@@ -68,31 +66,31 @@ VantComponent({
     description: String,
     round: {
       type: Boolean,
-      value: true
+      default: true
     },
     zIndex: {
       type: Number,
-      value: 100
+      default: 100
     },
     actions: {
       type: Array,
-      value: []
+      default: []
     },
     overlay: {
       type: Boolean,
-      value: true
+      default: true
     },
     closeOnClickOverlay: {
       type: Boolean,
-      value: true
+      default: true
     },
     closeOnClickAction: {
       type: Boolean,
-      value: true
+      default: true
     },
     safeAreaInsetBottom: {
       type: Boolean,
-      value: true
+      default: true
     }
   },
 
@@ -122,7 +120,7 @@ VantComponent({
       this.onClose();
     }
   }
-});
+};
 
 </script>
 

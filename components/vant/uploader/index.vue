@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="van-uploader"
@@ -23,7 +22,7 @@
           @tap="doPreviewImage"
         />
         <view
-          wx:else
+          v-else
           class="van-uploader__file"
           style="width: {{ computedPreviewSize }}px; height: {{ computedPreviewSize }}px;"
         >
@@ -45,7 +44,7 @@
           <slot />
         </view>
       </block>
-      <block wx:else>
+      <block v-else>
         <!-- 默认上传样式 -->
         <view
           class="van-uploader__upload"
@@ -63,6 +62,7 @@
 </template>
 
 <script>
+  import utils from '../wxs/utils';
     interface File {
   path: string; // 上传临时地址
   url: string; // 上传临时地址

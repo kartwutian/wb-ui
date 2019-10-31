@@ -1,7 +1,7 @@
 <template>
     <view class="van-count-down">
   <slot v-if=" useSlot "/>
-  <block wx:else>{{ formattedTime }}</block>
+  <block v-else>{{ formattedTime }}</block>
 </view>
 
 </template>

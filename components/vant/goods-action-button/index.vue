@@ -1,5 +1,5 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
+
 <van-button
   square
   :id=" id "
@@ -31,13 +31,14 @@
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { link } from '../mixins/link';
 import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
 import { Weapp } from 'definitions/weapp';
 
-VantComponent({
+export default {
   mixins: [link, button, openType],
   relation: {
     type: 'ancestor',
@@ -77,7 +78,7 @@ VantComponent({
       });
     }
   }
-});
+};
 
 </script>
 

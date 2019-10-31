@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   class="{{ utils.bem('nav-bar', { fixed }) }} custom-class {{ border ? 'van-hairline--bottom' : '' }}"
@@ -20,11 +19,11 @@
         hover-stay-time="70"
       >{{ leftText }}</view>
     </block>
-    <slot wx:else name="left" />
+    <slot v-else name="left" />
   </view>
   <view class="van-nav-bar__title title-class van-ellipsis">
     <block v-if=" title ">{{ title }}</block>
-    <slot wx:else name="title" />
+    <slot v-else name="title" />
   </view>
   <view class="van-nav-bar__right" @tap="onClickRight">
     <view
@@ -33,16 +32,17 @@
       hover-class="van-nav-bar__text--hover"
       hover-stay-time="70"
     >{{ rightText }}</view>
-    <slot wx:else name="right" />
+    <slot v-else name="right" />
   </view>
 </view>
 
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
 
-VantComponent({
+
+export default {
   classes: ['title-class'],
 
   props: {
@@ -83,7 +83,7 @@ VantComponent({
       this.$emit('click-right');
     }
   }
-});
+};
 
 </script>
 

@@ -1,5 +1,4 @@
 <template>
-    <wxs src="../wxs/utils.wxs" module="utils" />
 
 <view
   v-if=" show "
@@ -13,7 +12,7 @@
     :name=" leftIcon "
     class="van-notice-bar__left-icon"
   />
-  <slot wx:else name="left-icon" />
+  <slot v-else name="left-icon" />
 
   <view class="van-notice-bar__wrap">
     <view class="van-notice-bar__content {{ !scrollable && !wrapable ? 'van-ellipsis' : '' }}" :animation=" animationData ">
@@ -34,19 +33,20 @@
   >
     <van-icon class="van-notice-bar__right-icon" name="arrow" />
   </navigator>
-  <slot wx:else name="right-icon" />
+  <slot v-else name="right-icon" />
 </view>
 
 </template>
 
 <script>
-    import { VantComponent } from '../common/component';
+  import utils from '../wxs/utils';
+
 import { Weapp } from 'definitions/weapp';
 
 const FONT_COLOR = '#ed6a0c';
 const BG_COLOR = '#fffbe8';
 
-VantComponent({
+export default {
   props: {
     text: {
       type: String,
@@ -183,7 +183,7 @@ VantComponent({
       this.$emit('click', event);
     }
   }
-});
+};
 
 </script>
 
