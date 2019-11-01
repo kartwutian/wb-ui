@@ -1,11 +1,14 @@
-export const button = Behavior({
-  externalClasses: ['hover-class'],
+export const button = {
 
-  properties: {
+  props: {
     id: String,
     lang: {
       type: String,
-      value: 'en'
+      default: 'en'
+    },
+    hoverClass: {
+      type: String,
+      default: ''
     },
     businessId: Number,
     sessionFrom: String,
@@ -16,4 +19,4 @@ export const button = Behavior({
     appParameter: String,
     ariaLabel: String
   }
-});
+};

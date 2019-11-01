@@ -3,7 +3,7 @@
 <view
   class="{{ utils.bem('sidebar-item', { active }) }} van-hairline custom-class"
   hover-class="van-sidebar-item--hover"
-  hover-stay-time="70"
+  :hover-stay-time="70"
   @tap="onClick"
 >
   <view class="van-sidebar-item__text">

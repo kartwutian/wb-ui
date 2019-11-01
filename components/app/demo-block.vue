@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    name: 'app-demo-block',
+    name: 'demo-block',
     props: {
       title: {
         type: String,
@@ -24,7 +24,7 @@
     },
     computed: {
       classes(){
-        return `${customClass} demo-block van-clearfix ${padding ? 'demo-block--padding' : ''}`
+        return `${this.customClass} demo-block van-clearfix ${this.padding ? 'demo-block--padding' : ''}`
       }
     }
   }

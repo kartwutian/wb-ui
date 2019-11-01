@@ -7,7 +7,7 @@
     <view
       class="van-picker__cancel"
       hover-class="van-picker__cancel--hover"
-      hover-stay-time="70"
+      :hover-stay-time="70"
       data-type="cancel"
       bindtap="emit"
     >
@@ -17,7 +17,7 @@
     <view
       class="van-picker__confirm"
       hover-class="van-picker__confirm--hover"
-      hover-stay-time="70"
+      :hover-stay-time="70"
       data-type="confirm"
       bindtap="emit"
     >

@@ -30,8 +30,8 @@
 								v-for="item in group.list"
 								:key="item.title"
 								is-link
-								:url="`/pages/vant${item.path}/index`"
-								:data-url="`/pages/vant${item.path}/index`"
+								:url="`/pages/vant${item.path}${item.path}`"
+								:data-url="`/pages/vant${item.path}${item.path}`"
 								:data-switch-tab="true"
 								:title="`${item.title}`"
 								:border="true"

@@ -3,7 +3,7 @@
 <view
   :class="classes"
   :hover-class="'van-cell--hover ' + hoverClass"
-  hover-stay-time="70"
+  :hover-stay-time="70"
   :style=" customStyle "
   @tap="onClick"
 >

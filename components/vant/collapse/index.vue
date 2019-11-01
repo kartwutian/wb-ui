@@ -49,9 +49,9 @@
     beforeCreate() {
       this.children = [];
     },
-    mounted(){
-      console.log(this)
-    },
+    // mounted(){
+    //   console.log(this)
+    // },
 
     methods: {
       updateExpanded() {

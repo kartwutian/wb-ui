@@ -46,7 +46,7 @@
     v-if=" cancelText "
     class="van-action-sheet__cancel"
     hover-class="van-action-sheet__cancel--hover"
-    hover-stay-time="70"
+    :hover-stay-time="70"
     @tap="onCancel"
   >
     {{ cancelText }}

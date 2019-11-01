@@ -1,24 +1,24 @@
 <template>
-    <view class="van-loading {{vertical ? 'van-loading--vertical' : ''}}">
+<view :class="'van-loading ' + (vertical ? 'van-loading--vertical' : '') ">
   <view
-    class="van-loading__wrapper custom-class"
-    style="width: {{ sizeWithUnit }}; height: {{ sizeWithUnit }}"
+    :class="'van-loading__wrapper ' + customClass"
+    :style="'width: ' + sizeWithUnit + '; height: ' + sizeWithUnit + ';'"
   >
     <view
-      class="van-loading__spinner van-loading__spinner--{{ type }}"
-      style="color: {{ color }};"
+      :class="'van-loading__spinner van-loading__spinner--' + type"
+      :style="'color: ' + color + ';'"
     >
       <view
         v-if=" type === 'spinner' "
-        wx:for="item in 12"
+        v-for="(item, index) in 12"
         :key="index"
         class="van-loading__dot"
       />
     </view>
   </view>
   <view
-    style="font-size: {{textSizeWithUnit}};"
-    class="van-loading__text {{vertical ? 'van-loading__text--vertical' : ''}}"
+    :style="'font-size: ' + textSizeWithUnit + ';'"
+    :class="'van-loading__text ' + (vertical ? 'van-loading__text--vertical' : '') "
   >
     <slot />
   </view>
@@ -26,46 +26,52 @@
 </template>
 
 <script>
-
+import {basic} from "../mixins/basic";
 import { addUnit } from '../common/utils';
 
 export default {
+  name: 'van-loading',
+  mixins: [basic],
   props: {
     size: {
       type: String,
-      observer: 'setSizeWithUnit'
     },
     type: {
       type: String,
-      value: 'circular'
+      default: 'circular'
     },
     color: {
       type: String,
-      value: '#c9c9c9'
+      default: '#c9c9c9'
     },
     textSize: {
       type: String,
-      observer: 'setTextSizeWithUnit'
     },
     vertical: Boolean
   },
 
-  data: {
-    sizeWithUnit: '30px',
-    textSizeWithUnit: '14px'
+  data(){
+    return {
+      sizeWithUnit: '30px',
+      textSizeWithUnit: '14px'
+    };
   },
 
   methods: {
-    setSizeWithUnit(size: string | number): void {
-      this.setData({
-        sizeWithUnit: addUnit(size)
-      });
+    setSizeWithUnit(size) {
+      this.sizeWithUnit = addUnit(size);
     },
 
-    setTextSizeWithUnit(size: string | number): void {
-      this.set({
-        textSizeWithUnit: addUnit(size)
-      });
+    setTextSizeWithUnit(size) {
+      this.textSizeWithUnit = addUnit(size);
+    }
+  },
+  watch: {
+    size(size, oldSize){
+      this.setSizeWithUnit(size);
+    },
+    textSize(size, oldSize){
+      this.setTextSizeWithUnit(size)
     }
   }
 };

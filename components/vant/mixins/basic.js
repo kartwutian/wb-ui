@@ -1,8 +1,11 @@
 export const basic = {
+  props: {
+    customClass: {
+      type: String,
+      default: ''
+    }
+  },
   methods: {
-    // $emit(...args) {
-    //   this.triggerEvent(...args);
-    // },
 
     getRect(selector, all) {
       return new Promise(resolve => {

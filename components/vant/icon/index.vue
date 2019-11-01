@@ -17,14 +17,15 @@
       class="van-icon__image"
     />
   </view>
-
 </template>
 
 <script>
 import { addUnit } from '../common/utils';
+import VanInfo from "../info/index";
 
 export default{
   name: 'van-icon',
+  components: {VanInfo},
   props: {
     dot: Boolean,
     info: null,

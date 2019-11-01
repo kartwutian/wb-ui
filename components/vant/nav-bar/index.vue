@@ -16,7 +16,7 @@
         v-if=" leftText "
         class="van-nav-bar__text"
         hover-class="van-nav-bar__text--hover"
-        hover-stay-time="70"
+        :hover-stay-time="70"
       >{{ leftText }}</view>
     </block>
     <slot v-else name="left" />
@@ -30,7 +30,7 @@
       v-if=" rightText "
       class="van-nav-bar__text"
       hover-class="van-nav-bar__text--hover"
-      hover-stay-time="70"
+      :hover-stay-time="70"
     >{{ rightText }}</view>
     <slot v-else name="right" />
   </view>

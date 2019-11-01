@@ -113,4 +113,8 @@
     width: 100%;
   }
 
+
+  .demo-loading {
+    margin: 4px 16px 4px 0;
+  }
 </style>

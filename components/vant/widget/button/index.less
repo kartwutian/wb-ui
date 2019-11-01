@@ -10,11 +10,10 @@
   vertical-align: middle;
   -webkit-appearance: none;
   -webkit-text-size-adjust: 100%;
-
+  transition: opacity @animation-duration-fast;
   .theme(height, @button-default-height);
   .theme(font-size, @button-default-font-size);
   .theme(line-height, @button-default-line-height);
-  .theme(transition, 'opacity @animation-duration-fast');
   .theme(border-radius, @button-border-radius);
 
   &::before {
@@ -49,31 +48,31 @@
   &--default {
     .theme(color, @button-default-color);
     .theme(background-color, @button-default-background-color);
-    .theme(border, '1px solid @button-default-border-color');
+    border: 1px solid @button-default-border-color;
   }
 
   &--primary {
     .theme(color, @button-primary-color);
     .theme(background-color, @button-primary-background-color);
-    .theme(border, '1px solid @button-primary-border-color');
+    border: 1px solid @button-primary-border-color
   }
 
   &--info {
     .theme(color, @button-info-color);
     .theme(background-color, @button-info-background-color);
-    .theme(border, '1px solid @button-info-border-color');
+    border: 1px solid @button-info-border-color;
   }
 
   &--danger {
     .theme(color, @button-danger-color);
     .theme(background-color, @button-danger-background-color);
-    .theme(border, '1px solid @button-danger-border-color');
+    border: 1px solid @button-danger-border-color;
   }
 
   &--warning {
     .theme(color, @button-warning-color);
     .theme(background-color, @button-warning-background-color);
-    .theme(border, '1px solid @button-warning-border-color');
+    border: 1px solid @button-warning-border-color;
   }
 
   &--plain {
@@ -110,9 +109,9 @@
   &--small {
     .theme(min-width, @button-small-min-width);
     .theme(height, @button-small-height);
-    .theme(padding, '0 @padding-xs');
     .theme(font-size, @button-small-font-size);
     .theme(line-height, @button-small-line-height);
+    padding: 0 @padding-xs
   }
 
   // mini图标默认宽度50px，文字不能超过4个
@@ -174,7 +173,7 @@
     &::after {
       border-color: inherit;
       border-width: 1px;
-      .theme(border-radius, 'calc(@button-border-radius * 2)');
+      border-radius: calc(@button-border-radius * 2)
     }
 
     &.van-button--round::after {

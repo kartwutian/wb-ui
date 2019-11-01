@@ -2,10 +2,10 @@
 
 <button
   :id=" id "
-  class="custom-class {{ utils.bem('button', [type, size, { block, round, plain, square, loading, disabled, hairline, unclickable: disabled || loading }]) }} {{ hairline ? 'van-hairline--surround' : '' }}"
-  hover-class="van-button--active hover-class"
+  :class="classes"
+  :hover-class="'van-button--active ' + hoverClass"
   :lang=" lang "
-  style="{{ style }} {{ customStyle }}"
+  :style="style + customStyle"
   :open-type=" openType "
   :business-id=" businessId "
   :session-from=" sessionFrom "
@@ -15,17 +15,17 @@
   :show-message-card=" showMessageCard "
   :app-parameter=" appParameter "
   :aria-label=" ariaLabel "
-  bindtap="onClick"
-  bindgetuserinfo="bindGetUserInfo"
-  bindcontact="bindContact"
-  bindgetphonenumber="bindGetPhoneNumber"
-  binderror="bindError"
-  bindlaunchapp="bindLaunchApp"
-  bindopensetting="bindOpenSetting"
+  @tap="onClick"
+  @getuserinfo="bindGetUserInfo"
+  @contact="bindContact"
+  @getphonenumber="bindGetPhoneNumber"
+  @error="bindError"
+  @launchapp="bindLaunchApp"
+  @opensetting="bindOpenSetting"
 >
   <block v-if=" loading ">
     <van-loading
-      custom-class="loading-class"
+      :custom-class="loadingClass"
       :size=" loadingSize "
       :type=" loadingType "
       :color=" type === 'default' ? '#c9c9c9' : '' "
@@ -54,18 +54,17 @@
 </template>
 
 <script>
-  import utils from '../wxs/utils';
+import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
 import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
+import VanIcon from "../icon/index";
+import VanLoading from "../loading/index";
 
 export default {
-  mixins: [button, openType],
-
-  classes: ['hover-class', 'loading-class'],
-
-  data: {
-    style: ''
-  },
+  name: 'van-button',
+  components: {VanLoading, VanIcon},
+  mixins: [basic, button, openType],
 
   props: {
     icon: String,
@@ -78,47 +77,60 @@ export default {
     disabled: Boolean,
     loadingText: String,
     customStyle: String,
+    hoverClass: {
+      type: String,
+      default: '',
+    },
+    loadingClass: {
+      type: String,
+      default: '',
+    },
     loadingType: {
       type: String,
-      value: 'circular'
+      default: 'circular'
     },
     type: {
       type: String,
-      value: 'default'
+      default: 'default'
     },
     size: {
       type: String,
-      value: 'normal'
+      default: 'normal'
     },
     loadingSize: {
       type: String,
-      value: '20px'
+      default: '20px'
     },
     color: {
       type: String,
-      observer(color: string) {
-        let style = '';
 
-        if (color) {
-          style += `color: ${this.data.plain ? color : 'white'};`;
+    }
+  },
 
-          if (!this.data.plain) {
-            // Use background instead of backgroundColor to make linear-gradient work
-            style += `background: ${color};`;
-          }
+  computed: {
+    classes(){
+      return `${this.customClass} ${utils.bem('button', [this.type, this.size, { block: this.block, round: this.round, plain: this.plain, square: this.square, loading: this.loading, disabled: this.disabled, hairline: this.hairline, unclickable: this.disabled || this.loading }]) } ${ this.hairline ? 'van-hairline--surround' : '' }`
+    },
+    style(){
+      let style = '';
 
-          // hide border when color is linear-gradient
-          if (color.indexOf('gradient') !== -1) {
-            style += 'border: 0;';
-          } else {
-            style += `border-color: ${color};`;
-          }
+      if (this.color) {
+        style += `color: ${this.plain ? this.color : 'white'};`;
+
+        if (!this.plain) {
+          // Use background instead of backgroundColor to make linear-gradient work
+          style += `background: ${this.color};`;
         }
 
-        if (style !== this.data.style) {
-          this.setData({ style });
+        // hide border when color is linear-gradient
+        if (this.color.indexOf('gradient') !== -1) {
+          style += 'border: 0;';
+        } else {
+          style += `border-color: ${this.color};`;
         }
       }
+      return style;
+
     }
   },
 
@@ -128,7 +140,7 @@ export default {
         this.$emit('click');
       }
     }
-  }
+  },
 };
 
 </script>

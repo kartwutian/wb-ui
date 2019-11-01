@@ -10,35 +10,37 @@ const getClassNames = (name) => ({
 const nextTick = () => new Promise(resolve => setTimeout(resolve, 1000 / 30));
 
 export const transition = function(showDefaultValue) {
-  return Behavior({
-    properties: {
+  return {
+    props: {
       customStyle: String,
       // @ts-ignore
       show: {
         type: Boolean,
-        value: showDefaultValue,
-        observer: 'observeShow'
+        default: showDefaultValue,
+        // observer: 'observeShow'
       },
       // @ts-ignore
       duration: {
         type: null,
-        value: 300,
+        default: 300,
         observer: 'observeDuration'
       },
       name: {
         type: String,
-        value: 'fade'
+        default: 'fade'
       }
     },
 
-    data: {
-      type: '',
-      inited: false,
-      display: false
+    data(){
+      return {
+        type: '',
+        inited: false,
+        display: false
+      }
     },
 
-    attached() {
-      if (this.data.show) {
+    created() {
+      if (this.show) {
         this.enter();
       }
     },
@@ -136,6 +138,11 @@ export const transition = function(showDefaultValue) {
           this.setData({ display: false });
         }
       }
+    },
+    watch: {
+      show(val, oldval){
+        this.observeShow(val)
+      }
     }
-  });
+  };
 };

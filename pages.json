@@ -19,9 +19,15 @@
 			}
 		},
 		{
-			"path": "pages/vant/button/index",
+			"path": "pages/vant/button/button",
 			"style": {
 				"navigationBarTitleText": "button"
+			}
+		},
+		{
+			"path": "pages/vant/loading/loading",
+			"style": {
+				"navigationBarTitleText": "loading"
 			}
 		}
 	],

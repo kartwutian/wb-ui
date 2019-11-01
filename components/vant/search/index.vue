@@ -42,7 +42,7 @@
     v-if=" showAction || useActionSlot "
     class="van-search__action"
     hover-class="van-search__action--hover"
-    hover-stay-time="70"
+    :hover-stay-time="70"
   >
     <slot v-if=" useActionSlot " name="action" />
     <view v-else @tap="onCancel" class="cancel-class">{{ actionText }}</view>
