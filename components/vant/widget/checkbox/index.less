@@ -27,7 +27,7 @@
     transition-property: color, border-color, background-color;
 
     .theme(font-size, @checkbox-size);
-    .theme(border, '1px solid @checkbox-border-color');
+    border:1px solid @checkbox-border-color;
     .theme(transition-duration, @checkbox-transition-duration);
 
     &--round {
@@ -58,7 +58,7 @@
 
     &--left {
       float: left;
-      .theme(margin, '0 @checkbox-label-margin 0 0');
+      margin:0 @checkbox-label-margin 0 0;
     }
 
     &--disabled {

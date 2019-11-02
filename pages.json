@@ -29,6 +29,12 @@
 			"style": {
 				"navigationBarTitleText": "loading"
 			}
+		},
+		{
+			"path": "pages/vant/cell/cell",
+			"style": {
+				"navigationBarTitleText": "cell"
+			}
 		}
 	],
 	"globalStyle": {

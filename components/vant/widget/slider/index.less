@@ -12,14 +12,14 @@
     right: 0;
     left: 0;
     content: '';
-    .theme(top, '-@padding-xs');
-    .theme(bottom, '-@padding-xs');
+    top:-@padding-xs;
+    bottom:-@padding-xs;
   }
 
   &__bar {
     position: relative;
     border-radius: inherit;
-    .theme(transition, 'width @animation-duration-fast');
+    transition:width @animation-duration-fast;
     .theme(background-color, @blue);
   }
 

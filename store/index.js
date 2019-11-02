@@ -12,6 +12,7 @@ import tabbar from '../pages/tabbar/models/tabbar';
 import login from '../pages/login/models/login';
 import button from '../pages/vant/button/models/button';
 import loading from '../pages/vant/loading/models/loading';
+import cell from '../pages/vant/cell/models/cell';
 
 
 Vue.use(Vuex);
@@ -27,6 +28,7 @@ modules: {
     login,
     button,
     loading,
+    cell,
 
 },
 });
