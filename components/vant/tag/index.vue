@@ -10,9 +10,11 @@
 
 <script>
 import utils from '../wxs/utils'
+import {basic} from "../mixins/basic";
 
 export default {
   name: 'van-tag',
+  mixins: [basic],
   props: {
     size: {
       type: String,
@@ -34,12 +36,12 @@ export default {
     },
     type: {
       type: String,
-      value: 'default'
+      default: 'default'
     }
   },
   computed: {
     classes(){
-      return `custom-class ${utils.bem('tag', [this.type, this.size, {mark: this.mark, plain: this.plain, round: this.round }])} ${this.plain ? 'van-hairline--surround' : ''}`
+      return `${this.customClass} ${utils.bem('tag', [this.type, this.size, {mark: this.mark, plain: this.plain, round: this.round }])} ${this.plain ? 'van-hairline--surround' : ''}`
     },
     styles(){
       return `${this.color && !this.plain ? 'background-color: ' + this.color + ';' : ''} ${this.textColor || (this.color && this.plain) ? 'color: ' + (this.textColor || this.color) : ''}`

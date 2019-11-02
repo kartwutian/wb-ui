@@ -10,9 +10,6 @@ import reloadPlugin from "./plugins/reload/reloadPlugin";
 import home from '../pages/home/models/home';
 import tabbar from '../pages/tabbar/models/tabbar';
 import login from '../pages/login/models/login';
-import button from '../pages/vant/button/models/button';
-import loading from '../pages/vant/loading/models/loading';
-import cell from '../pages/vant/cell/models/cell';
 
 
 Vue.use(Vuex);
@@ -26,9 +23,6 @@ modules: {
     home,
     tabbar,
     login,
-    button,
-    loading,
-    cell,
 
 },
 });
