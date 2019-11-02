@@ -51,12 +51,12 @@
 <script>
   import utils from '../wxs/utils';
     import { addUnit, isDef } from '../common/utils';
-
-import { button } from '../mixins/button';
+import {basic} from "../mixins/basic";
+  import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
 
 export default {
-  mixins: [button, openType],
+  mixins: [basic, button, openType],
 
   classes: ['custom-class', 'loading-class', 'error-class', 'image-class'],
 
@@ -66,17 +66,17 @@ export default {
     height: String,
     fit: {
       type: String,
-      value: 'fill'
+      default: 'fill'
     },
     round: Boolean,
     lazyLoad: Boolean,
     showError: {
       type: Boolean,
-      value: true
+      default: true
     },
     showLoading: {
       type: Boolean,
-      value: true
+      default: true
     },
     showMenuByLongpress: Boolean,
 
@@ -85,19 +85,21 @@ export default {
     useErrorSlot: Boolean,
   },
 
-  data: {
-    fitWeapp: 'aspectFit',
-    FIT_MODE_MAP: {
-      contain: 'aspectFit',
-      cover: 'aspectFill',
-      fill: 'scaleToFill',
-      none: 'center',
+  data(){
+    return {
+      fitWeapp: 'aspectFit',
+      FIT_MODE_MAP: {
+        contain: 'aspectFit',
+        cover: 'aspectFill',
+        fill: 'scaleToFill',
+        none: 'center',
 
-      // TODO: 这个没有原生的属性，需要后面实现，暂时先用contain;
-      'scale-down': 'aspectFit'
-    },
-    loading: true,
-    error: false
+        // TODO: 这个没有原生的属性，需要后面实现，暂时先用contain;
+        'scale-down': 'aspectFit'
+      },
+      loading: true,
+      error: false
+    };
   },
 
   watch: {

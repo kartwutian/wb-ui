@@ -1,7 +1,7 @@
 <template>
 
 <view
-  class="custom-class {{ utils.bem('col', [span]) }} {{ offset ? 'van-col--offset-' + offset : '' }}"
+  :class="classes"
   :style=" style "
 >
   <slot />
@@ -11,32 +11,38 @@
 
 <script>
   import utils from '../wxs/utils';
+  import {basic} from "../mixins/basic";
 
-
-export default {
-  relation: {
-    name: 'row',
-    type: 'ancestor'
-  },
+  export default {
+  name: 'van-col',
+  mixins: [basic],
 
   props: {
-    span: Number,
-    offset: Number
+    span: Number | String,
+    offset: Number | String,
+    gutter: {
+      type: Number | String,
+      default: 0,
+    }
   },
 
-  data: {
-    style: ''
+  data(){
+    return {
+    };
+  },
+
+  computed: {
+    classes(){
+      return `${this.customClass} ${utils.bem('col', [this.span])} ${this.offset ? 'van-col--offset-' + this.offset : ''}`
+    },
+    style(){
+      const padding = `${this.gutter / 2}px`;
+      return  this.gutter ? `padding-left: ${padding}; padding-right: ${padding};` : '';
+    }
   },
 
   methods: {
-    setGutter(gutter: number) {
-      const padding = `${gutter / 2}px`;
-      const style = gutter ? `padding-left: ${padding}; padding-right: ${padding};` : '';
 
-      if (style !== this.data.style) {
-        this.setData({ style });
-      }
-    }
   }
 };
 

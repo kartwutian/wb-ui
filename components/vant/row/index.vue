@@ -1,51 +1,34 @@
 <template>
-    <view class="custom-class van-row" :style=" style ">
+    <view :class="customClass + ' van-row'" :style=" style ">
   <slot />
 </view>
 
 </template>
 
 <script>
-
+import {basic} from "../mixins/basic";
 
 export default {
-  relation: {
-    name: 'col',
-    type: 'descendant',
-    linked(target) {
-      if (this.data.gutter) {
-        target.setGutter(this.data.gutter);
-      }
+  name: 'van-row',
+  mixins: [basic],
+  props: {
+    gutter: {
+      type: Number | String,
+      default: 0,
     }
   },
 
-  props: {
-    gutter: Number
-  },
-
-  watch: {
-    gutter: 'setGutter'
-  },
-
-  mounted() {
-    if (this.data.gutter) {
-      this.setGutter();
+  computed: {
+    style(){
+      const margin = `-${Number(this.gutter) / 2}px`;
+      return this.gutter
+        ? `margin-right: ${margin}; margin-left: ${margin};`
+        : '';
     }
   },
 
   methods: {
-    setGutter() {
-      const { gutter } = this.data;
-      const margin = `-${Number(gutter) / 2}px`;
-      const style = gutter
-        ? `margin-right: ${margin}; margin-left: ${margin};`
-        : '';
 
-      this.setData({ style });
-      this.getRelationNodes('../col/index').forEach(col => {
-        col.setGutter(this.data.gutter);
-      });
-    }
   }
 };
 
