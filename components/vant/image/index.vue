@@ -1,24 +1,24 @@
 <template>
 
 <view
-  class="custom-class {{ utils.bem('image', { round })}}"
+  :class="classes"
   :style=" style "
   @tap="onClick"
 >
   <image
     v-if=" !error "
-    class="image-class van-image__img"
+    :class="imageClass + ' van-image__img'"
     :mode=" mode "
     :src=" src "
     :lazy-load=" lazyLoad "
     :show-menu-by-longpress=" showMenuByLongpress "
-    @load="onLoad"
-    @error="onError"
+    @load="onImageLoad"
+    @error="onImageError"
   />
 
-  <div
+  <view
     v-if=" loading && showLoading "
-    class="loading-class van-image__loading"
+    :class="loadingClass + ' van-image__loading'"
   >
     <slot
       v-if=" useLoadingSlot "
@@ -29,10 +29,10 @@
       name="photo-o"
       size="22"
     />
-  </div>
-  <div
+  </view>
+  <view
     v-if=" error && showError "
-    class="error-class van-image__error"
+    :class="errorClass + ' van-image__error'"
   >
     <slot
       v-if=" useErrorSlot "
@@ -43,22 +43,23 @@
       name="warning-o"
       size="22"
     />
-  </div>
+  </view>
 </view>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
-    import { addUnit, isDef } from '../common/utils';
+import utils from '../wxs/utils';
+import { addUnit, isDef } from '../common/utils';
 import {basic} from "../mixins/basic";
-  import { button } from '../mixins/button';
+import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
+import VanIcon from "../icon/index";
 
 export default {
+  name: 'van-image',
+  components: {VanIcon},
   mixins: [basic, button, openType],
-
-  classes: ['custom-class', 'loading-class', 'error-class', 'image-class'],
 
   props: {
     src: String,
@@ -70,6 +71,18 @@ export default {
     },
     round: Boolean,
     lazyLoad: Boolean,
+    imageClass: {
+      type: String,
+      default: '',
+    },
+    loadingClass: {
+      type: String,
+      default: '',
+    },
+    errorClass: {
+      type: String,
+      default: '',
+    },
     showError: {
       type: Boolean,
       default: true
@@ -85,8 +98,16 @@ export default {
     useErrorSlot: Boolean,
   },
 
+  computed: {
+    classes(){
+      return `${this.customClass} ${utils.bem('image', { round: this.round })}`
+    }
+  },
+
   data(){
     return {
+      mode: '',
+      style: '',
       fitWeapp: 'aspectFit',
       FIT_MODE_MAP: {
         contain: 'aspectFit',
@@ -104,10 +125,8 @@ export default {
 
   watch: {
     src() {
-      this.setData({
-        loading: true,
-        error: false
-      });
+      this.loading = true;
+      this.error = false;
     }
   },
 
@@ -117,16 +136,13 @@ export default {
 
   methods: {
     init() {
-      const { FIT_MODE_MAP, fit } = this.data;
-
-      this.setData({
-        mode: FIT_MODE_MAP[fit],
-        style: this.getStyle(),
-      });
+      const { FIT_MODE_MAP, fit } = this;
+      this.mode = FIT_MODE_MAP[fit];
+      this.style = this.getStyle();
     },
 
     getStyle() {
-      const { width, height } = this.data;
+      const { width, height } = this;
       let style = '';
 
       if (isDef(width)) {
@@ -140,20 +156,15 @@ export default {
       return style;
     },
 
-    onLoad(event) {
-      this.setData({
-        loading: false
-      });
-
+    onImageLoad(event) {
+      this.loading = false;
       this.$emit('load', event.detail);
     },
 
-    onError(event) {
-      this.setData({
-        loading: false,
-        error: true,
-      });
-
+    onImageError(event) {
+      this.loading = false;
+      this.error = true;
+      console.log('err')
       this.$emit('error', event.detail);
     },
 

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+  import {basic} from '../mixins/basic'
   import utils from '../wxs/utils';
 
 

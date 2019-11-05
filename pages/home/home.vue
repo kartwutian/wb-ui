@@ -338,7 +338,7 @@
 			...mapGetters('home', ['tabs', 'currentTabIndex', 'grids'])
 		},
 		onLoad(){
-			this.getData({});
+			// this.getData({});
 		},
 		onUnload(){
 			this.resetState();

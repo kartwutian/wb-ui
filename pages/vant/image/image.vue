@@ -35,6 +35,7 @@
            v-for="fit in fits"
             :key="fit"
             span="8"
+            gutter="20"
         >
           <van-image
               round
@@ -50,7 +51,7 @@
 
     <demo-block title="加载中提示" padding>
       <van-row gutter="20">
-        <van-col span="8">
+        <van-col span="8" gutter="20">
           <van-image
               width="100%"
               height="27vw"
@@ -58,7 +59,7 @@
           <view class="text">默认提示</view>
         </van-col>
 
-        <van-col span="8">
+        <van-col span="8" gutter="20">
           <van-image
               width="100%"
               height="27vw"
@@ -78,7 +79,7 @@
 
     <demo-block title="加载失败提示" padding>
       <van-row gutter="20">
-        <van-col span="8">
+        <van-col span="8" gutter="20">
           <van-image
               width="100%"
               height="27vw"
@@ -87,7 +88,7 @@
           <view class="text">默认提示</view>
         </van-col>
 
-        <van-col span="8">
+        <van-col span="8" gutter="20">
           <van-image
               width="100%"
               height="27vw"
@@ -108,10 +109,11 @@
   import VanRow from "../../../components/vant/row/index";
   import VanCol from "../../../components/vant/col/index";
   import VanLoading from "../../../components/vant/loading/index";
+  import VanImage from "../../../components/vant/image/index";
 
   export default {
     name: 'pages-image',
-    components: {VanLoading, VanCol, VanRow, DemoBlock},
+    components: {VanImage, VanLoading, VanCol, VanRow, DemoBlock},
     data(){
       return {
         fits: ['contain', 'cover', 'fill', 'none', 'scale-down'],
