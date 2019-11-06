@@ -1,18 +1,19 @@
 <template>
-    <view
-  v-if=" inited "
-  class="van-transition custom-class {{ classes }}"
-  style="-webkit-transition-duration:{{ currentDuration }}ms; transition-duration:{{ currentDuration }}ms; {{ display ? '' : 'display: none;' }} {{ customStyle }}"
-  @transitionend="onTransitionEnd"
->
-  <slot />
-</view>
+  <view
+    v-if=" inited "
+    :class="'van-transition ' + customClass + ' ' + classes"
+    :style="[{'-webkit-transition-duration':currentDuration + 'ms'},{'transition-duration':currentDuration + 'ms'},display ? '' : 'display: none;',customStyle]"
+    @transitionend="onTransitionEnd"
+  >
+    <slot />
+  </view>
 
 </template>
 
 <script>
 
 import { transition } from '../mixins/transition';
+import { basic } from '../mixins/basic';
 
 export default {
   classes: [
@@ -24,11 +25,11 @@ export default {
     'leave-to-class'
   ],
 
-  mixins: [transition(true)]
+  mixins: [transition(true), basic]
+
 };
 
 </script>
 
 <style lang="less">
-
 </style>

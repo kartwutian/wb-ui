@@ -1,4 +1,6 @@
-import { isObj } from '../common/utils';
+import {
+  isObj
+} from '../common/utils';
 
 const getClassNames = (name) => ({
   enter: `van-${name}-enter van-${name}-enter-active enter-class enter-active-class`,
@@ -9,7 +11,7 @@ const getClassNames = (name) => ({
 
 const nextTick = () => new Promise(resolve => setTimeout(resolve, 1000 / 30));
 
-export const transition = function(showDefaultValue) {
+export const transition = function (showDefaultValue) {
   return {
     props: {
       customStyle: String,
@@ -23,7 +25,7 @@ export const transition = function(showDefaultValue) {
       duration: {
         type: null,
         default: 300,
-        observer: 'observeDuration'
+        // observer: 'observeDuration'
       },
       name: {
         type: String,
@@ -31,18 +33,20 @@ export const transition = function(showDefaultValue) {
       }
     },
 
-    data(){
+    data() {
       return {
         type: '',
         inited: false,
-        display: false
+        display: false,
       }
     },
 
-    created() {
-      if (this.show) {
-        this.enter();
-      }
+    beforeCreate() {
+      this.$nextTick(() => {
+        if (this.show) {
+          this.enter();
+        }
+      })
     },
 
     methods: {
@@ -51,7 +55,10 @@ export const transition = function(showDefaultValue) {
       },
 
       enter() {
-        const { duration, name } = this.data;
+        const {
+          duration,
+          name
+        } = this;
         const classNames = getClassNames(name);
         const currentDuration = isObj(duration) ? duration.enter : duration;
 
@@ -64,31 +71,39 @@ export const transition = function(showDefaultValue) {
             this.checkStatus('enter');
             this.$emit('enter');
 
-            this.setData({
-              inited: true,
-              display: true,
-              classes: classNames.enter,
-              currentDuration
-            });
+            this.inited = true;
+            this.display = true;
+            this.classes = classNames.enter;
+            this.currentDuration = currentDuration
+            // this.setData({
+            //   inited: true,
+            //   display: true,
+            //   classes: classNames.enter,
+            //   currentDuration
+            // });
           })
           .then(nextTick)
           .then(() => {
             this.checkStatus('enter');
             this.transitionEnded = false;
 
-            this.setData({
-              classes: classNames['enter-to']
-            });
+            this.classes = classNames['enter-to']
+            // this.setData({
+            //   classes: classNames['enter-to']
+            // });
           })
           .catch(() => {});
       },
 
       leave() {
-        if (!this.data.display) {
+        if (!this.display) {
           return;
         }
 
-        const { duration, name } = this.data;
+        const {
+          duration,
+          name
+        } = this;
         const classNames = getClassNames(name);
         const currentDuration = isObj(duration) ? duration.leave : duration;
 
@@ -101,10 +116,12 @@ export const transition = function(showDefaultValue) {
             this.checkStatus('leave');
             this.$emit('leave');
 
-            this.setData({
-              classes: classNames.leave,
-              currentDuration
-            });
+            this.classes = classNames.leave
+            this.currentDuration = currentDuration
+            // this.setData({
+            //   classes: classNames.leave,
+            //   currentDuration
+            // });
           })
           .then(nextTick)
           .then(() => {
@@ -112,9 +129,10 @@ export const transition = function(showDefaultValue) {
             this.transitionEnded = false;
             setTimeout(() => this.onTransitionEnd(), currentDuration);
 
-            this.setData({
-              classes: classNames['leave-to']
-            });
+            this.classes = classNames['leave-to']
+            // this.setData({
+            //   classes: classNames['leave-to']
+            // });
           })
           .catch(() => {});
       },
@@ -133,14 +151,20 @@ export const transition = function(showDefaultValue) {
         this.transitionEnded = true;
         this.$emit(`after-${this.status}`);
 
-        const { show, display } = this.data;
+        const {
+          show,
+          display
+        } = this.data;
         if (!show && display) {
-          this.setData({ display: false });
+          this.display = false
+          // this.setData({
+          //   display: false
+          // });
         }
       }
     },
     watch: {
-      show(val, oldval){
+      show(val, oldval) {
         this.observeShow(val)
       }
     }

@@ -1,55 +1,55 @@
 <template>
 
-<button
-  :id=" id "
-  :class="classes"
-  :hover-class="'van-button--active ' + hoverClass"
-  :lang=" lang "
-  :style="style + customStyle"
-  :open-type=" openType "
-  :business-id=" businessId "
-  :session-from=" sessionFrom "
-  :send-message-title=" sendMessageTitle "
-  :send-message-path=" sendMessagePath "
-  :send-message-img=" sendMessageImg "
-  :show-message-card=" showMessageCard "
-  :app-parameter=" appParameter "
-  :aria-label=" ariaLabel "
-  @tap="onClick"
-  @getuserinfo="bindGetUserInfo"
-  @contact="bindContact"
-  @getphonenumber="bindGetPhoneNumber"
-  @error="bindError"
-  @launchapp="bindLaunchApp"
-  @opensetting="bindOpenSetting"
->
-  <block v-if=" loading ">
-    <van-loading
-      :custom-class="loadingClass"
-      :size=" loadingSize "
-      :type=" loadingType "
-      :color=" type === 'default' ? '#c9c9c9' : '' "
-    />
-    <view
-      v-if=" loadingText "
-      class="van-button__loading-text"
-    >
-      {{ loadingText }}
-    </view>
-  </block>
-  <block v-else>
-    <van-icon
-      v-if=" icon "
-      size="1.2em"
-      :name=" icon "
-      class="van-button__icon"
-      custom-style="line-height: inherit;"
-    />
-    <view class="van-button__text">
-      <slot />
-    </view>
-  </block>
-</button>
+  <button
+    :id=" id "
+    :class="classes"
+    :hover-class="'van-button--active ' + hoverClass"
+    :lang=" lang "
+    :style="style + customStyle"
+    :open-type=" openType "
+    :business-id=" businessId "
+    :session-from=" sessionFrom "
+    :send-message-title=" sendMessageTitle "
+    :send-message-path=" sendMessagePath "
+    :send-message-img=" sendMessageImg "
+    :show-message-card=" showMessageCard "
+    :app-parameter=" appParameter "
+    :aria-label=" ariaLabel "
+    @tap="onClick"
+    @getuserinfo="bindGetUserInfo"
+    @contact="bindContact"
+    @getphonenumber="bindGetPhoneNumber"
+    @error="bindError"
+    @launchapp="bindLaunchApp"
+    @opensetting="bindOpenSetting"
+  >
+    <block v-if=" loading ">
+      <van-loading
+        :custom-class="loadingClass"
+        :size=" loadingSize "
+        :type=" loadingType "
+        :color=" type === 'default' ? '#c9c9c9' : '' "
+      />
+      <view
+        v-if=" loadingText "
+        class="van-button__loading-text"
+      >
+        {{ loadingText }}
+      </view>
+    </block>
+    <block v-else>
+      <van-icon
+        v-if=" icon "
+        size="1.2em"
+        :name=" icon "
+        class="van-button__icon"
+        custom-style="line-height: inherit;"
+      />
+      <view class="van-button__text">
+        <slot />
+      </view>
+    </block>
+  </button>
 
 </template>
 
@@ -63,7 +63,7 @@ import VanLoading from "../loading/index";
 
 export default {
   name: 'van-button',
-  components: {VanLoading, VanIcon},
+  components: { VanLoading, VanIcon },
   mixins: [basic, button, openType],
 
   props: {
@@ -108,10 +108,10 @@ export default {
   },
 
   computed: {
-    classes(){
-      return `${this.customClass} ${utils.bem('button', [this.type, this.size, { block: this.block, round: this.round, plain: this.plain, square: this.square, loading: this.loading, disabled: this.disabled, hairline: this.hairline, unclickable: this.disabled || this.loading }]) } ${ this.hairline ? 'van-hairline--surround' : '' }`
+    classes () {
+      return `${this.customClass} ${utils.bem('button', [this.type, this.size, { block: this.block, round: this.round, plain: this.plain, square: this.square, loading: this.loading, disabled: this.disabled, hairline: this.hairline, unclickable: this.disabled || this.loading }])} ${this.hairline ? 'van-hairline--surround' : ''}`
     },
-    style(){
+    style () {
       let style = '';
 
       if (this.color) {
@@ -135,8 +135,8 @@ export default {
   },
 
   methods: {
-    onClick() {
-      if (!this.data.disabled && !this.data.loading) {
+    onClick () {
+      if (!this.disabled && !this.loading) {
         this.$emit('click');
       }
     }
@@ -146,5 +146,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
