@@ -5,22 +5,23 @@
 </template>
 
 <script>
-  import DemoBlock from "../../../components/app/demo-block";
+import DemoBlock from "../../../components/app/demo-block";
+import VanIcon from "../../../components/vant/icon/index.vue"
 
-  export default {
-    name: 'pages-icon',
-    onLoad(){
+export default {
+  name: 'pages-icon',
+  components: { VanIcon, DemoBlock },
+  onLoad () {
 
-    },
-    onUnload(){
+  },
+  onUnload () {
 
-    },
-    methods: {
+  },
+  methods: {
 
-    }
   }
+}
 </script>
 
 <style lang="less">
-
 </style>

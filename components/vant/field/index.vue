@@ -1,108 +1,122 @@
 <template>
 
-
-<van-cell
-  :size=" size "
-  :icon=" leftIcon "
-  :title=" label "
-  :center=" center "
-  :border=" border "
-  :is-link=" isLink "
-  :required=" required "
-  :clickable=" clickable "
-  :title-width=" titleWidth "
-  :custom-style=" customStyle "
-  :arrow-direction=" arrowDirection "
-  custom-class="van-field"
->
-  <slot name="left-icon" slot="icon" />
-  <slot name="label" slot="title" />
-  <view :class=" utils.bem('field__body', [type, system]) ">
-    <textarea
-      v-if=" type === 'textarea' "
-      class="input-class {{ utils.bem('field__input', [inputAlign, type, { disabled, error }]) }}"
-      :fixed=" fixed "
-      :focus=" focus "
-      :value=" value "
-      :disabled=" disabled || readonly "
-      :maxlength=" maxlength "
-      :placeholder=" placeholder "
-      :placeholder-style=" placeholderStyle "
-      placeholder-class="{{ utils.bem('field__placeholder', { error }) }}"
-      :auto-height=" autosize "
-      :cursor-spacing=" cursorSpacing "
-      :adjust-position=" adjustPosition "
-      :show-confirm-bar=" showConfirmBar "
-      :selection-end=" selectionEnd "
-      :selection-start=" selectionStart "
-      bindinput="onInput"
-      @blur="onBlur"
-      @focus="onFocus"
-      @confirm="onConfirm"
-    >
+  <van-cell
+    :size=" size "
+    :icon=" leftIcon "
+    :title=" label "
+    :center=" center "
+    :border=" border "
+    :is-link=" isLink "
+    :required=" required "
+    :clickable=" clickable "
+    :title-width=" titleWidth "
+    :custom-style=" customStyle "
+    :arrow-direction=" arrowDirection "
+    custom-class="van-field"
+  >
+    <slot
+      name="left-icon"
+      slot="icon"
+    />
+    <slot
+      name="label"
+      slot="title"
+    />
+    <view :class="fieldBody">
+      <textarea
+        v-if=" type === 'textarea' "
+        :class="fieldInputType"
+        :fixed=" fixed "
+        :focus=" focus "
+        :value=" value "
+        :disabled=" disabled || readonly "
+        :maxlength=" maxlength "
+        :placeholder=" placeholder "
+        :placeholder-style=" placeholderStyle "
+        :placeholder-class="fieldPlaceholder"
+        :auto-height=" autosize "
+        :cursor-spacing=" cursorSpacing "
+        :adjust-position=" adjustPosition "
+        :show-confirm-bar=" showConfirmBar "
+        :selection-end=" selectionEnd "
+        :selection-start=" selectionStart "
+        @input="onInput"
+        @blur="onBlur"
+        @focus="onFocus"
+        @confirm="onConfirm"
+      >
     </textarea>
-    <input
-      v-else
-      class="input-class {{ utils.bem('field__input', [inputAlign, { disabled, error }]) }}"
-      :type=" type "
-      :focus=" focus "
-      :value=" value "
-      :disabled=" disabled || readonly "
-      :maxlength=" maxlength "
-      :placeholder=" placeholder "
-      :placeholder-style=" placeholderStyle "
-      placeholder-class="{{ utils.bem('field__placeholder', { error }) }}"
-      :confirm-type=" confirmType "
-      :confirm-hold=" confirmHold "
-      :cursor-spacing=" cursorSpacing "
-      :adjust-position=" adjustPosition "
-      :selection-end=" selectionEnd "
-      :selection-start=" selectionStart "
-      :password=" password || type === 'password' "
-      bindinput="onInput"
-      @blur="onBlur"
-      @focus="onFocus"
-      @confirm="onConfirm"
-    />
-    <van-icon
-      v-if=" clearable && focused && value && !readonly "
-      size="16px"
-      name="clear"
-      class="van-field__clear-root van-field__icon-root"
-      bindtouchstart="onClear"
-    />
-    <view class="van-field__icon-container" @tap="onClickIcon">
-      <van-icon
-        v-if=" rightIcon || icon "
-        size="16px"
-        :name=" rightIcon || icon "
-        class="van-field__icon-root {{ iconClass }}"
-        custom-class="right-icon-class"
+      <input
+        v-else
+        :class="fieldInput"
+        :type=" type "
+        :focus=" focus "
+        :value=" value "
+        :disabled=" disabled || readonly "
+        :maxlength=" maxlength "
+        :placeholder=" placeholder "
+        :placeholder-style=" placeholderStyle "
+        :placeholder-class="fieldPlaceholder"
+        :confirm-type=" confirmType "
+        :confirm-hold=" confirmHold "
+        :cursor-spacing=" cursorSpacing "
+        :adjust-position=" adjustPosition "
+        :selection-end=" selectionEnd "
+        :selection-start=" selectionStart "
+        :password=" password || type === 'password' "
+        @input="onInput"
+        @blur="onBlur"
+        @focus="onFocus"
+        @confirm="onConfirm"
       />
-      <slot name="right-icon" />
-      <slot name="icon" />
+      <van-icon
+        v-if=" clearable && focused && value && !readonly "
+        size="16px"
+        name="clear"
+        class="van-field__clear-root van-field__icon-root"
+        @touchstart="onClear"
+      />
+      <view
+        class="van-field__icon-container"
+        @tap="onClickIcon"
+      >
+        <van-icon
+          v-if=" rightIcon || icon "
+          size="16px"
+          :name=" rightIcon || icon "
+          :class="'van-field__icon-root ' + iconClass "
+          custom-class="right-icon-class"
+        />
+        <slot name="right-icon" />
+        <slot name="icon" />
+      </view>
+      <view class="van-field__button">
+        <slot name="button" />
+      </view>
     </view>
-    <view class="van-field__button">
-      <slot name="button" />
+    <view
+      v-if=" errorMessage "
+      :class="fieldError"
+    >
+      {{ errorMessage }}
     </view>
-  </view>
-  <view v-if=" errorMessage " class="van-field__error-message {{ utils.bem('field__error', [errorMessageAlign, { disabled, error }]) }}">
-    {{ errorMessage }}
-  </view>
-</van-cell>
+  </van-cell>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
+import utils from '../wxs/utils';
+import VanCell from "../cell/index.vue"
+import VanIcon from "../icon/index"
 
-import { Weapp } from 'definitions/weapp';
+// import { Weapp } from 'definitions/weapp';
 import { getSystemInfoSync } from '../common/utils';
 
 export default {
+  name: "van-filed",
   field: true,
-
-  classes: ['input-class', 'right-icon-class'],
+  components: { VanCell, VanIcon },
+  // classes: ['input-class', 'right-icon-class'],
 
   props: {
     size: String,
@@ -134,82 +148,125 @@ export default {
     errorMessageAlign: String,
     selectionEnd: {
       type: Number,
-      value: -1
+      default: -1
     },
     selectionStart: {
       type: Number,
-      value: -1
+      default: -1
     },
     showConfirmBar: {
       type: Boolean,
-      value: true
+      default: true
     },
     adjustPosition: {
       type: Boolean,
-      value: true
+      default: true
     },
     cursorSpacing: {
       type: Number,
-      value: 50
+      default: 50
     },
     maxlength: {
       type: Number,
-      value: -1
+      default: -1
     },
     type: {
       type: String,
-      value: 'text'
+      default: 'text'
     },
     border: {
       type: Boolean,
-      value: true
+      default: true
     },
     titleWidth: {
       type: String,
-      value: '90px'
+      default: '90px'
+    },
+    inputClass: {
+      type: String,
+      default: ""
+    },
+    rightIconClass: {
+      type: String,
+      default: ""
     }
   },
 
-  data: {
-    focused: false,
-    system: getSystemInfoSync().system.split(' ').shift().toLowerCase()
+  // data: {
+  //   focused: false,
+  //   system: getSystemInfoSync().system.split(' ').shift().toLowerCase()
+  // },
+
+  data () {
+    return {
+      focused: false,
+      system: getSystemInfoSync().system.split(' ').shift().toLowerCase(),
+      value: ""
+    }
   },
 
+  computed: {
+    fieldError () {
+      // van-field__error-message {{ utils.bem('field__error', [errorMessageAlign, { disabled, error }]) }}
+      return `van-field__error-message ${utils.bem('field__error', [this.errorMessageAlign, { disabled: this.disabled, error: this.error }])}`
+    },
+    fieldPlaceholder () {
+      // {{ utils.bem('field__placeholder', { error }) }}
+      return `${utils.bem('field__placeholder', { error: this.error })}`
+    },
+    fieldInput () {
+      // input-class {{ utils.bem('field__input', [inputAlign, { disabled, error }]) }}
+      return `input-class ${utils.bem('field__input', [this.inputAlign, { disabled: this.disabled, error: this.error }])}`
+    },
+    fieldInputType () {
+      // input-class {{ utils.bem('field__input', [inputAlign, type, { disabled, error }]) }}
+      return `input-class ${utils.bem('field__input', [this.inputAlign, this.type, { disabled: this.disabled, error: this.error }])}`
+    },
+    fieldBody () {
+      // utils.bem('field__body', [type, system])
+      return `${utils.bem('field__body', [this.type, this.system])}`
+    }
+
+  },
+
+
   methods: {
-    onInput(event) {
+    onInput (event) {
       const { value = '' } = event.detail || {};
-
-      this.setData({ value }, () => {
-        this.emitChange(value);
-      });
+      this.emitChange(value);
+      // this.setData({ value }, () => {
+      //   this.emitChange(value);
+      // });
     },
 
-    onFocus(event) {
-      this.setData({ focused: true });
-      this.$emit('focus', event.detail);
+    onFocus (event) {
+      this.focused = true
+      this.$emit('focus', event.detail.value);
     },
 
-    onBlur(event) {
-      this.setData({ focused: false });
-      this.$emit('blur', event.detail);
+    onBlur (event) {
+      this.focused = false
+      this.$emit('blur', event.detail.value);
     },
 
-    onClickIcon() {
+    onClickIcon () {
       this.$emit('click-icon');
     },
 
-    onClear() {
-      this.setData({ value: '' }, () => {
-        this.emitChange('');
-        this.$emit('clear', '');
-      });
+    onClear () {
+      this.emitChange('');
+      this.$emit('clear', '');
+      // this.setData({ value: '' }, () => {
+      //   this.emitChange('');
+      //   this.$emit('clear', '');
+      // });
     },
 
-    onConfirm() {
-      this.$emit('confirm', this.data.value);
+    onConfirm () {
+      this.$emit('confirm');
     },
 
-    emitChange(value) {
+    emitChange (value) {
       this.$emit('input', value);
       this.$emit('change', value);
     }
@@ -219,5 +276,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
