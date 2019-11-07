@@ -13,9 +13,11 @@
 </template>
 
 <script>
+import { basic } from "../mixins/basic";
 
 export default {
   name: 'van-cell-group',
+  mixins: [basic],
   props: {
     title: String,
     border: {
@@ -25,9 +27,10 @@ export default {
   },
   computed: {
     classes () {
-      return `custom-class van-cell-group ${this.border ? 'van-hairline--top-bottom' : ''}`
+      return `${this.customClass} van-cell-group ${this.border ? 'van-hairline--top-bottom' : ''}`
     }
   }
+
 };
 
 </script>
