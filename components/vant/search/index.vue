@@ -23,7 +23,7 @@
         :border=" false "
         confirm-type="search"
         :class="'van-search__field' +  fieldClass"
-        :value=" value "
+        :value=" values "
         :disabled=" disabled "
         :readonly=" readonly "
         :clearable=" clearable "
@@ -86,11 +86,7 @@ export default {
   // classes: ['field-class', 'input-class', 'cancel-class'],
   mixins: [basic],
 
-  // data () {
-  //   return {
-  //     value: ""
-  //   }
-  // },
+
 
   props: {
     label: String,
@@ -141,11 +137,12 @@ export default {
     cancelClass: {
       type: String,
       default: ""
+    },
+    value: {
+      type: String,
+      default: ""
     }
   },
-  // beforeCreate () {
-  //   this.value = this.value
-  // },
 
   computed: {
     searchAction () {
@@ -158,12 +155,17 @@ export default {
     }
   },
 
+  data () {
+    return {
+      values: this.value
+    }
+  },
+
   methods: {
     onChange (event) {
-      console.log(event)
-      this.value = event.detail
+      this.values = event
       // this.setData({ value: event.detail });
-      // this.$emit('change', event.detail);
+      this.$emit('change', event);
     },
 
     onCancel () {
@@ -173,22 +175,22 @@ export default {
        */
       setTimeout(() => {
         // this.setData({ value: '' });
-        this.value = ""
         this.$emit('cancel');
-        this.$emit('change', '');
+        // this.$emit('change', '');
+        this.onChange("")
       }, 200);
     },
 
-    onSearch () {
-      // this.$emit('search', this.data.value);
+    onSearch (val) {
+      this.$emit('search', this.values);
     },
 
-    onFocus () {
-      this.$emit('focus');
+    onFocus (val) {
+      this.$emit('focus', val);
     },
 
-    onBlur () {
-      this.$emit('blur');
+    onBlur (val) {
+      this.$emit('blur', val);
     },
 
     onClear () {

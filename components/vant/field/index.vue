@@ -235,7 +235,6 @@ export default {
 
   methods: {
     onInput (event) {
-      console.log(event)
       const { value = '' } = event.detail || {};
       this.emitChange(value);
       // this.setData({ value }, () => {
@@ -245,12 +244,12 @@ export default {
 
     onFocus (event) {
       this.focused = true
-      this.$emit('focus', event.detail.value);
+      this.$emit('focus', event.detail);
     },
 
     onBlur (event) {
       this.focused = false
-      this.$emit('blur', event.detail.value);
+      this.$emit('blur', event.detail);
     },
 
     onClickIcon () {
@@ -267,7 +266,7 @@ export default {
     },
 
     onConfirm () {
-      this.$emit('confirm');
+      this.$emit('confirm', this.value);
     },
 
     emitChange (value) {
