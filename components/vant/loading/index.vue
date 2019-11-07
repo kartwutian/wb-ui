@@ -35,6 +35,7 @@ export default {
   props: {
     size: {
       type: String,
+      default: '30px',
     },
     type: {
       type: String,
@@ -46,34 +47,20 @@ export default {
     },
     textSize: {
       type: String,
+      default: '14px',
     },
     vertical: Boolean
   },
 
-  data(){
-    return {
-      sizeWithUnit: '30px',
-      textSizeWithUnit: '14px'
-    };
-  },
 
-  methods: {
-    setSizeWithUnit(size) {
-      this.sizeWithUnit = addUnit(size);
+  computed: {
+    sizeWithUnit(){
+      return addUnit(this.size);
     },
-
-    setTextSizeWithUnit(size) {
-      this.textSizeWithUnit = addUnit(size);
-    }
+    textSizeWithUnit(){
+      return addUnit(this.textSize);
+    },
   },
-  watch: {
-    size(size, oldSize){
-      this.setSizeWithUnit(size);
-    },
-    textSize(size, oldSize){
-      this.setTextSizeWithUnit(size)
-    }
-  }
 };
 
 </script>

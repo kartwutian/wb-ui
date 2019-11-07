@@ -31,8 +31,8 @@
         :color=" type === 'default' ? '#c9c9c9' : '' "
       />
       <view
-        v-if=" loadingText "
-        class="van-button__loading-text"
+          v-if=" loadingText "
+          class="van-button__loading-text"
       >
         {{ loadingText }}
       </view>

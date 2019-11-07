@@ -6,7 +6,7 @@
     >
       {{ title }}
     </view>
-    <view class="classes">
+    <view :class="classes">
       <slot />
     </view>
   </view>

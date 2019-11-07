@@ -14,14 +14,17 @@
     :arrow-direction=" arrowDirection "
     custom-class="van-field"
   >
-    <slot
-      name="left-icon"
-      slot="icon"
-    />
-    <slot
-      name="label"
-      slot="title"
-    />
+    <view slot="icon">
+      <slot
+          name="left-icon"
+      />
+    </view>
+    <view slot="title">
+      <slot
+          name="label"
+      />
+    </view>
+
     <view :class="fieldBody">
       <textarea
         v-if=" type === 'textarea' "
