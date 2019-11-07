@@ -55,6 +55,19 @@
     padding-bottom: 0;
   }
 
+  .demo-margin-left {
+    margin-left: 10px;
+  }
+
+  .demo-margin-right {
+    margin-right: 10px;
+  }
+
+  .demo-margin-bottom {
+    display: block;
+    margin-bottom: 15px;
+  }
+
   .container {
     padding: 45px 20px 20px;
   }
@@ -63,6 +76,8 @@
     padding-left: 15px;
     margin-bottom: 10px;
   }
+
+
 
   .logo,
   .title-text {

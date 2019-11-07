@@ -98,7 +98,7 @@
         is-link
       >
         <view slot="title">
-          <view class="title">单元格</view>
+          <view class="cell-title">单元格</view>
           <van-tag type="danger">标签</van-tag>
         </view>
       </van-cell>
@@ -137,4 +137,9 @@ export default {
 </script>
 
 <style lang="less">
+  .cell-title {
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+  }
 </style>
