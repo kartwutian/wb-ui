@@ -189,6 +189,10 @@ export default {
     rightIconClass: {
       type: String,
       default: ""
+    },
+    value: {
+      type: String,
+      default: '',
     }
   },
 
@@ -201,7 +205,6 @@ export default {
     return {
       focused: false,
       system: getSystemInfoSync().system.split(' ').shift().toLowerCase(),
-      value: ""
     }
   },
 
