@@ -85,7 +85,7 @@
           size="16px"
           :name=" rightIcon || icon "
           :class="'van-field__icon-root ' + iconClass "
-          custom-class="right-icon-class"
+          :custom-class="rightIconClass"
         />
         <slot name="right-icon" />
         <slot name="icon" />
@@ -216,11 +216,11 @@ export default {
     },
     fieldInput () {
       // input-class {{ utils.bem('field__input', [inputAlign, { disabled, error }]) }}
-      return `input-class ${utils.bem('field__input', [this.inputAlign, { disabled: this.disabled, error: this.error }])}`
+      return `${this.inputClass} ${utils.bem('field__input', [this.inputAlign, { disabled: this.disabled, error: this.error }])}`
     },
     fieldInputType () {
       // input-class {{ utils.bem('field__input', [inputAlign, type, { disabled, error }]) }}
-      return `input-class ${utils.bem('field__input', [this.inputAlign, this.type, { disabled: this.disabled, error: this.error }])}`
+      return `${this.inputClass} ${utils.bem('field__input', [this.inputAlign, this.type, { disabled: this.disabled, error: this.error }])}`
     },
     fieldBody () {
       // utils.bem('field__body', [type, system])
@@ -232,6 +232,7 @@ export default {
 
   methods: {
     onInput (event) {
+      console.log(event)
       const { value = '' } = event.detail || {};
       this.emitChange(value);
       // this.setData({ value }, () => {

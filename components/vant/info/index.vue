@@ -1,16 +1,16 @@
 <template>
 
-<view
-  v-if=" info !== null && info !== '' || dot "
-  :class="classes"
-  :style=" customStyle "
->{{ dot ? '' : info }}</view>
+  <view
+    v-if=" info !== null && info !== '' || dot "
+    :class="classes"
+    :style=" customStyle "
+  >{{ dot ? '' : info }}</view>
 
 </template>
 
 <script>
-    import utils from '../wxs/utils';
-    import { basic } from '../mixins/basic';
+import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
 
 export default {
   name: 'van-info',
@@ -21,8 +21,10 @@ export default {
     customStyle: String
   },
   computed: {
-    classes(){
-      return `${this.customClass} van-info ${utils.bem('info', { dot: this.dot })}`
+    classes () {
+      //van-info 属性会让使用icon的组件右上角出现白条
+      // return `${this.customClass} van-info ${utils.bem('info', { dot: this.dot })}`
+      return `${this.customClass}`
     }
   }
 };
@@ -30,5 +32,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>

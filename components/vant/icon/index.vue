@@ -23,11 +23,14 @@
 import { addUnit } from '../common/utils';
 import VanInfo from "../info/index";
 
-export default{
+export default {
   name: 'van-icon',
-  components: {VanInfo},
+  components: { VanInfo },
   props: {
-    dot: Boolean,
+    dot: {
+      type: Boolean,
+      default: false
+    },
     info: null,
     size: {
       type: null,
@@ -44,35 +47,35 @@ export default{
     }
   },
 
-  data(){
+  data () {
     return {
       sizeWithUnit: null,
     };
   },
 
   computed: {
-    isImageName(){
+    isImageName () {
       return this.name.indexOf('/') !== -1;
     },
-    classes(){
+    classes () {
       return `${this.customClass} ${this.classPrefix} ${this.isImageName ? 'van-icon--image' : this.classPrefix + '-' + this.name}`;
     },
-    styles(){
+    styles () {
       return `${this.color ? 'color: ' + this.color + ';' : ''}${this.size ? 'font-size: ' + this.sizeWithUnit + ';' : ''}${this.customStyle}`
     },
   },
 
   methods: {
-    onClick() {
+    onClick () {
       this.$emit('click');
     },
 
-    setSizeWithUnit(size) {
+    setSizeWithUnit (size) {
       this.sizeWithUnit = addUnit(size)
     }
   },
-  watch:{
-    size(val){
+  watch: {
+    size (val) {
       this.setSizeWithUnit(val)
     }
   }
@@ -81,5 +84,4 @@ export default{
 </script>
 
 <style lang="less">
-
 </style>

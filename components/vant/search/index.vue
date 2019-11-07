@@ -1,65 +1,96 @@
 <template>
 
-<view
-  class="{{ utils.bem('search', { withaction: showAction || useActionSlot }) }} custom-class"
-  style="background: {{ background }}"
->
-  <view :class=" utils.bem('search__content', [shape]) ">
-    <view class="van-search__label" v-if=" label ">{{ label }}</view>
-    <slot v-else name="label" />
-
-    <van-field
-      type="search"
-      :left-icon=" !useLeftIconSlot ? leftIcon : '' "
-      :right-icon=" !useRightIconSlot ? rightIcon : '' "
-      :focus=" focus "
-      :error=" error "
-      :border=" false "
-      confirm-type="search"
-      class="van-search__field field-class"
-      :value=" value "
-      :disabled=" disabled "
-      :readonly=" readonly "
-      :clearable=" clearable "
-      :maxlength=" maxlength "
-      :input-align=" inputAlign "
-      input-class="input-class"
-      :placeholder=" placeholder "
-      :placeholder-style=" placeholderStyle "
-      custom-style="padding: 5px 10px 5px 0; background-color: transparent;"
-      @blur="onBlur"
-      @focus="onFocus"
-      @change="onChange"
-      @confirm="onSearch"
-      @clear="onClear"
-    >
-      <slot v-if=" useLeftIconSlot " name="left-icon" slot="left-icon" />
-      <slot v-if=" useRightIconSlot " name="right-icon" slot="right-icon" />
-    </van-field>
-  </view>
-
   <view
-    v-if=" showAction || useActionSlot "
-    class="van-search__action"
-    hover-class="van-search__action--hover"
-    :hover-stay-time="70"
+    :class="searchAction"
+    :style="{'background':background}"
   >
-    <slot v-if=" useActionSlot " name="action" />
-    <view v-else @tap="onCancel" class="cancel-class">{{ actionText }}</view>
+    <view :class="searchContent">
+      <view
+        class="van-search__label"
+        v-if=" label "
+      >{{ label }}</view>
+      <slot
+        v-else
+        name="label"
+      />
+
+      <van-field
+        type="search"
+        :left-icon=" !useLeftIconSlot ? leftIcon : '' "
+        :right-icon=" !useRightIconSlot ? rightIcon : '' "
+        :focus=" focus "
+        :error=" error "
+        :border=" false "
+        confirm-type="search"
+        :class="'van-search__field' +  fieldClass"
+        :value=" value "
+        :disabled=" disabled "
+        :readonly=" readonly "
+        :clearable=" clearable "
+        :maxlength=" maxlength "
+        :input-align=" inputAlign "
+        :input-class="inputClass"
+        :placeholder=" placeholder "
+        :placeholder-style=" placeholderStyle "
+        custom-style="padding: 5px 10px 5px 0; background-color: transparent;"
+        @blur="onBlur"
+        @focus="onFocus"
+        @change="onChange"
+        @confirm="onSearch"
+        @clear="onClear"
+      >
+        <slot
+          v-if=" useLeftIconSlot "
+          name="left-icon"
+          slot="left-icon"
+        />
+        <slot
+          v-if=" useRightIconSlot "
+          name="right-icon"
+          slot="right-icon"
+        />
+      </van-field>
+    </view>
+
+    <view
+      v-if=" showAction || useActionSlot "
+      class="van-search__action"
+      hover-class="van-search__action--hover"
+      :hover-stay-time="70"
+    >
+      <slot
+        v-if=" useActionSlot "
+        name="action"
+      />
+      <view
+        v-else
+        @tap="onCancel"
+        :class="cancelClass"
+      >{{ actionText }}</view>
+    </view>
   </view>
-</view>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
+import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
+import VanField from "../field/index"
 
-import { Weapp } from 'definitions/weapp';
+// import { Weapp } from 'definitions/weapp';
 
 export default {
+  name: "van-search",
   field: true,
+  components: { VanField },
+  // classes: ['field-class', 'input-class', 'cancel-class'],
+  mixins: [basic],
 
-  classes: ['field-class', 'input-class', 'cancel-class'],
+  // data () {
+  //   return {
+  //     value: ""
+  //   }
+  // },
 
   props: {
     label: String,
@@ -74,64 +105,93 @@ export default {
     useRightIconSlot: Boolean,
     leftIcon: {
       type: String,
-      value: 'search'
+      default: 'search'
     },
     rightIcon: String,
     placeholder: String,
     placeholderStyle: String,
     actionText: {
       type: String,
-      value: '取消'
+      default: '取消'
     },
     background: {
       type: String,
-      value: '#ffffff'
+      default: '#ffffff'
     },
     maxlength: {
       type: Number,
-      value: -1
+      default: -1
     },
     shape: {
       type: String,
-      value: 'square'
+      default: 'square'
     },
     clearable: {
       type: Boolean,
-      value: true
+      default: true
+    },
+    fieldClass: {
+      type: String,
+      default: ""
+    },
+    inputClass: {
+      type: String,
+      default: ""
+    },
+    cancelClass: {
+      type: String,
+      default: ""
+    }
+  },
+  // beforeCreate () {
+  //   this.value = this.value
+  // },
+
+  computed: {
+    searchAction () {
+      // {{ utils.bem('search', { withaction: showAction || useActionSlot }) }} custom-class
+      return `${utils.bem('search', { withaction: this.showAction || this.useActionSlot })} ${this.customClass}`
+    },
+    searchContent () {
+      // utils.bem('search__content', [shape])
+      return `${utils.bem('search__content', [this.shape])}`
     }
   },
 
   methods: {
-    onChange(event) {
-      this.setData({ value: event.detail });
-      this.$emit('change', event.detail);
+    onChange (event) {
+      console.log(event)
+      this.value = event.detail
+      // this.setData({ value: event.detail });
+      // this.$emit('change', event.detail);
     },
 
-    onCancel() {
+    onCancel () {
       /**
        * 修复修改输入框值时，输入框失焦和赋值同时触发，赋值失效
        * https://github.com/youzan/vant-weapp/issues/1768
        */
       setTimeout(() => {
-        this.setData({ value: '' });
+        // this.setData({ value: '' });
+        this.value = ""
         this.$emit('cancel');
         this.$emit('change', '');
       }, 200);
     },
 
-    onSearch() {
-      this.$emit('search', this.data.value);
+    onSearch () {
+      // this.$emit('search', this.data.value);
     },
 
-    onFocus() {
+    onFocus () {
       this.$emit('focus');
     },
 
-    onBlur() {
+    onBlur () {
       this.$emit('blur');
     },
 
-    onClear() {
+    onClear () {
       this.$emit('clear');
     },
   }
@@ -140,5 +200,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>

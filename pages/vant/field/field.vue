@@ -3,10 +3,8 @@
     <demo-block title="基础用法">
       <van-cell-group>
         <van-field
-          v-model="value"
+          v-model="username"
           placeholder="请输入用户名"
-          @input="input"
-          @focus="focus"
         />
       </van-cell-group>
     </demo-block>
