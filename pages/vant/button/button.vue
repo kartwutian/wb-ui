@@ -59,7 +59,7 @@
 
 <script>
   import DemoBlock from "../../../components/app/demo-block";
-  import VanButton from "../../../components/vant/button/index";
+  import VanButton from "@/components/vant/button/index";
   export default {
     name: 'pages-button',
     components: {VanButton, DemoBlock},
