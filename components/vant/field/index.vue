@@ -14,17 +14,14 @@
     :arrow-direction=" arrowDirection "
     custom-class="van-field"
   >
-    <view slot="icon">
-      <slot
-          name="left-icon"
-      />
-    </view>
-    <view slot="title">
-      <slot
-          name="label"
-      />
-    </view>
-
+    <slot
+      name="left-icon"
+      slot="icon"
+    />
+    <slot
+      name="label"
+      slot="title"
+    />
     <view :class="fieldBody">
       <textarea
         v-if=" type === 'textarea' "
@@ -77,7 +74,7 @@
         size="16px"
         name="clear"
         class="van-field__clear-root van-field__icon-root"
-        @touchstart="onClear"
+        @click="onClear"
       />
       <view
         class="van-field__icon-container"
@@ -114,6 +111,7 @@ import VanIcon from "../icon/index"
 
 // import { Weapp } from 'definitions/weapp';
 import { getSystemInfoSync } from '../common/utils';
+
 
 export default {
   name: "van-filed",
@@ -207,9 +205,10 @@ export default {
   data () {
     return {
       focused: false,
-      system: getSystemInfoSync().system.split(' ').shift().toLowerCase(),
+      system: getSystemInfoSync().system.split(' ').shift().toLowerCase()
     }
   },
+
 
   computed: {
     fieldError () {
@@ -235,7 +234,6 @@ export default {
 
   },
 
-
   methods: {
     onInput (event) {
       const { value = '' } = event.detail || {};
@@ -251,6 +249,7 @@ export default {
     },
 
     onBlur (event) {
+      this.onClear()
       this.focused = false
       this.$emit('blur', event.detail);
     },

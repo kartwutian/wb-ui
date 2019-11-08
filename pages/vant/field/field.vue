@@ -3,8 +3,10 @@
     <demo-block title="基础用法">
       <van-cell-group>
         <van-field
-          v-model="username"
+          v-model="value"
           placeholder="请输入用户名"
+          clearable
+          @input="input"
         />
       </van-cell-group>
     </demo-block>
@@ -87,6 +89,7 @@
           placeholder="请输入短信验证码"
           use-button-slot
           :border="false"
+          @clear="clear"
         >
           <van-button
             slot="button"
@@ -127,12 +130,12 @@ export default {
   data () {
     return {
       sms: '',
-      value: '',
+      value: '12121',
       password: '',
       username: '',
       username2: '',
       message: '',
-      phone: '1365577',
+      phone: '136557789',
       messagecount: ""
     }
   },
