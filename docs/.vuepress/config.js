@@ -1,5 +1,70 @@
 module.exports = {
+  title: 'wb-ui(uni-app)',
+  description: 'wb-ui的使用文档',
   themeConfig: {
-
-  },
-}
+    nav: [
+      { text: 'Home', link: '/' },
+      { text: 'vant', link: '/vant/' },
+    ],
+    sidebar: {
+      '/vant/': [
+        {
+          title: 'vant组件',
+          collapsable: false,
+          children: [
+            '/vant/',
+            "/vant/action-sheet",
+            "/vant/area",
+            "/vant/button",
+            "/vant/cell",
+            "/vant/card",
+            "/vant/checkbox",
+            "/vant/circle",
+            "/vant/col",
+            "/vant/collapse",
+            "/vant/count-down",
+            "/vant/common",
+            "/vant/datetime-picker",
+            "/vant/dialog",
+            "/vant/divider",
+            "/vant/dropdown-menu",
+            "/vant/field",
+            "/vant/goods-action",
+            "/vant/grid",
+            "/vant/icon",
+            "/vant/image",
+            "/vant/loading",
+            "/vant/nav-bar",
+            "/vant/notice-bar",
+            "/vant/notify",
+            "/vant/overlay",
+            "/vant/panel",
+            "/vant/picker",
+            "/vant/popup",
+            "/vant/radio",
+            "/vant/progress",
+            "/vant/rate",
+            "/vant/search",
+            "/vant/sidebar",
+            "/vant/slider",
+            "/vant/steps",
+            "/vant/stepper",
+            "/vant/submit-bar",
+            "/vant/sticky",
+            "/vant/switch",
+            "/vant/swipe-cell",
+            "/vant/tab",
+            "/vant/tabbar",
+            "/vant/tag",
+            "/vant/toast",
+            "/vant/transition",
+            "/vant/tree-select",
+            "/vant/uploader"
+            ]
+        },
+      ],
+    },
+    lastUpdated: '上次更新 ', // string | boolean
+    iframeSrc: 'http://localhost:8080/#/pages/vant/', // 自定义内嵌的iframe前缀
+  }
+};
