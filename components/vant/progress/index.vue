@@ -1,66 +1,74 @@
 <template>
-    <wxs src="./index.wxs" module="getters" />
-
-<view
-  class="van-progress custom-class"
-  style="height: {{ strokeWidthUnit }}; {{ trackColor ? 'background: ' + trackColor : '' }}"
->
   <view
-    class="van-progress__portion"
-    style="width: {{ percentage }}%; background: {{ inactive ? '#cacaca' : color }}"
+    :class="'van-progress ' + customClass"
+    :style="[{'height': strokeWidthUnit }, (trackColor ? 'background: '+ trackColor : '' )]"
   >
     <view
-      v-if=" showPivot && getters.text(pivotText, percentage) "
-      style="color: {{ textColor }}; background: {{ pivotColor ? pivotColor : inactive ? '#cacaca' : color }}"
-      class="van-progress__pivot"
+      class="van-progress__portion"
+      :style="[{'width':  percentage + '%'}, {'background': ( inactive ? '#cacaca' : color )}]"
     >
-      {{ getters.text(pivotText, percentage) }}
+      <view
+        v-if=" showPivot "
+        class="van-progress__pivot"
+        :style="[{'color': textColor }, {'background': ( pivotColor ? pivotColor : (inactive ? '#cacaca' : color ))}]"  
+      >
+        {{ showText }}
+      </view>
     </view>
   </view>
-</view>
 
 </template>
 
 <script>
-
+import {basic} from '../mixins/basic';
 import { BLUE } from '../common/color';
 import { addUnit } from '../common/utils';
 
 export default {
+  name: 'van-progress',
+  mixins: [basic],
   props: {
-    inactive: Boolean,
+    inactive: {
+      type: Boolean,
+      default: false
+    },
     percentage: Number,
     pivotText: String,
     pivotColor: String,
     trackColor: String,
     showPivot: {
       type: Boolean,
-      value: true
+      default: true
     },
     color: {
       type: String,
-      value: BLUE
+      default: BLUE
     },
     textColor: {
       type: String,
-      value: '#fff'
+      default: '#fff'
     },
     strokeWidth: {
-      type: null,
-      observer: 'setStrokeWidthUnit'
+      type: Number,
+      default: 4
     }
   },
 
-  data: {
-    strokeWidthUnit: '4px'
-  },
+  data() {
+    return{
 
+    }
+  },
+  computed: {
+    showText() {
+      return this.pivotText || this.percentage + '%';
+    },
+    strokeWidthUnit() {
+      return this.strokeWidth + 'px';
+    }
+  },
   methods: {
-    setStrokeWidthUnit(val) {
-      this.setData({
-        strokeWidthUnit: addUnit(val)
-      });
-    }
+
   }
 };
 
@@ -69,3 +77,4 @@ export default {
 <style lang="less">
 
 </style>
+
