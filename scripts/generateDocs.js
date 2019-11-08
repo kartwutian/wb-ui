@@ -4,8 +4,6 @@ var path = require('path');
 //解析需要遍历的文件夹
 var filePath = path.resolve(__dirname, '../components/vant');
 
-var paths = [];
-
 //调用文件遍历方法
 fileDisplay(filePath);
 
@@ -33,10 +31,8 @@ function fileDisplay(filePath){
             if(isFile){
               if(path.extname(filedir) === '.md'){
                 const name = path.basename(path.dirname(filedir));
-                // const str = fs.readFileSync(filedir).toString()
-                // fs.writeFileSync(path.resolve(__dirname, `../docs/vant/${name}.md`), str);
-                paths.push(`/vant/${name}`)
-                console.log(JSON.stringify(paths, null ,2))
+                const str = fs.readFileSync(filedir).toString()
+                fs.writeFileSync(path.resolve(__dirname, `../docs/vant/${name}.md`), str);
               }
 
             }
