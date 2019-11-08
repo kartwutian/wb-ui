@@ -2,34 +2,28 @@
   <view class="pages-search">
     <demo-block title="基本用法">
       <van-search
-        :value="value"
         placeholder="请输入搜索关键词"
-        @change="onChange"
-        @search="onSearch"
+        v-model="value"
       />
     </demo-block>
 
     <demo-block title="监听对应事件">
       <van-search
-        :value="value"
-        show-action
+        v-model="value"
         placeholder="请输入搜索关键词"
-        @change="onChange"
-        @search="onSearch"
+        show-action
         @cancel="onCancel"
-        @clear="onClear"
       />
     </demo-block>
 
     <demo-block title="高级用法">
+
       <van-search
-        :value="value"
+        v-model="value"
         placeholder="请输入搜索关键词"
         use-action-slot
-        @change="onChange"
-        @search="onSearch"
-        label="地址"
         shape="round"
+        label="地址"
       >
         <view
           slot="action"
@@ -44,6 +38,7 @@
 <script>
 import DemoBlock from "../../../components/app/demo-block";
 import VanSearch from "../../../components/vant/search/index.vue"
+import { timeout } from 'q';
 
 export default {
   name: 'pages-search',
@@ -63,11 +58,19 @@ export default {
     onChange (e) {
       console.log(e)
     },
-    onSearch (e) {
-      console.log("搜索")
+    onSearch (val) {
+      uni.showToast({
+        title: '搜索',
+        icon: 'none'
+      })
+      // console.log(val)
+      // console.log("搜索")
     },
     onCancel () {
-      console.log("取消")
+      uni.showToast({
+        title: '取消',
+        icon: 'none'
+      })
     },
     onClear () {
       console.log("清空")
