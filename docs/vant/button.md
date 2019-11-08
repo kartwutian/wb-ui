@@ -1,3 +1,9 @@
+---
+title: Button 按钮
+lang: zh
+vant: true
+---
+
 # Button 按钮
 
 ### 引入

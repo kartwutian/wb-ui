@@ -4,7 +4,7 @@
       <slot />
     </div>
 
-    <div class="demo-view--right" v-bind:style="demoViewRightStyle">
+    <div v-show="isShowVantIFrame" class="demo-view--right" v-bind:style="demoViewRightStyle">
       <iframe class="demo-view__frame" :src="src" frameborder="0"></iframe>
     </div>
   </div>
@@ -15,7 +15,9 @@ export default {
   data(){
     return {
       marginTop: 70,
-      src: 'http://localhost:8080/'
+      baseIframeSrc: '/',
+      src: '/',
+      isShowVantIFrame: false,
     }
   },
 
@@ -27,10 +29,13 @@ export default {
 
   mounted() {
     window.addEventListener('scroll', this.onScroll, false)
+    // console.log(this)
+    this.baseIframeSrc = this.$themeConfig.iframeSrc;
   },
 
   updated(){
     // console.log(this.$page)
+    this.isShowVantIFrame = !!this.$frontmatter.vant;
     this.fetchPath(this.$page.regularPath)
   },
 
@@ -39,14 +44,14 @@ export default {
   },
 
   methods: {
-    onScroll(e){
+    onScroll(){
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       this.marginTop = 70 + scrollTop;
     },
     // regularPath: "/vant/button.html"
     fetchPath(regularPath){
       const componentName = regularPath.substring(regularPath.lastIndexOf('/') + 1).split('.')[0];
-      this.src = `http://localhost:8080/#/pages/vant/${componentName}/${componentName}`
+      this.src = `${this.baseIframeSrc}${componentName}/${componentName}`
     },
   }
 }

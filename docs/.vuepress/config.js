@@ -19,5 +19,6 @@ module.exports = {
       ],
     },
     lastUpdated: '上次更新 ', // string | boolean
+    iframeSrc: 'http://localhost:8081/#/pages/vant/', // 自定义内嵌的iframe前缀
   }
 };
