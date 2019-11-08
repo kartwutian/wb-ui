@@ -1,13 +1,32 @@
+---
+title: Button 按钮
+lang: zh
+vant: true
+---
+
 # Button 按钮
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-button": "path/to/vant-weapp/dist/button/index"
+```js
+
+import VanButton from "@/components/vant/button/index";
+
+export default {
+  components: {VanButton},
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    
+  }
 }
+  
 ```
 
 ## 代码演示

@@ -8,6 +8,7 @@
     "init:vant:less": "gulp less -f ./scripts/gulp/compiler.js",
     "generateApis": "node ./scripts/fetch/index.js",
     "generatePages": "node ./scripts/generatePages.js",
+    "generateDocs": "node ./scripts/generateDocs.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
