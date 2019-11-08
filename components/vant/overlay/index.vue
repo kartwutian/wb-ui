@@ -5,7 +5,7 @@
     :custom-style="customStyles"
     :duration=" duration "
     @tap="onClick"
-    catch:touchmove="noop"
+    @touchmove="noop"
   />
 
 </template>

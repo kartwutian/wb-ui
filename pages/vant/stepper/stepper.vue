@@ -5,7 +5,7 @@
       center
       title="基础用法"
     >
-      <van-stepper v-model="value" />
+      <van-stepper :value="1" />
     </van-cell>
 
     <van-cell

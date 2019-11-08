@@ -182,7 +182,7 @@ export default {
     },
 
     onSearch (val) {
-      this.$emit('search', this.values);
+      this.$emit('search', val);
     },
 
     onFocus (val) {

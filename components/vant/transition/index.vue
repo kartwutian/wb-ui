@@ -14,18 +14,56 @@
 
 import { transition } from '../mixins/transition';
 import { basic } from '../mixins/basic';
+import { type } from 'os';
 
 export default {
-  classes: [
-    'enter-class',
-    'enter-active-class',
-    'enter-to-class',
-    'leave-class',
-    'leave-active-class',
-    'leave-to-class'
-  ],
+  name: "van-transition",
+  // classes: [
+  //   'enter-class',
+  //   'enter-active-class',
+  //   'enter-to-class',
+  //   'leave-class',
+  //   'leave-active-class',
+  //   'leave-to-class'
+  // ],
 
-  mixins: [transition(true), basic]
+  data () {
+    return {
+      currentDuration: this.duration
+    }
+  },
+
+
+  mixins: [transition(true), basic],
+  props: {
+    enterClass: {
+      type: String,
+      default: ""
+    },
+    enterActiveClass: {
+      type: String,
+      default: ""
+    },
+    entertoClass: {
+      type: String,
+      default: ""
+    },
+    leaveClass: {
+      type: String,
+      default: ""
+    },
+    leaveActiveClass: {
+      type: String,
+      default: ""
+    },
+    leavetoClass: {
+      type: String,
+      default: ""
+    },
+    customStyle: {
+      type: String
+    }
+  }
 
 };
 

@@ -42,6 +42,7 @@ export default {
       this.show = true
     },
     onClickHide () {
+      console.log("~~~~~~~~~~~~~~~~")
       this.show = false
     }
   }

@@ -49,6 +49,8 @@ export const transition = function (showDefaultValue) {
       })
     },
 
+
+
     methods: {
       observeShow(value) {
         value ? this.enter() : this.leave();
@@ -59,6 +61,8 @@ export const transition = function (showDefaultValue) {
           duration,
           name
         } = this;
+        console.log("===============")
+
         const classNames = getClassNames(name);
         const currentDuration = isObj(duration) ? duration.enter : duration;
 
@@ -104,6 +108,7 @@ export const transition = function (showDefaultValue) {
           duration,
           name
         } = this;
+        console.log("--------------")
         const classNames = getClassNames(name);
         const currentDuration = isObj(duration) ? duration.leave : duration;
 
@@ -127,7 +132,7 @@ export const transition = function (showDefaultValue) {
           .then(() => {
             this.checkStatus('leave');
             this.transitionEnded = false;
-            setTimeout(() => this.onTransitionEnd(), currentDuration);
+            setTimeout(() => this.onTransitionEnd(), this.currentDuration);
 
             this.classes = classNames['leave-to']
             // this.setData({
@@ -154,7 +159,7 @@ export const transition = function (showDefaultValue) {
         const {
           show,
           display
-        } = this.data;
+        } = this;
         if (!show && display) {
           this.display = false
           // this.setData({
@@ -165,6 +170,7 @@ export const transition = function (showDefaultValue) {
     },
     watch: {
       show(val, oldval) {
+        console.log("========++++++++++++")
         this.observeShow(val)
       }
     }
