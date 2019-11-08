@@ -1,13 +1,13 @@
 <template>
   <view class="pages-progress">
     <demo-block title="基础用法">
-      <van-progress :percentage = percentage />
+      <van-progress :percentage="50" />
     </demo-block>
     <demo-block title="线条粗细">
-      <van-progress :percentage= percentage :stroke-width="8" />
+      <van-progress :percentage="50" :stroke-width="8" />
     </demo-block>
     <demo-block title="置灰">
-      <van-progress inactive :percentage = percentage />
+      <van-progress inactive :percentage="50" />
     </demo-block>
     <demo-block title="样式定制">
       <view class="pages-progress__linesPadding">

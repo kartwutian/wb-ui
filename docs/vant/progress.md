@@ -1,12 +1,15 @@
-# Progress 进度条
+---
+title: Progress 进度条
+lang: zh
+vant: true
+---
 
 ### 引入
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-progress": "path/to/vant-weapp/dist/progress/index"
-}
+```js
+
+import VanProgress from "@/components/vant/progress/index";
 ```
 
 ## 代码演示
