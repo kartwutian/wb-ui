@@ -117,7 +117,7 @@ export default {
 
       if (typeof newValue === 'number' && +this.value !== newValue) {
         // this.setData({ value: newValue });
-        this.value = newValue
+        this.values = newValue
       }
     },
 
@@ -163,7 +163,7 @@ export default {
   computed: {
     stepperMinus () {
       // minus-class {{ utils.bem('stepper__minus', { disabled: disabled || value <= min }) }}
-      return `${this.minusClass}  ${utils.bem('stepper__minus', { disabled: this.disabled || this.value <= this.min })}`
+      return `${this.minusClass}  ${utils.bem('stepper__minus', { disabled: this.disabled || this.values <= this.min })}`
     },
     stepperInput () {
       // input-class {{ utils.bem('stepper__input', { disabled: disabled || disableInput }) }}
@@ -171,17 +171,17 @@ export default {
     },
     stepperplus () {
       // plus-class {{ utils.bem('stepper__plus', { disabled: disabled || value >= max }) }}
-      return `${this.plusClass} ${utils.bem('stepper__plus', { disabled: this.disabled || this.value >= this.max })}`
+      return `${this.plusClass} ${utils.bem('stepper__plus', { disabled: this.disabled || this.values >= this.max })}`
     }
   },
 
   methods: {
     isDisabled (type) {
       if (type === 'plus') {
-        return this.disabled || this.value >= this.max;
+        return this.disabled || this.values >= this.max;
       }
 
-      return this.disabled || this.value <= this.min;
+      return this.disabled || this.values <= this.min;
     },
 
     onFocus (event) {
@@ -264,9 +264,7 @@ export default {
       // this.setData({
       //   value: this.data.asyncChange ? this.data.value : value
       // });
-      // this.values = this.asyncChange ? this.values : value
       this.values = value
-      // console.log(this.values, value)
       this.$emit('change', this.values);
     },
 

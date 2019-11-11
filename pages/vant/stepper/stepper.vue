@@ -95,7 +95,7 @@ export default {
   components: { VanStepper, VanCell, DemoBlock },
   data () {
     return {
-      value: 10
+      value: 1
     }
   },
   onLoad () {
@@ -111,6 +111,7 @@ export default {
       })
 
       setTimeout(() => {
+        this.value = value
         uni.hideLoading()
       }, 1000)
     }

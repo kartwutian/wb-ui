@@ -32,12 +32,13 @@ export default {
     
   },
   methods: {
-    onChange () {
+    onChange (value) {
       uni.showLoading({
         title: "加载中..."
       })
 
       setTimeout(() => {
+        this.value = value
         uni.hideLoading()
       }, 1000)
     }
