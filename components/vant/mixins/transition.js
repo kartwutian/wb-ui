@@ -2,12 +2,14 @@ import {
   isObj
 } from '../common/utils';
 
-const getClassNames = (name) => ({
-  enter: `van-${name}-enter van-${name}-enter-active enter-class enter-active-class`,
-  'enter-to': `van-${name}-enter-to van-${name}-enter-active enter-to-class enter-active-class`,
-  leave: `van-${name}-leave van-${name}-leave-active leave-class leave-active-class`,
-  'leave-to': `van-${name}-leave-to van-${name}-leave-active leave-to-class leave-active-class`
-});
+const getClassNames = function(name){
+  return {
+    enter: `van-${name}-enter van-${name}-enter-active ${this.enterClass} enter-active-class`,
+    'enter-to': `van-${name}-enter-to van-${name}-enter-active ${this.enterToClass} enter-active-class`,
+    leave: `van-${name}-leave van-${name}-leave-active ${this.leaveClass} leave-active-class`,
+    'leave-to': `van-${name}-leave-to van-${name}-leave-active ${this.leaveToClass} leave-active-class`
+  }
+};
 
 const nextTick = () => new Promise(resolve => setTimeout(resolve, 1000 / 30));
 
@@ -38,6 +40,8 @@ export const transition = function (showDefaultValue) {
         type: '',
         inited: false,
         display: false,
+        classes: '',
+        currentDuration: 0
       }
     },
 
@@ -48,8 +52,6 @@ export const transition = function (showDefaultValue) {
         }
       })
     },
-
-
 
     methods: {
       observeShow(value) {
@@ -63,7 +65,7 @@ export const transition = function (showDefaultValue) {
         } = this;
         console.log("===============")
 
-        const classNames = getClassNames(name);
+        const classNames = getClassNames.call(this, name);
         const currentDuration = isObj(duration) ? duration.enter : duration;
 
         this.status = 'enter';
@@ -109,7 +111,7 @@ export const transition = function (showDefaultValue) {
           name
         } = this;
         console.log("--------------")
-        const classNames = getClassNames(name);
+        const classNames = getClassNames.call(this, name);
         const currentDuration = isObj(duration) ? duration.leave : duration;
 
         this.status = 'leave';

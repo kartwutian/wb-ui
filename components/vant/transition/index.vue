@@ -2,8 +2,9 @@
   <view
     v-if=" inited "
     :class="'van-transition ' + customClass + ' ' + classes"
-    :style="[{'-webkit-transition-duration':currentDuration + 'ms'},{'transition-duration':currentDuration + 'ms'},display ? '' : 'display: none;',customStyle]"
+    :style="styles"
     @transitionend="onTransitionEnd"
+    @tap="onClick"
   >
     <slot />
   </view>
@@ -18,6 +19,7 @@ import { type } from 'os';
 
 export default {
   name: "van-transition",
+  mixins: [basic, transition(true)],
   // classes: [
   //   'enter-class',
   //   'enter-active-class',
@@ -34,7 +36,6 @@ export default {
   },
 
 
-  mixins: [transition(true), basic],
   props: {
     enterClass: {
       type: String,
@@ -56,15 +57,26 @@ export default {
       type: String,
       default: ""
     },
-    leavetoClass: {
+    leaveToClass: {
       type: String,
       default: ""
     },
     customStyle: {
       type: String
     }
-  }
+  },
 
+  computed: {
+    styles(){
+      return `-webkit-transition-duration: ${this.currentDuration}ms;transition-duration: ${this.currentDuration}ms;${this.display ? '' : 'display: none;'} ${this.customStyle}`
+    }
+  },
+
+  methods: {
+    onClick(){
+      this.$emit('click')
+    }
+  },
 };
 
 </script>

@@ -91,7 +91,10 @@ export default {
     clickable: Boolean,
     titleWidth: String,
     customStyle: String,
-    customClass: String,
+    customClass: {
+      type: String,
+      default: '',
+    },
     titleClass: {
       type: String,
       default: '',
