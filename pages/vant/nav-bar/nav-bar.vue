@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanNavBar from "../../../components/vant/nav-bar/index.vue"
-import VanIcon from "../../../components/vant/icon/index"
+import DemoBlock from "@/components/app/demo-block";
+import VanNavBar from "@/components/vant/nav-bar/index.vue"
+import VanIcon from "@/components/vant/icon/index"
 
 export default {
   name: 'pages-nav-bar',

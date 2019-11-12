@@ -189,8 +189,8 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanTag from "../../../components/vant/tag/index.vue"
+import DemoBlock from "@/components/app/demo-block";
+import VanTag from "@/components/vant/tag/index.vue"
 
 export default {
   name: 'pages-tag',
