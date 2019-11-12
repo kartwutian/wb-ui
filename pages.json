@@ -49,6 +49,12 @@
 			}
 		},
 		{
+			"path": "pages/vant/divider/divider",
+			"style": {
+				"navigationBarTitleText": "divider"
+			}
+		},
+		{
 			"path": "pages/vant/count-down/count-down",
 			"style": {
 				"navigationBarTitleText": "count-down"
