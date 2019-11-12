@@ -1,26 +1,37 @@
 <template>
 
-<view
-  class="custom-class {{ utils.bem('switch', { on: value === activeValue, disabled }) }}"
-  style="font-size: {{ size }}; {{ (checked ? activeColor : inactiveColor) ? 'background-color: ' + (checked ? activeColor : inactiveColor ) : '' }}"
-  @tap="onClick"
->
-  <view class="van-switch__node node-class">
-    <van-loading v-if=" loading " :color=" loadingColor " size="50%" custom-class="van-switch__loading" />
+  <view
+    :class="switchs"
+    :style="styles"
+    @tap="onClick"
+  >
+    <view :class="'van-switch__node ' + nodeClass">
+      <van-loading
+        v-if=" loading "
+        :color=" loadingColor "
+        size="50%"
+        custom-class="van-switch__loading"
+      />
+    </view>
   </view>
-</view>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
+import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
 
 import { BLUE, GRAY_DARK } from '../common/color';
+import VanLoading from "../../vant/loading/index"
+import { type } from 'os';
 
 export default {
+  name: "van-switch",
+  components: { VanLoading },
   field: true,
 
-  classes: ['node-class'],
+  // classes: ['node-class'],
+  mixins: [basic],
 
   props: {
     checked: null,
@@ -30,42 +41,75 @@ export default {
     inactiveColor: String,
     size: {
       type: String,
-      value: '30px'
+      default: '30px'
     },
     activeValue: {
       type: null,
-      value: true
+      default: true
     },
     inactiveValue: {
       type: null,
-      value: false
+      default: false
+    },
+    nodeClass: {
+      type: String,
+      default: ""
+    }
+  },
+
+  data () {
+    return {
+      value: false,
+      loadingColor: ""
     }
   },
 
   watch: {
-    checked(value) {
+    checked (value) {
       const loadingColor = this.getLoadingColor(value);
-      this.setData({ value, loadingColor });
+      // this.setData({ value, loadingColor });
+      this.value = value
+      this.loadingColor = loadingColor
     }
   },
 
-  created() {
-    const { checked: value } = this.data;
-    const loadingColor = this.getLoadingColor(value);
+  computed: {
+    switchs () {
+      // custom-class {{ utils.bem('switch', { on: value === activeValue, disabled }) }}
+      return `${this.customClass} ${utils.bem('switch', { on: this.value === this.activeValue, disabled: this.disabled })}`
+    },
+    styles () {
+      // font-size: {{ size }}; {{ (checked ? activeColor : inactiveColor) ? 'background-color: ' + (checked ? activeColor : inactiveColor ) : '' }}
+      return `font-size: ${this.size}; ${(this.checked ? this.activeColor : this.inactiveColor) ? 'background-color: ' + (this.checked ? this.activeColor : this.inactiveColor) : ''}`
+    }
+  },
 
-    this.setData({ value, loadingColor });
+  // created () {
+  //   const { checked: value } = this.data;
+  //   const loadingColor = this.getLoadingColor(value);
+
+  //   this.setData({ value, loadingColor });
+  // },
+
+  beforeCreate () {
+    this.$nextTick(() => {
+      const { checked } = this;
+      const loadingColor = this.getLoadingColor(checked);
+      this.value = checked
+      this.loadingColor = loadingColor
+    })
   },
 
   methods: {
-    getLoadingColor(checked) {
-      const { activeColor, inactiveColor } = this.data;
+    getLoadingColor (checked) {
+      const { activeColor, inactiveColor } = this;
       return checked ? activeColor || BLUE : inactiveColor || GRAY_DARK;
     },
 
-    onClick() {
-      const { activeValue, inactiveValue } = this.data;
-      if (!this.data.disabled && !this.data.loading) {
-        const checked = this.data.checked === activeValue;
+    onClick () {
+      const { activeValue, inactiveValue } = this;
+      if (!this.disabled && !this.loading) {
+        const checked = this.checked === activeValue;
         const value = checked ? inactiveValue : activeValue;
         this.$emit('input', value);
         this.$emit('change', value);
@@ -77,5 +121,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
