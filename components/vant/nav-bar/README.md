@@ -1,13 +1,42 @@
+---
+title: Nav-bar 导航栏
+lang: zh
+vant: true
+---
+
 # NavBar 导航栏
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-nav-bar": "path/to/vant-weapp/dist/nav-bar/index"
+```js
+import VanNavBar from "@/components/vant/nav-bar/index.vue"
+
+export default {
+  components: {VanNavBar},
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    onClickLeft () {
+      uni.showToast({
+        title: "点击返回",
+        icon: "none"
+      })
+    },
+    onClickRight () {
+      uni.showToast({
+        title: "点击按钮！！！",
+        icon: "none"
+      })
+    }
+  }
 }
+
 ```
 
 ## 代码演示
@@ -20,28 +49,26 @@
   left-text="返回"
   right-text="按钮"
   left-arrow
-  bind:click-left="onClickLeft"
-  bind:click-right="onClickRight"
+  @click-left="onClickLeft"
+  @click-right="onClickRight"
 />
 ```
 
-```js
-Page({
-  onClickLeft() {
-    wx.showToast({ title: '点击返回', icon: 'none' });
-  },
-  onClickRight() {
-    wx.showToast({ title: '点击按钮', icon: 'none' });
-  }
-});
-```
 
 ### 高级用法
 通过 slot 定制内容
 
 ```html
-<van-nav-bar title="标题" left-text="返回" left-arrow>
-  <van-icon name="search" slot="right" />
+<van-nav-bar
+  title="标题"
+  left-text="返回"
+  left-arrow
+>
+  <van-icon
+    name="search"
+    slot="right"
+    custom-class="icon"
+  />
 </van-nav-bar>
 ```
 

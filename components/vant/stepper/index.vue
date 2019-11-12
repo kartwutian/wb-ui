@@ -144,7 +144,7 @@ export default {
       focus: false,
       inputStyle: '',
       buttonStyle: '',
-      values: ""
+      values: 1
     }
   },
 
@@ -157,6 +157,7 @@ export default {
   beforeCreate () {
     this.$nextTick(() => {
       this.values = this.range(this.value)
+      console.log(this.values)
     })
   },
 

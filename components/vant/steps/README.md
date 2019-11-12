@@ -1,13 +1,56 @@
+---
+title: Steps 步骤条
+lang: zh
+vant: false
+---
+
 # Steps 步骤条
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-steps": "path/to/vant-weapp/dist/steps/index"
+```js
+import VanSteps from "@/components/vant/steps/index.vue"
+
+export default {
+  components: {VanSteps},
+  data () {
+    return {
+      active: 1,
+      steps: [
+        {
+          text: '步骤一',
+          desc: '描述信息'
+        },
+        {
+          text: '步骤二',
+          desc: '描述信息'
+        },
+        {
+          text: '步骤三',
+          desc: '描述信息'
+        },
+        {
+          text: '步骤四',
+          desc: '描述信息'
+        }
+      ]
+    }
+  },
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    nextStep () {
+      this.active = ++this.active % 4
+    }
+  }
 }
+
 ```
 
 ## 代码演示
@@ -16,45 +59,27 @@
 
 ```html
 <van-steps
-  steps="{{ steps }}"
-  active="{{ active }}"
+  :steps="steps"
+  :active="active"
+  custom-class="demo-margin-bottom"
 />
+ <van-button
+  custom-class="demo-margin-left"
+  @click="nextStep"
+>下一步</van-button>
 ```
 
-```javascript
-Page({
-  data: {
-    steps: [
-      {
-        text: '步骤一',
-        desc: '描述信息'
-      },
-      {
-        text: '步骤二',
-        desc: '描述信息'
-      },
-      {
-        text: '步骤三',
-        desc: '描述信息'
-      },
-      {
-        text: '步骤四',
-        desc: '描述信息'
-      }
-    ]
-  }
-});
-```
 
 ### 自定义样式
 可以通过 `active-icon` 和 `active-color` 属性设置激活状态下的图标和颜色
 
 ```html
 <van-steps
-  steps="{{ steps }}"
-  active="{{ active }}"
+  :steps="steps"
+  :active="active"
   active-icon="success"
   active-color="#38f"
+  inactive-icon="arrow"
 />
 ```
 
@@ -63,8 +88,8 @@ Page({
 
 ```html
 <van-steps
-  steps="{{ steps }}"
-  active="{{ active }}"
+  :steps="steps"
+  :active="active"
   direction="vertical"
   active-color="#ee0a24"
 />

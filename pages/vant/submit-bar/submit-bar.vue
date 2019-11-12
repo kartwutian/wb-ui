@@ -63,10 +63,10 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanButton from "../../../components/vant/button/index"
-import VanSubmitBar from "../../../components/vant/submit-bar/index"
-import VanTag from "../../../components/vant/tag/index"
+import DemoBlock from "@/components/app/demo-block";
+import VanButton from "@/components/vant/button/index"
+import VanSubmitBar from "@/components/vant/submit-bar/index"
+import VanTag from "@/components/vant/tag/index"
 
 export default {
   name: 'pages-submit-bar',
@@ -82,7 +82,10 @@ export default {
       console.log(val)
     },
     onClickLink () {
-      console.log("点击修改")
+      uni.showToast({
+        title: "修改地址",
+        icon: "none"
+      })
     }
   }
 }

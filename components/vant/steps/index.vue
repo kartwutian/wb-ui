@@ -1,85 +1,102 @@
 <template>
 
-<view class="custom-class {{ utils.bem('steps', [direction]) }}">
-  <view class="van-step__wrapper">
-    <view
-      v-for=" steps "
-      :key="index"
-      class="{{ utils.bem('step', [direction, status(index, active)]) }} van-hairline"
-    >
-      <view class="van-step__title" :style=" index === active ? 'color: ' + activeColor : '' ">
-        <view>{{ item.text }}</view>
-        <view>{{ item.desc }}</view>
-      </view>
-      <view class="van-step__circle-container">
-        <block v-if=" index !== active ">
+  <view :class="stepsbody">
+    <view class="van-step__wrapper">
+      <view
+        v-for=" (item,index) in steps "
+        :key="index"
+        :class="stepbody(index)"
+      >
+        <view
+          class="van-step__title"
+          :style=" index === active ? 'color: ' + activeColor : '' "
+        >
+          <view>{{ item.text }}</view>
+          <view>{{ item.desc }}</view>
+        </view>
+        <view class="van-step__circle-container">
+          <block v-if=" index !== active ">
+            <van-icon
+              v-if=" inactiveIcon "
+              color="#969799"
+              :name=" inactiveIcon "
+              custom-class="van-step__icon"
+            />
+            <view
+              v-else
+              class="van-step__circle"
+              :style=" index < active ? 'background-color: ' + activeColor : '' "
+            />
+          </block>
+
           <van-icon
-            v-if=" inactiveIcon "
-            color="#969799"
-            :name=" inactiveIcon "
+            v-else
+            :name=" activeIcon "
+            :color=" activeColor "
             custom-class="van-step__icon"
           />
-          <view
-            v-else
-            class="van-step__circle"
-            :style=" index < active ? 'background-color: ' + activeColor : '' "
-          />
-        </block>
-
-        <van-icon v-else :name=" activeIcon " :color=" activeColor " custom-class="van-step__icon" />
+        </view>
+        <view
+          v-if=" index !== steps.length - 1 "
+          class="van-step__line"
+          :style=" index < active ? 'background-color: ' + activeColor : '' "
+        />
       </view>
-      <view
-        v-if=" index !== steps.length - 1 "
-        class="van-step__line" :style=" index < active ? 'background-color: ' + activeColor : '' "
-      />
     </view>
   </view>
-</view>
-
+  <!-- 
 <wxs module="status">
-function get(index, active) {
-  if (index < active) {
-    return 'finish';
-  } else if (index === active) {
-    return 'process';
-  }
 
-  return '';
-}
-
-module.exports = get;
-</wxs>
+</wxs> -->
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
+const get = require("./get")
+import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
+import { button } from '../mixins/button';
+import { openType } from '../mixins/open-type';
+import VanIcon from "../icon/index.vue"
 
 import { GREEN } from '../common/color';
 
 export default {
+  name: "van-steps",
+  components: { VanIcon },
+  mixins: [basic, button, openType],
   props: {
     icon: String,
     steps: Array,
     active: Number,
     direction: {
       type: String,
-      value: 'horizontal'
+      default: 'horizontal'
     },
     activeColor: {
       type: String,
-      value: GREEN
+      default: GREEN
     },
     activeIcon: {
       type: String,
-      value: 'checked'
+      default: 'checked'
     },
     inactiveIcon: String
+  },
+  computed: {
+    stepsbody () {
+      // custom-class {{ utils.bem('steps', [direction]) }}
+      return `${this.customClass} ${utils.bem('steps', [this.direction])}`
+    },
+    stepbody () {
+      return (index) => {
+        return `${utils.bem('step', [this.direction, get(index, this.active)])} van-hairline`
+      }
+    }
   }
 };
 
 </script>
 
 <style lang="less">
-
 </style>

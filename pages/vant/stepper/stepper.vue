@@ -86,9 +86,9 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanCell from "../../../components/vant/cell/index.vue"
-import VanStepper from "../../../components/vant/stepper/index"
+import DemoBlock from "@/components/app/demo-block";
+import VanCell from "@/components/vant/cell/index.vue"
+import VanStepper from "@/components/vant/stepper/index"
 
 export default {
   name: 'pages-stepper',

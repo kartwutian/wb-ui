@@ -1,13 +1,39 @@
+---
+title: Tag 标记
+lang: zh
+vant: true
+---
+
 # Tag 标签
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+```js
+import VanTag from "@/components/vant/tag/index.vue"
 
-```json
-"usingComponents": {
-  "van-tag": "path/to/vant-weapp/dist/tag/index"
+export default {
+  components: {VanTag},
+  data () {
+    return {
+      show: {
+        success: true,
+        primary: true
+      }
+    }
+  },
+  onLoad () {
+
+  },
+  onUnload () {
+
+  },
+  methods: {
+    onClose (type) {
+      this.show[type] = false
+    }
+  }
 }
+
 ```
 
 ## 代码演示
@@ -18,10 +44,10 @@
 
 ```html
 <van-tag>标签</van-tag>
-<van-tag type="primary">标签</van-tag>
-<van-tag type="success">标签</van-tag>
-<van-tag type="danger">标签</van-tag>
-<van-tag type="warning">标签</van-tag>
+<van-tag class="demo-margin-right" type="primary">标签</van-tag>
+<van-tag class="demo-margin-right" type="success">标签</van-tag>
+<van-tag class="demo-margin-right" type="danger">标签</van-tag>
+<van-tag class="demo-margin-right" type="warning">标签</van-tag>
 ```
 
 ### 空心样式
@@ -29,11 +55,11 @@
 设置`plain`属性设置为空心样式
 
 ```html
-<van-tag plain>标签</van-tag>
-<van-tag plain type="primary">标签</van-tag>
-<van-tag plain type="success">标签</van-tag>
-<van-tag plain type="danger">标签</van-tag>
-<van-tag plain type="warning">标签</van-tag>
+<van-tag class="demo-margin-right" plain>标签</van-tag>
+<van-tag class="demo-margin-right" plain type="primary">标签</van-tag>
+<van-tag class="demo-margin-right" plain type="success">标签</van-tag>
+<van-tag class="demo-margin-right" plain type="danger">标签</van-tag>
+<van-tag class="demo-margin-right" plain type="warning">标签</van-tag>
 ```
 
 ### 圆角样式
@@ -41,11 +67,11 @@
 通过`round`设置为圆角样式
 
 ```html
-<van-tag round>标签</van-tag>
-<van-tag round type="primary">标签</van-tag>
-<van-tag round type="success">标签</van-tag>
-<van-tag round type="danger">标签</van-tag>
-<van-tag round type="warning">标签</van-tag>
+<van-tag class="demo-margin-right" round>标签</van-tag>
+<van-tag class="demo-margin-right" round type="primary">标签</van-tag>
+<van-tag class="demo-margin-right" round type="success">标签</van-tag>
+<van-tag class="demo-margin-right" round type="danger">标签</van-tag>
+<van-tag class="demo-margin-right" round type="warning">标签</van-tag>
 ```
 
 ### 标记样式
@@ -53,29 +79,29 @@
 通过`mark`设置为标记样式(半圆角)
 
 ```html
-<van-tag mark>标签</van-tag>
-<van-tag mark type="primary">标签</van-tag>
-<van-tag mark type="success">标签</van-tag>
-<van-tag mark type="danger">标签</van-tag>
-<van-tag mark type="warning">标签</van-tag>
+<van-tag class="demo-margin-right" mark>标签</van-tag>
+<van-tag class="demo-margin-right" mark type="primary">标签</van-tag>
+<van-tag class="demo-margin-right" mark type="success">标签</van-tag>
+<van-tag class="demo-margin-right" mark type="danger">标签</van-tag>
+<van-tag class="demo-margin-right" mark type="warning">标签</van-tag>
 ```
 
 ### 自定义颜色
 
 ```html
-<van-tag color="#f2826a">标签</van-tag>
-<van-tag color="#f2826a" plain>标签</van-tag>
-<van-tag color="#7232dd">标签</van-tag>
-<van-tag color="#7232dd" plain>标签</van-tag>
-<van-tag color="#ffe1e1" text-color="#ad0000">标签</van-tag>
+<van-tag class="demo-margin-right" color="#f2826a">标签</van-tag>
+<van-tag class="demo-margin-right" color="#f2826a" plain>标签</van-tag>
+<van-tag class="demo-margin-right" color="#7232dd">标签</van-tag>
+<van-tag class="demo-margin-right" color="#7232dd" plain>标签</van-tag>
+<van-tag class="demo-margin-right" color="#ffe1e1" text-color="#ad0000">标签</van-tag>
 ```
 
 ### 标签大小
 
 ```html
-<van-tag type="danger">标签</van-tag>
-<van-tag type="danger" size="medium">标签</van-tag>
-<van-tag type="danger" size="large">标签</van-tag>
+<van-tag class="demo-margin-right" type="danger">标签</van-tag>
+<van-tag class="demo-margin-right" type="danger" size="medium">标签</van-tag>
+<van-tag class="demo-margin-right" type="danger" size="large">标签</van-tag>
 ```
 
 ## API
