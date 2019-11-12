@@ -5,7 +5,7 @@
       <view
         v-for=" (item,index) in steps "
         :key="index"
-        :class="stepbody(index)"
+        :class="$utils.bem('step', [direction, get(index, active)]) + ' van-hairline'"
       >
         <view
           class="van-step__title"
@@ -44,7 +44,7 @@
       </view>
     </view>
   </view>
-  <!-- 
+  <!--
 <wxs module="status">
 
 </wxs> -->
@@ -88,11 +88,6 @@ export default {
       // custom-class {{ utils.bem('steps', [direction]) }}
       return `${this.customClass} ${utils.bem('steps', [this.direction])}`
     },
-    stepbody () {
-      return (index) => {
-        return `${utils.bem('step', [this.direction, get(index, this.active)])} van-hairline`
-      }
-    }
   }
 };
 
