@@ -5,7 +5,7 @@
       <view
         v-for=" (item,index) in steps "
         :key="index"
-        :class="$utils.bem('step', [direction, get(index, active)]) + ' van-hairline'"
+        :class="$utils.bem('step', [direction, index  === active ? 'process' : (index < active ? 'finish' : '')]) + ' van-hairline'"
       >
         <view
           class="van-step__title"
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-const get = require("./get")
+
 import utils from '../wxs/utils';
 import { basic } from '../mixins/basic';
 import { button } from '../mixins/button';
