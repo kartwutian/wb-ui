@@ -1,3 +1,9 @@
+---
+title: Divider 分割线
+lang: zh
+vant: true
+---
+
 # Divider 分割线
 
 ### 介绍
@@ -6,12 +12,26 @@
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，默认为`ES6`版本，`ES5`引入方式参见[快速上手](#/quickstart)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-divider": "path/to/vant-weapp/dist/divider/index"
+```js
+
+import VanDivider from "@/components/vant/divider/index"
+
+export default {
+  components: {VanDivider},
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    
+  }
 }
+  
+```
 ```
 
 ## 代码演示
@@ -25,7 +45,7 @@
 ### 使用hairline
 
 ```html
-<van-divider hairline />
+<van-divider />
 ```
 
 ### 虚线
@@ -38,8 +58,8 @@
 
 ```html
 <van-divider contentPosition="center">文本</van-divider>
-  <van-divider contentPosition="left">文本</van-divider>
-  <van-divider contentPosition="right">文本</van-divider>
+<van-divider contentPosition="left">文本</van-divider>
+<van-divider contentPosition="right">文本</van-divider>
 ```
 
 ### 自定义属性

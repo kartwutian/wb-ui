@@ -2,7 +2,7 @@ import {
   isObj
 } from '../common/utils';
 
-const getClassNames = function(name){
+const getClassNames = function (name) {
   return {
     enter: `van-${name}-enter van-${name}-enter-active ${this.enterClass} enter-active-class`,
     'enter-to': `van-${name}-enter-to van-${name}-enter-active ${this.enterToClass} enter-active-class`,
@@ -63,7 +63,6 @@ export const transition = function (showDefaultValue) {
           duration,
           name
         } = this;
-        console.log("===============")
 
         const classNames = getClassNames.call(this, name);
         const currentDuration = isObj(duration) ? duration.enter : duration;
@@ -110,7 +109,6 @@ export const transition = function (showDefaultValue) {
           duration,
           name
         } = this;
-        console.log("--------------")
         const classNames = getClassNames.call(this, name);
         const currentDuration = isObj(duration) ? duration.leave : duration;
 
@@ -172,7 +170,6 @@ export const transition = function (showDefaultValue) {
     },
     watch: {
       show(val, oldval) {
-        console.log("========++++++++++++")
         this.observeShow(val)
       }
     }

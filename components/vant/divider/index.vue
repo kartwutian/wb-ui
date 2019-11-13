@@ -1,47 +1,57 @@
 <template>
 
-<view
-  class="custom-class {{ utils.bem('divider', [{dashed, hairline}, contentPosition]) }}"
-  style="{{ borderColor  ? 'border-color: ' + borderColor + ';' : '' }}{{ textColor ? 'color: ' + textColor + ';' : '' }} {{ fontSize ? 'font-size: ' + fontSize + 'px;' : '' }} {{ customStyle }}"
->
-  <slot />
-</view>
+  <view
+    :class="divider"
+    :style="styles"
+  >
+    <slot />
+  </view>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
+import utils from '../wxs/utils';
 
 
 export default {
   props: {
     dashed: {
       type: Boolean,
-      value: false
+      default: false
     },
     hairline: {
       type: Boolean,
-      value: false
+      default: false
     },
     contentPosition: {
       type: String,
-      value: ''
+      default: 'center'
     },
     fontSize: {
-      type: Number,
-      value: ''
+      type: String,
+      default: ""
     },
     borderColor: {
       type: String,
-      value: ''
+      default: ''
     },
     textColor: {
       type: String,
-      value: ''
+      default: ''
     },
     customStyle: {
       type: String,
-      value: ''
+      default: ''
+    }
+  },
+  computed: {
+    divider () {
+      // custom-class {{ utils.bem('divider', [{dashed, hairline}, contentPosition]) }}
+      return `${this.customClass} ${utils.bem('divider', [{ dashed: this.dashed, hairline: this.hairline }, this.contentPosition])}`
+    },
+    styles () {
+      // {{ borderColor  ? 'border-color: ' + borderColor + ';' : '' }}{{ textColor ? 'color: ' + textColor + ';' : '' }} {{ fontSize ? 'font-size: ' + fontSize + 'px;' : '' }} {{ customStyle }}
+      return `${this.borderColor ? 'border-color: ' + this.borderColor + ';' : ''} ${this.textColor ? 'color: ' + this.textColor + ';' : ''} ${this.fontSize ? 'font-size: ' + this.fontSize + 'px;' : ''} ${this.customStyle}`
     }
   }
 };
@@ -49,5 +59,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
