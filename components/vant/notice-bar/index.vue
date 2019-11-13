@@ -61,6 +61,7 @@ const FONT_COLOR = '#ed6a0c';
 const BG_COLOR = '#fffbe8';
 
 export default {
+  name: "van-notice-bar",
   mixins: [basic],
   components: { VanIcon },
   props: {

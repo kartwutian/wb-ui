@@ -1,87 +1,115 @@
 <template>
 
-<view
-  class="custom-class {{ border ? 'van-hairline--top-bottom' : '' }} {{ utils.bem('tabbar', { fixed, safe: safeAreaInsetBottom }) }}"
-  :style=" zIndex ? 'z-index: ' + zIndex : '' "
->
-  <slot />
-</view>
+  <view
+    :class="tabberBorder"
+    :style=" zIndex ? 'z-index: ' + zIndex : '' "
+  >
+    <slot />
+  </view>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
+import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
+import { queryParentComponent } from '../common/utils';
 
 
 export default {
-  relation: {
-    name: 'tabbar-item',
-    type: 'descendant',
-    linked(target) {
-      this.children.push(target);
-      target.parent = this;
-      target.updateFromParent();
-    },
-    unlinked(target) {
-      this.children = this.children.filter(
-        (item: WechatMiniprogram.Component.TrivialInstance) => item !== target
-      );
-      this.updateChildren();
-    }
-  },
+  name: "van-tabber",
+  mixins: [basic],
+  // relation: {
+  //   name: 'tabbar-item',
+  //   type: 'descendant',
+  //   linked (target) {
+  //     this.children.push(target);
+  //     target.parent = this;
+  //     target.updateFromParent();
+  //   },
+  //   unlinked (target) {
+  //     this.children = this.children.filter(
+  //       (item) => item !== target
+  //     );
+  //     this.updateChildren();
+  //   }
+  // },
 
   props: {
     active: {
       type: null,
-      observer: 'updateChildren'
+      default () {
+        return {};
+      },
     },
     activeColor: {
       type: String,
-      observer: 'updateChildren'
+      default () {
+        return "";
+      },
     },
     inactiveColor: {
       type: String,
-      observer: 'updateChildren'
+      default () {
+        return "";
+      },
     },
     fixed: {
       type: Boolean,
-      value: true
+      default: true
     },
     border: {
       type: Boolean,
-      value: true
+      default: true
     },
     zIndex: {
       type: Number,
-      value: 1
+      default: 1
     },
     safeAreaInsetBottom: {
       type: Boolean,
-      value: true
+      default: true
     }
   },
 
-  beforeCreate() {
+  beforeCreate () {
     this.children = [];
   },
 
+  computed: {
+    tabberBorder () {
+      return `${this.customClass} ${this.border ? 'van-hairline--top-bottom' : ''} ${utils.bem('tabbar', { fixed: this.fixed, safe: this.safeAreaInsetBottom })}`
+    }
+  },
+
   methods: {
-    updateChildren() {
+    linked (target) {
+      this.children.push(target);
+      target.parent = this;
+      target.updateFromParent();
+    },
+    unlinked (target) {
+      this.children = this.children.filter(
+        (item) => item !== target
+      );
+      this.updateChildren();
+    },
+
+    updateChildren () {
       const { children } = this;
       if (!Array.isArray(children) || !children.length) {
         return Promise.resolve();
       }
 
       return Promise.all(
-        children.map((child: WechatMiniprogram.Component.TrivialInstance) => child.updateFromParent())
+        children.map((child) => child.updateFromParent())
       );
     },
 
-    onChange(child: WechatMiniprogram.Component.TrivialInstance) {
+    onChange (child) {
       const index = this.children.indexOf(child);
-      const active = child.data.name || index;
+      const active = child.name || index;
 
-      if (active !== this.data.active) {
+      if (active !== this.active) {
         this.$emit('change', active);
       }
     }
@@ -91,5 +119,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
