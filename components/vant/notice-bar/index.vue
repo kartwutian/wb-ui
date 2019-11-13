@@ -1,123 +1,152 @@
 <template>
 
-<view
-  v-if=" show "
-  class="custom-class {{ utils.bem('notice-bar', { withicon: mode, wrapable }) }}"
-  style="color: {{ color }}; background-color: {{ backgroundColor }};"
-  @tap="onClick"
->
-  <van-icon
-    v-if=" leftIcon "
-    size="16px"
-    :name=" leftIcon "
-    class="van-notice-bar__left-icon"
-  />
-  <slot v-else name="left-icon" />
-
-  <view class="van-notice-bar__wrap">
-    <view class="van-notice-bar__content {{ !scrollable && !wrapable ? 'van-ellipsis' : '' }}" :animation=" animationData ">
-      {{ text }}
-    </view>
-  </view>
-
-  <van-icon
-    v-if=" mode === 'closeable' "
-    class="van-notice-bar__right-icon"
-    name="cross"
-    @tap="onClickIcon"
-  />
-  <navigator
-    v-else-if=" mode === 'link' "
-    :url=" url "
-    :open-type=" openType "
+  <view
+    v-if=" show "
+    :class="noticeBar"
+    :style="'color:'+ color + '; background-color:' + backgroundColor "
+    @tap="onClick"
   >
-    <van-icon class="van-notice-bar__right-icon" name="arrow" />
-  </navigator>
-  <slot v-else name="right-icon" />
-</view>
+    <van-icon
+      v-if=" leftIcon "
+      size="16px"
+      :name=" leftIcon "
+      class="van-notice-bar__left-icon"
+    />
+    <slot
+      v-else
+      name="left-icon"
+    />
+
+    <view class="van-notice-bar__wrap">
+      <view
+        :class="'van-notice-bar__content' + (!scrollable && !wrapable ? 'van-ellipsis' : '') "
+        :animation=" animationData "
+      >
+        {{ text }}
+      </view>
+    </view>
+
+    <van-icon
+      v-if=" mode === 'closeable' "
+      class="van-notice-bar__right-icon"
+      name="cross"
+      @tap="onClickIcon"
+    />
+    <navigator
+      v-else-if=" mode === 'link' "
+      :url=" url "
+      :open-type=" openType "
+    >
+      <van-icon
+        class="van-notice-bar__right-icon"
+        name="arrow"
+      />
+    </navigator>
+    <slot
+      v-else
+      name="right-icon"
+    />
+  </view>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
+import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
+import VanIcon from "../icon/index"
 
-import { Weapp } from 'definitions/weapp';
+// import { Weapp } from 'definitions/weapp';
 
 const FONT_COLOR = '#ed6a0c';
 const BG_COLOR = '#fffbe8';
 
 export default {
+  mixins: [basic],
+  components: { VanIcon },
   props: {
     text: {
       type: String,
-      value: ''
+      default: ''
     },
     mode: {
       type: String,
-      value: ''
+      default: ''
     },
     url: {
       type: String,
-      value: ''
+      default: ''
     },
     openType: {
       type: String,
-      value: 'navigate'
+      default: 'navigate'
     },
     delay: {
       type: Number,
-      value: 1
+      default: 1
     },
     speed: {
       type: Number,
-      value: 50
+      default: 50
     },
     scrollable: {
       type: Boolean,
-      value: true
+      default: true
     },
     leftIcon: {
       type: String,
-      value: ''
+      default: ''
     },
     color: {
       type: String,
-      value: FONT_COLOR
+      default: FONT_COLOR
     },
     backgroundColor: {
       type: String,
-      value: BG_COLOR
+      default: BG_COLOR
     },
     wrapable: Boolean
   },
 
-  data: {
-    show: true
-  },
-
-  watch: {
-    text() {
-      this.setData({}, this.init);
+  data () {
+    return {
+      show: true,
+      animationData: {}
     }
   },
 
-  created() {
-    this.resetAnimation = wx.createAnimation({
-      duration: 0,
-      timingFunction: 'linear'
-    });
+  watch: {
+    text () {
+      this.init()
+    }
   },
 
-  destroyed() {
+  beforeCreate () {
+    this.$nextTick(() => {
+      this.resetAnimation = uni.createAnimation({
+        duration: 0,
+        timingFunction: 'linear'
+      })
+      this.init()
+    })
+
+  },
+
+  computed: {
+    noticeBar () {
+      return `${this.customClass} ${utils.bem('notice-bar', { withicon: this.mode, wrapable: this.wrapable })}`
+    }
+  },
+
+  destroyed () {
     this.timer && clearTimeout(this.timer);
   },
 
   methods: {
-    init() {
+    init () {
       Promise.all([
         this.getRect('.van-notice-bar__content'),
         this.getRect('.van-notice-bar__wrap')
-      ]).then((rects: WechatMiniprogram.BoundingClientRectCallbackResult[]) => {
+      ]).then((rects) => {
         const [contentRect, wrapRect] = rects;
         if (
           contentRect == null ||
@@ -128,7 +157,7 @@ export default {
           return;
         }
 
-        const { speed, scrollable, delay } = this.data;
+        const { speed, scrollable, delay } = this;
 
         if (scrollable && wrapRect.width < contentRect.width) {
           const duration = (contentRect.width / speed) * 1000;
@@ -136,7 +165,7 @@ export default {
           this.wrapWidth = wrapRect.width;
           this.contentWidth = contentRect.width;
           this.duration = duration;
-          this.animation = wx.createAnimation({
+          this.animation = uni.createAnimation({
             duration,
             timingFunction: 'linear',
             delay
@@ -147,24 +176,20 @@ export default {
       });
     },
 
-    scroll() {
+    scroll () {
       this.timer && clearTimeout(this.timer);
       this.timer = null;
 
-      this.setData({
-        animationData: this.resetAnimation
-          .translateX(this.wrapWidth)
-          .step()
-          .export()
-      });
+      this.animationData = this.resetAnimation
+        .translateX(this.wrapWidth)
+        .step()
+        .export()
 
       setTimeout(() => {
-        this.setData({
-          animationData: this.animation
-            .translateX(-this.contentWidth)
-            .step()
-            .export()
-        });
+        this.animationData = this.animation
+          .translateX(-this.contentWidth)
+          .step()
+          .export()
       }, 20);
 
       this.timer = setTimeout(() => {
@@ -172,14 +197,15 @@ export default {
       }, this.duration);
     },
 
-    onClickIcon() {
+    onClickIcon () {
       this.timer && clearTimeout(this.timer);
       this.timer = null;
 
-      this.setData({ show: false });
+      // this.setData({ show: false });
+      this.show = false
     },
 
-    onClick(event) {
+    onClick (event) {
       this.$emit('click', event);
     }
   }
@@ -188,5 +214,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
