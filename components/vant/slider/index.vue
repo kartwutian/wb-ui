@@ -1,44 +1,44 @@
 <template>
 
-<view
-  class="custom-class {{ utils.bem('slider', { disabled }) }}"
-  :style=" inactiveColor ? 'background:' + inactiveColor : '' "
-  @tap="onClick"
->
   <view
-    class="van-slider__bar"
-    style="{{ barStyle }}; {{ activeColor ? 'background:' + activeColor : '' }}"
+    :class="sliders"
+    :style=" inactiveColor ? 'background:' + inactiveColor : '' "
+    @tap="onClick"
   >
     <view
-      class="van-slider__button-wrapper"
-      @touchstart="onTouchStart"
-      catch:touchmove="onTouchMove"
-      @touchend="onTouchEnd"
-      @touchcancel="onTouchEnd"
+      class="van-slider__bar"
+      :style="barStyle + (activeColor ? 'background:' + activeColor : '')"
     >
-      <slot
-        v-if=" useButtonSlot "
-        name="button"
-      />
       <view
-        v-else
-        class="van-slider__button"
-      />
+        class="van-slider__button-wrapper"
+        @touchstart="onTouchStart"
+        @touchmove="onTouchMove"
+        @touchend="onTouchEnd"
+        @touchcancel="onTouchEnd"
+      >
+        <slot
+          v-if=" useButtonSlot "
+          name="button"
+        />
+        <view
+          v-else
+          class="van-slider__button"
+        />
+      </view>
     </view>
   </view>
-</view>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
-
+import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
 import { touch } from '../mixins/touch';
-import { Weapp } from 'definitions/weapp';
+// import { Weapp } from 'definitions/weapp';
 import { addUnit } from '../common/utils';
 
 export default {
-  mixins: [touch],
+  mixins: [touch, basic],
 
   props: {
     disabled: Boolean,
@@ -47,47 +47,64 @@ export default {
     inactiveColor: String,
     max: {
       type: Number,
-      value: 100
+      default: 100
     },
     min: {
       type: Number,
-      value: 0
+      default: 0
     },
     step: {
       type: Number,
-      value: 1
+      default: 1
     },
     value: {
       type: Number,
-      value: 0
+      default: 0
     },
     barHeight: {
       type: null,
-      value: '2px'
+      default: '2px'
+    }
+  },
+
+  data () {
+    return {
+      values: 0,
+      barStyle: {}
     }
   },
 
   watch: {
-    value(value: number) {
+    value (value) {
       this.updateValue(value, false);
     }
   },
 
-  created() {
-    this.updateValue(this.data.value);
+  computed: {
+    sliders () {
+      return `${this.customClass} ${utils.bem('slider', { disabled: this.disabled })}`
+    }
+  },
+
+
+  beforeCreate () {
+    this.$nextTick(() => {
+      this.values = this.value
+      this.updateValue(this.values)
+    })
   },
 
   methods: {
-    onTouchStart(event: Weapp.TouchEvent) {
-      if (this.data.disabled) return;
+    onTouchStart (event) {
+      if (this.disabled) return;
 
       this.touchStart(event);
-      this.startValue = this.format(this.data.value);
+      this.startValue = this.format(this.value);
       this.dragStatus = 'start';
     },
 
-    onTouchMove(event: Weapp.TouchEvent) {
-      if (this.data.disabled) return;
+    onTouchMove (event) {
+      if (this.disabled) return;
 
       if (this.dragStatus === 'start') {
         this.$emit('drag-start');
@@ -96,15 +113,15 @@ export default {
       this.touchMove(event);
       this.dragStatus = 'draging';
 
-      this.getRect('.van-slider').then((rect: WechatMiniprogram.BoundingClientRectCallbackResult) => {
+      this.getRect('.van-slider').then((rect) => {
         const diff = this.deltaX / rect.width * 100;
         this.newValue = this.startValue + diff;
         this.updateValue(this.newValue, false, true);
       });
     },
 
-    onTouchEnd() {
-      if (this.data.disabled) return;
+    onTouchEnd () {
+      if (this.disabled) return;
 
       if (this.dragStatus === 'draging') {
         this.updateValue(this.newValue, true);
@@ -112,33 +129,29 @@ export default {
       }
     },
 
-    onClick(event: Weapp.TouchEvent) {
-      if (this.data.disabled) return;
+    onClick (event) {
+      if (this.disabled) return;
 
-      const { min } = this.data;
+      const { min } = this;
 
-      this.getRect('.van-slider').then((rect: WechatMiniprogram.BoundingClientRectCallbackResult) => {
+      this.getRect('.van-slider').then((rect) => {
         const value = (event.detail.x - rect.left) / rect.width * this.getRange() + min;
         this.updateValue(value, true);
       });
     },
 
-    updateValue(value: number, end: boolean, drag: boolean) {
+    updateValue (value, end, drag) {
       value = this.format(value);
-      const { barHeight, min } = this.data;
+      const { barHeight, min } = this;
       const width = `${((value - min) * 100) / this.getRange()}%`;
 
-      this.setData({
-        value,
-        barStyle: `
-          width: ${width};
-          height: ${addUnit(barHeight)};
-          ${drag ? 'transition: none;' : ''}
-        `,
-      });
+      this.values = value
+      this.barStyle = `width: ${width}; height: ${addUnit(barHeight)};${drag ? 'transition: none;' : ''}`
+      var obj = new Object(this.barStyle)
+
 
       if (drag) {
-        this.$emit('drag', { value });
+        this.$emit('drag', value);
       }
 
       if (end) {
@@ -146,13 +159,13 @@ export default {
       }
     },
 
-    getRange() {
-      const { max, min } = this.data;
+    getRange () {
+      const { max, min } = this;
       return max - min;
     },
 
-    format(value: number) {
-      const { max, min, step } = this.data;
+    format (value) {
+      const { max, min, step } = this;
       return Math.round(Math.max(min, Math.min(value, max)) / step) * step;
     }
   }
@@ -161,5 +174,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>

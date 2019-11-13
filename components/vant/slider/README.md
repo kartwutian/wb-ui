@@ -1,57 +1,119 @@
+---
+title: Slider 滑块
+lang: zh
+vant: true
+---
+
 # Slider 滑块
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-slider": "path/to/vant-weapp/dist/slider/index"
+```js
+
+import VanSlider from "@/components/vant/slider/index.vue"
+
+export default {
+  components: {VanSlider},
+  data () {
+    return {
+      currentValue: 50
+    }
+  },
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    onChange (event) {
+      console.log(event)
+      uni.showToast({
+        title: `当前值：${event}`,
+        icon: "none"
+      });
+    },
+    onDrag (event) {
+      this.currentValue = event
+      uni.showToast({
+        title: `当前值：${event}`,
+        icon: "none"
+      });
+    },
+    dragStart () {
+      uni.showToast({
+        title: "开始滑动",
+        icon: "none"
+      });
+    },
+    dragEnd () {
+      setTimeout(() => {
+        uni.showToast({
+          title: "结束滑动",
+          icon: "none"
+        });
+      }, 1000);
+    }
+  }
 }
+  
 ```
 
 ### 基本用法
 
 ```html
-<van-slider value="50" bind:change="onChange" />
-```
-
-```js
-Page({
-  onChange(event) {
-    wx.showToast({
-      icon: 'none',
-      title: `当前值：${event.detail}`
-    });
-  }
-});
+<van-slider
+  :value="currentValue"
+  custom-class="slider"
+  @change="onChange"
+  @drag-start="dragStart"
+  @drag-end="dragEnd"
+/>
 ```
 
 ### 指定选择范围
 
 ```html
-<van-slider min="-50" max="50" />
+<van-slider
+  custom-class="slider"
+  :min="-50"
+  :max="50"
+  @change="onChange"
+/>
 ```
 
 ### 禁用
 
 ```html
-<van-slider value="50" disabled />
+<van-slider
+  custom-class="slider"
+  v-model="currentValue"
+  disabled
+/>
 ```
 
 ### 指定步长
 
 ```html
-<van-slider value="50" step="10" />
+<van-slider
+  custom-class="slider"
+  v-model="currentValue"
+  :step="10"
+  @change="onChange"
+/>
 ```
 
 ### 自定义样式
 
 ```html
 <van-slider
-  value="50"
+  v-model="currentValue"
+  custom-class="slider"
   bar-height="4px"
   active-color="#ee0a24"
+  @change="onChange"
 />
 ```
 
@@ -59,29 +121,21 @@ Page({
 
 ```html
 <van-slider
-  value="{{ currentValue }}"
+  v-model="currentValue"
+  custom-class="slider"
   use-button-slot
-  bind:drag="onDrag"
+  active-color="#ee0a24"
+  @drag="onDrag"
 >
-  <view class="custom-button" slot="button">
-    {{ currentValue }}/100
+  <view
+    class="custom-button"
+    slot="button"
+  >
+    {{ currentValue }}
   </view>
 </van-slider>
 ```
 
-```js
-Page({
-  data: {
-    currentValue: 50
-  },
-
-  onDrag(event) {
-    this.setData({
-      currentValue: event.detail.value
-    });
-  }
-});
-```
 
 ## API
 
