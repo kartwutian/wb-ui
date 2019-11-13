@@ -1,24 +1,27 @@
 <template>
 
-<view class="custom-class {{ utils.bem('tabs', [type]) }}">
-  <view style="z-index: {{ zIndex }}; {{ wrapStyle }}" class="{{ utils.bem('tabs__wrap', { scrollable }) }} {{ type === 'line' && border ? 'van-hairline--top-bottom' : '' }}">
+<view :class="tabsClass">
+  <view
+      :style="'z-index: ' + zIndex + '; ' + wrapStyle"
+      :class="tabsWrapClass"
+  >
     <slot name="nav-left" />
 
     <scroll-view
       :scroll-x=" scrollable "
       scroll-with-animation
       :scroll-left=" scrollLeft "
-      class="van-tabs__scroll--{{ type }}"
+      :class="'van-tabs__scroll--' + type"
       :style=" color ? 'border-color: ' + color : '' "
     >
-      <view class="{{ utils.bem('tabs__nav', [type]) }} nav-class">
+      <view :class="tabsNavClass">
         <view v-if=" type === 'line' " class="van-tabs__line" :style=" lineStyle " />
         <view
-          v-for=" tabs "
+          v-for="(item, index) in tabs "
           :key="index"
           :data-index=" index "
-          class="van-ellipsis tab-class {{ index === currentIndex ? 'tab-active-class' : '' }} {{ utils.bem('tab', { active: index === currentIndex, disabled: item.disabled }) }}"
-          style="{{ color && index !== currentIndex && type === 'card' && !item.disabled ? 'color: ' + color : '' }} {{ color && index === currentIndex && type === 'card' ? ';background-color:' + color : '' }} {{ color ? ';border-color: ' + color : '' }} {{ scrollable ? ';flex-basis:' + (88 / swipeThreshold) + '%' : '' }}"
+          :class="'van-ellipsis ' + tabClass + (index === currentIndex ? tabActiveClass : '') + ($utils.bem('tab', { active: index === currentIndex, disabled: item.disabled }))"
+          :style="(color && index !== currentIndex && type === 'card' && !item.disabled ? 'color: ' + color : '') + (color && index === currentIndex && type === 'card' ? ';background-color:' + color : '') + (color ? ';border-color: ' + color : '') + (scrollable ? ';flex-basis:' + (88 / swipeThreshold) + '%' : '')"
           @tap="onTap"
         >
           <view class="van-ellipsis" :style=" item.titleStyle ">
@@ -52,52 +55,35 @@
 </template>
 
 <script>
-  import utils from '../wxs/utils';
-
+import utils from '../wxs/utils';
+import {basic} from "../mixins/basic";
 import { touch } from '../mixins/touch';
-import { Weapp } from 'definitions/weapp';
+import { set } from '../mixins/set';
+// import { Weapp } from 'definitions/weapp';
 import { nextTick, isDef, addUnit } from '../common/utils';
+import VanInfo from "../info/index";
 
-type TabItemData = {
-  width?: number
-  active: boolean
-  inited?: boolean
-  animated?: boolean
-  name?: string | number
-};
+// type TabItemData = {
+//   width?: number
+//   active: boolean
+//   inited?: boolean
+//   animated?: boolean
+//   name?: string | number
+// };
 
-type Position = 'top' | 'bottom' | '';
+// type Position = 'top' | 'bottom' | '';
 
 export default {
-  mixins: [touch],
+  name: 'van-tabs',
+  components: {VanInfo},
+  mixins: [basic, touch, set],
 
-  classes: ['nav-class', 'tab-class', 'tab-active-class', 'line-class'],
+  // classes: ['nav-class', 'tab-class', 'tab-active-class', 'line-class'],
 
   relation: {
     name: 'tab',
     type: 'descendant',
-    linked(child) {
-      child.index = this.children.length;
-      child.setComputedName();
-      this.children.push(child);
-      this.updateTabs(this.data.tabs.concat(child.data));
-    },
-    unlinked(child) {
-      const index = this.children.indexOf(child);
-      const { tabs } = this.data;
-      tabs.splice(index, 1);
-      this.children.splice(index, 1);
 
-      let i = index;
-      while (i >= 0 && i < this.children.length) {
-        const currentChild = this.children[i];
-        currentChild.index--;
-        currentChild.setComputedName();
-        i++;
-      }
-
-      this.updateTabs(tabs);
-    }
   },
 
   props: {
@@ -105,60 +91,89 @@ export default {
     sticky: Boolean,
     animated: Boolean,
     swipeable: Boolean,
+    navClass: {
+      type: String,
+      default: ''
+    },
+    tabClass: {
+      type: String,
+      default: ''
+    },
+    tabActiveClass: {
+      type: String,
+      default: ''
+    },
+    lineClass: {
+      type: String,
+      default: ''
+    },
     lineWidth: {
-      type: [String, Number],
-      value: -1
+      type: String | Number,
+      default: -1
     },
     lineHeight: {
-      type: [String, Number],
-      value: -1
+      type: String | Number,
+      default: -1
     },
     active: {
-      type: [String, Number],
-      value: 0,
+      type: String | Number,
+      default: 0,
     },
     type: {
       type: String,
-      value: 'line'
+      default: 'line'
     },
     border: {
       type: Boolean,
-      value: true
+      default: true
     },
     duration: {
       type: Number,
-      value: 0.3
+      default: 0.3
     },
     zIndex: {
       type: Number,
-      value: 1
+      default: 1
     },
     swipeThreshold: {
       type: Number,
-      value: 4
+      default: 4
     },
     offsetTop: {
       type: Number,
-      value: 0
+      default: 0
     }
   },
 
-  data: {
-    tabs: [],
-    lineStyle: '',
-    scrollLeft: 0,
-    scrollable: false,
-    trackStyle: '',
-    wrapStyle: '',
-    position: '',
-    currentIndex: 0,
+  data(){
+    return {
+      tabs: [],
+      lineStyle: '',
+      scrollLeft: 0,
+      scrollable: false,
+      trackStyle: '',
+      wrapStyle: '',
+      position: '',
+      currentIndex: 0,
+    }
   },
+
+  computed: {
+    tabsClass(){
+      return `${this.customClass} ${utils.bem('tabs', [this.type])}`
+    },
+    tabsWrapClass(){
+      return `${utils.bem('tabs__wrap', { scrollable: this.scrollable })} ${this.type === 'line' && this.border ? 'van-hairline--top-bottom' : ''}`
+    },
+    tabsNavClass(){
+      return `${utils.bem('tabs__nav', [this.type])} ${this.navClass}`
+    },
+  },
+
 
   watch: {
     swipeThreshold() {
-      this.setData({
-        scrollable: this.children.length > this.data.swipeThreshold
-      });
+      this.scrollable = this.children.length > this.swipeThreshold;
     },
     color: 'setLine',
     lineWidth: 'setLine',
@@ -168,16 +183,16 @@ export default {
     offsetTop: 'setWrapStyle'
   },
 
-  beforeCreate() {
-    this.children = [];
-  },
-
   mounted() {
+    console.log(this.children)
+    setTimeout(()=>{
+      console.log(this.children)
+    },1000)
     this.setLine(true);
     this.setTrack();
     this.scrollIntoView();
     this.getRect('.van-tabs__wrap').then(
-      (rect: WechatMiniprogram.BoundingClientRectCallbackResult) => {
+      (rect) => {
         this.navHeight = rect.height;
         this.observerContentScroll();
       }
@@ -190,17 +205,43 @@ export default {
   },
 
   methods: {
-    updateTabs(tabs: TabItemData[]) {
-      tabs = tabs || this.data.tabs;
-      this.setData({
-        tabs,
-        scrollable: tabs.length > this.data.swipeThreshold
-      });
+
+    linked(child) {
+      this.children = this.children || [];
+      child.index = this.children.length;
+      this.children.push(child);
+      // 把子项data映射过来
+      this.updateTabs(this.tabs.concat({
+        ...child.$data,
+        ...child.$props,
+      }));
+    },
+    unlinked(child) {
+      const index = this.children.indexOf(child);
+      const { tabs } = this;
+      tabs.splice(index, 1);
+      this.children.splice(index, 1);
+
+      let i = index;
+      while (i >= 0 && i < this.children.length) {
+        const currentChild = this.children[i];
+        currentChild.index--;
+        i++;
+      }
+
+      this.updateTabs(tabs);
+    },
+
+    updateTabs(tabs) {
+      tabs = tabs || this.tabs;
+      this.tabs = tabs;
+      // debugger
+      this.scrollable = tabs.length > this.swipeThreshold;
       this.setActiveTab();
     },
 
-    trigger(eventName: string, name: string | number) {
-      const { tabs, currentIndex } = this.data;
+    trigger(eventName) {
+      const { tabs, currentIndex } = this;
 
       this.$emit(eventName, {
         name,
@@ -211,7 +252,7 @@ export default {
     onTap(event) {
       const { index } = event.currentTarget.dataset;
       const child = this.children[index];
-      if (this.data.tabs[index].disabled) {
+      if (this.tabs[index].disabled) {
         this.trigger('disabled', child.computedName);
       } else {
         this.trigger('click', child.computedName);
@@ -227,15 +268,15 @@ export default {
       }
     },
 
-    setLine(skipTransition?: boolean) {
-      if (this.data.type !== 'line') {
+    setLine(skipTransition) {
+      if (this.type !== 'line') {
         return;
       }
 
-      const { color, duration, currentIndex, lineWidth, lineHeight } = this.data;
+      const { color, duration, currentIndex, lineWidth, lineHeight } = this;
 
       this.getRect('.van-tab', true).then(
-        (rects: WechatMiniprogram.BoundingClientRectCallbackResult[]) => {
+        (rects) => {
           const rect = rects[currentIndex];
           const width = lineWidth !== -1 ? lineWidth : rect.width / 2;
           const height = lineHeight !== -1 ? `height: ${addUnit(lineHeight)}; border-radius: ${addUnit(lineHeight)};` : '';
@@ -250,43 +291,41 @@ export default {
             ? ''
             : `transition-duration: ${duration}s; -webkit-transition-duration: ${duration}s;`;
 
-          this.setData({
-            lineStyle: `
+          this.lineStyle = `
             ${height}
             width: ${addUnit(width)};
             background-color: ${color};
             -webkit-transform: translateX(${left}px);
             transform: translateX(${left}px);
             ${transition}
-          `
-          });
+          `;
         }
       );
     },
 
     setTrack() {
-      const { animated, duration, currentIndex } = this.data;
+      const { animated, duration, currentIndex } = this;
 
       if (!animated) return '';
 
       this.getRect('.van-tabs__content').then(
-        (rect: WechatMiniprogram.BoundingClientRectCallbackResult) => {
+        (rect) => {
           const { width } = rect;
 
-          this.setData({
-            trackStyle: `
+          this.trackStyle = `
               width: ${width * this.children.length}px;
               left: ${-1 * currentIndex * width}px;
               transition: left ${duration}s;
               display: -webkit-box;
               display: flex;
-            `
-          });
+            `;
 
           const data = { width, animated };
 
-          this.children.forEach((item: WechatMiniprogram.Component.TrivialInstance) => {
-            item.setData(data);
+          this.children.forEach((item) => {
+            Object.keys(data).forEach((k) => {
+              item[k] = data[k];
+            });
           });
         }
       );
@@ -294,23 +333,24 @@ export default {
 
     setActiveTab() {
       if (!isDef(this.currentName)) {
-        this.currentName = this.data.active || (this.children[0] || {}).computedName;
+        this.currentName = this.active || (this.children[0] || {}).computedName;
       }
 
-      this.children.forEach((item: WechatMiniprogram.Component.TrivialInstance, index: number) => {
-        const data: TabItemData = {
+      this.children.forEach((item, index) => {
+        const data = {
           active: item.computedName === this.currentName
         };
 
+
         if (data.active) {
-          this.setData({
-            currentIndex: index
-          });
+          this.currentIndex = index;
           data.inited = true;
         }
 
-        if (data.active !== item.data.active) {
-          item.setData(data);
+        if (data.active !== item.active) {
+          Object.keys(data).forEach((k) => {
+            item[k] = data[k];
+          });
         }
       });
 
@@ -323,7 +363,7 @@ export default {
 
     // scroll active tab into view
     scrollIntoView() {
-      const { currentIndex, scrollable } = this.data;
+      const { currentIndex, scrollable } = this;
 
       if (!scrollable) {
         return;
@@ -333,39 +373,34 @@ export default {
         this.getRect('.van-tab', true),
         this.getRect('.van-tabs__nav')
       ]).then(
-        ([tabRects, navRect]: [
-        WechatMiniprogram.BoundingClientRectCallbackResult[],
-        WechatMiniprogram.BoundingClientRectCallbackResult
-        ]) => {
+        ([tabRects, navRect]) => {
           const tabRect = tabRects[currentIndex];
           const offsetLeft = tabRects
             .slice(0, currentIndex)
             .reduce((prev, curr) => prev + curr.width, 0);
 
-          this.setData({
-            scrollLeft: offsetLeft - (navRect.width - tabRect.width) / 2
-          });
+          this.scrollLeft = offsetLeft - (navRect.width - tabRect.width) / 2;
         }
       );
     },
 
-    onTouchStart(event: Weapp.TouchEvent) {
-      if (!this.data.swipeable) return;
+    onTouchStart(event) {
+      if (!this.swipeable) return;
 
       this.touchStart(event);
     },
 
-    onTouchMove(event: Weapp.TouchEvent) {
-      if (!this.data.swipeable) return;
+    onTouchMove(event) {
+      if (!this.swipeable) return;
 
       this.touchMove(event);
     },
 
     // watch swipe touch end
     onTouchEnd() {
-      if (!this.data.swipeable) return;
+      if (!this.swipeable) return;
 
-      const { tabs, currentIndex } = this.data;
+      const { tabs, currentIndex } = this;
 
       const { direction, deltaX, offsetX } = this;
       const minSwipeDistance = 50;
@@ -380,11 +415,8 @@ export default {
     },
 
     setWrapStyle() {
-      const { offsetTop, position } = this.data as {
-        offsetTop: number
-        position: Position
-      };
-      let wrapStyle: string;
+      const { offsetTop, position } = this;
+      let wrapStyle;
 
       switch (position) {
         case 'top':
@@ -403,17 +435,17 @@ export default {
           wrapStyle = '';
       }
 
-      if (wrapStyle !== this.data.wrapStyle) {
-        this.setData({ wrapStyle });
+      if (wrapStyle !== this.wrapStyle) {
+        this.wrapStyle = wrapStyle;
       }
     },
 
     observerContentScroll() {
-      if (!this.data.sticky) {
+      if (!this.sticky) {
         return;
       }
 
-      const { offsetTop } = this.data;
+      const { offsetTop } = this;
       const { windowHeight } = wx.getSystemInfoSync();
 
       // @ts-ignore
@@ -422,14 +454,14 @@ export default {
       // @ts-ignore
       this.createIntersectionObserver()
         .relativeToViewport({ top: -(this.navHeight + offsetTop) })
-        .observe('.van-tabs', (res: WechatMiniprogram.ObserveCallbackResult) => {
+        .observe('.van-tabs', (res) => {
           const { top } = res.boundingClientRect;
 
           if (top > offsetTop) {
             return;
           }
 
-          const position: Position =
+          const position =
             res.intersectionRatio > 0 ? 'top' : 'bottom';
 
           this.$emit('scroll', {
@@ -443,14 +475,14 @@ export default {
       // @ts-ignore
       this.createIntersectionObserver()
         .relativeToViewport({ bottom: -(windowHeight - 1 - offsetTop) })
-        .observe('.van-tabs', (res: WechatMiniprogram.ObserveCallbackResult) => {
+        .observe('.van-tabs', (res) => {
           const { top, bottom } = res.boundingClientRect;
 
           if (bottom < this.navHeight) {
             return;
           }
 
-          const position: Position = res.intersectionRatio > 0 ? 'top' : '';
+          const position = res.intersectionRatio > 0 ? 'top' : '';
 
           this.$emit('scroll', {
             scrollTop: top + offsetTop,
@@ -461,8 +493,8 @@ export default {
         });
     },
 
-    setPosition(position: Position) {
-      if (position !== this.data.position) {
+    setPosition(position) {
+      if (position !== this.position) {
         this.set({ position }).then(() => {
           this.setWrapStyle();
         });
@@ -474,5 +506,26 @@ export default {
 </script>
 
 <style lang="less">
+  .content {
+    padding: 20px;
+    background-color: #fff;
+  }
 
+  .content-2 {
+    padding: 20px;
+  }
+
+  .right-nav {
+    padding: 0 10px;
+    line-height: 44px !important;
+    background-color: #fff;
+  }
+
+  .tab-class {
+    transition: all 0.25s ease-in-out;
+  }
+
+  .tab-active-class {
+    font-size: 1.05em !important;
+  }
 </style>

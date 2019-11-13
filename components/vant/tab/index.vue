@@ -2,8 +2,8 @@
 
 <view
   v-if=" animated || inited "
-  class="custom-class {{ utils.bem('tab__pane', { active, inactive: !active }) }}"
-  style="{{ animated || active ? '' : 'display: none;' }} {{ width ? 'width:' + width + 'px;' : '' }}"
+  :class="classes"
+  :style="style"
 >
   <slot />
 </view>
@@ -13,9 +13,11 @@
 <script>
   import {basic} from '../mixins/basic'
   import utils from '../wxs/utils';
+  import {queryParentComponent} from "../common/utils";
 
-
-export default {
+  export default {
+  name: 'van-tab',
+  mixins: [basic],
   relation: {
     name: 'tabs',
     type: 'ancestor'
@@ -28,17 +30,51 @@ export default {
     disabled: Boolean,
     titleStyle: String,
     name: {
-      type: [Number, String],
-      value: '',
-      observer: 'setComputedName'
+      type: Number | String,
+      default: '',
+      // observer: 'setComputedName'
     }
   },
 
-  data: {
-    width: null,
-    inited: false,
-    active: false,
-    animated: false
+  data() {
+    return {
+      width: null,
+      inited: false,
+      active: false,
+      animated: false,
+
+      hasParent: false, // 标记是否有父元素
+    };
+  },
+
+  computed: {
+    classes(){
+      return `${this.customClass} ${utils.bem('tab__pane', { active: this.active, inactive: !this.active })}`
+    },
+    style(){
+      return `${this.animated || this.active ? '' : 'display: none;'} ${this.width ? 'width:' + this.width + 'px;' : ''}`
+    },
+    computedName(){
+      return this.name || this.index;
+    },
+  },
+
+
+  mounted() {
+    this.parent = queryParentComponent(this, 'van-tabs');
+
+    if(this.parent){
+      this.hasParent = true;
+      this.parent.linked(this);
+    }
+  },
+
+  destroyed() {
+    if(this.parent){
+      this.parent.unlinked(this);
+      this.parent = null;
+      this.hasParent = false;
+    }
   },
 
   watch: {
@@ -50,14 +86,13 @@ export default {
   },
 
   methods: {
-    setComputedName() {
-      this.computedName = this.data.name || this.index;
-    },
+    // setComputedName() {
+    //   this.computedName = this.name || this.index;
+    // },
 
     update() {
-      const parent = this.getRelationNodes('../tabs/index')[0];
-      if (parent) {
-        parent.updateTabs();
+      if (this.parent) {
+        this.parent.updateTabs();
       }
     }
   }
