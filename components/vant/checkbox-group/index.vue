@@ -1,57 +1,67 @@
 <template>
-    <slot />
-
+  <view>
+    <slot/>
+  </view>
 </template>
 
 <script>
 
 
-export default {
-  field: true,
+  export default {
+    name: 'van-checkbox-group',
 
-  relation: {
-    name: 'checkbox',
-    type: 'descendant',
-    linked(target) {
-      this.children = this.children || [];
-      this.children.push(target);
-      this.updateChild(target);
-    },
-    unlinked(target) {
-      this.children = this.children.filter(
-        (child: WechatMiniprogram.Component.TrivialInstance) => child !== target
-      );
-    }
-  },
-
-  props: {
-    max: Number,
-    value: {
-      type: Array,
-      observer: 'updateChildren'
-    },
-    disabled: {
-      type: Boolean,
-      observer: 'updateChildren'
-    }
-  },
-
-  methods: {
-    updateChildren() {
-      (this.children || []).forEach((child: WechatMiniprogram.Component.TrivialInstance) =>
-        this.updateChild(child)
-      );
+    props: {
+      max: Number,
+      value: {
+        type: Array,
+        default(){
+          return [];
+        },
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
+      }
     },
 
-    updateChild(child: WechatMiniprogram.Component.TrivialInstance) {
-      const { value, disabled } = this.data;
-      child.setData({
-        value: value.indexOf(child.data.name) !== -1,
-        disabled: disabled || child.data.disabled
-      });
+    mounted(){
+      this.$emit('parent-link', this);
+    },
+
+    methods: {
+      linked(target) {
+        this.children = this.children || [];
+        this.children.push(target);
+        this.updateChild(target);
+      },
+      unlinked(target) {
+        this.children = this.children.filter(
+          (child) => child !== target
+        );
+      },
+
+      updateChildren() {
+        (this.children || []).forEach((child) =>{
+            this.updateChild(child)
+          }
+        );
+      },
+
+      updateChild(child) {
+        const {value, disabled} = this;
+        child.proxyValue = value.indexOf(child.name) !== -1;
+        child.proxyDisabled =  disabled || child.disabled;
+      }
+    },
+    watch: {
+      value(){
+        this.updateChildren()
+      },
+      disabled(){
+        this.updateChildren()
+      }
     }
-  }
-};
+  };
 
 </script>
 
