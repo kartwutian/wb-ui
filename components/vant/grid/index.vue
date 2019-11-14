@@ -1,7 +1,10 @@
 <template>
-    <view class="van-grid {{ border && !gutter ? 'van-hairline--top' : '' }}" :style=" style ">
-  <slot />
-</view>
+  <view
+    :class="'van-grid' + (border && !gutter ? 'van-hairline--top' : '')  "
+    :style=" style "
+  >
+    <slot />
+  </view>
 
 </template>
 
@@ -9,67 +12,76 @@
 
 
 export default {
+  name: "van-grid",
   relation: {
     name: 'grid-item',
     type: 'descendant',
-    linked(child) {
-      this.children.push(child);
-    },
-    unlinked(child) {
-      this.children = this.children.filter(
-        (item: WechatMiniprogram.Component.TrivialInstance) => item !== child
-      );
-    }
   },
 
   props: {
     square: {
       type: Boolean,
-      observer: 'updateChildren'
     },
     gutter: {
-      type: [Number, String],
-      value: 0,
-      observer: 'updateChildren'
+      type: Number,
+      default: 0,
     },
     clickable: {
       type: Boolean,
-      observer: 'updateChildren'
     },
     columnNum: {
-      type: Number,
-      value: 4,
-      observer: 'updateChildren'
+      type: [Number, String],
+      default: 4,
     },
     center: {
       type: Boolean,
-      value: true,
-      observer: 'updateChildren'
+      default: true,
     },
     border: {
       type: Boolean,
-      value: true,
-      observer: 'updateChildren'
+      default: true,
     }
   },
 
-  beforeCreate() {
-    this.children = [];
+  watch: {
+    square: "updateChildren",
+    gutter: "updateChildren",
+    clickable: "updateChildren",
+    columnNum: "updateChildren",
+    center: "updateChildren",
+    border: "updateChildren",
   },
 
-  created() {
-    const { gutter } = this.data;
-    if (gutter) {
-      this.setData({
-        style: `padding-left: ${gutter}px`
-      });
+
+  beforeCreate () {
+    this.children = [];
+    this.$nextTick(() => {
+      const { gutter } = this;
+      if (gutter) {
+        this.style = `padding-left: ${gutter}px`
+      }
+    })
+
+  },
+
+  data () {
+    return {
+      style: ""
     }
   },
 
   methods: {
-    updateChildren() {
+    linked (child) {
+      this.children.push(child);
+    },
+    unlinked (child) {
+      this.children = this.children.filter(
+        (item) => item !== child
+      );
+    },
+    updateChildren () {
       this.children.forEach(
-        (child: WechatMiniprogram.Component.TrivialInstance) => {
+        (child) => {
           child.updateStyle();
         }
       );
@@ -80,5 +92,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>

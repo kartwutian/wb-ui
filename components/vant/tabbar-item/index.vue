@@ -64,7 +64,6 @@ export default {
       active: false,
       inactiveColor: "",
       activeColor: "",
-      parent: {},
       hasParent: false, // 标记是否有父元素
     }
   },
