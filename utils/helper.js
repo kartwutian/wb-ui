@@ -273,3 +273,44 @@ export function gettersGenerate(initialState,getters) {
     ...getters,
   }
 }
+
+
+/**
+ *
+ * @param options
+ * @param enhancer   // 增强子, 增强的配置项必须是函数（处理生命周期）;增强子可以是函数，也可以是对象，函数的话默认为before，在配置项之前执行;是对象的话，可以配置before 和 after，控制执行的顺序
+ */
+export function page(options, enhancer = {} ) {
+
+  Object.keys(enhancer).forEach((k)=>{
+    if(options[k] && isFuc(options[k])){
+      const temp = options[k];
+      const before = isObject(enhancer[k]) ? enhancer[k].before : enhancer[k] ;
+      const after = isObject(enhancer[k]) ? enhancer[k].after : undefined;
+
+      options[k] = function (...args) {
+        before && before(...args);
+        temp(...args);
+        after && after(...args);
+      }
+    }
+  });
+
+  return {
+    ...options,
+  }
+}
+
+/**
+ * 页面拦截
+ * @param options
+ * @returns {*}
+ */
+export function pageIntercept(options) {
+  const enhancer = {
+    onLoad(){
+      console.log('you has not login in')
+    }
+  };
+  return page(options, enhancer)
+}
