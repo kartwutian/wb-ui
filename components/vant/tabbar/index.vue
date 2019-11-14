@@ -12,47 +12,20 @@
 <script>
 import utils from '../wxs/utils';
 import { basic } from '../mixins/basic';
-import { queryParentComponent } from '../common/utils';
 
 
 export default {
-  name: "van-tabber",
+  name: "van-tabbar",
   mixins: [basic],
-  // relation: {
-  //   name: 'tabbar-item',
-  //   type: 'descendant',
-  //   linked (target) {
-  //     this.children.push(target);
-  //     target.parent = this;
-  //     target.updateFromParent();
-  //   },
-  //   unlinked (target) {
-  //     this.children = this.children.filter(
-  //       (item) => item !== target
-  //     );
-  //     this.updateChildren();
-  //   }
-  // },
+  relation: {
+    name: 'tabbar-item',
+    type: 'descendant'//祖先
+  },
 
   props: {
-    active: {
-      type: null,
-      default () {
-        return {};
-      },
-    },
-    activeColor: {
-      type: String,
-      default () {
-        return "";
-      },
-    },
-    inactiveColor: {
-      type: String,
-      default () {
-        return "";
-      },
-    },
+    active: null,
+    activeColor: String,
+    inactiveColor: String,
     fixed: {
       type: Boolean,
       default: true
@@ -73,6 +46,12 @@ export default {
 
   beforeCreate () {
     this.children = [];
+  },
+
+  watch: {
+    active: 'updateChildren',
+    activeColor: 'updateChildren',
+    inactiveColor: 'updateChildren',
   },
 
   computed: {
