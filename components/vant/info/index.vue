@@ -23,8 +23,7 @@ export default {
   computed: {
     classes () {
       //van-info 属性会让使用icon的组件右上角出现白条
-      // return `${this.customClass} van-info ${utils.bem('info', { dot: this.dot })}`
-      return `${this.customClass}`
+      return `${this.customClass} van-info ${utils.bem('info', { dot: this.dot })}`
     }
   }
 };

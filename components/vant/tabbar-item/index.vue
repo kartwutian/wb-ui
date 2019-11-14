@@ -9,7 +9,7 @@
       <van-icon
         v-if=" icon "
         :name=" icon "
-        customStyle="display: block"
+        custom-style="display: block"
       />
       <block v-else>
         <slot
@@ -37,15 +37,16 @@
 <script>
 import utils from '../wxs/utils';
 import { basic } from '../mixins/basic';
+import { set } from '../mixins/set';
 import { queryParentComponent } from '../common/utils';
 import VanIcon from "../icon/index";
 import VanInfo from "../info/index"
 
 
 export default {
-  name: "van-tabber-item",
+  name: "van-tabbar-item",
   components: { VanIcon, VanInfo },
-  mixins: [basic],
+  mixins: [basic, set],
   props: {
     info: null,
     name: null,
@@ -53,23 +54,34 @@ export default {
     dot: Boolean
   },
 
-  // relation: {
-  //   name: 'tabbar',
-  //   type: 'ancestor'//祖先
-  // },
+  relation: {
+    name: 'tabbar',
+    type: 'ancestor'//祖先
+  },
 
   data () {
     return {
       active: false,
       inactiveColor: "",
-      parent: {}
+      activeColor: "",
+      parent: {},
+      hasParent: false, // 标记是否有父元素
     }
   },
 
   mounted () {
-    this.parent = queryParentComponent(this, 'van-tabber');
+    this.parent = queryParentComponent(this, 'van-tabbar');
     if (this.parent) {
+      this.hasParent = true;
       this.parent.linked(this);
+    }
+  },
+
+  destroyed () {
+    if (this.parent) {
+      this.parent.unlinked(this);
+      this.parent = null;
+      this.hasParent = false;
     }
   },
 

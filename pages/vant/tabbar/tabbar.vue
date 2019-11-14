@@ -2,11 +2,11 @@
   <view class="pages-tabbar">
     <demo-block title="基础用法">
       <van-tabbar
-        :active="active"
-        data-key="active"
+        :active="active.active1"
+        data-key="active.active1"
         custom-class="tabbar"
         :safe-area-inset-bottom="false"
-        @change="onChange"
+        @change="onChange1"
       >
         <van-tabbar-item icon="home-o">标签</van-tabbar-item>
         <van-tabbar-item icon="search">标签</van-tabbar-item>
@@ -15,13 +15,13 @@
       </van-tabbar>
     </demo-block>
 
-    <!-- <demo-block title="通过名称匹配">
+    <demo-block title="通过名称匹配">
       <van-tabbar
-        :active="active2"
-        data-key="active2"
+        :active="active.active2"
+        data-key="active.active2"
         custom-class="tabbar"
         :safe-area-inset-bottom="false"
-        @change="onChange"
+        @change="onChange2"
       >
         <van-tabbar-item
           name="home"
@@ -44,11 +44,11 @@
 
     <demo-block title="显示徽标">
       <van-tabbar
-        :active="active3"
-        data-key="active3"
+        :active="active.active3"
+        data-key="active.active3"
         custom-class="tabbar"
         :safe-area-inset-bottom="false"
-        @change="onChange"
+        @change="onChange3"
       >
         <van-tabbar-item icon="home-o">标签</van-tabbar-item>
         <van-tabbar-item
@@ -68,11 +68,11 @@
 
     <demo-block title="自定义图标">
       <van-tabbar
-        :active="active4"
-        data-key="active4"
+        :active="active.active4"
+        data-key="active.active4"
         custom-class="tabbar"
         :safe-area-inset-bottom="false"
-        @change="onChange"
+        @change="onChange4"
       >
         <van-tabbar-item info="3">
           <image
@@ -96,20 +96,20 @@
 
     <demo-block title="自定义颜色">
       <van-tabbar
-        :active="active5"
-        data-key="active5"
+        :active="active.active5"
+        data-key="active.active5"
         custom-class="tabbar"
         active-color="#07c160"
         inactive-color="#000"
         :safe-area-inset-bottom="false"
-        @change="onChange"
+        @change="onChange5"
       >
         <van-tabbar-item icon="home-o">标签</van-tabbar-item>
         <van-tabbar-item icon="search">标签</van-tabbar-item>
         <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
         <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
       </van-tabbar>
-    </demo-block> -->
+    </demo-block>
   </view>
 </template>
 
@@ -123,11 +123,13 @@ export default {
   components: { VanTabbarItem, VanTabbar, DemoBlock },
   data () {
     return {
-      active: 0,
-      active2: 'home',
-      active3: 0,
-      active4: 0,
-      active5: 0,
+      active: {
+        active1: 0,
+        active2: 'home',
+        active3: 0,
+        active4: 0,
+        active5: 0,
+      },
       icon: {
         normal: 'https://img.yzcdn.cn/vant/user-inactive.png',
         active: 'https://img.yzcdn.cn/vant/user-active.png'
@@ -141,10 +143,23 @@ export default {
 
   },
   methods: {
-    onChange (event) {
-      console.log(event)
-      // const { key } = event.currentTarget.dataset;
-      // this.setData({ [key]: event.detail });
+    onChange1 (event) {
+      this.changeActive(event, 1)
+    },
+    onChange2 (event) {
+      this.changeActive(event, 2)
+    },
+    onChange3 (event) {
+      this.changeActive(event, 3)
+    },
+    onChange4 (event) {
+      this.changeActive(event, 4)
+    },
+    onChange5 (event) {
+      this.changeActive(event, 5)
+    },
+    changeActive (event, val) {
+      this.active[`active${val}`] = event
     }
   }
 }
