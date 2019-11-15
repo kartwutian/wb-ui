@@ -1,80 +1,94 @@
 <template>
-    <view
-  class="van-swipe-cell"
-  data-key="cell"
-  catchtap="onClick"
-  bindtouchstart="startDrag"
-  :catchtouchmove=" catchMove ? 'noop' : '' "
-  capture-@touchmove="onDrag"
-  catchtouchend="endDrag"
-  catchtouchcancel="endDrag"
->
-  <view :style=" wrapperStyle ">
-    <view v-if=" leftWidth " class="van-swipe-cell__left" data-key="left" catch:tap="onClick">
-      <slot name="left" />
-    </view>
-    <slot />
-    <view v-if=" rightWidth " class="van-swipe-cell__right" data-key="right" catch:tap="onClick">
-      <slot name="right" />
+  <view
+    class="van-swipe-cell"
+    data-key="cell"
+    @tap="onClick"
+    @touchstart="startDrag"
+    :catchtouchmove=" catchMove ? 'noop' : '' "
+    @touchmove="onDrag"
+    @touchend="endDrag"
+    @touchcancel="endDrag"
+  >
+    <view :style=" wrapperStyle ">
+      <view
+        v-if=" leftWidth "
+        class="van-swipe-cell__left"
+        @tap="onClick"
+      >
+        <slot name="left" />
+      </view>
+      <slot />
+      <view
+        v-if=" rightWidth "
+        class="van-swipe-cell__right"
+        @tap="onClick"
+      >
+        <slot name="right" />
+      </view>
     </view>
   </view>
-</view>
 
 </template>
 
 <script>
 
 import { touch } from '../mixins/touch';
-import { Weapp } from 'definitions/weapp';
+// import { Weapp } from 'definitions/weapp';
 
 const THRESHOLD = 0.3;
-let ARRAY: WechatMiniprogram.Component.TrivialInstance[] = [];
+let ARRAY = [];
 
 export default {
+  name: "van-swipe-cell",
   props: {
     disabled: Boolean,
     leftWidth: {
       type: Number,
-      value: 0
+      default: 0
     },
     rightWidth: {
       type: Number,
-      value: 0
+      default: 0
     },
     asyncClose: Boolean,
     name: {
       type: [Number, String],
-      value: ''
+      default: ''
     }
   },
 
   mixins: [touch],
 
-  data: {
-    catchMove: false
+  data () {
+    return {
+      catchMove: false,
+      wrapperStyle: ""
+    }
   },
 
-  created() {
-    this.offset = 0;
-    ARRAY.push(this);
+  beforeCreate () {
+    this.$nextTick(() => {
+      this.offset = 0;
+      ARRAY.push(this);
+    })
   },
 
-  destroyed() {
+  destroyed () {
     ARRAY = ARRAY.filter(item => item !== this);
   },
 
   methods: {
-    open(position: 'left' | 'right') {
-      const { leftWidth, rightWidth } = this.data;
+    open (position) {
+      const { leftWidth, rightWidth } = this;
       const offset = position === 'left' ? leftWidth : -rightWidth;
       this.swipeMove(offset);
     },
 
-    close() {
+    close () {
       this.swipeMove(0);
     },
 
-    swipeMove(offset: number = 0) {
+    swipeMove (offset) {
       this.offset = offset;
 
       const transform = `translate3d(${offset}px, 0, 0)`;
@@ -82,18 +96,11 @@ export default {
         ? 'none'
         : 'transform .6s cubic-bezier(0.18, 0.89, 0.32, 1)';
 
-      this.setData({
-        wrapperStyle: `
-        -webkit-transform: ${transform};
-        -webkit-transition: ${transition};
-        transform: ${transform};
-        transition: ${transition};
-      `
-      });
+      this.wrapperStyle = `-webkit-transform:${transform}; -webkit-transition:${transition}; transform:${transform}; transition${transition}`
     },
 
-    swipeLeaveTransition() {
-      const { leftWidth, rightWidth } = this.data;
+    swipeLeaveTransition () {
+      const { leftWidth, rightWidth } = this;
       const { offset } = this;
 
       if (rightWidth > 0 && -offset > rightWidth * THRESHOLD) {
@@ -103,11 +110,11 @@ export default {
       } else {
         this.swipeMove(0);
       }
-      this.setData({ catchMove: false });
+      this.catchMove = false
     },
 
-    startDrag(event: Weapp.TouchEvent) {
-      if (this.data.disabled) {
+    startDrag (event) {
+      if (this.disabled) {
         return;
       }
 
@@ -123,10 +130,10 @@ export default {
       this.touchStart(event);
     },
 
-    noop() {},
+    noop () { },
 
-    onDrag(event: Weapp.TouchEvent) {
-      if (this.data.disabled) {
+    onDrag (event) {
+      if (this.disabled) {
         return;
       }
 
@@ -134,14 +141,14 @@ export default {
 
       if (!this.firstDirection) {
         this.firstDirection = this.direction;
-        this.setData({ catchMove: this.firstDirection === 'horizontal' });
+        this.catchMove = this.firstDirection === 'horizontal'
       }
 
       if (this.firstDirection === 'vertical') {
         return;
       }
 
-      const { leftWidth, rightWidth } = this.data;
+      const { leftWidth, rightWidth } = this;
 
       const offset = this.startOffset + this.deltaX;
 
@@ -155,8 +162,8 @@ export default {
       this.swipeMove(offset);
     },
 
-    endDrag() {
-      if (this.data.disabled) {
+    endDrag () {
+      if (this.disabled) {
         return;
       }
 
@@ -164,7 +171,7 @@ export default {
       this.swipeLeaveTransition();
     },
 
-    onClick(event) {
+    onClick (event) {
       const { key: position = 'outside' } = event.currentTarget.dataset;
       this.$emit('click', position);
 
@@ -172,8 +179,8 @@ export default {
         return;
       }
 
-      if (this.data.asyncClose) {
-        this.$emit('close', { position, instance: this, name: this.data.name });
+      if (this.asyncClose) {
+        this.$emit('close', { position, instance: this, name: this.name });
       } else {
         this.swipeMove(0);
       }
@@ -184,5 +191,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
