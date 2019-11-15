@@ -1,73 +1,74 @@
 <template>
-    <van-popup
-  :show=" show "
-  :z-index=" zIndex "
-  :overlay=" overlay "
-  :transition=" transition "
-  custom-class="van-dialog {{ className }}"
-  custom-style="{{ widthWithUnit ? 'width: ' + widthWithUnit + ';' : '' }}{{ customStyle }}"
-  :overlay-style=" overlayStyle "
-  :close-on-click-overlay=" closeOnClickOverlay "
-  @close="onClickOverlay"
->
-  <view
-    v-if=" title || useTitleSlot  "
-    class="van-dialog__header {{ message || useSlot ? '' : 'van-dialog--isolated' }}"
+  <van-popup
+    :show=" show "
+    :z-index=" zIndex "
+    :overlay=" overlay "
+    :transition=" transition "
+    :custom-class="'van-dialog' + className "
+    :custom-style="(widthWithUnit ? 'width: ' + widthWithUnit + ';' : '' ) + customStyle "
+    :overlay-style=" overlayStyle "
+    :close-on-click-overlay=" closeOnClickOverlay "
+    @close="onClickOverlay"
   >
-    <slot v-if=" useTitleSlot " name="title" />
-    <block v-else-if=" title "> {{ title }}</block>
-  </view>
-
-  <slot v-if=" useSlot " />
-  <view
-    v-else-if=" message "
-    class="van-dialog__message {{ title ? 'van-dialog__message--has-title' : '' }} {{ messageAlign ? 'van-dialog__message--' + messageAlign : '' }}"
-  >
-    <text class="van-dialog__message-text">{{ message }}</text>
-  </view>
-
-  <view class="van-hairline--top van-dialog__footer">
-    <van-button
-      v-if=" showCancelButton "
-      size="large"
-      :loading=" loading.cancel "
-      class="van-dialog__button van-hairline--right"
-      custom-class="van-dialog__cancel"
-      custom-style="color: {{ cancelButtonColor }}"
-      @click="onCancel"
+    <view
+      v-if=" title || useTitleSlot  "
+      :class="'van-dialog__header '+( message || useSlot ? '' : 'van-dialog--isolated') "
     >
-      {{ cancelButtonText }}
-    </van-button>
-    <van-button
-      v-if=" showConfirmButton "
-      size="large"
-      class="van-dialog__button"
-      :loading=" loading.confirm "
-      custom-class="van-dialog__confirm"
-      custom-style="color: {{ confirmButtonColor }}"
+      <slot
+        v-if=" useTitleSlot "
+        name="title"
+      />
+      <block v-else-if=" title "> {{ title }}</block>
+    </view>
 
-      :open-type=" confirmButtonOpenType "
-      :lang=" lang "
-      :business-id=" businessId "
-      :session-from=" sessionFrom "
-      :send-message-title=" sendMessageTitle "
-      :send-message-path=" sendMessagePath "
-      :send-message-img=" sendMessageImg "
-      :show-message-card=" showMessageCard "
-      :app-parameter=" appParameter "
-
-      @click="onConfirm"
-      bindgetuserinfo="bindGetUserInfo"
-      bindcontact="bindContact"
-      bindgetphonenumber="bindGetPhoneNumber"
-      binderror="bindError"
-      bindlaunchapp="bindLaunchApp"
-      bindopensetting="bindOpenSetting"
+    <slot v-if=" useSlot " />
+    <view
+      v-else-if=" message "
+      :class="'van-dialog__message ' + (title ? 'van-dialog__message--has-title' : '') + (messageAlign ? 'van-dialog__message--' + messageAlign : '')"
     >
-      {{ confirmButtonText }}
-    </van-button>
-  </view>
-</van-popup>
+      <text class="van-dialog__message-text">{{ message }}</text>
+    </view>
+
+    <view class="van-hairline--top van-dialog__footer">
+      <van-button
+        v-if=" showCancelButton "
+        size="large"
+        :loading=" loading.cancel "
+        class="van-dialog__button van-hairline--right"
+        custom-class="van-dialog__cancel"
+        :custom-style="'color:' + cancelButtonColor "
+        @click="onCancel"
+      >
+        {{ cancelButtonText }}
+      </van-button>
+      <van-button
+        v-if=" showConfirmButton "
+        size="large"
+        class="van-dialog__button"
+        :loading=" loading.confirm "
+        custom-class="van-dialog__confirm"
+        :custom-style="'color:' + confirmButtonColor "
+        :open-type=" confirmButtonOpenType "
+        :lang=" lang "
+        :business-id=" businessId "
+        :session-from=" sessionFrom "
+        :send-message-title=" sendMessageTitle "
+        :send-message-path=" sendMessagePath "
+        :send-message-img=" sendMessageImg "
+        :show-message-card=" showMessageCard "
+        :app-parameter=" appParameter "
+        @click="onConfirm"
+        @getuserinfo="bindGetUserInfo"
+        @contact="bindContact"
+        @getphonenumber="bindGetPhoneNumber"
+        @error="bindError"
+        @launchapp="bindLaunchApp"
+        @opensetting="bindOpenSetting"
+      >
+        {{ confirmButtonText }}
+      </van-button>
+    </view>
+  </van-popup>
 
 </template>
 
@@ -77,11 +78,15 @@ import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
 import { addUnit } from '../common/utils';
 import { GRAY, BLUE } from '../common/color';
+import VanButton from "../button/index"
+import VanPopup from "../popup/index"
 
-type Action = 'confirm' | 'cancel' | 'overlay';
+// type Action = 'confirm' | 'cancel' | 'overlay';
 
 export default {
+  name: "van-dialog",
   mixins: [button, openType],
+  components: { VanPopup, VanButton },
 
   props: {
     show: Boolean,
@@ -99,70 +104,77 @@ export default {
     confirmButtonOpenType: String,
     width: {
       type: null,
-      observer: 'setWidthWithUnit'
+      // observer: 'setWidthWithUnit'
     },
     zIndex: {
       type: Number,
-      value: 2000
+      default: 2000
     },
     confirmButtonText: {
       type: String,
-      value: '确认'
+      default: '确认'
     },
     cancelButtonText: {
       type: String,
-      value: '取消'
+      default: '取消'
     },
     confirmButtonColor: {
       type: String,
-      value: BLUE
+      default: BLUE
     },
     cancelButtonColor: {
       type: String,
-      value: GRAY
+      default: GRAY
     },
     showConfirmButton: {
       type: Boolean,
-      value: true
+      default: true
     },
     overlay: {
       type: Boolean,
-      value: true
+      default: true
     },
     transition: {
       type: String,
-      value: 'scale'
+      default: 'scale'
     }
   },
 
-  data: {
-    loading: {
-      confirm: false,
-      cancel: false
+  data () {
+    return {
+      loading: {
+        confirm: false,
+        cancel: false
+      },
+      widthWithUnit: ""
     }
   },
+
 
   watch: {
-    show(show: boolean) {
+    show (show) {
       !show && this.stopLoading();
+    },
+    width () {
+      this.setWidthWithUnit()
     }
   },
 
   methods: {
-    onConfirm() {
+    onConfirm () {
       this.handleAction('confirm');
     },
 
-    onCancel() {
+    onCancel () {
       this.handleAction('cancel');
     },
 
-    onClickOverlay() {
+    onClickOverlay () {
       this.onClose('overlay');
     },
 
-    handleAction(action: Action) {
-      if (this.data.asyncClose) {
+    handleAction (action) {
+      if (this.asyncClose) {
         this.setData({
           [`loading.${action}`]: true
         });
@@ -171,23 +183,25 @@ export default {
       this.onClose(action);
     },
 
-    close() {
-      this.setData({
-        show: false
-      });
+    close () {
+      this.show = false
     },
 
-    stopLoading() {
-      this.setData({
-        loading: {
-          confirm: false,
-          cancel: false
-        }
-      });
+    stopLoading () {
+      // this.setData({
+      //   loading: {
+      //     confirm: false,
+      //     cancel: false
+      //   }
+      // });
+      this.loading = {
+        confirm: false,
+        cancel: false
+      }
     },
 
-    onClose(action: Action) {
-      if (!this.data.asyncClose) {
+    onClose (action) {
+      if (!this.asyncClose) {
         this.close();
       }
       this.$emit('close', action);
@@ -201,10 +215,8 @@ export default {
       }
     },
 
-    setWidthWithUnit(val) {
-      this.setData({
-        widthWithUnit: addUnit(val)
-      });
+    setWidthWithUnit (val) {
+      this.widthWithUnit = addUnit(val)
     }
   }
 };
@@ -212,5 +224,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
