@@ -5,22 +5,24 @@
 </template>
 
 <script>
-  import DemoBlock from "../../../components/app/demo-block";
+import DemoBlock from "../../../components/app/demo-block";
+import VanNotify from "../../../components/vant/notify/index.vue"
+import VanButton from "../../../components/vant/button/index"
 
-  export default {
-    name: 'pages-notify',
-    onLoad(){
+export default {
+  name: 'pages-notify',
+  components: { VanButton, DemoBlock },
+  onLoad () {
 
-    },
-    onUnload(){
+  },
+  onUnload () {
 
-    },
-    methods: {
+  },
+  methods: {
 
-    }
   }
+}
 </script>
 
 <style lang="less">
-
 </style>

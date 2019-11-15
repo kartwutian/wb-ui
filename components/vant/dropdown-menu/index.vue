@@ -131,7 +131,6 @@ export default {
     },
 
     toggleItem (active) {
-
       this.children.forEach((item, index) => {
         const { showPopup } = item;
         if (index === active) {
@@ -151,7 +150,6 @@ export default {
         return;
       }
       // debugger
-
       const newChildData = { transition: !options.immediate, showPopup: show };
 
       if (!show) {

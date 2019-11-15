@@ -18,11 +18,10 @@
       <van-cell
         v-for=" item in options "
         :key=" item.value "
-        :data-option=" item "
         :class=" $utils.bem('dropdown-item__option', { active: item.value === value } ) "
         clickable
         :icon=" item.icon "
-        @tap="onOptionTap"
+        @tap="onOptionTap(item)"
       >
         <view
           slot="title"
