@@ -32,7 +32,6 @@
     name: {
       type: Number | String,
       default: '',
-      // observer: 'setComputedName'
     }
   },
 
@@ -54,9 +53,9 @@
     style(){
       return `${this.animated || this.active ? '' : 'display: none;'} ${this.width ? 'width:' + this.width + 'px;' : ''}`
     },
-    computedName(){
-      return this.name || this.index;
-    },
+    // computedName(){
+    //   return this.name || this.index;
+    // },
   },
 
 
@@ -89,6 +88,17 @@
     // setComputedName() {
     //   this.computedName = this.name || this.index;
     // },
+
+    setComputedName() {
+      this.computedName = this.name || this.index;
+    },
+
+    getComputedName() {
+      if (this.name !== '') {
+        return this.name;
+      }
+      return this.index;
+    },
 
     update() {
       if (this.parent) {

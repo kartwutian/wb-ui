@@ -14,7 +14,7 @@
       </van-tabs>
     </demo-block>
     <demo-block title="通过名称匹配">
-      <van-tabs active="a">
+      <van-tabs active="a" @change="onChange">
         <van-tab
             v-for="(item, index) in tabsWithName"
             :key="index"
@@ -57,7 +57,7 @@
     </demo-block>
 
     <demo-block title="样式风格">
-      <van-tabs type="card" tab-class="tab-class" tab-active-class="tab-active-class">
+      <van-tabs type="card" tab-class="tab-class">
         <van-tab
             v-for="(item, index) in [1,2,3]"
             :key="index"
@@ -85,7 +85,7 @@
     </demo-block>
 
     <demo-block title="粘性布局">
-      <van-tabs sticky>
+      <van-tabs sticky @scroll="onScroll">
         <van-tab
             v-for="(item, index) in [1,2,3,4]"
             :key="index"
@@ -188,6 +188,7 @@
       },
 
       onChange(val) {
+        console.log(val)
         uni.showToast({
           title: `切换到${val.title}`,
           icon: 'none'
@@ -206,12 +207,18 @@
           title: `点击标签${val.title}`,
           icon: 'none'
         });
+      },
+      onScroll(e){
+        console.log(e)
       }
     }
   }
 </script>
 
 <style lang="less">
+  .pages-tab{
+    height: 200vh;
+  }
   .content {
     padding: 20px;
     background-color: #fff;
@@ -224,6 +231,7 @@
   .right-nav {
     padding: 0 10px;
     line-height: 44px !important;
+    background-color: #fff;
   }
 
   .tab-class {

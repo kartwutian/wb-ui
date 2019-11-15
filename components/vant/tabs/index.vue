@@ -1,7 +1,8 @@
 <template>
 
 <view :class="tabsClass">
-  <view
+  <van-sticky :disabled="!sticky" :z-index="zIndex" :offset-top="offsetTop" @scroll="onTouchScroll">
+    <view
       :style="'z-index: ' + zIndex + '; ' + wrapStyle"
       :class="tabsWrapClass"
   >
@@ -11,7 +12,7 @@
       :scroll-x=" scrollable "
       scroll-with-animation
       :scroll-left=" scrollLeft "
-      :class="'van-tabs__scroll--' + type"
+      :class="scrollClass"
       :style=" color ? 'border-color: ' + color : '' "
     >
       <view :class="tabsNavClass">
@@ -20,14 +21,14 @@
           v-for="(item, index) in tabs "
           :key="index"
           :data-index=" index "
-          :class="'van-ellipsis ' + tabClass + (index === currentIndex ? tabActiveClass : '') + ($utils.bem('tab', { active: index === currentIndex, disabled: item.disabled }))"
+          :class="'van-ellipsis ' + tabClass + ' ' + (index === currentIndex ? tabActiveClass + ' ' : '') + ($utils.bem('tab', { active: index === currentIndex, disabled: item.disabled }))"
           :style="(color && index !== currentIndex && type === 'card' && !item.disabled ? 'color: ' + color : '') + (color && index === currentIndex && type === 'card' ? ';background-color:' + color : '') + (color ? ';border-color: ' + color : '') + (scrollable ? ';flex-basis:' + (88 / swipeThreshold) + '%' : '')"
-          @tap="onTap"
+          @tap="onTap(index)"
         >
           <view class="van-ellipsis" :style=" item.titleStyle ">
             {{ item.title }}
             <van-info
-              v-if=" item.info !== null || item.dot "
+              v-if=" item.info || item.dot "
               :info=" item.info "
               :dot=" item.dot "
               custom-class="van-tab__title__info"
@@ -39,6 +40,7 @@
 
     <slot name="nav-right" />
   </view>
+  </van-sticky>
   <view
     class="van-tabs__content"
     @touchstart="onTouchStart"
@@ -62,6 +64,7 @@ import { set } from '../mixins/set';
 // import { Weapp } from 'definitions/weapp';
 import { nextTick, isDef, addUnit } from '../common/utils';
 import VanInfo from "../info/index";
+import VanSticky from "../sticky/index";
 
 // type TabItemData = {
 //   width?: number
@@ -75,7 +78,7 @@ import VanInfo from "../info/index";
 
 export default {
   name: 'van-tabs',
-  components: {VanInfo},
+  components: {VanSticky, VanInfo},
   mixins: [basic, touch, set],
 
   // classes: ['nav-class', 'tab-class', 'tab-active-class', 'line-class'],
@@ -83,7 +86,6 @@ export default {
   relation: {
     name: 'tab',
     type: 'descendant',
-
   },
 
   props: {
@@ -154,7 +156,7 @@ export default {
       trackStyle: '',
       wrapStyle: '',
       position: '',
-      currentIndex: 0,
+      currentIndex: 0
     }
   },
 
@@ -168,6 +170,9 @@ export default {
     tabsNavClass(){
       return `${utils.bem('tabs__nav', [this.type])} ${this.navClass}`
     },
+    scrollClass(){
+      return `${utils.bem('tabs__scroll', [this.type])}`
+    }
   },
 
 
@@ -178,30 +183,25 @@ export default {
     color: 'setLine',
     lineWidth: 'setLine',
     lineHeight: 'setLine',
-    active: 'setActiveTab',
+    active(value){
+      this.currentName = value;
+      this.setActiveTab();
+    },
     animated: 'setTrack',
-    offsetTop: 'setWrapStyle'
   },
 
   mounted() {
-    console.log(this.children)
-    setTimeout(()=>{
-      console.log(this.children)
-    },1000)
+    // console.log(this.children)
+    // setTimeout(()=>{
+    //   console.log(this.children)
+    // },1000)
     this.setLine(true);
     this.setTrack();
     this.scrollIntoView();
-    this.getRect('.van-tabs__wrap').then(
-      (rect) => {
-        this.navHeight = rect.height;
-        this.observerContentScroll();
-      }
-    );
   },
 
   destroyed() {
     // @ts-ignore
-    this.createIntersectionObserver().disconnect();
   },
 
   methods: {
@@ -240,7 +240,7 @@ export default {
       this.setActiveTab();
     },
 
-    trigger(eventName) {
+    trigger(eventName, name) {
       const { tabs, currentIndex } = this;
 
       this.$emit(eventName, {
@@ -249,22 +249,22 @@ export default {
       });
     },
 
-    onTap(event) {
-      const { index } = event.currentTarget.dataset;
+    onTap(index) {
       const child = this.children[index];
+      const computedName = child.getComputedName();
       if (this.tabs[index].disabled) {
-        this.trigger('disabled', child.computedName);
+        this.trigger('disabled', computedName);
       } else {
-        this.trigger('click', child.computedName);
-        this.setActive(child.computedName);
+        this.trigger('click', computedName);
+        this.setActive(computedName);
       }
     },
 
     setActive(computedName) {
       if (computedName !== this.currentName) {
         this.currentName = computedName;
-        this.trigger('change', computedName);
         this.setActiveTab();
+        this.trigger('change', computedName);
       }
     },
 
@@ -333,14 +333,19 @@ export default {
 
     setActiveTab() {
       if (!isDef(this.currentName)) {
-        this.currentName = this.active || (this.children[0] || {}).computedName;
+        const { active } = this;
+        const { children = [] } = this;
+
+        this.currentName =
+          active === '' && children.length
+            ? children[0].getComputedName()
+            : active;
       }
 
       this.children.forEach((item, index) => {
         const data = {
-          active: item.computedName === this.currentName
+          active: item.getComputedName() === this.currentName
         };
-
 
         if (data.active) {
           this.currentIndex = index;
@@ -384,6 +389,10 @@ export default {
       );
     },
 
+    onTouchScroll(val) {
+      this.$emit('scroll', val);
+    },
+
     onTouchStart(event) {
       if (!this.swipeable) return;
 
@@ -404,128 +413,21 @@ export default {
 
       const { direction, deltaX, offsetX } = this;
       const minSwipeDistance = 50;
-
       if (direction === 'horizontal' && offsetX >= minSwipeDistance) {
         if (deltaX > 0 && currentIndex !== 0) {
-          this.setActive(this.children[currentIndex - 1].computedName);
+          const child = this.children[currentIndex - 1];
+          this.setActive(child.getComputedName());
         } else if (deltaX < 0 && currentIndex !== tabs.length - 1) {
-          this.setActive(this.children[currentIndex + 1].computedName);
+          const child = this.children[currentIndex + 1];
+          this.setActive(child.getComputedName());
         }
       }
     },
-
-    setWrapStyle() {
-      const { offsetTop, position } = this;
-      let wrapStyle;
-
-      switch (position) {
-        case 'top':
-          wrapStyle = `
-            top: ${offsetTop}px;
-            position: fixed;
-          `;
-          break;
-        case 'bottom':
-          wrapStyle = `
-            top: auto;
-            bottom: 0;
-          `;
-          break;
-        default:
-          wrapStyle = '';
-      }
-
-      if (wrapStyle !== this.wrapStyle) {
-        this.wrapStyle = wrapStyle;
-      }
-    },
-
-    observerContentScroll() {
-      if (!this.sticky) {
-        return;
-      }
-
-      const { offsetTop } = this;
-      const { windowHeight } = wx.getSystemInfoSync();
-
-      // @ts-ignore
-      this.createIntersectionObserver().disconnect();
-
-      // @ts-ignore
-      this.createIntersectionObserver()
-        .relativeToViewport({ top: -(this.navHeight + offsetTop) })
-        .observe('.van-tabs', (res) => {
-          const { top } = res.boundingClientRect;
-
-          if (top > offsetTop) {
-            return;
-          }
-
-          const position =
-            res.intersectionRatio > 0 ? 'top' : 'bottom';
-
-          this.$emit('scroll', {
-            scrollTop: top + offsetTop,
-            isFixed: position === 'top'
-          });
-
-          this.setPosition(position);
-        });
-
-      // @ts-ignore
-      this.createIntersectionObserver()
-        .relativeToViewport({ bottom: -(windowHeight - 1 - offsetTop) })
-        .observe('.van-tabs', (res) => {
-          const { top, bottom } = res.boundingClientRect;
-
-          if (bottom < this.navHeight) {
-            return;
-          }
-
-          const position = res.intersectionRatio > 0 ? 'top' : '';
-
-          this.$emit('scroll', {
-            scrollTop: top + offsetTop,
-            isFixed: position === 'top'
-          });
-
-          this.setPosition(position);
-        });
-    },
-
-    setPosition(position) {
-      if (position !== this.position) {
-        this.set({ position }).then(() => {
-          this.setWrapStyle();
-        });
-      }
-    }
   }
 };
 
 </script>
 
 <style lang="less">
-  .content {
-    padding: 20px;
-    background-color: #fff;
-  }
 
-  .content-2 {
-    padding: 20px;
-  }
-
-  .right-nav {
-    padding: 0 10px;
-    line-height: 44px !important;
-    background-color: #fff;
-  }
-
-  .tab-class {
-    transition: all 0.25s ease-in-out;
-  }
-
-  .tab-active-class {
-    font-size: 1.05em !important;
-  }
 </style>
