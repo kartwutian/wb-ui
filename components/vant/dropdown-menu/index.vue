@@ -1,51 +1,104 @@
 <template>
 
-<view class="van-dropdown-menu van-dropdown-menu--top-bottom">
-  <view
-    v-for=" itemListData "
-    :key="index"
-    :data-item=" item "
-    :data-index=" index "
-    class="{{ utils.bem('dropdown-menu__item', { disabled: item.disabled }) }}"
-    @tap="onTitleTap"
-  >
+  <view class="van-dropdown-menu van-dropdown-menu--top-bottom">
     <view
-      class="{{ item.titleClass }} {{ utils.bem('dropdown-menu__title', { active: item.showPopup, down: item.showPopup === (direction === 'down') }) }}"
-      :style=" item.showPopup ? 'color:' + activeColor : '' "
+      v-for=" (item,index) in itemListData "
+      :key="index"
+      :class="$utils.bem('dropdown-menu__item', { disabled: item.disabled }) "
+      @tap="onTitleTap({item, index})"
     >
-      <view class="van-ellipsis">
-        {{item.displayTitle}}
+      <view
+        :class=" item.titleClass+ ' ' + $utils.bem('dropdown-menu__title', { active: item.showPopup, down: item.showPopup === (direction === 'down') }) "
+        :style=" item.showPopup ? 'color:' + activeColor : '' "
+      >
+        <view class="van-ellipsis">
+          {{item.displayTitle}}
+        </view>
       </view>
     </view>
-  </view>
 
-  <slot />
-</view>
+    <slot />
+  </view>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
+import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
 
-import { Weapp } from 'definitions/weapp';
+// import { Weapp } from 'definitions/weapp';
 import { addUnit } from '../common/utils';
 
-interface ToggleOptions {
-  immediate?: Boolean;
-}
+// interface ToggleOptions {
+//   immediate?: Boolean;
+// }
 
-let ARRAY: WechatMiniprogram.Component.TrivialInstance[] = [];
+let ARRAY = [];
 
 export default {
+  name: "van-dropdown",
   field: true,
+  mixins: [basic],
 
   relation: {
     name: 'dropdown-item',
     type: 'descendant',
-    linked(target) {
+
+  },
+
+  data () {
+    return {
+      itemListData: []
+    }
+  },
+
+  props: {
+    activeColor: String,
+    overlay: {
+      type: Boolean,
+      default: true
+    },
+    zIndex: {
+      type: Number,
+      default: 10
+    },
+    duration: {
+      type: Number,
+      default: 200
+    },
+    direction: {
+      type: String,
+      default: 'down'
+    },
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: true
+    },
+    closeOnClickOutside: {
+      type: Boolean,
+      default: true
+    }
+  },
+
+
+
+  beforeCreate () {
+    this.$nextTick(() => {
+      ARRAY.push(this);
+      console.log(ARRAY)
+    })
+  },
+
+  destroyed () {
+    ARRAY = ARRAY.filter(item => item !== this);
+  },
+
+  methods: {
+
+    linked (target) {
       this.children = this.children || [];
       // 透传 props 给 dropdown-item
-      const { overlay, duration, activeColor, closeOnClickOverlay, direction } = this.data;
+      const { overlay, duration, activeColor, closeOnClickOverlay, direction } = this;
       this.updateChildData(target, {
         overlay,
         duration,
@@ -57,69 +110,30 @@ export default {
 
       this.children.push(target);
       // 收集 dorpdown-item 的 data 挂在 data 上
-      target &&
-        this.setData({
-          itemListData: this.data.itemListData.concat([target.data])
-        });
+      // target &&
+      //   this.setData({
+      //     itemListData: this.data.itemListData.concat([target._data])
+      //   });
+      this.itemListData = this.itemListData.concat([target._data])
     },
-    unlinked(target) {
-      this.children = this.children.filter((child: WechatMiniprogram.Component.TrivialInstance) => child !== target);
-    }
-  },
+    unlinked (target) {
+      this.children = this.children.filter((child) => child !== target);
+    },
 
-  props: {
-    activeColor: String,
-    overlay: {
-      type: Boolean,
-      value: true
-    },
-    zIndex: {
-      type: Number,
-      value: 10
-    },
-    duration: {
-      type: Number,
-      value: 200
-    },
-    direction: {
-      type: String,
-      value: 'down'
-    },
-    closeOnClickOverlay: {
-      type: Boolean,
-      value: true
-    },
-    closeOnClickOutside: {
-      type: Boolean,
-      value: true
-    }
-  },
-
-  data: {
-    itemListData: []
-  },
-
-  created() {
-    ARRAY.push(this);
-  },
-
-  destroyed() {
-    ARRAY = ARRAY.filter(item => item !== this);
-  },
-
-  methods: {
-    updateChildData(childItem: WechatMiniprogram.Component.TrivialInstance, newData, needRefreshList: Boolean = false) {
-      childItem.setData(newData);
+    updateChildData (childItem, newData, needRefreshList = false) {
+      childItem.newData = newData
 
       if (needRefreshList) {
         // dropdown-item data 更新，涉及到 title 的展示，触发模板更新
-        this.setData({ itemListData: this.data.itemListData });
+        // this.setData({ itemListData: this.data.itemListData });
+
       }
     },
 
-    toggleItem(active: Number) {
-      this.children.forEach((item: WechatMiniprogram.Component.TrivialInstance, index: Number) => {
-        const { showPopup } = item.data;
+    toggleItem (active) {
+
+      this.children.forEach((item, index) => {
+        const { showPopup } = item;
         if (index === active) {
           this.toggleChildItem(item);
         } else if (showPopup) {
@@ -128,14 +142,15 @@ export default {
       });
     },
 
-    toggleChildItem(childItem: WechatMiniprogram.Component.TrivialInstance, show: boolean, options: ToggleOptions = {}) {
-      const { showPopup, duration } = childItem.data;
+    toggleChildItem (childItem, show, options = {}) {
+      const { showPopup, duration } = childItem;
 
       if (show === undefined) show = !showPopup;
 
       if (show === showPopup) {
         return;
       }
+      // debugger
 
       const newChildData = { transition: !options.immediate, showPopup: show };
 
@@ -149,7 +164,7 @@ export default {
         return;
       }
 
-      this.getChildWrapperStyle().then((wrapperStyle: String = '') => {
+      this.getChildWrapperStyle().then((wrapperStyle = '') => {
         this.updateChildData(
           childItem,
           {
@@ -162,15 +177,15 @@ export default {
       });
     },
 
-    close() {
-      this.children.forEach((item: WechatMiniprogram.Component.TrivialInstance) => {
+    close () {
+      this.children.forEach((item) => {
         this.toggleChildItem(item, false, { immediate: true });
       });
     },
 
-    getChildWrapperStyle() {
-      const { windowHeight } = wx.getSystemInfoSync();
-      const { zIndex, direction } = this.data;
+    getChildWrapperStyle () {
+      const { windowHeight } = uni.getSystemInfoSync();
+      const { zIndex, direction } = this;
       let offset = 0;
 
       return this.getRect('.van-dropdown-menu').then(rect => {
@@ -193,14 +208,14 @@ export default {
       });
     },
 
-    onTitleTap(event) {
+    onTitleTap (event) {
       // item ---> dropdown-item
-      const { item, index } = event.currentTarget.dataset;
+      const { item, index } = event;
 
       if (!item.disabled) {
         // menuItem ---> dropdown-menu
         ARRAY.forEach(menuItem => {
-          if (menuItem && menuItem.data.closeOnClickOutside && menuItem !== this) {
+          if (menuItem && menuItem.closeOnClickOutside && menuItem !== this) {
             menuItem.close();
           }
         });
@@ -214,5 +229,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
