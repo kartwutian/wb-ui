@@ -5,7 +5,7 @@
     @tap="onClick"
   >
     <van-info
-      v-if=" info !== null || dot "
+      v-if=" info || dot "
       :dot=" dot "
       :info=" info "
       custom-class="van-icon__info"
@@ -33,7 +33,8 @@ export default {
     },
     info: null,
     size: {
-      type: null,
+      type: String | Number,
+      default: '1em',
     },
     color: String,
     customStyle: String,
@@ -47,12 +48,6 @@ export default {
     }
   },
 
-  data () {
-    return {
-      sizeWithUnit: null,
-    };
-  },
-
   computed: {
     isImageName () {
       return this.name.indexOf('/') !== -1;
@@ -61,7 +56,7 @@ export default {
       return `${this.customClass} ${this.classPrefix} ${this.isImageName ? 'van-icon--image' : this.classPrefix + '-' + this.name}`;
     },
     styles () {
-      return `${this.color ? 'color: ' + this.color + ';' : ''}${this.size ? 'font-size: ' + this.sizeWithUnit + ';' : ''}${this.customStyle}`
+      return `${this.color ? 'color: ' + this.color + ';' : ''}${this.size ? 'font-size: ' + addUnit(this.size) + ';' : ''}${this.customStyle}`
     },
   },
 
@@ -69,16 +64,7 @@ export default {
     onClick () {
       this.$emit('click');
     },
-
-    setSizeWithUnit (size) {
-      this.sizeWithUnit = addUnit(size)
-    }
   },
-  watch: {
-    size (val) {
-      this.setSizeWithUnit(val)
-    }
-  }
 };
 
 </script>

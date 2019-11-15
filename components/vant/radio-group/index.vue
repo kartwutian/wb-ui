@@ -1,56 +1,62 @@
 <template>
-    <slot />
-
+  <view>
+    <slot/>
+  </view>
 </template>
 
 <script>
 
 
-export default {
-  field: true,
+  export default {
+    name: 'van-radio-group',
+    field: true,
 
-  relation: {
-    name: 'radio',
-    type: 'descendant',
-    linked(target) {
-      this.children = this.children || [];
-      this.children.push(target);
-      this.updateChild(target);
-    },
-    unlinked(target) {
-      this.children = this.children.filter(
-        (child: WechatMiniprogram.Component.TrivialInstance) => child !== target
-      );
-    }
-  },
-
-  props: {
-    value: {
-      type: null,
-      observer: 'updateChildren'
-    },
-    disabled: {
-      type: Boolean,
-      observer: 'updateChildren'
-    }
-  },
-
-  methods: {
-    updateChildren() {
-      (this.children || []).forEach((child: WechatMiniprogram.Component.TrivialInstance) =>
-        this.updateChild(child)
-      );
+    relation: {
+      name: 'radio',
+      type: 'descendant',
     },
 
-    updateChild(child: WechatMiniprogram.Component.TrivialInstance) {
-      const { value, disabled } = this.data;
-      child.setData({
-        value,
-        disabled: disabled || child.data.disabled
-      });
+    props: {
+      value: {
+        type: null,
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
+      }
+    },
+
+    methods: {
+      linked(target) {
+        this.children = this.children || [];
+        this.children.push(target);
+        this.updateChild(target);
+      },
+      unlinked(target) {
+        this.children = this.children.filter(
+          (child) => child !== target
+        );
+      },
+      updateChildren() {
+        (this.children || []).forEach((child) =>
+          this.updateChild(child)
+        );
+      },
+
+      updateChild(child) {
+        const {value, disabled} = this;
+        // child.value = value;
+        // child.disabled = disabled || child.disabled;
+        child.proxyValue = value;
+        child.proxyDisabled =  disabled || child.disabled;
+      }
+    },
+
+    watch: {
+      value: 'updateChildren',
+      disabled: 'updateChildren',
     }
-  }
-};
+  };
 
 </script>
 
