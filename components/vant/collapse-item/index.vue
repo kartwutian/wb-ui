@@ -54,6 +54,8 @@
 import utils from '../wxs/utils';
 import VanCell from "../cell/index";
 import {basic} from '../mixins/basic';
+import {set} from '../mixins/set';
+import {queryParentComponent} from "../common/utils";
 
 const nextTick = () => new Promise(resolve => setTimeout(resolve, 20));
 
@@ -69,6 +71,7 @@ export default {
   // },
 
   name: 'van-collapse-item',
+  mixins: [basic, set],
   components: {VanCell},
   props: {
     name: null,
@@ -78,7 +81,6 @@ export default {
     label: String,
     disabled: Boolean,
     clickable: Boolean,
-    customClass: String,
     titleClass: {
       type: String,
       default: '',
@@ -105,6 +107,9 @@ export default {
     return {
       contentHeight: 0,
       expanded: false,
+
+      hasParent: false,
+
     };
   },
 
@@ -121,47 +126,58 @@ export default {
   },
 
   mounted() {
-    // this.updateExpanded()
-    //   .then(nextTick)
-    //   .then(() => {
-    //     const data = { transition: true };
-    //
-    //     if (this.expanded) {
-    //       data.contentHeight = 'auto';
-    //     }
-    //
-    //   });
+    this.parent = queryParentComponent(this, 'van-collapse');
+    if(this.parent){
+      this.hasParent = true;
+      this.parent.linked(this);
+    }
+    this.updateExpanded()
+      .then(nextTick)
+      .then(() => {
+
+        if (this.expanded) {
+          this.contentHeight = 'auto';
+        }
+
+      });
+  },
+
+  destroyed() {
+    if(this.parent){
+      this.parent.unlinked(this);
+      this.parent = null;
+      this.hasParent = false;
+    }
   },
 
   methods: {
-    ...basic.methods,
-    // updateExpanded() {
-    //   if (!this.parent) {
-    //     return Promise.resolve();
-    //   }
-    //
-    //   const { value, accordion } = this.parent.data;
-    //   const { children = [] } = this.parent;
-    //   const { name } = this.data;
-    //
-    //   const index = children.indexOf(this);
-    //   const currentName = name == null ? index : name;
-    //
-    //   const expanded = accordion
-    //     ? value === currentName
-    //     : (value || []).some((name) => name === currentName);
-    //
-    //   const stack = [];
-    //
-    //   if (expanded !== this.data.expanded) {
-    //     stack.push(this.updateStyle(expanded));
-    //   }
-    //
-    //   stack.push(this.set({ index, expanded }));
-    //
-    //   return Promise.all(stack);
-    // },
-    //
+    updateExpanded() {
+      if (!this.parent) {
+        return Promise.resolve();
+      }
+
+      const { value, accordion } = this.parent;
+      const { children = [] } = this.parent;
+      const { name } = this;
+
+      const index = children.indexOf(this);
+      const currentName = name == null ? index : name;
+
+      const expanded = accordion
+        ? value === currentName
+        : (value || []).some((name) => name === currentName);
+
+      const stack = [];
+
+      if (expanded !== this.expanded) {
+        stack.push(this.updateStyle(expanded));
+      }
+
+      stack.push(this.set({ index, expanded }));
+
+      return Promise.all(stack);
+    },
+
     updateStyle(expanded) {
       return this.getRect('.van-collapse-item__content')
         .then((rect) => rect.height)
@@ -188,7 +204,7 @@ export default {
       }
       console.log(this)
       const { name, expanded } = this;
-      const index = this.$parent.$children.indexOf(this);
+      const index = this.parent.children.indexOf(this);
       const currentName = name == null ? index : name;
       console.log(index)
       console.log(currentName)
@@ -202,7 +218,7 @@ export default {
       //   this.contentHeight = 0
       // }
 
-      // this.parent.switch(currentName, !expanded);
+      this.parent.switch(currentName, !expanded);
     },
 
     onTransitionEnd() {

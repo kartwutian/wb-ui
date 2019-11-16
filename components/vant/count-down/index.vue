@@ -1,86 +1,145 @@
 <template>
-    <view class="van-count-down">
-  <slot v-if=" useSlot "/>
-  <block v-else>{{ formattedTime }}</block>
-</view>
+  <view class="van-count-down">
+    <slot v-if=" useSlot "/>
+    <block v-else>{{ formattedTime }}</block>
+  </view>
 
 </template>
 
 <script>
-    function padZero(num: number | string, targetLength = 2): string {
-  let str = num + '';
+  import { isSameSecond, parseFormat, parseTimeData } from './utils';
+  import {basic} from "../mixins/basic";
 
-  while (str.length < targetLength) {
-    str = '0' + str;
+  function simpleTick(fn) {
+    return setTimeout(fn, 30);
   }
 
-  return str;
-}
+  export default {
+    name: 'van-count-down',
+    mixins: [basic],
+    props: {
+      useSlot: {
+        type: Boolean,
+        default: false,
+      },
+      millisecond: Boolean,
+      time: {
+        type: Number,
+        // observer: 'reset'
+      },
+      format: {
+        type: String,
+        default: 'HH:mm:ss'
+      },
+      autoStart: {
+        type: Boolean,
+        default: true
+      }
+    },
 
-export type TimeData = {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-  milliseconds: number;
-};
+    data(){
+      return {
+        timeData: parseTimeData(0),
+        formattedTime: '0'
+      };
+    },
 
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-const HOUR = 60 * MINUTE;
-const DAY = 24 * HOUR;
+    mounted(){
+      this.reset()
+    },
 
-export function parseTimeData(time: number): TimeData {
-  const days = Math.floor(time / DAY);
-  const hours = Math.floor((time % DAY) / HOUR);
-  const minutes = Math.floor((time % HOUR) / MINUTE);
-  const seconds = Math.floor((time % MINUTE) / SECOND);
-  const milliseconds = Math.floor(time % SECOND);
+    destroyed() {
+      clearTimeout(this.tid);
+      this.tid = null;
+    },
 
-  return {
-    days,
-    hours,
-    minutes,
-    seconds,
-    milliseconds
-  };
-}
+    methods: {
+      // 开始
+      start() {
+        if (this.counting) {
+          return;
+        }
 
-export function parseFormat(format: string, timeData: TimeData): string {
-  const { days } = timeData;
-  let { hours, minutes, seconds, milliseconds } = timeData;
+        this.counting = true;
+        this.endTime = Date.now() + this.remain;
+        this.tick();
+      },
 
-  if (format.indexOf('DD') === -1) {
-    hours += days * 24;
-  } else {
-    format = format.replace('DD', padZero(days));
+      // 暂停
+      pause() {
+        this.counting = false;
+        clearTimeout(this.tid);
+      },
+
+      // 重置
+      reset() {
+        this.pause();
+        this.remain = this.time;
+        this.setRemain(this.remain);
+
+        if (this.autoStart) {
+          this.start();
+        }
+      },
+
+      tick() {
+        if (this.millisecond) {
+          this.microTick();
+        } else {
+          this.macroTick();
+        }
+      },
+
+      microTick() {
+        this.tid = simpleTick(() => {
+          this.setRemain(this.getRemain());
+
+          if (this.remain !== 0) {
+            this.microTick();
+          }
+        });
+      },
+
+      macroTick() {
+        this.tid = simpleTick(() => {
+          const remain = this.getRemain();
+
+          if (!isSameSecond(remain, this.remain) || remain === 0) {
+            this.setRemain(remain);
+          }
+
+          if (this.remain !== 0) {
+            this.macroTick();
+          }
+        });
+      },
+
+      getRemain() {
+        return Math.max(this.endTime - Date.now(), 0);
+      },
+
+      setRemain(remain) {
+        this.remain = remain;
+        const timeData = parseTimeData(remain);
+
+        if (this.useSlot) {
+          this.$emit('change', timeData);
+        }
+
+        this.formattedTime = parseFormat(this.format, timeData);
+
+        if (remain === 0) {
+          this.pause();
+          this.$emit('finish');
+        }
+      }
+    },
+
+    watch: {
+      time: 'reset',
+    }
+
   }
-
-  if (format.indexOf('HH') === -1) {
-    minutes += hours * 60;
-  } else {
-    format = format.replace('HH', padZero(hours));
-  }
-
-  if (format.indexOf('mm') === -1) {
-    seconds += minutes * 60;
-  } else {
-    format = format.replace('mm', padZero(minutes));
-  }
-
-  if (format.indexOf('ss') === -1) {
-    milliseconds += seconds * 1000;
-  } else {
-    format = format.replace('ss', padZero(seconds));
-  }
-
-  return format.replace('SSS', padZero(milliseconds, 3));
-}
-
-export function isSameSecond(time1: number, time2: number): boolean {
-  return Math.floor(time1 / 1000) === Math.floor(time2 / 1000);
-}
-
 </script>
 
 <style lang="less">

@@ -1,18 +1,15 @@
 <template>
 
-<wxs src="./index.wxs" module="wxs" />
-
 <view
   class="van-tree-select"
-  style="height: {{ mainHeight }}px"
+  :style="'height: ' + mainHeight + 'px;'"
 >
-  <scroll-view scroll-y class="van-tree-select__nav">
+  <scroll-view scroll-y class="van-tree-select__nav" :style="'height: ' + mainHeight + 'px;'">
     <view
-      v-for=" items "
+      v-for=" (item, index) in items "
       :key="index"
-      class="van-ellipsis main-item-class {{ utils.bem('tree-select__nitem', { active: mainActiveIndex === index, disabled: item.disabled }) }} {{ mainActiveIndex === index ? 'main-active-class' : '' }} {{ item.disabled ? 'main-disabled-class' : '' }}"
-      :data-index=" index "
-      @tap="onClickNav"
+      :class="'van-ellipsis ' + mainItemClass + ' ' + $utils.bem('tree-select__nitem', { active: mainActiveIndex === index, disabled: item.disabled }) + ' ' + (mainActiveIndex === index ? mainActiveClass : '') + ' ' + (item.disabled ? mainDisabledClass : '')"
+      @tap="onClickNav(index)"
     >
       {{ item.text }}
     </view>
@@ -20,19 +17,18 @@
   <scroll-view
     scroll-y
     class="van-tree-select__content"
-    style="height: {{ itemHeight }}px"
+    :style="'height: ' + itemHeight + 'px;'"
   >
     <slot name="content" />
     <view
-      v-for=" subItems "
-      :key="id"
-      class="van-ellipsis van-hairline--bottom content-item-class {{ utils.bem('tree-select__item', { active: wxs.isActive(activeId, item.id), disabled: item.disabled }) }} {{ wxs.isActive(activeId, item.id) ? 'content-active-class' : '' }} {{ item.disabled ? 'content-disabled-class' : '' }}"
-      :data-item=" item "
-      @tap="onSelectItem"
+      v-for="(it) in subItems "
+      :key="it.id"
+      :class="'van-ellipsis van-hairline--bottom ' + contentItemClass + ' ' + ($utils.bem('tree-select__item', { active: isActive(activeId, it.id), disabled: it.disabled })) + ' ' + (isActive(activeId, it.id) ? contentActiveClass : '') + ' ' + (it.disabled ? contentDisabledClass : '')"
+      @tap="onSelectItem(it)"
     >
-      {{ item.text }}
+      {{ it.text }}
       <van-icon
-        v-if=" wxs.isActive(activeId, item.id) "
+        v-if=" isActive(activeId, it.id) "
         name="checked"
         size="16px"
         class="van-tree-select__selected"
@@ -45,53 +41,90 @@
 
 <script>
   import utils from '../wxs/utils';
+  import {isActive} from './helper';
+  import {basic} from "../mixins/basic";
+  import {set} from "../mixins/set";
+  import VanIcon from "../icon/index";
 
-import { Weapp } from 'definitions/weapp';
+  // import { Weapp } from 'definitions/weapp';
 
 const ITEM_HEIGHT = 44;
 
 export default {
-  classes: [
-    'main-item-class',
-    'content-item-class',
-    'main-active-class',
-    'content-active-class',
-    'main-disabled-class',
-    'content-disabled-class'
-  ],
+  name: 'van-tree-select',
+  components: {VanIcon},
+  mixins: [basic, set],
+  // classes: [
+  //   'main-item-class',
+  //   'content-item-class',
+  //   'main-active-class',
+  //   'content-active-class',
+  //   'main-disabled-class',
+  //   'content-disabled-class'
+  // ],
 
   props: {
     items: Array,
     activeId: null,
+    mainItemClass: {
+      type: String,
+      default: '',
+    },
+    contentItemClass: {
+      type: String,
+      default: '',
+    },
+    mainActiveClass: {
+      type: String,
+      default: '',
+    },
+    contentActiveClass: {
+      type: String,
+      default: '',
+    },
+    mainDisabledClass: {
+      type: String,
+      default: '',
+    },
+    contentDisabledClass: {
+      type: String,
+      default: '',
+    },
     mainActiveIndex: {
       type: Number,
-      value: 0
+      default: 0
     },
     maxHeight: {
       type: Number,
-      value: 300
+      default: 300
     },
     max: {
       type: Number,
-      value: Infinity
+      default: Infinity
     }
   },
 
-  data: {
-    subItems: [],
-    mainHeight: 0,
-    itemHeight: 0
+  data(){
+    return {
+      subItems: [],
+      mainHeight: 0,
+      itemHeight: 0
+    };
+  },
+
+  mounted(){
+    this.updateSubItems();
+    this.updateMainHeight();
   },
 
   watch: {
     items() {
-      this.updateSubItems().then(() => {
-        this.updateMainHeight();
-      });
+      this.updateSubItems();
+      this.updateMainHeight();
     },
 
     maxHeight() {
-      this.updateItemHeight(this.data.subItems);
+      this.updateItemHeight(this.subItems);
       this.updateMainHeight();
     },
 
@@ -99,14 +132,14 @@ export default {
   },
 
   methods: {
+    isActive,
     // 当一个子项被选择时
-    onSelectItem(event) {
-      const { item } = event.currentTarget.dataset;
-      const isArray = Array.isArray(this.data.activeId);
+    onSelectItem(item) {
+      const isArray = Array.isArray(this.activeId);
       // 判断有没有超出右侧选择的最大数
-      const isOverMax = isArray && (this.data.activeId.length >= this.data.max);
+      const isOverMax = isArray && (this.activeId.length >= this.max);
       // 判断该项有没有被选中, 如果有被选中，则忽视是否超出的条件
-      const isSelected = isArray ? this.data.activeId.indexOf(item.id) > -1 : this.data.activeId === item.id;
+      const isSelected = isArray ? this.activeId.indexOf(item.id) > -1 : this.activeId === item.id;
 
       if (!item.disabled && (!isOverMax || isSelected)) {
         this.$emit('click-item', item);
@@ -114,9 +147,8 @@ export default {
     },
 
     // 当一个导航被点击时
-    onClickNav(event) {
-      const { index } = event.currentTarget.dataset;
-      const item = this.data.items[index];
+    onClickNav(index) {
+      const item = this.items[index];
       if (!item.disabled) {
         this.$emit('click-nav', { index });
       }
@@ -124,29 +156,29 @@ export default {
 
     // 更新子项列表
     updateSubItems() {
-      const { items, mainActiveIndex } = this.data;
+      const { items, mainActiveIndex } = this;
       const { children = [] } = items[mainActiveIndex] || {};
-
+      this.$set( this, 'subItems', children);
       this.updateItemHeight(children);
-      return this.set({ subItems: children });
     },
 
     // 更新组件整体高度，根据最大高度和当前组件需要展示的高度来决定
     updateMainHeight() {
-      const { items = [], subItems = [] } = this.data;
-      const maxHeight = Math.max(
-        items.length * ITEM_HEIGHT,
-        subItems.length * ITEM_HEIGHT
-      );
-
-      this.setData({ mainHeight: Math.min(maxHeight, this.data.maxHeight) });
+      setTimeout(()=>{
+        const { items = [], subItems = [] } = this;
+        const maxHeight = Math.max(
+          items.length * ITEM_HEIGHT,
+          subItems.length * ITEM_HEIGHT
+        );
+        this.mainHeight = Math.min(maxHeight, this.maxHeight);
+      })
     },
 
     // 更新子项列表高度，根据可展示的最大高度和当前子项列表的高度决定
     updateItemHeight(subItems) {
-      const itemHeight = Math.min(subItems.length * ITEM_HEIGHT, this.data.maxHeight);
+      const itemHeight = Math.min(subItems.length * ITEM_HEIGHT, this.maxHeight);
 
-      return this.setData({ itemHeight });
+      return this.itemHeight = itemHeight;
     }
   }
 };

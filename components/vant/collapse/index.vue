@@ -6,29 +6,25 @@
 </template>
 
 <script>
+  import {basic} from "../mixins/basic";
+
   export default {
     name: 'van-collapse',
-    // relation: {
-    //   name: 'collapse-item',
-    //   type: 'descendant',
-    //   linked(child) {
-    //     this.children.push(child);
-    //   },
-    //   unlinked(child) {
-    //     this.children = this.children.filter(
-    //       (item) => item !== child
-    //     );
-    //   }
-    // },
+    mixins: [basic],
+    relation: {
+      name: 'collapse-item',
+      type: 'descendant',
+    },
 
     props: {
       value: {
         type: null,
-        observer: 'updateExpanded'
+        // observer: 'updateExpanded'
       },
-      accordion: {
+      accordion: { // 手风琴
         type: Boolean,
-        observer: 'updateExpanded'
+        default: false,
+        // observer: 'updateExpanded'
       },
       border: {
         type: Boolean,
@@ -46,22 +42,25 @@
       },
     },
 
-    beforeCreate() {
-      this.children = [];
-    },
-    // mounted(){
-    //   console.log(this)
-    // },
-
     methods: {
+      linked(child) {
+        this.children = this.children || [];
+        this.children.push(child);
+      },
+      unlinked(child) {
+        this.children = this.children.filter(
+          (item) => item !== child
+        );
+      },
+
       updateExpanded() {
         this.children.forEach((child) => {
           child.updateExpanded();
         });
       },
 
-      switch(name) {
-        const {accordion, value} = this.data;
+      switch(name, expanded) {
+        const {accordion, value} = this;
         if (!accordion) {
           name = expanded
             ? (value || []).concat(name)
@@ -74,6 +73,11 @@
         this.$emit('change', name);
         this.$emit('input', name);
       }
+    },
+
+    watch: {
+      value: 'updateExpanded',
+      accordion: 'updateExpanded',
     }
   }
 
