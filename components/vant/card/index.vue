@@ -1,66 +1,94 @@
 <template>
 
-<view class="custom-class van-card">
-  <view class="{{ utils.bem('card__header', { center: centered }) }}">
-    <view class="van-card__thumb" @tap="onClickThumb">
-      <image
-        v-if=" thumb "
-        :src=" thumb "
-        :mode=" thumbMode "
-        :lazy-load=" lazyLoad "
-        class="van-card__img thumb-class"
-      />
-      <slot name="thumb" />
-      <van-tag
-        v-if=" tag "
-        mark
-        type="danger"
-        custom-class="van-card__tag"
+  <view :class="customClass + ' van-card'">
+    <view :class="cardHealper">
+      <view
+        class="van-card__thumb"
+        @tap="onClickThumb"
       >
-        {{ tag }}
-      </van-tag>
-    </view>
+        <image
+          v-if=" thumb "
+          :src=" thumb "
+          :mode=" thumbMode "
+          :lazy-load=" lazyLoad "
+          :class="'van-card__img ' + thumbClass"
+        />
+        <slot name="thumb" />
+        <van-tag
+          v-if=" tag "
+          mark
+          type="danger"
+          custom-class="van-card__tag"
+        >
+          {{ tag }}
+        </van-tag>
+      </view>
 
-    <view class="van-card__content">
-      <view v-if=" title " class="van-card__title title-class">{{ title }}</view>
-      <slot v-else name="title" />
+      <view class="van-card__content">
+        <view
+          v-if=" title "
+          :class="'van-card__title ' + titleClass"
+        >{{ title }}</view>
+        <slot
+          v-else
+          name="title"
+        />
 
-      <view v-if=" desc " class="van-card__desc desc-class">{{ desc }}</view>
-      <slot v-else name="desc" />
+        <view
+          v-if=" desc "
+          :class="'van-card__desc ' + descClass"
+        >{{ desc }}</view>
+        <slot
+          v-else
+          name="desc"
+        />
 
-      <slot name="tags" />
+        <slot name="tags" />
 
-      <view class="van-card__bottom">
-        <view v-if=" price || price === 0 " class="van-card__price price-class">{{ currency }} {{ price }}</view>
-        <view v-if=" originPrice || originPrice === 0 " class="van-card__origin-price origin-price-class">{{ currency }} {{ originPrice }}</view>
-        <view v-if=" num " class="van-card__num num-class">x {{ num }}</view>
-        <slot name="bottom" />
+        <view class="van-card__bottom">
+          <view
+            v-if=" price || price === 0 "
+            :class="'van-card__price ' + priceClass"
+          >{{ currency }} {{ price }}</view>
+          <view
+            v-if=" originPrice || originPrice === 0 "
+            :class="'van-card__origin-price ' + originpriceClass"
+          >{{ currency }} {{ originPrice }}</view>
+          <view
+            v-if=" num "
+            :class="'van-card__num ' + numClass"
+          >x {{ num }}</view>
+          <slot name="bottom" />
+        </view>
       </view>
     </view>
-  </view>
 
-  <view class="van-card__footer">
-    <slot name="footer" />
+    <view class="van-card__footer">
+      <slot name="footer" />
+    </view>
   </view>
-</view>
 
 </template>
 
 <script>
-  import utils from '../wxs/utils';
-    import { link } from '../mixins/link';
+import utils from '../wxs/utils';
+import { link } from '../mixins/link';
+import { basic } from '../mixins/basic';
+import VanTag from "../tag/index"
 
 export default {
-  classes: [
-    'num-class',
-    'desc-class',
-    'thumb-class',
-    'title-class',
-    'price-class',
-    'origin-price-class',
-  ],
+  name: "van-card",
+  components: { VanTag },
+  // classes: [
+  //   'num-class',
+  //   'desc-class',
+  //   'thumb-class',
+  //   'title-class',
+  //   'price-class',
+  //   'origin-price-class',
+  // ],
 
-  mixins: [link],
+  mixins: [link, basic],
 
   props: {
     tag: String,
@@ -75,16 +103,47 @@ export default {
     originPrice: String,
     thumbMode: {
       type: String,
-      value: 'aspectFit'
+      default: 'aspectFit'
     },
     currency: {
       type: String,
-      value: '¥'
+      default: '¥'
+    },
+    numClass: {
+      type: String,
+      default: ''
+    },
+    descClass: {
+      type: String,
+      default: ''
+    },
+    thumbClass: {
+      type: String,
+      default: ''
+    },
+    titleClass: {
+      type: String,
+      default: ''
+    },
+    priceClass: {
+      type: String,
+      default: ''
+    },
+    originpriceClass: {
+      type: String,
+      default: ''
+    }
+  },
+
+  computed: {
+    cardHealper () {
+      // {{ utils.bem('card__header', { center: centered }) }}
+      return `${utils.bem('card__header', { center: this.centered })}`
     }
   },
 
   methods: {
-    onClickThumb() {
+    onClickThumb () {
       this.jumpLink('thumbLink');
     }
   }
@@ -93,5 +152,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
