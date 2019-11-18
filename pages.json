@@ -105,7 +105,9 @@
 		{
 			"path": "pages/vant/notify/notify",
 			"style": {
-				"navigationBarTitleText": "notify"
+				"navigationBarTitleText": "notify",
+				"navigationStyle": "custom"
+
 			}
 		},
 		{

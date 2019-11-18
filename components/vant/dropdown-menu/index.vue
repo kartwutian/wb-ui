@@ -26,12 +26,7 @@
 import utils from '../wxs/utils';
 import { basic } from '../mixins/basic';
 
-// import { Weapp } from 'definitions/weapp';
 import { addUnit } from '../common/utils';
-
-// interface ToggleOptions {
-//   immediate?: Boolean;
-// }
 
 let ARRAY = [];
 
@@ -79,8 +74,6 @@ export default {
       default: true
     }
   },
-
-
 
   beforeCreate () {
     this.$nextTick(() => {
