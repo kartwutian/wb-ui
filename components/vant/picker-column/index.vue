@@ -1,38 +1,39 @@
 <template>
-    <wxs src="./index.wxs" module="getOptionText" />
 
-<view
-  class="van-picker-column custom-class"
-  style="height: {{ itemHeight * visibleItemCount }}px"
-  @touchstart="onTouchStart"
-  catch:touchmove="onTouchMove"
-  @touchend="onTouchEnd"
-  @touchcancel="onTouchEnd"
->
-  <view style="transition: transform {{ duration }}ms; line-height: {{ itemHeight }}px; transform: translate3d(0, {{ offset + (itemHeight * (visibleItemCount - 1)) / 2 }}px, 0)">
-    <view
-      v-for=" options "
-      wx:for-item="option"
-      :key="index"
-      :data-index=" index "
-      style="height: {{ itemHeight }}px"
-      class="van-ellipsis van-picker-column__item {{ option && option.disabled ? 'van-picker-column__item--disabled' : '' }} {{ index === currentIndex ? 'van-picker-column__item--selected active-class' : '' }}"
-      bindtap="onClickItem"
-    >{{ getOptionText(option, valueKey) }}</view>
+  <view
+    :class="'van-picker-column ' + customClass"
+    :style="'height:' + (itemHeight * visibleItemCount) + 'px'"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
+    @touchcancel="onTouchEnd"
+  >
+    <view :style="'transition: transform ' + duration +' ms; line-height:' + itemHeight + 'px; transform: translate3d(0,' + (offset + (itemHeight * (visibleItemCount - 1)) / 2) + 'px, 0)'">
+      <view
+        v-for=" (option,index) in options "
+        :key="index"
+        :style="'height:' + itemHeight +' px'"
+        :class="'van-ellipsis van-picker-column__item ' + (option && option.disabled ? 'van-picker-column__item--disabled' : '') + (index === currentIndex ? 'van-picker-column__item--selected ' + activeClass : '' )"
+        @tap="onClickItem(index)"
+      >{{ getOptionText(option.text ? option.text : option, valueKey) }}</view>
+    </view>
   </view>
-</view>
 
 </template>
 
 <script>
 
 import { isObj, range } from '../common/utils';
-import { Weapp } from 'definitions/weapp';
+import { set } from '../mixins/set';
+import { basic } from '../mixins/basic';
+// import { Weapp } from 'definitions/weapp';
 
 const DEFAULT_DURATION = 200;
 
 export default {
-  classes: ['active-class'],
+  name: "van-picker-column",
+  mixins: [set, basic],
+  // classes: ['active-class'],
 
   props: {
     valueKey: String,
@@ -41,72 +42,70 @@ export default {
     visibleItemCount: Number,
     initialOptions: {
       type: Array,
-      value: []
+      default: []
     },
     defaultIndex: {
       type: Number,
-      value: 0
+      default: 0
+    },
+    activeClass: {
+      type: String,
+      default: ""
     }
   },
 
-  data: {
-    startY: 0,
-    offset: 0,
-    duration: 0,
-    startOffset: 0,
-    options: [],
-    currentIndex: 0
+  data () {
+    return {
+      startY: 0,
+      offset: 0,
+      duration: 0,
+      startOffset: 0,
+      options: [],
+      currentIndex: 0
+    }
   },
 
-  created() {
-    const { defaultIndex, initialOptions } = this.data;
-
-    this.set({
-      currentIndex: defaultIndex,
-      options: initialOptions
-    }).then(() => {
-      this.setIndex(defaultIndex);
-    });
+  beforeCreate () {
+    this.$nextTick(() => {
+      const { defaultIndex, initialOptions } = this;
+      this.currentIndex = defaultIndex
+      this.options = this.initialOptions
+      this.setIndex(defaultIndex)
+    })
   },
 
   watch: {
-    defaultIndex(value: number) {
+    defaultIndex (value) {
       this.setIndex(value);
     }
   },
 
   methods: {
-    getCount() {
-      return this.data.options.length;
+    getCount () {
+      return this.options.length;
     },
 
-    onTouchStart(event: Weapp.TouchEvent) {
-      this.setData({
-        startY: event.touches[0].clientY,
-        startOffset: this.data.offset,
-        duration: 0
-      });
+    onTouchStart (event) {
+      this.startY = event.touches[0].clientY
+      this.startOffset = this.offset
+      this.duration = 0
     },
 
-    onTouchMove(event: Weapp.TouchEvent) {
-      const { data } = this;
-      const deltaY = event.touches[0].clientY - data.startY;
-      this.setData({
-        offset: range(
-          data.startOffset + deltaY,
-          -(this.getCount() * data.itemHeight),
-          data.itemHeight
-        )
-      });
+    onTouchMove (event) {
+      const deltaY = event.touches[0].clientY - this.startY;
+      this.offset = range(
+        this.startOffset + deltaY,
+        -(this.getCount() * this.itemHeight),
+        this.itemHeight
+      )
     },
 
-    onTouchEnd() {
-      const { data } = this;
-      if (data.offset !== data.startOffset) {
-        this.setData({ duration: DEFAULT_DURATION });
+    onTouchEnd () {
+      if (this.offset !== this.startOffset) {
+        this.duration = DEFAULT_DURATION
 
         const index = range(
-          Math.round(-data.offset / data.itemHeight),
+          Math.round(-this.offset / this.itemHeight),
           0,
           this.getCount() - 1
         );
@@ -114,41 +113,37 @@ export default {
       }
     },
 
-    onClickItem(event) {
-      const { index } = event.currentTarget.dataset;
+    onClickItem (index) {
       this.setIndex(index, true);
     },
 
-    adjustIndex(index: number) {
-      const { data } = this;
+    adjustIndex (index) {
       const count = this.getCount();
 
       index = range(index, 0, count);
       for (let i = index; i < count; i++) {
-        if (!this.isDisabled(data.options[i])) return i;
+        if (!this.isDisabled(this.options[i])) return i;
       }
       for (let i = index - 1; i >= 0; i--) {
-        if (!this.isDisabled(data.options[i])) return i;
+        if (!this.isDisabled(this.options[i])) return i;
       }
     },
 
-    isDisabled(option: any) {
+    isDisabled (option) {
       return isObj(option) && option.disabled;
     },
 
-    getOptionText(option: any) {
-      const { data } = this;
-      return isObj(option) && data.valueKey in option
-        ? option[data.valueKey]
+    getOptionText (option) {
+      return isObj(option) && this.valueKey in option
+        ? option[this.valueKey]
         : option;
     },
 
-    setIndex(index: number, userAction: boolean) {
-      const { data } = this;
+    setIndex (index, userAction) {
       index = this.adjustIndex(index) || 0;
-      const offset = -index * data.itemHeight;
+      const offset = -index * this.itemHeight;
+      if (index !== this.currentIndex) {
 
-      if (index !== data.currentIndex) {
         return this.set({ offset, currentIndex: index }).then(() => {
           userAction && this.$emit('change', index);
         });
@@ -157,8 +152,8 @@ export default {
       return this.set({ offset });
     },
 
-    setValue(value: string) {
-      const { options } = this.data;
+    setValue (value) {
+      const { options } = this;
       for (let i = 0; i < options.length; i++) {
         if (this.getOptionText(options[i]) === value) {
           return this.setIndex(i);
@@ -167,9 +162,8 @@ export default {
       return Promise.resolve();
     },
 
-    getValue() {
-      const { data } = this;
-      return data.options[data.currentIndex];
+    getValue () {
+      return this.options[this.currentIndex];
     }
   }
 };
@@ -177,5 +171,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
