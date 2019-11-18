@@ -1,88 +1,83 @@
 <template>
   <van-transition
-    name="slide-down"
-    :show=" show "
-    custom-class="van-notify__container"
-    :custom-style="'z-index:' + zIndex "
-    @tap="onTap"
+      name="slide-down"
+      :show=" isShow "
+      custom-class="van-notify__container"
+      :custom-style="'z-index:' + zIndex "
+      @tap="onTap"
   >
     <view
-      :class="'van-notify van-notify--' + type "
-      :style="'background:' + background + ';color:' + color "
+        :class="'van-notify van-notify--' + type "
+        :style="'background:' + background + ';color:' + color "
     >
       <view
-        v-if=" safeAreaInsetTop "
-        class="van-notify__safe-area"
+          v-if=" safeAreaInsetTop "
+          class="van-notify__safe-area"
       ></view>
       <text>{{ message }}</text>
     </view>
   </van-transition>
-
 </template>
 
 <script>
-import { WHITE } from '../common/color';
-import VanTransition from "../transition/index"
+  import {basic} from "../mixins/basic";
+  import {set} from "../mixins/set";
+  import { WHITE } from '../common/color';
+  import VanTransition from "../transition/index";
 
-// export default {
-//   name: "van-notify",
-//   components: { VanTransition },
-// };
+  export default {
+    name: 'van-notify',
+    components: {VanTransition},
+    mixins: [basic, set],
 
-// interface NotifyOptions {
-//   type?: 'primary' | 'success' | 'danger' | 'warning';
-//   color?: string;
-//   zIndex?: number;
-//   message: string;
-//   context?: any;
-//   duration?: number;
-//   selector?: string;
-//   background?: string;
-//   safeAreaInsetTop?: boolean;
-//   onClick?: () => void;
-//   onOpened?: () => void;
-//   onClose?: () => void;
-// }
+    data(){
+      return {
+        type: 'danger',
+        message: '',
+        background: '',
+        color: WHITE,
+        duration: 3000,
+        zIndex: 110,
+        safeAreaInsetTop: false,
 
-const defaultOptions = {
-  selector: '#van-notify',
-  type: 'danger',
-  message: '',
-  background: '',
-  duration: 3000,
-  zIndex: 110,
-  color: WHITE,
-  safeAreaInsetTop: false,
-  onClick: () => { },
-  onOpened: () => { },
-  onClose: () => { }
-};
+        isShow: false,
+      }
+    },
 
-function parseOptions (message) {
-  return typeof message === 'string' ? { message } : message;
-}
+    methods: {
+      show() {
+        const {duration, onOpened} = this;
 
-function getContext () {
-  const pages = getCurrentPages();
-  return pages[pages.length - 1];
-}
+        clearTimeout(this.timer);
+        this.set({
+          isShow: true
+        }, onOpened);
 
-export default function Notify (options) {
-  options = Object.assign({}, defaultOptions, parseOptions(options));
+        if (duration > 0 && duration !== Infinity) {
+          this.timer = setTimeout(() => {
+            this.hide();
+          }, duration);
+        }
+      },
 
-  const context = options.context || getContext();
-  const notify = context.selectComponent(options.selector);
+      hide() {
+        const {onClose} = this;
 
-  delete options.context;
-  delete options.selector;
+        clearTimeout(this.timer);
+        this.set({
+          isShow: false
+        }, onClose);
+      },
 
-  if (notify) {
-    notify.set(options);
-    notify.show();
-  } else {
-    console.warn('未找到 van-notify 节点，请确认 selector 及 context 是否正确');
+      onTap() {
+        const {onClick} = this;
+        console.log('clicked');
+        if (onClick) {
+          onClick();
+        }
+      }
+    }
   }
-}
 
 </script>
 
