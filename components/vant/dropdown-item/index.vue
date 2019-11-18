@@ -18,7 +18,7 @@
       <van-cell
         v-for=" item in options "
         :key=" item.value "
-        :class=" $utils.bem('dropdown-item__option', { active: item.value === value } ) "
+        :class="'van-dropdown-item__option ' + (item.value === value ? 'van-dropdown-item__option--active' : '') "
         clickable
         :icon=" item.icon "
         @tap="onOptionTap(item)"
