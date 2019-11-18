@@ -7,28 +7,27 @@
     >
       <van-dropdown-menu>
         <van-dropdown-item
-          :value="value1"
+          v-model="value1"
           :options="option1"
         />
         <van-dropdown-item
-          :value="value2"
+          v-model="value2"
           :options="option2"
         />
       </van-dropdown-menu>
     </demo-block>
 
-    <!-- <demo-block
+     <demo-block
       custom-class="white"
       title="自定义菜单内容"
       padding
     >
-      <van-dropdown-menu>
+      <van-dropdown-menu ref="custom-drop-down">
         <van-dropdown-item
           :value="value1"
           :options="option1"
         />
         <van-dropdown-item
-          id="item"
           :title="itemTitle"
         >
           <van-cell :title="switchTitle1">
@@ -37,7 +36,7 @@
               size="24px"
               style="height: 26px"
               :checked="switch1"
-              bind:change="onSwitch1Change"
+              @change="onSwitch1Change"
             />
           </van-cell>
           <van-cell :title="switchTitle2">
@@ -46,13 +45,13 @@
               size="24px"
               style="height: 26px"
               :checked="switch2"
-              bind:change="onSwitch2Change"
+              @change="onSwitch2Change"
             />
           </van-cell>
           <van-button
             type="info"
             block
-            bind:click="onConfirm"
+            @click="onConfirm"
           >
             确定
           </van-button>
@@ -111,7 +110,7 @@
           :options="option2"
         />
       </van-dropdown-menu>
-    </demo-block> -->
+    </demo-block>
   </view>
 </template>
 
@@ -119,10 +118,13 @@
 import DemoBlock from "../../../components/app/demo-block";
 import VanDropdownItem from "../../../components/vant/dropdown-item/index.vue"
 import VanDropdownMenu from "../../../components/vant/dropdown-menu/index.vue"
+import VanCell from "../../../components/vant/cell/index";
+import VanSwitch from "../../../components/vant/switch/index";
+import VanButton from "../../../components/vant/button/index";
 
 export default {
   name: 'pages-dropdown-menu',
-  components: { VanDropdownMenu, VanDropdownItem, DemoBlock },
+  components: {VanButton, VanSwitch, VanCell, VanDropdownMenu, VanDropdownItem, DemoBlock },
   data () {
     return {
       switchTitle1: '包邮',
@@ -152,15 +154,15 @@ export default {
   },
   methods: {
     onConfirm () {
-      this.selectComponent('#item').toggle();
+      this.$refs['custom-drop-down'].close();
     },
 
-    onSwitch1Change ({ detail }) {
-      this.setData({ switch1: detail });
+    onSwitch1Change (val) {
+      this.switch1 = val;
     },
 
-    onSwitch2Change ({ detail }) {
-      this.setData({ switch2: detail });
+    onSwitch2Change (val) {
+      this.switch2 = val;
     }
   }
 }
