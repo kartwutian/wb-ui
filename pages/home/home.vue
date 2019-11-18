@@ -13,9 +13,8 @@
 				<van-collapse
 						v-for="group in list"
 						:key="group.title"
-						:value="activeNames"
+						v-model="activeNames"
 						:border="false"
-						@change="onChangeCollapse"
 				>
 					<van-collapse-item
 							clickable
