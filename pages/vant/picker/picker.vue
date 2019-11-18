@@ -1,6 +1,6 @@
 <template>
   <view class="pages-picker">
-    <!-- <demo-block title="基础用法">
+    <demo-block title="基础用法">
       <van-picker
         :columns="column1"
         @change="onChange1"
@@ -35,7 +35,7 @@
         loading
         :columns="column4"
       />
-    </demo-block> -->
+    </demo-block>
 
     <demo-block title="多列联动">
       <van-picker
@@ -74,11 +74,11 @@ export default {
       },
       column4: [
         {
-          values: ['浙江', '福建'],
+          values: Object.keys(citys),
           className: 'column1'
         },
         {
-          values: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+          values: citys['浙江'],
           className: 'column2',
           defaultIndex: 2
         }
@@ -115,10 +115,8 @@ export default {
     },
 
     onChange2 (event) {
-      console.log(event)
-      // const { picker, value } = event.detail;
-      // picker.setColumnValues(1, this.data.column3[value[0]]);
-      // getApp().picker = picker;
+      const { picker, index, value } = event
+      picker.setColumnValues(1, citys[value[0]])
     }
   }
 }
