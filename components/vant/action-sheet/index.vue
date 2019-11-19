@@ -2,6 +2,7 @@
 
   <van-popup
     :show=" show "
+    name="slide-up"
     position="bottom"
     :round=" round "
     :z-index=" zIndex "
