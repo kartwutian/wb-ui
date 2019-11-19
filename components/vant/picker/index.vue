@@ -37,15 +37,15 @@
         v-if=" loading "
         class="van-picker__loading"
       >
-        <loading color="#1989fa" />
+        <van-loading color="#1989fa" />
       </view>
       <view
         class="van-picker__columns"
         :style="'height:' + (itemHeight * visibleItemCount) + 'px'"
         @touchmove="noop"
       >
-        <picker-column
-          ref="vanpickercolumn"
+        <van-picker-column
+          ref="van-picker-column"
           class="van-picker__column"
           v-for="(item,index) in (column ? [columns] : columns) "
           :key=" index "
@@ -73,16 +73,17 @@
 </template>
 
 <script>
-const isSimple = require("./isSimple.js")
+import VanLoading from "../loading/index";
+const isSimple = require("./isSimple.js");
 import { basic } from '../mixins/basic';
-import Loading from "../loading/index"
-import PickerColumn from "../picker-column/index"
+import VanPickerColumn from "../picker-column/index";
+
 
 // :data=" showToolbar, cancelButtonText, title, confirmButtonText "
 
 export default {
   name: "van-picker",
-  components: { PickerColumn, Loading },
+  components: {VanPickerColumn, VanLoading },
   mixins: [basic],
   props: {
     valueKey: String,
@@ -134,20 +135,10 @@ export default {
   },
   beforeCreate () {
     this.children = [];
-    this.$nextTick(() => {
-      console.log(this)
-      // this.children = this.selectAllComponents('.van-picker__column');
-      this.children = this.$refs.vanpickercolumn
-      if (Array.isArray(this.children) && this.children.length) {
-        this.setColumns().catch(() => { });
-      }
-    })
   },
-  watch: {
-    columns () {
-      this.simple = this.columns.length && !this.columns[0].values;
 
-    }
+  mounted(){
+    this.children = this.$refs['van-picker-column'];
   },
 
   computed: {
@@ -155,6 +146,7 @@ export default {
       return isSimple(this.columns)
     }
   },
+
   methods: {
     noop () { },
     onChange (index) {
@@ -238,7 +230,6 @@ export default {
     // set options of column by index
     setColumnValues (index, options, needReset = true) {
       const column = this.children[index];
-
       if (column == null) {
         return Promise.reject(new Error('setColumnValues: 对应列不存在'));
       }
@@ -283,7 +274,18 @@ export default {
       );
       return Promise.all(stack);
     }
-  }
+  },
+
+  watch: {
+    columns () {
+      this.simple = this.columns.length && !this.columns[0].values;
+      this.children = this.$refs['van-picker-column'];
+      if (Array.isArray(this.children) && this.children.length) {
+        this.setColumns().catch(() => { });
+      }
+    }
+  },
+
 }
 
 </script>
