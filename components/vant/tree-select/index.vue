@@ -23,12 +23,12 @@
     <view
       v-for="(it) in subItems "
       :key="it.id"
-      :class="'van-ellipsis van-hairline--bottom ' + contentItemClass + ' ' + ($utils.bem('tree-select__item', { active: isActive(activeId, it.id), disabled: it.disabled })) + ' ' + (isActive(activeId, it.id) ? contentActiveClass : '') + ' ' + (it.disabled ? contentDisabledClass : '')"
+      :class="'van-ellipsis van-hairline--bottom ' + contentItemClass + ' ' + ($utils.bem('tree-select__item', { active: Array.isArray(activeId) ? activeId.indexOf(it.id) > -1 : activeId === it.id , disabled: it.disabled })) + ' ' + (( Array.isArray(activeId) ? activeId.indexOf(it.id) > -1 : activeId === it.id ) ? contentActiveClass : '') + ' ' + (it.disabled ? contentDisabledClass : '')"
       @tap="onSelectItem(it)"
     >
       {{ it.text }}
       <van-icon
-        v-if=" isActive(activeId, it.id) "
+        v-if="Array.isArray(activeId) ? activeId.indexOf(it.id) > -1 : activeId === it.id "
         name="checked"
         size="16px"
         class="van-tree-select__selected"
@@ -41,7 +41,6 @@
 
 <script>
   import utils from '../wxs/utils';
-  import {isActive} from './helper';
   import {basic} from "../mixins/basic";
   import {set} from "../mixins/set";
   import VanIcon from "../icon/index";
@@ -132,7 +131,6 @@ export default {
   },
 
   methods: {
-    isActive,
     // 当一个子项被选择时
     onSelectItem(item) {
       const isArray = Array.isArray(this.activeId);
@@ -140,7 +138,6 @@ export default {
       const isOverMax = isArray && (this.activeId.length >= this.max);
       // 判断该项有没有被选中, 如果有被选中，则忽视是否超出的条件
       const isSelected = isArray ? this.activeId.indexOf(item.id) > -1 : this.activeId === item.id;
-
       if (!item.disabled && (!isOverMax || isSelected)) {
         this.$emit('click-item', item);
       }
