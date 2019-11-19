@@ -107,7 +107,7 @@ export default {
       if(target){
         this.$nextTick(()=>{
           this.itemListData = this.itemListData.concat([{...target.$data, ...target.$props}])
-          console.log(this.itemListData)
+          // console.log(this.itemListData)
         })
       }
     },
@@ -115,25 +115,28 @@ export default {
       this.children = this.children.filter((child) => child !== target);
     },
 
-    updateChildData (childItem, newData, needRefreshList = false) {
+    updateChildData (childItem, newData) {
       childItem.set(newData);
     },
 
     toggleItem (active) {
+      console.log(this.children)
       this.children.forEach((item, index) => {
         const { showPopup } = item;
         if (index === active) {
+          // 展示当前选中的drop-down-item组件
+          // 控制dropdown-menu 样式变化
+          this.itemListData[active].showPopup = true;
           this.toggleChildItem(item);
         } else if (showPopup) {
+          // 隐藏其他未选中的drop-down-item组件
           this.toggleChildItem(item, false, { immediate: true });
         }
       });
     },
 
-    toggleChildItem (childItem, show, options = {}) {
+    toggleChildItem (childItem, show = true, options = {}) {
       const { showPopup, duration } = childItem;
-
-      if (show === undefined) show = !showPopup;
 
       if (show === showPopup) {
         return;
@@ -143,23 +146,23 @@ export default {
 
       if (!show) {
         const time = options.immediate ? 0 : duration;
-        this.updateChildData(childItem, { ...newChildData }, true);
+        this.updateChildData(childItem, { ...newChildData });
 
         setTimeout(() => {
-          this.updateChildData(childItem, { showWrapper: false }, true);
+          this.updateChildData(childItem, { showWrapper: false });
         }, time);
         return;
       }
 
       this.getChildWrapperStyle().then((wrapperStyle = '') => {
+        console.log(wrapperStyle)
         this.updateChildData(
           childItem,
           {
             ...newChildData,
             wrapperStyle,
             showWrapper: true
-          },
-          true
+          }
         );
       });
     },
@@ -195,10 +198,9 @@ export default {
       });
     },
 
-    onTitleTap (event) {
+    onTitleTap (detail) {
       // item ---> dropdown-item
-      const { item, index } = event;
-
+      const { item, index } = detail;
       if (!item.disabled) {
         // menuItem ---> dropdown-menu
         ARRAY.forEach(menuItem => {

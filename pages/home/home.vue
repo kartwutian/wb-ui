@@ -9,6 +9,7 @@
 			<van-collapse
 					v-for="group in list"
 					:key="group.title"
+					accordion
 					v-model="activeNames"
 					:border="false"
 			>
