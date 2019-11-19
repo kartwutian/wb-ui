@@ -4,10 +4,10 @@ import store from './store';
 import VueI18n from 'vue-i18n'
 import messages from './locales/index.js'
 import {getUrl} from './utils/helper'
-import Vant from './components/vant'
+import VantUni from './components/vant'
 
 Vue.use(VueI18n);
-Vue.use(Vant);
+Vue.use(VantUni);
 Vue.config.productionTip = false
 
 Vue.prototype.$store = store;
