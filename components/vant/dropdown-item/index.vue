@@ -10,6 +10,7 @@
       custom-style="position: absolute;"
       overlay-style="position: absolute;"
       :overlay=" overlay "
+      :name=" direction === 'down' ? 'slide-down' : 'slide-up'"
       :position=" direction === 'down' ? 'top' : 'bottom' "
       :duration=" transition ? duration : 0 "
       :close-on-click-overlay=" closeOnClickOverlay "
@@ -67,7 +68,10 @@ export default {
   },
 
   props: {
-    value: null,
+    value: {
+      type: null,
+      default: ''
+    },
     title: String,
     disabled: Boolean,
     titleClass: String,
@@ -97,6 +101,7 @@ export default {
       transition: true,
       showPopup: false,
       showWrapper: false,
+      wrapperStyle: '',
       displayTitle: '',
       hasParent: false, // 标记是否有父元素
       newData: {},
@@ -151,27 +156,26 @@ export default {
       const { value: optionValue } = option;
 
       if (optionValue !== value) {
-        value = optionValue;
         displayTitle = this.computedDisplayTitle(optionValue);
         this.$emit('change', optionValue);
       }
       this.showPopup = false;
-      this.value = value;
       this.displayTitle = displayTitle;
 
+      // parent 中的 itemListData 是 children 上的数据的集合
+      // 数据的更新由 children 各自维护，但是模板的更新需要额外触发 parent 的 数据更新
       if(this.parent){
         const index = this.parent.children.indexOf(this);
+        // 修改父级的显示文字
         this.parent.itemListData[index].displayTitle = displayTitle;
+        // 还原父级样式
+        this.parent.itemListData[index].showPopup = false;
       }
 
       const time = this.duration || 0;
       setTimeout(() => {
         this.showWrapper = false
       }, time);
-
-      // parent 中的 itemListData 是 children 上的数据的集合
-      // 数据的更新由 children 各自维护，但是模板的更新需要额外触发 parent 的 setData
-      // this.parent.setData({ itemListData: this.parent.data.itemListData });
 
     },
 
