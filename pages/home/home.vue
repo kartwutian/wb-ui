@@ -215,6 +215,10 @@
 								title: 'Sticky 粘性布局'
 							},
 							{
+								path: '/skeleton',
+								title: 'Skeleton 骨架屏'
+							},
+							{
 								path: '/tag',
 								title: 'Tag 标记'
 							},

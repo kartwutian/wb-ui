@@ -295,6 +295,12 @@
 			"style": {
 				"navigationBarTitleText": "dropdown-menu"
 			}
+		},
+		{
+			"path": "pages/vant/skeleton/skeleton",
+			"style": {
+				"navigationBarTitleText": "skeleton"
+			}
 		}
 
 	],
