@@ -56,6 +56,7 @@
             <van-icon
               name="plus"
               class="van-uploader__upload-icon"
+              :style="'font-size:' + unloadfontSize"
             />
             <text
               v-if=" uploadText "
@@ -132,7 +133,11 @@ export default {
       default: 'scaleToFill'
     },
     useSlot: Boolean,
-    useBeforeRead: Boolean
+    useBeforeRead: Boolean,
+    unloadfontSize: {
+      type: String,
+      default: '24px'
+    }
   },
   data () {
     return {
@@ -165,7 +170,6 @@ export default {
       }));
       this.lists = lists
       this.isInCount = lists.length < maxCount
-      console.log(this.lists)
       this.lists.map((item) => {
         item.isImage = true
       })
@@ -249,7 +253,6 @@ export default {
 
     doPreviewImage (item) {
       if (!this.previewFullImage) return;
-      console.log(item)
       const curUrl = item.url || item.path;
       const images = this.lists
         .filter(item => item.isImage)
