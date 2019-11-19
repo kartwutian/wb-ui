@@ -4,9 +4,10 @@ import store from './store';
 import VueI18n from 'vue-i18n'
 import messages from './locales/index.js'
 import {getUrl} from './utils/helper'
-import utils from './components/vant/wxs/utils'
+import VantUni from './components/vant'
 
-Vue.use(VueI18n)
+Vue.use(VueI18n);
+Vue.use(VantUni);
 Vue.config.productionTip = false
 
 Vue.prototype.$store = store;
@@ -21,8 +22,6 @@ Vue.prototype._i18n = i18n
 // 扩展一个公用获取图片url的方法
 Vue.prototype.$getUrl = getUrl;
 
-// 把vant的utils绑到vue实例上
-Vue.prototype.$utils = utils;
 
 App.mpType = 'app'
 

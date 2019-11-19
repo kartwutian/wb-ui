@@ -1,5 +1,5 @@
 <template>
-    <view class="van-sidebar van-hairline--top-bottom custom-class">
+    <view :class="'van-sidebar van-hairline--top-bottom ' + customClass">
   <slot />
 </view>
 
@@ -7,39 +7,45 @@
 
 <script>
 
+import {basic} from "../mixins/basic";
 
 export default {
+  name: 'van-sidebar',
+  mixins: [basic],
   relation: {
     name: 'sidebar-item',
     type: 'descendant',
-    linked(target) {
-      this.items.push(target);
-      this.setActive(this.data.active);
-    },
-    unlinked(target) {
-      this.items = this.items.filter(item => item !== target);
-      this.setActive(this.data.active);
-    }
+
   },
 
   props: {
     active: {
       type: Number,
-      value: 0,
-      observer: 'setActive'
+      default: 0,
     }
   },
 
-  beforeCreate() {
-    this.items = [];
-    this.currentActive = -1;
+  data(){
+    return {
+      currentActive: -1,
+    }
   },
 
   methods: {
-    setActive(active: number) {
-      const { items, currentActive } = this;
+    linked(target) {
+      this.children = this.children || [];
+      this.children.push(target);
+      this.setActive(this.active);
+    },
+    unlinked(target) {
+      this.children = this.children.filter(item => item !== target);
+      this.setActive(this.active);
+    },
 
-      if (!items.length) {
+    setActive(active) {
+      const { children, currentActive } = this;
+
+      if (!children.length) {
         return Promise.resolve();
       }
 
@@ -47,16 +53,20 @@ export default {
 
       const stack = [];
 
-      if (currentActive !== active && items[currentActive]) {
-        stack.push(items[currentActive].setActive(false));
+      if (currentActive !== active && children[currentActive]) {
+        stack.push(children[currentActive].setActive(false));
       }
 
-      if (items[active]) {
-        stack.push(items[active].setActive(true));
+      if (children[active]) {
+        stack.push(children[active].setActive(true));
       }
 
       return Promise.all(stack);
     }
+  },
+
+  watch: {
+    active: 'setActive',
   }
 };
 

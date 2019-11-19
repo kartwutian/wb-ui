@@ -1,111 +1,57 @@
 <template>
 	<view>
-		<view v-show="currentTabIndex === 0">
-			<wb-grid :grids="grids"></wb-grid>
-		</view>
-		<view v-show="currentTabIndex === 1">
-			<view class="container">
-				<view class="title">
-					<image class="logo" src="https://img.yzcdn.cn/vant/logo.png" />
-					<view class="title-text">Vant Weapp</view>
-				</view>
-				<view class="desc">轻量、可靠的小程序 UI 组件库</view>
-				<van-collapse
-						v-for="group in list"
-						:key="group.title"
-						v-model="activeNames"
-						:border="false"
+		<view class="container">
+			<view class="title">
+				<image class="logo" src="https://img.yzcdn.cn/vant/logo.png" />
+				<view class="title-text">Vant uni-app</view>
+			</view>
+			<view class="desc">基于 vant weapp 改造的 UI 组件库</view>
+			<van-collapse
+					v-for="group in list"
+					:key="group.title"
+					v-model="activeNames"
+					:border="false"
+			>
+				<van-collapse-item
+						clickable
+						:is-link="false"
+						custom-class="mobile-nav"
+						title-class="mobile-nav__title"
+						content-class="mobile-nav__content"
+						:title="group.groupName"
+						:name="group.groupName"
 				>
-					<van-collapse-item
-							clickable
-							:is-link="false"
-							custom-class="mobile-nav"
-							title-class="mobile-nav__title"
-							content-class="mobile-nav__content"
-							:title="group.groupName"
-							:name="group.groupName"
-					>
-						<van-cell
-								v-for="item in group.list"
-								:key="item.title"
-								is-link
-								:url="`/pages/vant${item.path}${item.path}`"
-								:data-url="`/pages/vant${item.path}${item.path}`"
-								:data-switch-tab="true"
-								:title="`${item.title}`"
-								:border="true"
-								@click="onClick"
-						/>
-						<van-icon
-								:name="group.icon"
-								slot="right-icon"
-								custom-class="mobile-nav__icon"
-						/>
-					</van-collapse-item>
-				</van-collapse>
-<!--				<van-collapse :value="activeNames">-->
-<!--					<van-collapse-item title="有赞微商城" name="1">-->
-<!--						提供多样店铺模板，快速搭建网上商城-->
-<!--					</van-collapse-item>-->
-<!--					<van-collapse-item title="有赞零售" name="2">-->
-<!--						网店吸粉获客、会员分层营销、一机多种收款，告别经营低效和客户流失-->
-<!--					</van-collapse-item>-->
-<!--					<van-collapse-item title="有赞美业" name="3" disabled>-->
-<!--						线上拓客，随时预约，贴心顺手的开单收银-->
-<!--					</van-collapse-item>-->
-<!--				</van-collapse>-->
-			<!--	<van-cell-group>
-					<van-cell  value="内容" size="large" >
-						<view slot="title" @tap.stop="onClick">1231</view>
-					</van-cell>
-				</van-cell-group>
-				<app-slot>
-					<van-cell  value="内容" size="large" >
-						<view slot="title" @tap.stop="onClick">1231</view>
-					</van-cell>
-				</app-slot>
-				<app-slot
-						v-for="group in list"
-						:key="group.groupName"
-				>
-					<van-cell-group
+					<van-cell
 							v-for="item in group.list"
 							:key="item.title"
-					>
-						<van-cell  value="内容" size="large" >
-							<view slot="title" @tap.stop="onClick">{{item.title}}</view>
-						</van-cell>
-					</van-cell-group>
-				</app-slot>-->
-			</view>
-		</view>
-		<view v-show="currentTabIndex === 2">
-			2
+							is-link
+							:url="`/pages/vant${item.path}${item.path}`"
+							:data-url="`/pages/vant${item.path}${item.path}`"
+							:data-switch-tab="true"
+							:title="`${item.title}`"
+							:border="true"
+					/>
+					<van-icon
+							:name="group.icon"
+							slot="right-icon"
+							custom-class="mobile-nav__icon"
+					/>
+				</van-collapse-item>
+			</van-collapse>
 		</view>
 
-		<wb-tabbar
-				type="bottom"
-				:tabs="tabs"
-				:current="currentTabIndex"
-				@change="handleTabChange"
-		></wb-tabbar>
 	</view>
 </template>
 
 <script>
-	import { mapGetters, mapMutations, mapActions } from 'vuex'; // 节省代码量
-	import WbIcon from "../../components/wanbo/wb-icon/wb-icon";
-	import WbGrid from "../../components/wanbo/wb-grid/wb-grid";
-	import WbTabbar from "../../components/wanbo/wb-tabbar/wb-tabbar";
 	import VanTag from "../../components/vant/tag/index";
 	import VanCell from "../../components/vant/cell/index";
 	import VanCollapse from "../../components/vant/collapse/index";
 	import VanCollapseItem from "../../components/vant/collapse-item/index";
 	import VanIcon from "../../components/vant/icon/index";
 	import VanCellGroup from "../../components/vant/cell-group/index";
-	import AppSlot from "../../components/app/slot";
 	export default {
-		components: {AppSlot, VanCellGroup, VanIcon, VanCell, VanCollapseItem, VanCollapse, VanTag, WbTabbar, WbGrid, WbIcon},
+		components: {VanCellGroup, VanIcon, VanCell, VanCollapseItem, VanCollapse, VanTag},
 		data(){
 			return {
 				activeNames: [],
@@ -334,44 +280,13 @@
 			}
 		},
 		computed: {
-			...mapGetters('home', ['tabs', 'currentTabIndex', 'grids'])
 		},
 		onLoad(){
 			// this.getData({});
 		},
 		onUnload(){
-			this.resetState();
 		},
 		methods: {
-			...mapMutations('home', {
-				resetState: 'reset',
-				updateShallowState: 'updateShallowState'
-			}),
-			...mapActions('home', {
-				delayChange: 'delayChange',
-				getData: 'getData'
-			}),
-			onChangeCollapse(event) {
-				this.activeNames = event.detail;
-			},
-			onClick(event) {
-				console.log('slot')
-				console.log(event)
-				// const { switchTab, url } = event.currentTarget.dataset;
-				// if (switchTab) {
-				// 	wx.switchTab({ url });
-				// }
-			},
-			handleDelayTabChange(index){
-				this.delayChange({
-					currentTabIndex: index,
-				})
-			},
-			handleTabChange(index){
-				this.updateShallowState({
-					currentTabIndex: index,
-				})
-			},
 
 		},
 	}

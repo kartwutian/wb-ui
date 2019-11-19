@@ -33,12 +33,14 @@
       />
       <van-popup
           :show="show.left"
+          name="slide-left"
           position="left"
           custom-style="width: 20%; height: 100%"
           @close="hideLeft"
       />
       <van-popup
           :show="show.right"
+          name="slide-right"
           position="right"
           custom-style="width: 20%; height: 100%"
           @close="hideRight"
@@ -53,6 +55,7 @@
       <van-popup
           :show="show.closeIcon"
           closeable
+          name="slide-up"
           position="bottom"
           custom-style="height: 20%"
           @close="hideCloseIcon"
@@ -62,6 +65,7 @@
           :show="show.customCloseIcon"
           closeable
           close-icon="close"
+          name="slide-up"
           position="bottom"
           custom-style="height: 20%"
           @close="hideCustomCloseIcon"
@@ -71,6 +75,7 @@
           :show="show.customIconPosition"
           closeable
           close-icon-position="top-left"
+          name="slide-up"
           position="bottom"
           custom-style="height: 20%"
           @close="hideCustomIconPosition"
@@ -83,6 +88,7 @@
       <van-popup
           :show="show.round"
           round
+          name="slide-up"
           position="bottom"
           custom-style="height: 20%"
           @close="hideRound"
