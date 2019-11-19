@@ -6,7 +6,6 @@
         @change="onChange1"
       />
     </demo-block>
-
     <demo-block title="默认选中项">
       <van-picker
         :columns="column1"

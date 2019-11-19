@@ -9,10 +9,9 @@
          @click-nav="onClickNav"
      ></van-tree-select>
    </demo-block>
-
     <demo-block title="多选模式">
       <van-tree-select
-          max="2"
+          :max="2"
           :items="items"
           :main-active-index="mainActiveIndexMulti"
           :active-id="activeIdMulti"
@@ -103,15 +102,12 @@
       },
 
       onClickItemMulti(detail) {
-        const {activeIdMulti} = this;
-        const idx = activeIdMulti.indexOf(detail.id);
+        const idx = this.activeIdMulti.indexOf(detail.id);
         if (idx > -1) {
-          activeIdMulti.splice(idx, 1);
+          this.activeIdMulti.splice(idx, 1);
         } else {
-          activeIdMulti.push(detail.id);
+          this.activeIdMulti.push(detail.id);
         }
-
-        this.activeIdMulti = activeIdMulti;
       }
     }
   }

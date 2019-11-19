@@ -4,7 +4,7 @@
     :class="'van-picker-column ' + customClass"
     :style="'height:' + (itemHeight * visibleItemCount) + 'px'"
     @touchstart="onTouchStart"
-    @touchmove="onTouchMove"
+    @touchmove.prevent="onTouchMove"
     @touchend="onTouchEnd"
     @touchcancel="onTouchEnd"
   >
