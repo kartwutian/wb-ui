@@ -182,7 +182,7 @@ export default {
       return this.getRect('.van-collapse-item__content')
         .then((rect) => rect.height)
         .then((height) => {
-          console.log(height)
+          // console.log(height)
           if(expanded){
             this.contentHeight = height
           }else{
@@ -202,12 +202,12 @@ export default {
       if (this.disabled) {
         return;
       }
-      console.log(this)
+      // console.log(this)
       const { name, expanded } = this;
       const index = this.parent.children.indexOf(this);
       const currentName = name == null ? index : name;
-      console.log(index)
-      console.log(currentName)
+      // console.log(index)
+      // console.log(currentName)
       this.expanded = !expanded;
       this.updateStyle(this.expanded)
       // if(this.expanded){

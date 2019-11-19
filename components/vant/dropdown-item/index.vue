@@ -2,11 +2,11 @@
 
   <view
     v-if=" showWrapper "
-    :class=" $utils.bem('dropdown-item', direction) "
+    :class=" wrapperClass "
     :style=" wrapperStyle "
   >
     <van-popup
-      v-show=" showPopup "
+      :show=" showPopup "
       custom-style="position: absolute;"
       overlay-style="position: absolute;"
       :overlay=" overlay "
@@ -18,7 +18,7 @@
       <van-cell
         v-for=" item in options "
         :key=" item.value "
-        :class=" $utils.bem('dropdown-item__option', { active: item.value === value } ) "
+        :class="'van-dropdown-item__option ' + (item.value === value ? 'van-dropdown-item__option--active' : '') "
         clickable
         :icon=" item.icon "
         @tap="onOptionTap(item)"
@@ -47,6 +47,7 @@
 <script>
 import utils from '../wxs/utils';
 import { basic } from '../mixins/basic';
+import { set } from '../mixins/set';
 import { queryParentComponent } from '../common/utils';
 import VanPopup from "../popup/index"
 import VanCell from "../cell/index"
@@ -57,7 +58,7 @@ import VanIcon from "../icon/index"
 export default {
   name: "van-dropdown-item",
   field: true,
-  mixins: [basic],
+  mixins: [basic, set],
   components: { VanIcon, VanCell, VanPopup },
 
   relation: {
@@ -78,8 +79,21 @@ export default {
     }
   },
 
+  computed: {
+    wrapperClass(){
+      return `${utils.bem('dropdown-item', this.direction)}`
+    }
+  },
+
   data () {
     return {
+      closeOnClickOverlay: true,
+      overlay: true,
+      duration: 200,
+      activeColor: '',
+      direction: 'down',
+      childIndex: 0,
+
       transition: true,
       showPopup: false,
       showWrapper: false,
@@ -123,6 +137,7 @@ export default {
 
       const match = options.filter(option => option.value === curValue);
       const displayTitle = match.length ? match[0].text : '';
+      console.log(displayTitle)
       return displayTitle;
     },
 
@@ -131,17 +146,23 @@ export default {
       this.$emit('close');
     },
 
-    onOptionTap (event) {
+    onOptionTap (option) {
       let { value, displayTitle } = this;
-      const { option } = event.currentTarget.dataset;
-      // const { value } = option;
+      const { value: optionValue } = option;
 
       if (optionValue !== value) {
         value = optionValue;
         displayTitle = this.computedDisplayTitle(optionValue);
         this.$emit('change', optionValue);
       }
-      this.setData({ showPopup, value, displayTitle });
+      this.showPopup = false;
+      this.value = value;
+      this.displayTitle = displayTitle;
+
+      if(this.parent){
+        const index = this.parent.children.indexOf(this);
+        this.parent.itemListData[index].displayTitle = displayTitle;
+      }
 
       const time = this.duration || 0;
       setTimeout(() => {

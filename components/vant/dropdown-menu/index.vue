@@ -4,7 +4,7 @@
     <view
       v-for=" (item,index) in itemListData "
       :key="index"
-      :class="$utils.bem('dropdown-menu__item', { disabled: item.disabled }) "
+      :class="'van-dropdown-menu__item ' + (item.disabled ? 'van-dropdown-menu__item--disabled' : '')"
       @tap="onTitleTap({item, index})"
     >
       <view
@@ -32,7 +32,7 @@ let ARRAY = [];
 
 export default {
   name: "van-dropdown",
-  field: true,
+  // field: true,
   mixins: [basic],
 
   relation: {
@@ -102,25 +102,21 @@ export default {
       });
 
       this.children.push(target);
-      // 收集 dorpdown-item 的 data 挂在 data 上
-      // target &&
-      //   this.setData({
-      //     itemListData: this.data.itemListData.concat([target._data])
-      //   });
-      this.itemListData = this.itemListData.concat([target._data])
+      // 收集 dorpdown-item 的数据
+
+      if(target){
+        this.$nextTick(()=>{
+          this.itemListData = this.itemListData.concat([{...target.$data, ...target.$props}])
+          console.log(this.itemListData)
+        })
+      }
     },
     unlinked (target) {
       this.children = this.children.filter((child) => child !== target);
     },
 
     updateChildData (childItem, newData, needRefreshList = false) {
-      childItem.newData = newData
-
-      if (needRefreshList) {
-        // dropdown-item data 更新，涉及到 title 的展示，触发模板更新
-        // this.setData({ itemListData: this.data.itemListData });
-
-      }
+      childItem.set(newData);
     },
 
     toggleItem (active) {
@@ -210,7 +206,6 @@ export default {
             menuItem.close();
           }
         });
-
         this.toggleItem(index);
       }
     }
