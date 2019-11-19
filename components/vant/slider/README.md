@@ -135,7 +135,21 @@ export default {
   </view>
 </van-slider>
 ```
+```css
+.slider {
+  margin: 0 15px 30px;
+}
 
+.custom-button {
+  width: 26px;
+  color: #fff;
+  font-size: 10px;
+  line-height: 18px;
+  text-align: center;
+  border-radius: 100px;
+  background-color: #ee0a24;
+}
+```
 
 ## API
 
@@ -151,15 +165,16 @@ export default {
 | bar-height | 进度条高度，默认单位为 `px` | *string \| number* | `2px` | - |
 | active-color | 进度条激活态颜色 | *string* | `#1989fa` | - |
 | inactive-color | 进度条默认颜色 | *string* | `#e5e5e5` | - |
+| use-button-slot | 是否开启按钮槽 | *boolean* | `false` | - |
 
 ### Events
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:drag | 拖动进度条时触发 | event.detail.value: 当前进度 |
-| bind:change | 进度值改变后触发 | event.detail: 当前进度 |
-| bind:drag-start | 开始拖动时触发 | - |
-| bind:drag-end | 结束拖动时触发 | - |
+| @drag | 拖动进度条时触发 | event.detail.value: 当前进度 |
+| @change | 进度值改变后触发 | event.detail: 当前进度 |
+| @drag-start | 开始拖动时触发 | - |
+| @drag-end | 结束拖动时触发 | - |
 
 ### 外部样式类
 

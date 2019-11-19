@@ -116,11 +116,11 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanCellGroup from "../../../components/vant/cell-group/index";
-import VanCell from "../../../components/vant/cell/index";
-import VanTag from "../../../components/vant/tag/index";
-import VanIcon from "../../../components/vant/icon/index"
+import DemoBlock from "@/components/app/demo-block";
+import VanCellGroup from "@/components/vant/cell-group/index";
+import VanCell from "@/components/vant/cell/index";
+import VanTag from "@/components/vant/tag/index";
+import VanIcon from "@/components/vant/icon/index"
 export default {
   name: 'pages-cell',
   components: { VanIcon, VanTag, VanCell, VanCellGroup, DemoBlock },
@@ -137,9 +137,9 @@ export default {
 </script>
 
 <style lang="less">
-  .cell-title {
-    margin-right: 5px;
-    display: inline-block;
-    vertical-align: middle;
-  }
+.cell-title {
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
 </style>

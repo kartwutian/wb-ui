@@ -3,7 +3,6 @@
     <demo-block title="基础用法">
       <van-rate
         custom-class="van-rate"
-        data-key="value.value1"
         :value="value.value1"
       />
     </demo-block>
@@ -13,7 +12,6 @@
         custom-class="van-rate"
         icon="like"
         void-icon="like-o"
-        data-key="value.value2"
         :value="value.value2"
       />
     </demo-block>
@@ -21,7 +19,6 @@
     <demo-block title="自定义样式">
       <van-rate
         custom-class="van-rate"
-        data-key="value.value3"
         :value="value.value3"
         size="25"
         color="#ee0a24"
@@ -34,7 +31,6 @@
     <demo-block title="半星">
       <van-rate
         custom-class="van-rate"
-        data-key="value.value4"
         :value="value.value4"
         size="25"
         allow-half
@@ -49,7 +45,6 @@
     <demo-block title="自定义数量">
       <van-rate
         custom-class="van-rate"
-        data-key="value.value5"
         :value="value.value5"
         :count="6"
         @change="onChange"
@@ -59,7 +54,6 @@
     <demo-block title="禁用状态">
       <van-rate
         custom-class="van-rate"
-        data-key="value.value6"
         :value="value.value6"
         disabled
       />
@@ -68,7 +62,6 @@
     <demo-block title="只读状态">
       <van-rate
         custom-class="van-rate"
-        data-key="value.value6"
         :value="value.value6"
         readonly
       />
@@ -77,8 +70,8 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanRate from "../../../components/vant/rate/index.vue"
+import DemoBlock from "@/components/app/demo-block";
+import VanRate from "@/components/vant/rate/index.vue"
 
 export default {
   name: 'pages-rate',

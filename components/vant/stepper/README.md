@@ -116,13 +116,13 @@ export default {
 <van-stepper :value="1" input-width="40px" button-size="32px" />
 ```
 
+
 ## API
 
 ### Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
-| name | 在表单内提交时的标识符 | *string* | - | - |
 | value | 输入值 | *string \| number* | 最小值 | - |
 | min | 最小值 | *string \| number* | `1` | - |
 | max | 最大值 | *string \| number* | - | - |
@@ -141,12 +141,12 @@ export default {
 
 | 事件名         | 说明                     | 回调参数                   |
 | -------------- | ------------------------ | -------------------------- |
-| bind:change    | 当绑定值变化时触发的事件 | event.detail: 当前输入的值 |
-| bind:overlimit | 点击不可用的按钮时触发   | -                          |
-| bind:plus      | 点击增加按钮时触发       | -                          |
-| bind:minus     | 点击减少按钮时触发       | -                          |
-| bind:focus     | 输入框聚焦时触发         | -                          |
-| bind:blur      | 输入框失焦时触发         | -                          |
+| @change    | 当绑定值变化时触发的事件 | event.detail: 当前输入的值 |
+| @overlimit | 点击不可用的按钮时触发   | -                          |
+| @plus      | 点击增加按钮时触发       | -                          |
+| @minus     | 点击减少按钮时触发       | -                          |
+| @focus     | 输入框聚焦时触发         | -                          |
+| @blur      | 输入框失焦时触发         | -                          |
 
 ### 外部样式类
 

@@ -80,9 +80,9 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanButton from "../../../components/vant/button/index"
-import VanUploader from "../../../components/vant/uploader/index"
+import DemoBlock from "@/components/app/demo-block";
+import VanButton from "@/components/vant/button/index"
+import VanUploader from "@/components/vant/uploader/index"
 import { EEXIST } from 'constants';
 
 export default {

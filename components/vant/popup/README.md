@@ -1,3 +1,9 @@
+---
+title: Popup 弹出层
+lang: zh
+vant: true
+---
+
 # Popup 弹出层
 
 ### 介绍
@@ -6,12 +12,64 @@
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+```js
 
-```json
-"usingComponents": {
-  "van-popup": "path/to/vant-weapp/dist/popup/index"
+import VanPopup from "@/components/vant/popup/index";
+
+export default {
+  components: {VanPopup},
+  data () {
+    return {
+      show: {
+        basic: false,
+        top: false,
+        bottom: false,
+        left: false,
+        right: false,
+        round: false,
+        closeIcon: false,
+        customCloseIcon: false,
+        customIconPosition: false
+      }
+    };
+  },
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    toggle (type, show) {
+      this.show[`${type}`] = show;
+    },
+
+    hideBasic () {
+      this.toggle('basic', false);
+    },
+
+    hideTop () {
+      this.toggle('top', false);
+    },
+
+    hideRound () {
+      this.toggle('round', false);
+    },
+
+    hideCloseIcon () {
+      this.toggle('closeIcon', false);
+    },
+
+    hideCustomCloseIcon () {
+      this.toggle('customCloseIcon', false);
+    },
+
+    hideCustomIconPosition () {
+      this.toggle('customIconPosition', false);
+    }
+  }
 }
+  
 ```
 
 ## 代码演示
@@ -21,26 +79,11 @@
 通过`show`属性控制弹出层是否展示
 
 ```html
-<van-cell title="展示弹出层" is-link bind:click="showPopup" />
+<van-cell title="展示弹出层" is-link @click="showBasic" />
 
-<van-popup show="{{ show }}" bind:close="onClose">内容</van-popup>
+<van-popup :show="show.basic" @close="hideBasic" custom-style="padding: 30px 50px">内容</van-popup>
 ```
 
-```javascript
-Page({
-  data: {
-    show: false
-  },
-
-  showPopup() {
-    this.setData({ show: true });
-  },
-
-  onClose() {
-    this.setData({ show: false });
-  }
-});
-```
 
 ### 弹出位置
 
@@ -48,10 +91,11 @@ Page({
 
 ```html
 <van-popup
-  show="{{ show }}"
+  :show="show.top"
+  name="slide-down"
   position="top"
   custom-style="height: 20%;"
-  bind:close="onClose"
+  @close="hideTop"
 />
 ```
 
@@ -61,31 +105,34 @@ Page({
 
 ```html
 <van-popup
-  show="{{ show }}"
+  :show="show.closeIcon"
   closeable
+  name="slide-up"
   position="bottom"
   custom-style="height: 20%"
-  bind:close="onClose"
+  @close="hideCloseIcon"
 />
 
 <!-- 自定义图标 -->
 <van-popup
-  show="{{ show }}"
+  :show="show.customCloseIcon"
   closeable
   close-icon="close"
+  name="slide-up"
   position="bottom"
   custom-style="height: 20%"
-  bind:close="onClose"
+  @close="hideCustomCloseIcon"
 />
 
 <!-- 图标位置 -->
 <van-popup
-  show="{{ show }}"
+  :show="show.customIconPosition"
   closeable
   close-icon-position="top-left"
+  name="slide-up"
   position="bottom"
   custom-style="height: 20%"
-  bind:close="onClose"
+  @close="hideCustomIconPosition"
 />
 ```
 
@@ -95,11 +142,12 @@ Page({
 
 ```html
 <van-popup
-  show="{{ show }}"
+  :show="show.round"
   round
+  name="slide-up"
   position="bottom"
   custom-style="height: 20%"
-  bind:close="onClose"
+  @close="hideRound"
 />
 ```
 
@@ -122,22 +170,30 @@ Page({
 | close-icon | 关闭图标名称或图片链接 | *string* | `cross` | - |
 | safe-area-inset-bottom | 是否为 iPhoneX 留出底部安全距离 | *boolean* | `true` | - |
 | safe-area-inset-top | 是否留出顶部安全距离（状态栏高度） | *boolean* | `false` | - |
+| close-icon-position | 关闭图标位置，可选值为top-left bottom-left bottom-right | *string* | `top-right` | - |
+| transition | 动画类名，等价于 transtion 的name属性 | *string* | - | - |
 
 ### Events
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:close | 关闭弹出层时触发 | - |
-| bind:click-overlay | 点击遮罩层时触发 | - |
-| bind:before-enter | 进入前触发 | - |
-| bind:enter | 进入中触发 | - |
-| bind:after-enter | 进入后触发 | - |
-| bind:before-leave | 离开前触发 | - |
-| bind:leave | 离开中触发 | - |
-| bind:after-leave | 离开后触发 | - |
+| @close | 关闭弹出层时触发 | - |
+| @click-overlay | 点击遮罩层时触发 | - |
+| @before-enter | 进入前触发 | - |
+| @enter | 进入中触发 | - |
+| @after-enter | 进入后触发 | - |
+| @before-leave | 离开前触发 | - |
+| @leave | 离开中触发 | - |
+| @after-leave | 离开后触发 | - |
 
 ### 外部样式类
 
 | 类名 | 说明 |
 |-----------|-----------|
 | custom-class | 根节点样式类 |
+| enter-class | 定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。|
+| enter-active-class | 定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数。 |
+| enter-to-class | 定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 enter-class 被移除)，在过渡/动画完成之后移除。 |
+| leave-class | 定义离开过渡的开始状态。在离开过渡被触发时立刻生效，下一帧被移除。|
+| leave-active-class | 定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被用来定义离开过渡的过程时间，延迟和曲线函数。 |
+| leave-to-class | 定义离开过渡的结束状态。在离开过渡被触发之后下一帧生效 (与此同时 leave-class 被删除)，在过渡/动画完成之后移除。 |

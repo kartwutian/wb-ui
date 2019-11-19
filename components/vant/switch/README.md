@@ -103,7 +103,6 @@ export default {
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
-| name | 在表单内提交时的标识符 | *string* | - | - |
 | checked | 开关选中状态 | *any* | `false` | - |
 | loading | 是否为加载状态 | *boolean* | `false` | - |
 | disabled | 是否为禁用状态 | *boolean* | `false` | - |
@@ -117,7 +116,7 @@ export default {
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:change | 开关状态切换回调 | event.detail: 是否选中开关 |
+| @change | 开关状态切换回调 | event.detail: 是否选中开关 |
 
 ### 外部样式类
 
