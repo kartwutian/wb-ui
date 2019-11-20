@@ -40,7 +40,10 @@
   @import "./components/vant/index.less";
 
   page{
-    background-color: #f2f2f2;
+    background-color: #f1f1f1;
+    font-size: 28rpx;
+    color: #333333;
+    font-family: Helvetica Neue, Helvetica, sans-serif;
   }
 
   .test{
