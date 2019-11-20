@@ -24,57 +24,93 @@ module.exports = {
     sidebar: {
       '/vant/': [
         {
-          title: 'vant组件',
+          title: '起步',
           collapsable: false,
           children: [
-            '/vant/',
-            "/vant/action-sheet",
-            "/vant/area",
+            "/vant/common",
+          ]
+        },
+        {
+          title: '基础组件',
+          collapsable: false,
+          children: [
             "/vant/button",
             "/vant/cell",
-            "/vant/card",
-            "/vant/checkbox",
-            "/vant/circle",
-            "/vant/col",
-            "/vant/collapse",
-            "/vant/count-down",
-            "/vant/common",
-            "/vant/datetime-picker",
-            "/vant/dialog",
-            "/vant/divider",
-            "/vant/dropdown-menu",
-            "/vant/field",
-            "/vant/goods-action",
-            "/vant/grid",
             "/vant/icon",
             "/vant/image",
-            "/vant/loading",
-            "/vant/nav-bar",
-            "/vant/notice-bar",
-            "/vant/notify",
-            "/vant/overlay",
-            "/vant/panel",
-            "/vant/picker",
+            "/vant/col",
             "/vant/popup",
+            "/vant/transition",
+          ]
+        },
+        {
+          title: '表单组件',
+          collapsable: false,
+          children: [
+            "/vant/checkbox",
+            "/vant/datetime-picker",
+            "/vant/field",
+            "/vant/picker",
             "/vant/radio",
-            "/vant/progress",
             "/vant/rate",
             "/vant/search",
-            "/vant/sidebar",
             "/vant/slider",
-            "/vant/steps",
             "/vant/stepper",
-            "/vant/submit-bar",
-            "/vant/sticky",
             "/vant/switch",
+            "/vant/uploader",
+          ]
+        },
+        {
+          title: '反馈组件',
+          collapsable: false,
+          children: [
+            "/vant/action-sheet",
+            "/vant/dialog",
+            "/vant/dropdown-menu",
+            "/vant/loading",
+            "/vant/notify",
+            "/vant/overlay",
             "/vant/swipe-cell",
+            "/vant/toast",
+          ]
+        },
+        {
+          title: '展示组件',
+          collapsable: false,
+          children: [
+            "/vant/circle",
+            "/vant/collapse",
+            "/vant/count-down",
+            "/vant/notice-bar",
+            "/vant/panel",
+            "/vant/progress",
+            "/vant/steps",
+            "/vant/sticky",
+            "/vant/tag",
+            "/vant/tree-select",
+            "/vant/divider",
+          ]
+        },
+        {
+          title: '导航组件',
+          collapsable: false,
+          children: [
+            "/vant/grid",
+            "/vant/sidebar",
+            "/vant/nav-bar",
             "/vant/tab",
             "/vant/tabbar",
-            "/vant/tag",
-            "/vant/toast",
-            "/vant/transition",
-            "/vant/tree-select",
-            "/vant/uploader"
+          ]
+        },
+        {
+          title: '业务组件',
+          collapsable: false,
+          children: [
+            // '/vant/',
+            // "/vant/area",
+            "/vant/card",
+            "/vant/submit-bar",
+            "/vant/goods-action",
             ]
         },
       ],
@@ -83,7 +119,7 @@ module.exports = {
           title: 'uni-app pro',
           collapsable: false,
           children: [
-            '/vant/'
+            '/pro/'
           ]
         }
       ]

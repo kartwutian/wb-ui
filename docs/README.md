@@ -3,38 +3,25 @@ home: true
 actionText: Get Started →
 actionLink: /pro/
 features:
-  - title: Pluggable
-    details: The entire lifecycle of umi is composed of plugins. Features such as pwa, on-demand loading, one-click switching preact, one-button compatibility ie9, etc., are all implemented by plugins.
-  - title: Out Of Box
-    details: You only need an umi dependency to start development without having to install react, preact, webpack, react-router, babel, jest, and more.
-  - title: Conventional Routing
-    details: Next.js like and full featured routing conventions, support permissions, dynamic routing, nested routing, and more.
+  - title: 集成vuex
+    details: 使用vuex 全局状态管理，实现了基于vuex的loading及reload插件
+  - title: 支持自动创建路由结构及依赖
+    details: 基于page.json,运行`npm run generatePages`命令，会根据page.json文件的路由配置，生成相应的页面文件
+  - title: 支持自动生成service及modules文件内容
+    details: 运行`npm run generateApis`命令，基于Yapi接口，自动生成service及module文件,注意cookie需要自己在相应脚本位置配置
 footer: MIT Licensed | Copyright © 2019-present
 ---
 
 ### Getting started is very simple
 
 ```bash
-# Install deps
-$ yarn global add umi # or npm install -g umi
 
-# Create application
-$ mkdir myapp && cd myapp
+# 克隆项目
+$ git clone http://183.131.202.93:9080/baohz/wb-ui-uniapp.git
 
-# Create page
-$ umi generate page index
+# Install deps 安装依赖
+$ yarn add # or npm install
 
-# Start dev server
-$ umi dev
+# 打开hbuilderX, 导入项目，安装less插件等，运行项目
 
-# Build and deploy
-$ umi build
 ```
-
-[Getting started with a 10 minutes video](https://youtu.be/vkAUGUlYm24)
-
-## Community
-
-| Github Issue                                            | 钉钉群                                                                                                                         | 微信群                                                                                      |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| [umijs/umi/issues](https://github.com/umijs/umi/issues) | <img src="https://img.alicdn.com/tfs/TB1KxCae9f2gK0jSZFPXXXsopXa-1125-1485.jpg" width="60" /> | <img src="https://img.alicdn.com/tfs/TB1pd1ce8r0gK0jSZFnXXbRRXXa-430-430.jpg" width="60" /> |
