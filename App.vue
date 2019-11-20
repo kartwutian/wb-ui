@@ -23,6 +23,7 @@
       //     url: '/pages/saler/login/index'
       //   });
       // }
+
     },
     onShow() {
 

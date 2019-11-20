@@ -26,11 +26,9 @@
 							v-for="item in group.list"
 							:key="item.title"
 							is-link
-							:url="`/pages/vant${item.path}${item.path}`"
-							:data-url="`/pages/vant${item.path}${item.path}`"
-							:data-switch-tab="true"
 							:title="`${item.title}`"
 							:border="true"
+							@tap="navTo(`/pages/vant${item.path}${item.path}`)"
 					/>
 					<van-icon
 							:name="group.icon"
@@ -293,6 +291,17 @@
 		},
 		methods: {
 
+			navTo(path){
+				// #ifdef  H5
+
+				// 向父级窗口posMessage
+				top.postMessage({path}, 'http://localhost:8081');
+
+				// #endif
+				uni.navigateTo({
+					url: path,
+				})
+			}
 		},
 	}
 </script>
