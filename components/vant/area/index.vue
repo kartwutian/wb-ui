@@ -1,7 +1,7 @@
 <template>
   <van-picker
     class="van-area__picker"
-    ref="vanareapicker"
+    ref="van-area-picker"
     :active-class="activeClass"
     :toolbar-class="toolbarClass"
     :column-class="columnClass"
@@ -122,7 +122,7 @@ export default {
     getPicker () {
       if (this.picker == null) {
         // this.picker = this.selectComponent('.van-area__picker');
-        this.picker = this.$refs.vanareapicker
+        this.picker = this.$refs['van-area-picker'];
       }
       return this.picker;
     },
@@ -240,7 +240,7 @@ export default {
       if (!code) {
         // if (this.columnsPlaceholder.length) {
         //   code = COLUMNSPLACEHOLDERCODE;
-        // } else 
+        // } else
         if (Object.keys(county)[0]) {
           code = Object.keys(county)[0];
         } else {

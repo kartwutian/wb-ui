@@ -1,6 +1,6 @@
 <template>
   <view class="pages-datetime-picker">
-    <!-- <demo-block title="选择完整时间">
+     <demo-block title="选择完整时间">
       <van-datetime-picker
         type="datetime"
         data-type="datetime"
@@ -8,7 +8,7 @@
         :min-date="minDate"
         @input="onInput"
       />
-    </demo-block> -->
+    </demo-block>
 
     <demo-block title="选择日期（年月日）">
       <van-datetime-picker
@@ -20,13 +20,13 @@
       />
     </demo-block>
 
-    <!--  <demo-block title="选择日期（年月）">
+      <demo-block title="选择日期（年月）">
       <van-datetime-picker
         type="year-month"
         data-type="year-month"
         :value="currentDate3"
         :min-date="minDate"
-        bind:input="onInput"
+        @input="onInput"
       />
     </demo-block>
 
@@ -37,7 +37,7 @@
         :value="currentDate4"
         :min-hour="minHour"
         :max-hour="maxHour"
-        bind:input="onInput"
+        @input="onInput"
       />
     </demo-block>
 
@@ -47,7 +47,7 @@
         :value="currentDate4"
         :filter="filter"
       />
-    </demo-block> -->
+    </demo-block>
   </view>
 </template>
 

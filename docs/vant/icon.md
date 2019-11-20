@@ -1,3 +1,9 @@
+---
+title: Icon 图标
+lang: zh
+vant: true
+---
+
 # Icon 图标
 
 ### 介绍
@@ -6,12 +12,29 @@
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+```js
 
-```json
-"usingComponents": {
-  "van-icon": "path/to/vant-weapp/dist/icon/index"
+import VanIcon from "@/components/vant/icon/index.vue"
+
+export default {
+  components: {VanIcon},
+  data () {
+    return {
+      icons,
+      active: 0
+    };
+  },
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    
+  }
 }
+  
 ```
 
 ## 代码演示
@@ -53,7 +76,7 @@
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:click | 点击图标时触发 | - |
+| @click | 点击图标时触发 | - |
 
 ### 外部样式类
 

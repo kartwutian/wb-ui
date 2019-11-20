@@ -1,13 +1,32 @@
+---
+title: Panel 面板
+lang: zh
+vant: true
+---
+
 # Panel 面板
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-panel": "path/to/vant-weapp/dist/panel/index"
+```js
+
+import VanPanel from '@/components/vant/panel/index';
+
+export default {
+  components: {VanPanel},
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    
+  }
 }
+  
 ```
 
 ## 代码演示
@@ -16,8 +35,8 @@
 面板只是一个容器，里面可以放入自定义的内容
 
 ```html
-<van-panel title="标题" desc="描述信息" status="状态">
-  <view>内容</view>
+<van-panel title="标题" desc="描述信息" status="状态" >
+  <view class="content">内容</view>
 </van-panel>
 ```
 
@@ -26,7 +45,7 @@
 
 ```html
 <van-panel title="标题" desc="描述信息" status="状态" use-footer-slot>
-  <view>内容</view>
+  <view class="content">内容</view>
   <view slot="footer">
     <van-button size="small">按钮</van-button>
     <van-button size="small" type="danger">按钮</van-button>

@@ -1,8 +1,8 @@
 <template>
   <view class="pages-area">
-    <demo-block title="基础用法">
+    <!--<demo-block title="基础用法">
       <van-area :area-list="areaList" />
-    </demo-block>
+    </demo-block>-->
 
     <!-- <demo-block title="选中省市县">
       <van-area

@@ -1,41 +1,61 @@
+---
+title: Radio 单选框
+lang: zh
+vant: true
+---
+
 # Radio 单选框
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+```js
 
-```json
-"usingComponents": {
-  "van-radio": "path/to/vant-weapp/dist/radio/index",
-  "van-radio-group": "path/to/vant-weapp/dist/radio-group/index"
+import VanRadioGroup from "@/components/vant/radio-group/index";
+import VanRadio from "@/components/vant/radio/index";
+
+export default {
+  components: {VanRadioGroup, VanRadio},
+  data () {
+    return {
+      radio1: '1',
+      radio2: '2',
+      radio3: '1',
+      radio4: '1',
+      radio5: '1',
+      icon: {
+        normal:
+          'https://img.yzcdn.cn/public_files/2017/10/13/c547715be149dd3faa817e4a948b40c4.png',
+        active:
+          'https://img.yzcdn.cn/public_files/2017/10/13/793c77793db8641c4c325b7f25bf130d.png'
+      }
+    };
+  },
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    onClick(name) {
+      this.radio5 = name;
+    },
+    toggle(){
+      this.$refs['radio-1'].onChange();
+    }
+  }
 }
+  
 ```
-
-## 代码演示
-
 ### 基础用法
 
-通过`value`绑定值当前选中项的 name
+通过`v-model`绑定值当前选中项的 `name`
 
 ```html
-<van-radio-group value="{{ radio }}" bind:change="onChange">
-  <van-radio name="1">单选框 1</van-radio>
+<van-radio-group v-model="radio1" >
+  <van-radio name="1" custom-class="demo-radio">单选框 1</van-radio>
   <van-radio name="2">单选框 2</van-radio>
 </van-radio-group>
-```
-
-```js
-Page({
-  data: {
-    radio: '1'
-  },
-
-  onChange(event) {
-    this.setData({
-      radio: event.detail
-    });
-  }
-});
 ```
 
 ### 禁用状态
@@ -43,8 +63,8 @@ Page({
 通过`disabled`属性禁止选项切换，在`van-radio`上设置`diabled`可以禁用单个选项
 
 ```html
-<van-radio-group value="{{ radio }}" bind:change="onChange" disabled>
-  <van-radio name="1">单选框 1</van-radio>
+<van-radio-group v-model="radio2" disabled>
+  <van-radio name="1" custom-class="demo-radio">单选框 1</van-radio>
   <van-radio name="2">单选框 2</van-radio>
 </van-radio-group>
 ```
@@ -52,7 +72,8 @@ Page({
 ### 自定义颜色
 
  ```html
-<van-radio checked-color="#07c160">复选框</van-radio>
+<van-radio name="1" custom-class="demo-radio" checked-color="#07c160">单选框</van-radio>
+<van-radio name="2" checked-color="#07c160">单选框</van-radio>
 ```
 
 ### 自定义图标
@@ -60,31 +81,24 @@ Page({
 通过 icon 插槽自定义图标
 
 ```html
-<van-radio use-icon-slot value="{{ radio }}" name="1" bind:change="onChange">
+<van-radio use-icon-slot name="1">
   自定义图标
   <image
     slot="icon"
-    src="{{ radio === '1' ? icon.active : icon.normal }}"
+    :src="radio4 === '1' ? icon.active : icon.normal"
+    class="icon"
+    mode="widthFix"
   />
 </van-radio>
-```
-
-```js
-Page({
-  data: {
-    radio: true,
-    icon: {
-      normal: '//img.yzcdn.cn/icon-normal.png',
-      active: '//img.yzcdn.cn/icon-active.png'
-    }
-  },
-
-  onChange(event) {
-    this.setData({
-      radio: event.detail
-    });
-  }
-});
+<van-radio use-icon-slot name="2">
+  自定义图标
+  <image
+      slot="icon"
+      :src="radio4 === '2' ? icon.active : icon.normal"
+      class="icon"
+      mode="widthFix"
+  />
+</van-radio>
 ```
 
 ### 与 Cell 组件一起使用
@@ -92,54 +106,32 @@ Page({
 此时你需要再引入`Cell`和`CellGroup`组件。
 
 ```html
-<van-radio-group value="{{ radio }}" bind:change="onChange">
+<van-radio-group v-model="radio5">
   <van-cell-group>
     <van-cell
-      title="单选框 1"
-      value-class="value-class"
-      clickable
-      data-name="1"
-      bind:click="onClick"
+        title="单选框 1"
+        clickable
+        @tap="toggle"
     >
-      <van-radio name="1" />
+      <van-radio slot="right-icon" name="1" ref="radio-1" />
     </van-cell>
     <van-cell
-      title="单选框 2"
-      value-class="value-class"
-      clickable
-      data-name="2"
-      bind:click="onClick"
+        title="单选框 2"
+        clickable
     >
-      <van-radio name="2" />
+      <van-radio slot="right-icon" name="2" ref="radio-2" />
     </van-cell>
   </van-cell-group>
 </van-radio-group>
 ```
 
-```js
-Page({
-  data: {
-    radio: '1'
-  },
-
-  onChange(event) {
-    this.setData({
-      radio: event.detail
-    });
-  },
-
-  onClick(event) {
-    const { name } = event.currentTarget.dataset;
-    this.setData({
-      radio: name
-    });
-  }
-});
-```
-
 ```css
-.value-class {
-  flex: none !important;
+.demo-radio {
+  margin-bottom: 10px;
+}
+
+.icon {
+  width: 20px;
 }
 ```
 
@@ -163,7 +155,7 @@ Page({
 
 | 事件名 | 说明 | 回调参数 |
 |-----------|-----------|-----------|
-| bind:change | 当绑定值变化时触发的事件 | 当前选中项的 name |
+| @change | 当绑定值变化时触发的事件 | 当前选中项的 name |
 
 ### Radio 外部样式类
 
@@ -185,4 +177,4 @@ Page({
 
 | 事件名 | 说明 | 回调参数 |
 |-----------|-----------|-----------|
-| bind:change | 当绑定值变化时触发的事件 | 当前选中项的 name |
+| @change | 当绑定值变化时触发的事件 | 当前选中项的 name |

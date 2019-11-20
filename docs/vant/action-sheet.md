@@ -1,13 +1,73 @@
+---
+title: ActionSheet 上拉菜单
+lang: zh
+vant: true
+---
+
 # ActionSheet 上拉菜单
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-action-sheet": "path/to/vant-weapp/dist/action-sheet/index"
+```js
+
+import VanActionSheet from "@/components/vant/action-sheet/index.vue"
+
+export default {
+  components: {VanActionSheet},
+  data () {
+    return {
+      show1: false,
+      show2: false,
+      show3: false,
+      show4: false,
+      show5: false,
+      action1: [
+        { name: '选项' },
+        { name: '选项' },
+        { name: '选项', subname: '副文本' }
+      ],
+      action2: [
+        { name: '选项', color: '#07c160' },
+        { loading: true },
+        { name: '禁用选项', disabled: true }
+      ]
+    }
+  },
+  onLoad () {
+
+  },
+  onUnload () {
+
+  },
+  methods: {
+    toggle (type) {
+      this[`${type}`] = !this[`${type}`]
+    },
+
+    toggleActionSheet1 () {
+      this.toggle('show1');
+    },
+
+    toggleActionSheet2 () {
+      this.toggle('show2');
+    },
+
+    toggleActionSheet3 () {
+      this.toggle('show3');
+    },
+
+    toggleActionSheet4 () {
+      this.toggle('show4');
+    },
+
+    toggleActionSheet5 () {
+      this.toggle('show5');
+    }
+  }
 }
+  
 ```
 
 
@@ -19,41 +79,12 @@
 
 ```html
 <van-action-sheet
-  show="{{ show }}"
-  actions="{{ actions }}"
-  bind:close="onClose"
-  bind:select="onSelect"
+  :show="show1"
+  :actions="action1"
+  @select="toggleActionSheet1"
 />
 ```
 
-```javascript
-Page({
-  data: {
-    show: false,
-    actions: [
-      {
-        name: '选项'
-      },
-      {
-        name: '选项'
-      },
-      {
-        name: '选项',
-        subname: '副文本',
-        openType: 'share'
-      }
-    ]
-  },
-
-  onClose() {
-    this.setData({ show: false });
-  },
-
-  onSelect(event) {
-    console.log(event.detail);
-  }
-});
-```
 
 ### 选项状态
 
@@ -61,35 +92,25 @@ Page({
 
 ```html
 <van-action-sheet
-  show="{{ show }}"
-  actions="{{ actions }}"
-  cancel-text="取消"
+  :show="show2"
+  :actions="action2"
+  @select="toggleActionSheet2"
 />
 ```
 
-```javascript
-Page({
-  data: {
-    show: false,
-    actions: [
-      { name: '选项', color: '07c160' },
-      { loading: true },
-      { name: '禁用选项', disabled: true }
-    ]
-  }
-})
-```
 
 ### 展示取消按钮
 
 设置`cancel-text`属`性后，会在底部展示取消按钮，点击后关闭当前菜单
 
 ```html
-<van-action-sheet 
-  show="{{ show }}" 
-  actions="{{ actions }}"
+<van-action-sheet
+  :show="show3"
+  :actions="action1"
   cancel-text="取消"
-/>
+  @close="toggleActionSheet3"
+  @cancel="toggleActionSheet3"
+>
 ```
 
 ### 展示描述信息
@@ -98,10 +119,11 @@ Page({
 
 ```html
 <van-action-sheet
-  show="{{ show }}" 
-  :actions="actions"
+  :show="show4"
+  :actions="action1"
   description="这是一段描述信息"
-/>
+  @close="toggleActionSheet4"
+>
 ```
 
 ### 展示标题栏
@@ -109,9 +131,11 @@ Page({
 通过设置`title`属性展示标题栏，同时可以使用插槽自定义菜单内容
 
 ```html
-<van-action-sheet show="{{ show }}" title="标题">
-  <view>内容</view>
-</van-action-sheet>
+<van-action-sheet
+  :show="show5"
+  title="标题"
+  @close="toggleActionSheet5"
+>
 ```
 
 ## API

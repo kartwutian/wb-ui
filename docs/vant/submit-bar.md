@@ -1,13 +1,38 @@
+---
+title: Submit-bar 提交订单栏
+lang: zh
+vant: true
+---
+
 # SubmitBar 提交订单栏
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
 
-```json
-"usingComponents": {
-  "van-submit-bar": "path/to/vant-weapp/dist/submit-bar/index"
+```js
+import VanSubmitBar from "@/components/vant/submit-bar/index"
+
+export default {
+  components: {VanSubmitBar},
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    onClickButton (val) {
+      console.log(val)
+    },
+    onClickLink () {
+      uni.showToast({
+        title: "修改地址",
+        icon: "none"
+      })
+    }
+  }
 }
+
 ```
 
 ## 代码演示
@@ -16,9 +41,11 @@
 
 ```html
 <van-submit-bar
-  price="{{ 3050 }}"
+  :price="3050"
   button-text="提交订单"
-  bind:submit="onSubmit"
+  @submit="onClickButton"
+  custom-class="van-submit-bar"
+  :safe-area-inset-bottom="false"
 />
 ```
 
@@ -29,11 +56,13 @@
 ```html
 <van-submit-bar
   disabled
-  price="{{ 3050 }}"
+  price="3050"
   button-text="提交订单"
   tip="您的收货地址不支持同城送, 我们已为您推荐快递"
-  tip-icon="https://img.yzcdn.cn/1.png"
-  bind:submit="onSubmit"
+  tip-icon="//img.yzcdn.cn/public_files/2017/8/10/6af5b7168eed548100d9041f07b7c616.png"
+  @submit="onClickButton"
+  custom-class="van-submit-bar"
+  :safe-area-inset-bottom="false"
 />
 ```
 
@@ -44,9 +73,11 @@
 ```html
 <van-submit-bar
   loading
-  price="{{ 3050 }}"
+  price="3050"
   button-text="提交订单"
-  bind:submit="onSubmit"
+  @submit="onClickButton"
+  custom-class="van-submit-bar"
+  :safe-area-inset-bottom="false"
 />
 ```
 
@@ -56,14 +87,23 @@
 
 ```html
 <van-submit-bar
-  price="{{ 3050 }}"
+  price="3050"
   button-text="提交订单"
-  bind:submit="onClickButton"
-  tip="{{ true }}"
+  @submit="onClickButton"
+  custom-class="van-submit-bar"
+  :tip="true"
+  :safe-area-inset-bottom="false"
 >
-  <van-tag type="primary">标签</van-tag>
+  <van-tag
+    type="primary"
+    custom-class="van-tag"
+  >标签</van-tag>
   <view slot="tip">
-    您的收货地址不支持同城送, <text>修改地址</text>
+    您的收货地址不支持同城送
+    <text
+      class="edit-address"
+      @tap="onClickLink"
+    >修改地址</text>
   </view>
 </van-submit-bar>
 ```

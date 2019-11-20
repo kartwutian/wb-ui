@@ -1,44 +1,60 @@
+---
+title: Rate 评分
+lang: zh
+vant: true
+---
+
 # Rate 评分
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+```js
 
-```json
-"usingComponents": {
-  "van-rate": "path/to/vant-weapp/dist/rate/index"
+import VanRate from "@/components/vant/rate/index.vue"
+
+export default {
+  components: {VanRate},
+  data () {
+    return {
+      value: {
+        value1: 3,
+        value2: 3,
+        value3: 3,
+        value4: 2.5,
+        value5: 4,
+        value6: 3
+      }
+    };
+  },
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    
+  }
 }
+  
 ```
-## 代码演示
-
 ### 基础用法
 
-```html
-<van-rate value="{{ value }}" bind:change="onChange" />
-```
-
-```javascript
-Page({
-  data: {
-    value: 3
-  },
-
-  onChange(event) {
-    this.setData({
-      value: event.detail
-    });
-  }
-});
+ ```html
+<van-rate
+  :value="value.value1"
+  custom-class="van-rate"
+/>
 ```
 
 ### 自定义图标
 
  ```html
 <van-rate
-  value="{{ value }}"
+  :value="value.value2"
   icon="like"
   void-icon="like-o"
-  bind:change="onChange"
+  custom-class="van-rate"
 />
 ```
 
@@ -46,12 +62,13 @@ Page({
 
 ```html
 <van-rate
-  value="{{ value }}"
-  size="{{ 25 }}"
+  custom-class="van-rate"
+  :value="value.value3"
+  size="25"
   color="#ee0a24"
   void-color="#eee"
   void-icon="star"
-  bind:change="onChange"
+  @change="onChange"
 />
 ```
 
@@ -59,13 +76,15 @@ Page({
 
 ```html
 <van-rate
-  value="{{ value }}"
-  size="{{ 25 }}"
+  custom-class="van-rate"
+  :value="value.value4"
+  size="25"
   allow-half
   color="#ee0a24"
   void-color="#eee"
   void-icon="star"
-  bind:change="onChange"
+  :touchable="false"
+  @change="onChange"
 />
 ```
 
@@ -73,19 +92,19 @@ Page({
 
 ```html
 <van-rate
-  value="{{ value }}"
-  count="{{ 6 }}"
-  bind:change="onChange"
-/>
+  custom-class="van-rate"
+  :value="value.value5"
+  :count="6"
+  @change="onChange"
 ```
 
 ### 禁用状态
 
 ```html
 <van-rate
+  custom-class="van-rate"
+  :value="value.value6"
   disabled
-  value="{{ value }}"
-  bind:change="onChange"
 />
 ```
 
@@ -93,10 +112,19 @@ Page({
 
 ```html
 <van-rate
+  custom-class="van-rate"
+  :value="value.value6"
   readonly
-  value="{{ value }}"
-  bind:change="onChange"
 />
+```
+```css
+page {
+  background-color: #fff;
+}
+
+.van-rate {
+  margin-left: 15px;
+}
 ```
 
 ## API
@@ -105,7 +133,6 @@ Page({
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |------|------|------|------|------|
-| name | 在表单内提交时的标识符 | *string* | - | - |
 | value | 当前分值 | *number* | - | - |
 | count | 图标总数 | *number* | `5` | - |
 | size | 图标大小，默认单位为 `px` | *string \| number* | `20px` | - |
@@ -124,7 +151,7 @@ Page({
 
 | 事件名称 | 说明 | 回调参数 |
 |------|------|------|
-| change | 当前分值变化时触发的事件 | 当前分值 |
+| @change | 当前分值变化时触发的事件 | 当前分值 |
 
 ### 外部样式类
 

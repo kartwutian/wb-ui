@@ -1,3 +1,9 @@
+---
+title: Grid 宫格
+lang: zh
+vant: true
+---
+
 # Grid 宫格
 
 ### 介绍
@@ -6,13 +12,26 @@
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-grid": "path/to/vant-weapp/dist/grid/index",
-  "van-grid-item": "path/to/vant-weapp/dist/grid-item/index"
+```js
+
+import VanGrid from "@/components/vant/grid/index.vue"
+import VanGridItem from "@/components/vant/grid-item/index.vue"
+
+export default {
+  components: {VanGridItem, VanGrid},
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    
+  }
 }
+  
 ```
 
 ## 代码演示
@@ -23,10 +42,12 @@
 
 ```html
 <van-grid>
-  <van-grid-item icon="photo-o" text="文字" />
-  <van-grid-item icon="photo-o" text="文字" />
-  <van-grid-item icon="photo-o" text="文字" />
-  <van-grid-item icon="photo-o" text="文字" />
+  <van-grid-item
+    icon="photo-o"
+    text="文字"
+    v-for="value in 4"
+    :key="value"
+  />
 </van-grid>
 ```
 
@@ -35,8 +56,13 @@
 默认一行展示四个格子，可以通过`column-num`自定义列数
 
 ```html
-<van-grid column-num="3">
-  <van-grid-item icon="photo-o" text="文字" wx:for="{{ 6 }}" />
+<van-grid :column-num="3">
+  <van-grid-item
+    icon="photo-o"
+    text="文字"
+    v-for="value in 6"
+    :key="value"
+  />
 </van-grid>
 ```
 
@@ -45,11 +71,18 @@
 通过插槽可以自定义格子展示的内容
 
 ```html
-<van-grid column-num="3" border="{{ false }}">
-  <van-grid-item use-slot wx:for="{{ 3 }}" wx:for-item="index">
+<van-grid
+  :column-num="3"
+  :border="false"
+>
+  <van-grid-item
+    use-slot
+    v-for="(value,index) in 3"
+    :key="index"
+  >
     <image
       style="width: 100%; height: 90px;"
-      src="https://img.yzcdn.cn/vant/apple-{{ index + 1 }}.jpg"
+      :src="'https://img.yzcdn.cn/vant/apple-' +(index + 1) + '.jpg'"
     />
   </van-grid-item>
 </van-grid>
@@ -61,7 +94,12 @@
 
 ```html
 <van-grid square>
-  <van-grid-item icon="photo-o" text="文字" wx:for="{{ 8 }}" />
+  <van-grid-item
+    icon="photo-o"
+    text="文字"
+    v-for="value in 8"
+    :key="value"
+  />
 </van-grid>
 ```
 
@@ -70,8 +108,13 @@
 通过`gutter`属性设置格子之间的距离
 
 ```html
-<van-grid gutter="{{ 10 }}">
-  <van-grid-item icon="photo-o" text="文字" wx:for="{{ 8 }}" />
+<van-grid :gutter="10">
+  <van-grid-item
+    icon="photo-o"
+    text="文字"
+    v-for="value in 8"
+    :key="value"
+  />
 </van-grid>
 ```
 
@@ -80,17 +123,20 @@
 可以通过`url`属性进行页面跳转，通过`link-type`属性控制跳转类型
 
 ```html
-<van-grid clickable column-num="2">
+<van-grid
+  clickable
+  :column-num="2"
+>
   <van-grid-item
     icon="home-o"
     link-type="navigateTo"
-    url="/pages/dashboard/index"
+    url="/pages/vant/tabbar/tabbar"
     text="Navigate 跳转"
   />
   <van-grid-item
     icon="search"
     link-type="reLaunch"
-    url="/pages/dashboard/index"
+    url="/pages/vant/tabbar/tabbar"
     text="ReLaunch 跳转"
   />
 </van-grid>
@@ -101,9 +147,17 @@
 设置`dot`属性后，会在图标右上角展示一个小红点。设置`info`属性后，会在图标右上角展示相应的徽标
 
 ```html
-<van-grid column-num="2">
-  <van-grid-item icon="home-o" text="文字" dot />
-  <van-grid-item icon="search" text="文字" info="99+" />
+<van-grid :column-num="2">
+  <van-grid-item
+    icon="home-o"
+    text="文字"
+    dot
+  />
+  <van-grid-item
+    icon="search"
+    text="文字"
+    info="99+"
+  />
 </van-grid>
 ```
 
