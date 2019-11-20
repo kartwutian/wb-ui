@@ -8,31 +8,10 @@ vant: true
 
 ### 引入
 
+在script中引入组件
 
 ```js
 import VanSubmitBar from "@/components/vant/submit-bar/index"
-
-export default {
-  components: {VanSubmitBar},
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    onClickButton (val) {
-      console.log(val)
-    },
-    onClickLink () {
-      uni.showToast({
-        title: "修改地址",
-        icon: "none"
-      })
-    }
-  }
-}
-
 ```
 
 ## 代码演示
@@ -47,6 +26,16 @@ export default {
   custom-class="van-submit-bar"
   :safe-area-inset-bottom="false"
 />
+```
+
+```js
+export default {
+  methods: {
+    onClickButton (val) {
+      console.log(val)
+    }
+  }
+}
 ```
 
 ### 禁用状态
@@ -66,6 +55,16 @@ export default {
 />
 ```
 
+```js
+export default {
+  methods: {
+    onClickButton (val) {
+      console.log(val)
+    }
+  }
+}
+```
+
 ### 加载状态
 
 加载状态下不会触发`submit`事件
@@ -75,7 +74,6 @@ export default {
   loading
   price="3050"
   button-text="提交订单"
-  @submit="onClickButton"
   custom-class="van-submit-bar"
   :safe-area-inset-bottom="false"
 />
@@ -108,6 +106,22 @@ export default {
 </van-submit-bar>
 ```
 
+```js
+export default {
+  methods: {
+    onClickButton (val) {
+      console.log(val)
+    },
+    onClickLink () {
+      uni.showToast({
+        title: "修改地址",
+        icon: "none"
+      })
+    }
+  }
+}
+```
+
 ## API
 
 ### Props
@@ -131,7 +145,7 @@ export default {
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| submit | 按钮点击事件回调 | - |
+| @submit | 按钮点击事件回调 | - |
 
 ### Slot
 

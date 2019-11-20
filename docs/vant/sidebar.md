@@ -1,24 +1,28 @@
+---
+title: Sidebar 侧边导航
+lang: zh
+vant: true
+---
+
 # Sidebar 侧边导航
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-sidebar": "path/to/vant-weapp/dist/sidebar/index",
-  "van-sidebar-item": "path/to/vant-weapp/dist/sidebar-item/index"
-}
+```js
+import VanSidebar from "@/components/vant/sidebar/index";
+import VanSidebarItem from "@/components/vant/sidebar-item/index";
 ```
 
 ## 代码演示
 
 ### 基础用法
 
-通过在`van-sidebar`上设置`active`属性来控制选中项
+通过`v-model`绑定当前选中项的索引
 
 ```html
-<van-sidebar active="{{ active }}" bind:change="onChange">
+<van-sidebar custom-class="custom-sidebar" @change="onChange">
   <van-sidebar-item title="标签名称" />
   <van-sidebar-item title="标签名称" />
   <van-sidebar-item title="标签名称" />
@@ -26,18 +30,16 @@
 ```
 
 ``` javascript
-Page({
-  data: {
-    active: 0
-  },
-
-  onChange(event) {
-    wx.showToast({
-      icon: 'none',
-      title: `切换至第${event.detail}项`
-    });
+export default {
+  methods: {
+    onChange(detail) {
+      uni.showToast({
+        icon: 'none',
+        title: `切换至第${detail}项`
+      });
+    }
   }
-});
+}
 ```
 
 ### 提示信息
@@ -45,11 +47,24 @@ Page({
 设置`dot`属性后，会在右上角展示一个小红点。设置`info`属性后，会在右上角展示相应的徽标
 
 ```html
-<van-sidebar active="{{ active }}">
+<van-sidebar custom-class="custom-sidebar" @change="onChange">
   <van-sidebar-item title="标签名称" dot />
   <van-sidebar-item title="标签名称" info="5" />
   <van-sidebar-item title="标签名称" info="99+" />
 </van-sidebar>
+```
+
+``` javascript
+export default {
+  methods: {
+    onChange(detail) {
+      uni.showToast({
+        icon: 'none',
+        title: `切换至第${detail}项`
+      });
+    }
+  }
+}
 ```
 
 ## API
@@ -64,7 +79,7 @@ Page({
 
 | 事件名 | 说明 | 参数 |
 |------|------|------|
-| change | 切换徽章时触发 | 当前选中徽章的索引 |
+| @change | 切换徽章时触发 | 当前选中徽章的索引 |
 
 ### Sidebar 外部样式类
 
@@ -84,7 +99,7 @@ Page({
 
 | 事件名 | 说明 | 参数 |
 |------|------|------|
-| click | 点击徽章时触发 | 当前徽章的索引 |
+| @click | 点击徽章时触发 | 当前徽章的索引 |
 
 ### SidebarItem 外部样式类
 

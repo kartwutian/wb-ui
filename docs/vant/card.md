@@ -1,13 +1,18 @@
+---
+title: Card 商品卡片
+lang: zh
+vant: true
+---
+
+
 # Card 商品卡片
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-card": "path/to/vant-weapp/dist/card/index"
-}
+```js
+import VanCard from "@/components/vant/card/index"
 ```
 
 ## 代码演示
@@ -19,8 +24,8 @@
   num="2"
   price="2.00"
   desc="描述信息"
-  title="商品标题"
-  thumb="{{ imageURL }}"
+  title="2018秋冬新款男士休闲时尚军绿飞行夹克秋冬新款男"
+  thumb="//img.yzcdn.cn/upload_files/2017/07/02/af5b9f44deaeb68000d7e4a711160c53.jpg"
 />
 ```
 
@@ -32,14 +37,19 @@
 <van-card
   num="2"
   tag="标签"
-  price="10.00"
+  price="2.00"
+  origin-price="10.00"
   desc="描述信息"
-  title="商品标题"
-  thumb="{{ imageURL }}"
+  title="2018秋冬新款男士休闲时尚军绿飞行夹克秋冬新款男"
+  thumb="//img.yzcdn.cn/upload_files/2017/07/02/af5b9f44deaeb68000d7e4a711160c53.jpg"
 >
-  <view slot="footer">
-    <van-button size="mini">按钮</van-button>
-    <van-button size="mini">按钮</van-button>
+  <view slot="tags">
+    <van-tag plain type="danger" custom-class="tag" >标签1</van-tag>
+    <van-tag plain type="danger" >标签2</van-tag>
+  </view>
+  <view slot="footer" class="van-card__footer" >
+    <van-button size="mini" round custom-class="button" >按钮</van-button>
+    <van-button size="mini" round>按钮</van-button>
   </view>
 </van-card>
 ```
@@ -61,7 +71,6 @@
 | centered | 内容是否垂直居中 | *string* | `false` | - |
 | currency | 货币符号 |  *string* | `¥` | - |
 | thumb-link | 点击左侧图片后跳转的链接地址 | *string* | - | - |
-| link-type | 链接跳转类型，可选值为 `redirectTo` `switchTab` `reLaunch` | *string* | `navigateTo` | - |
 | lazy-load | 是否开启图片懒加载 | *boolean* | `false` | - |
 
 ### Slot

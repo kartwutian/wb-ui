@@ -19,15 +19,6 @@ export default {
       fits: ['contain', 'cover', 'fill', 'none', 'scale-down'],
       src: 'https://img.yzcdn.cn/vant/cat.jpeg',
     };
-  },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    
   }
 }
   

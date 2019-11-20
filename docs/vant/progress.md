@@ -8,7 +8,6 @@ vant: true
 在script中引入组件
 
 ```js
-
 import VanProgress from "@/components/vant/progress/index";
 ```
 
@@ -71,7 +70,7 @@ import VanProgress from "@/components/vant/progress/index";
 | percentage | 进度百分比 | *number* | `false` | - |
 | stroke-width | 进度条粗细，默认单位为`px` | *string \| number* | `4px` | - |
 | show-pivot | 是否显示进度文字 | *boolean* | `true` | - |
-| color | 进度条颜色 | *string* | `#1989fa` | - |
+| color | 进度条颜色 | *string* | `BLUE` | - |
 | text-color | 进度文字颜色 | *string* | `#fff` | - |
 | track-color | 轨道颜色 | *string* | `#e5e5e5` | 1.0.0 |
 | pivot-text | 文字显示 | *string* | 百分比文字 | - |

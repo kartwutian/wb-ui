@@ -1,13 +1,19 @@
+---
+title: CountDown 倒计时
+lang: zh
+vant: true
+---
+
 # CountDown 倒计时
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-count-down": "path/to/vant-weapp/dist/count-down/index"
+```js
+import VanCountDown from "@/components/vant/count-down/index";
 }
+  
 ```
 
 ## 代码演示
@@ -17,15 +23,17 @@
 `time`属性表示倒计时总时长，单位为毫秒
 
 ```html
-<van-count-down time="{{ time }}" />
+<van-count-down :time="time" />
 ```
 
 ```js
-Page({
-  data: {
-    time: 30 * 60 * 60 * 1000
+export default {
+  data() {
+    return {
+      time: 30 * 60 * 60 * 1000,
+    };
   }
-});
+};
 ```
 
 ### 自定义格式
@@ -34,9 +42,19 @@ Page({
 
 ```html
 <van-count-down
-  time="{{ time }}"
+  :time="time"
   format="DD 天 HH 时 mm 分 ss 秒"
 />
+```
+
+```js
+export default {
+  data() {
+    return {
+      time: 30 * 60 * 60 * 1000,
+    };
+  }
+};
 ```
 
 ### 毫秒级渲染
@@ -46,20 +64,30 @@ Page({
 ```html
 <van-count-down
   millisecond
-  time="{{ time }}"
+  :time="time"
   format="HH:mm:ss:SSS"
 />
 ```
 
+```js
+export default {
+  data() {
+    return {
+      time: 30 * 60 * 60 * 1000,
+    };
+  }
+};
+```
+
 ### 自定义样式
 
-设置`use-slot`属性后可以自定义倒计时样式，需要通过`bind:change`事件获取`timeData`对象并自行渲染，格式见下方表格
+设置`use-slot`属性后可以自定义倒计时样式，需要通过`@change`事件获取`timeData`对象并自行渲染，格式见下方表格
 
 ```html
 <van-count-down
   use-slot
-  time="{{ time }}"
-  bind:change="onChange"
+  :time="time"
+  @change="onChange"
 >
   <text class="item">{{ timeData.hours }}</text>
   <text class="item">{{ timeData.minutes }}</text>
@@ -68,19 +96,19 @@ Page({
 ```
 
 ```js
-
-Page({
-  data: {
-    time: 30 * 60 * 60 * 1000,
-    timeData: {}
+export default {
+  data() {
+    return {
+      time: 30 * 60 * 60 * 1000,
+      timeData: {}
+    };
   },
-
-  onChange(e) {
-    this.setData({
-      timeData: e.detail
-    });
+  methods:{
+    onChange(timeData) {
+      this.timeData = timeData;
+    }
   }
-});
+};
 ```
 
 ```css
@@ -102,42 +130,44 @@ Page({
 
 ```html
 <van-count-down
-  class="control-count-down"
+  ref="control-count-down"
   millisecond
-  time="{{ 3000 }}"
-  auto-start="{{ false }}"
+  :time="3000"
+  :auto-start="false"
   format="ss:SSS"
-  bind:finish="finished"
+  @finish="finished"
 />
 
 <van-grid clickable column-num="3">
-  <van-grid-item text="开始" icon="play-circle-o" bindclick="start" />
-  <van-grid-item text="暂停" icon="pause-circle-o" bindclick="pause" />
-  <van-grid-item text="重置" icon="replay" bindclick="reset" />
+  <van-grid-item text="开始" icon="play-circle-o" @click="start" />
+  <van-grid-item text="暂停" icon="pause-circle-o" @click="pause" />
+  <van-grid-item text="重置" icon="replay" @click="reset" />
 </van-grid>
 ```
 
 ```js
-Page({
-  start() {
-    const countDown = this.selectComponent('.control-count-down');
-    countDown.start();
-  },
+export default {
+  methods:{
+    start() {
+      const countDown = this.$refs['control-count-down'];
+      countDown.start();
+    },
 
-  pause() {
-    const countDown = this.selectComponent('.control-count-down');
-    countDown.pause();
-  },
+    pause() {
+      const countDown = this.$refs['control-count-down'];
+      countDown.pause();
+    },
 
-  reset() {
-    const countDown = this.selectComponent('.control-count-down');
-    countDown.reset();
-  },
+    reset() {
+      const countDown = this.$refs['control-count-down'];
+      countDown.reset();
+    },
 
-  finished() {
-    Toast('倒计时结束');
+    finished() {
+      console.log('倒计时结束')
+    }
   }
-});
+}
 ```
 
 ## API
@@ -156,8 +186,8 @@ Page({
 
 | 事件名 | 说明 | 回调参数 |
 |------|------|------|
-| finish | 倒计时结束时触发 | - |
-| change | 时间变化时触发，仅在开启`use-slot`后才会触发 | timeData |
+| @finish | 倒计时结束时触发 | - |
+| @change | 时间变化时触发，仅在开启`use-slot`后才会触发 | timeData |
 
 ### timeData 格式
 

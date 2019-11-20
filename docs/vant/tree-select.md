@@ -1,13 +1,17 @@
+---
+title: TreeSelect 分类选择
+lang: zh
+vant: true
+---
+
 # TreeSelect 分类选择
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-tree-select": "path/to/vant-weapp/dist/tree-select/index"
-}
+```js
+import VanTreeSelect from "@/components/vant/tree-select/index";
 ```
 
 ## 代码演示
@@ -19,75 +23,100 @@
 
 ```html
 <van-tree-select
-  items="{{ items }}"
-  main-active-index="{{ mainActiveIndex }}"
-  active-id="{{ activeId }}"
-  bind:click-nav="onClickNav"
-  bind:click-item="onClickItem"
-/>
+  :items="items"
+  :main-active-index="mainActiveIndex"
+  :active-id="activeId"
+  @click-item="onClickItem"
+  @click-nav="onClickNav"
+></van-tree-select>
 ```
 
-```javascript
-Page({
-  data: {
-    mainActiveIndex: 0,
-    activeId: null
+```js
+export default {
+  data(){
+    return {
+      items: [{
+        text: '所有城市',
+        children: [...config.pro1, ...config.pro2]
+      }, {
+        text: config.pro1Name,
+        children: config.pro1
+      }, {
+        text: config.pro2Name,
+        children: config.pro2
+      }, {
+        text: config.pro3Name,
+        disabled: true,
+        children: config.pro3
+      }
+      ],
+      mainActiveIndex: 0,
+      activeId: 0
+    }
   },
-
-  onClickNav({ detail = {} }) {
-    this.setData({
-      mainActiveIndex: detail.index || 0
-    });
-  },
-
-  onClickItem({ detail = {} }) {
-    const activeId = this.data.activeId === detail.id ? null : detail.id;
-
-    this.setData({ activeId });
+  methods:{
+    onClickNav ({ index }) {
+      this.mainActiveIndex = index || 0;
+    },
+    onClickItem (detail) {
+      let activeId = this.activeId === detail.id ? null : detail.id;
+      this.activeId = activeId;
+    },
   }
-});
+}
 ```
 
 ### 多选模式
 
 ```html
 <van-tree-select
-  items="{{ items }}"
-  main-active-index="{{ mainActiveIndex }}"
-  active-id="{{ activeId }}"
-  max="{{ max }}"
-  bind:click-nav="onClickNav"
-  bind:click-item="onClickItem"
-/>
+  :max="2"
+  :items="items"
+  :main-active-index="mainActiveIndexMulti"
+  :active-id="activeIdMulti"
+  @click-item="onClickItemMulti"
+  @click-nav="onClickNavMulti"
+></van-tree-select>
 ```
 
-```javascript
-Page({
-  data: {
-    mainActiveIndex: 0,
-    activeId: [],
-    max: 2
-  },
-
-  onClickNav({ detail = {} }) {
-    this.setData({
-      mainActiveIndex: detail.index || 0
-    });
-  },
-
-  onClickItem({ detail = {} }) {
-    const { activeId } = this.data;
-
-    const index = activeId.indexOf(detail.id);
-    if (index > -1) {
-      activeId.splice(index, 1);
-    } else {
-      activeId.push(detail.id);
+```js
+export default {
+  data(){
+    return {
+      items: [{
+        text: '所有城市',
+        children: [...config.pro1, ...config.pro2]
+      }, {
+        text: config.pro1Name,
+        children: config.pro1
+      }, {
+        text: config.pro2Name,
+        children: config.pro2
+      }, {
+        text: config.pro3Name,
+        disabled: true,
+        children: config.pro3
+      }
+      ],
+      mainActiveIndexMulti: 0,
+      activeIdMulti: []
     }
+  },
+  methods:{
+    onClickNavMulti ({ index }) {
+      this.mainActiveIndexMulti = index || 0;
+    },
 
-    this.setData({ activeId });
+    onClickItemMulti (detail) {
+      const idx = this.activeIdMulti.indexOf(detail.id);
+      if (idx > -1) {
+        this.activeIdMulti.splice(idx, 1);
+      } else {
+        this.activeIdMulti.push(detail.id);
+      }
+    }
   }
-});
+}
 ```
 
 ### 自定义内容
@@ -114,13 +143,14 @@ Page({
 | main-active-index | 左侧选中项的索引 | *number* | `0` | - |
 | active-id | 右侧选中项的 id，支持传入数组 | *string \| number \| Array* | `0` | - |
 | max | 右侧项最大选中个数 | *number* | *Infinity* | - |
+| maxHeight | 组件整体最大高度  | *number* | *300* | - |
 
 ### Events
 
 | 事件名 | 说明 | 回调参数 |
 |-----------|-----------|-----------|
-| bind:click-nav | 左侧导航点击时，触发的事件 | event.detail.index：被点击的导航的索引 |
-| bind:click-item | 右侧选择项被点击时，会触发的事件 | event.detail: 该点击项的数据 |
+| @click-nav | 左侧导航点击时，触发的事件 | event.detail.index：被点击的导航的索引 |
+| @click-item | 右侧选择项被点击时，会触发的事件 | event.detail: 该点击项的数据 |
 
 ### Slots
 
