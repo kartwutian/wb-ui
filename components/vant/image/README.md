@@ -9,19 +9,7 @@ vant: true
 ### 引入
 
 ```js
-
 import VanImage from "@/components/vant/image/index";
-
-export default {
-  components: {VanImage},
-  data () {
-    return {
-      fits: ['contain', 'cover', 'fill', 'none', 'scale-down'],
-      src: 'https://img.yzcdn.cn/vant/cat.jpeg',
-    };
-  }
-}
-  
 ```
 
 ## 代码演示
