@@ -1,7 +1,7 @@
 <template>
   <van-picker
     class="van-datetime-picker"
-    ref="vandatetimepicker"
+    ref="van-datetime-picker"
     :active-class="activeClass"
     :toolbar-class="toolbarClass"
     :column-class="columnClass"
@@ -71,9 +71,11 @@ export default {
   // classes: ['active-class', 'toolbar-class', 'column-class'],
 
   props: {
-    title: String,
+    title: {
+      type: String,
+      default: ''
+    },
     loading: Boolean,
-    showToolbar: Boolean,
     cancelButtonText: {
       type: String,
       default: '取消'
@@ -140,10 +142,6 @@ export default {
       type: String,
       default: ""
     },
-    aaa: {
-      type: String,
-      default: "12121"
-    }
   },
 
   data () {
@@ -180,14 +178,14 @@ export default {
     getPicker () {
       if (this.picker == null) {
         // this.picker = this.selectComponent('.van-datetime-picker');
-        this.picker = this.$refs.vandatetimepicker
+        this.picker = this.$refs['van-datetime-picker'];
 
         const { picker } = this;
         const { setColumnValues } = picker;
         picker.setColumnValues = (...args) =>
           setColumnValues.apply(picker, [...args, false]);
       }
-
+      // debugger
       return this.picker;
     },
 

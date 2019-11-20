@@ -3,7 +3,7 @@
     <template name="toolbar">
       <view
         v-if=" showToolbar "
-        class="van-picker__toolbar van-hairline--top-bottom toolbar-class"
+        :class="'van-picker__toolbar van-hairline--top-bottom ' + toolbarClass"
       >
         <view
           class="van-picker__cancel"
@@ -47,15 +47,15 @@
         <van-picker-column
           ref="van-picker-column"
           class="van-picker__column"
-          v-for="(item,index) in (column ? [columns] : columns) "
+          v-for="(item,index) in (simple ? [columns] : columns) "
           :key=" index "
-          custom-class="column-class"
+          :custom-class="columnClass"
           :value-key=" valueKey "
-          :initial-options=" column ? item : item.values "
+          :initial-options=" simple ? item : item.values "
           :default-index=" item.defaultIndex || defaultIndex "
           :item-height=" itemHeight "
           :visible-item-count=" visibleItemCount "
-          active-class="active-class"
+          :active-class="activeClass"
           @change="onChange"
         />
         <view
@@ -74,7 +74,6 @@
 
 <script>
 import VanLoading from "../loading/index";
-const isSimple = require("./isSimple.js");
 import { basic } from '../mixins/basic';
 import VanPickerColumn from "../picker-column/index";
 
@@ -117,33 +116,33 @@ export default {
     columns: {
       type: Array,
       default: [],
-      // observer (columns = []) {
-      //   this.simple = columns.length && !columns[0].values;
-      //   this.children = this.selectAllComponents('.van-picker__column');
-
-      //   if (Array.isArray(this.children) && this.children.length) {
-      //     this.setColumns().catch(() => { });
-      //   }
-      // }
     },
-
+    activeClass: {
+      type: String,
+      default: ''
+    },
+    toolbarClass: {
+      type: String,
+      default: ''
+    },
+    columnClass: {
+      type: String,
+      default: ''
+    }
   },
   data () {
     return {
-      simple: false
+
     }
-  },
-  beforeCreate () {
-    this.children = [];
   },
 
   mounted(){
-    this.children = this.$refs['van-picker-column'];
+
   },
 
   computed: {
-    column () {
-      return isSimple(this.columns)
+    simple(){
+      return this.columns.length && !this.columns[0].values;
     }
   },
 
@@ -188,7 +187,7 @@ export default {
     },
     // get column instance by index
     getColumn (index) {
-      return this.children[index];
+      return this.$refs['van-picker-column'][index];
     },
 
     // get column value by index
@@ -225,11 +224,11 @@ export default {
 
     // get options of column by index
     getColumnValues (index) {
-      return (this.children[index] || {}).options;
+      return (this.$refs['van-picker-column'][index] || {}).options;
     },
     // set options of column by index
     setColumnValues (index, options, needReset = true) {
-      const column = this.children[index];
+      const column = this.$refs['van-picker-column'][index];
       if (column == null) {
         return Promise.reject(new Error('setColumnValues: 对应列不存在'));
       }
@@ -250,7 +249,7 @@ export default {
 
     // get values of all columns
     getValues () {
-      return this.children.map((child) => child.getValue());
+      return this.$refs['van-picker-column'].map((child) => child.getValue());
     },
     // set values of all columns
     setValues (values) {
@@ -262,7 +261,7 @@ export default {
 
     // get indexes of all columns
     getIndexes () {
-      return this.children.map(
+      return this.$refs['van-picker-column'].map(
         (child) => child.currentIndex
       );
     },
@@ -278,9 +277,7 @@ export default {
 
   watch: {
     columns () {
-      this.simple = this.columns.length && !this.columns[0].values;
-      this.children = this.$refs['van-picker-column'];
-      if (Array.isArray(this.children) && this.children.length) {
+      if (Array.isArray(this.$refs['van-picker-column']) && this.$refs['van-picker-column'].length) {
         this.setColumns().catch(() => { });
       }
     }

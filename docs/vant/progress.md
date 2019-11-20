@@ -19,7 +19,7 @@ import VanProgress from "@/components/vant/progress/index";
 进度条默认为蓝色，使用`percentage`属性来设置当前进度
 
 ```html
-<van-progress percentage="50" />
+<van-progress :percentage="50" />
 ```
 
 ### 线条粗细
@@ -27,13 +27,13 @@ import VanProgress from "@/components/vant/progress/index";
 通过`stroke-width`可以设置进度条的粗细
 
 ```html
-<van-progress :percentage="50" stroke-width="8" />
+<van-progress :percentage="50" :stroke-width="8" />
 ```
 
 ### 置灰
 
 ```html
-<van-progress inactive percentage="50" />
+<van-progress inactive :percentage="50" />
 ```
 
 ### 样式定制
@@ -44,17 +44,17 @@ import VanProgress from "@/components/vant/progress/index";
 <van-progress
   pivot-text="橙色"
   color="#f2826a"
-  percentage="25"
+  :percentage="25"
 />
 
 <van-progress
   pivot-text="红色"
   color="#ee0a24"
-  percentage="50"
+  :percentage="50"
 />
 
 <van-progress
-  percentage="75"
+  :percentage="75"
   pivot-text="紫色"
   pivot-color="#7232dd"
   color="linear-gradient(to right, #be99ff, #7232dd)"

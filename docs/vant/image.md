@@ -1,13 +1,36 @@
+---
+title: Image 图片
+lang: zh
+vant: true
+---
+
 # Image 图片
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+```js
 
-```json
-"usingComponents": {
-  "van-image": "path/to/vant-weapp/dist/image/index"
+import VanImage from "@/components/vant/image/index";
+
+export default {
+  components: {VanImage},
+  data () {
+    return {
+      fits: ['contain', 'cover', 'fill', 'none', 'scale-down'],
+      src: 'https://img.yzcdn.cn/vant/cat.jpeg',
+    };
+  },
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    
+  }
 }
+  
 ```
 
 ## 代码演示
@@ -50,25 +73,12 @@
 />
 ```
 
-### 图片懒加载
-
-图片懒加载，在即将进入一定范围（上下三屏）时才开始加载
-
-```html
-<van-image
-  width="100"
-  height="100"
-  lazy-load
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
-/>
-```
-
 ### 加载中提示
 
 `Image`组件提供了默认的加载中提示，支持通过`loading`插槽自定义内容
 
 ```html
-<van-image use-loading-slot>
+<van-image width="100%" height="27vw" use-loading-slot>
   <van-loading
     slot="loading"
     type="spinner"
@@ -83,7 +93,11 @@
 `Image`组件提供了默认的加载失败提示，支持通过`error`插槽自定义内容
 
 ```html
-<van-image use-error-slot>
+<van-image width="100%" height="27vw" src="x"></van-image>
+```
+
+```html
+<van-image width="100%" height="27vw" src="x" use-error-slot>
   <text slot="error">加载失败</text>
 </van-image>
 ```
@@ -121,9 +135,9 @@
 
 | 事件名 | 说明 | 回调参数 |
 |------|------|------|
-| click | 点击图片时触发 | event: Event |
-| load | 图片加载完毕时触发 | event: Event |
-| error | 图片加载失败时触发 | event: Event |
+| @click | 点击图片时触发 | event: Event |
+| @load | 图片加载完毕时触发 | event: Event |
+| @error | 图片加载失败时触发 | event: Event |
 
 ### Slots
 

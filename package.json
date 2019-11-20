@@ -7,8 +7,8 @@
     "generateApis": "node ./scripts/fetch/index.js",
     "generatePages": "node ./scripts/generatePages.js",
     "generateDocs": "node ./scripts/generateDocs.js",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:dev": "cross-env NODE_ENV=development vuepress dev docs",
+    "docs:build": "cross-env NODE_ENV=production vuepress build docs"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "vue-i18n": "^8.14.1"
   },
   "devDependencies": {
+    "cross-env": "^6.0.3",
     "ejs": "^2.7.1",
     "gulp": "^4.0.2",
     "gulp-file-include": "^2.1.0",

@@ -26,11 +26,9 @@
 							v-for="item in group.list"
 							:key="item.title"
 							is-link
-							:url="`/pages/vant${item.path}${item.path}`"
-							:data-url="`/pages/vant${item.path}${item.path}`"
-							:data-switch-tab="true"
 							:title="`${item.title}`"
 							:border="true"
+							@tap="navTo(`/pages/vant${item.path}${item.path}`)"
 					/>
 					<van-icon
 							:name="group.icon"
@@ -51,6 +49,7 @@
 	import VanCollapseItem from "../../components/vant/collapse-item/index";
 	import VanIcon from "../../components/vant/icon/index";
 	import VanCellGroup from "../../components/vant/cell-group/index";
+	import config from '../../config/config';
 	export default {
 		components: {VanCellGroup, VanIcon, VanCell, VanCollapseItem, VanCollapse, VanTag},
 		data(){
@@ -293,6 +292,17 @@
 		},
 		methods: {
 
+			navTo(path){
+				// #ifdef  H5
+
+				// 向父级窗口posMessage
+				top.postMessage({path}, location.origin);
+				// #endif
+
+				uni.navigateTo({
+					url: path,
+				})
+			}
 		},
 	}
 </script>

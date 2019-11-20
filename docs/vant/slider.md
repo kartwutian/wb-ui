@@ -1,57 +1,119 @@
+---
+title: Slider 滑块
+lang: zh
+vant: true
+---
+
 # Slider 滑块
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-slider": "path/to/vant-weapp/dist/slider/index"
+```js
+
+import VanSlider from "@/components/vant/slider/index.vue"
+
+export default {
+  components: {VanSlider},
+  data () {
+    return {
+      currentValue: 50
+    }
+  },
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    onChange (event) {
+      console.log(event)
+      uni.showToast({
+        title: `当前值：${event}`,
+        icon: "none"
+      });
+    },
+    onDrag (event) {
+      this.currentValue = event
+      uni.showToast({
+        title: `当前值：${event}`,
+        icon: "none"
+      });
+    },
+    dragStart () {
+      uni.showToast({
+        title: "开始滑动",
+        icon: "none"
+      });
+    },
+    dragEnd () {
+      setTimeout(() => {
+        uni.showToast({
+          title: "结束滑动",
+          icon: "none"
+        });
+      }, 1000);
+    }
+  }
 }
+  
 ```
 
 ### 基本用法
 
 ```html
-<van-slider value="50" bind:change="onChange" />
-```
-
-```js
-Page({
-  onChange(event) {
-    wx.showToast({
-      icon: 'none',
-      title: `当前值：${event.detail}`
-    });
-  }
-});
+<van-slider
+  :value="currentValue"
+  custom-class="slider"
+  @change="onChange"
+  @drag-start="dragStart"
+  @drag-end="dragEnd"
+/>
 ```
 
 ### 指定选择范围
 
 ```html
-<van-slider min="-50" max="50" />
+<van-slider
+  custom-class="slider"
+  :min="-50"
+  :max="50"
+  @change="onChange"
+/>
 ```
 
 ### 禁用
 
 ```html
-<van-slider value="50" disabled />
+<van-slider
+  custom-class="slider"
+  v-model="currentValue"
+  disabled
+/>
 ```
 
 ### 指定步长
 
 ```html
-<van-slider value="50" step="10" />
+<van-slider
+  custom-class="slider"
+  v-model="currentValue"
+  :step="10"
+  @change="onChange"
+/>
 ```
 
 ### 自定义样式
 
 ```html
 <van-slider
-  value="50"
+  v-model="currentValue"
+  custom-class="slider"
   bar-height="4px"
   active-color="#ee0a24"
+  @change="onChange"
 />
 ```
 
@@ -59,28 +121,34 @@ Page({
 
 ```html
 <van-slider
-  value="{{ currentValue }}"
+  v-model="currentValue"
+  custom-class="slider"
   use-button-slot
-  bind:drag="onDrag"
+  active-color="#ee0a24"
+  @drag="onDrag"
 >
-  <view class="custom-button" slot="button">
-    {{ currentValue }}/100
+  <view
+    class="custom-button"
+    slot="button"
+  >
+    {{ currentValue }}
   </view>
 </van-slider>
 ```
+```css
+.slider {
+  margin: 0 15px 30px;
+}
 
-```js
-Page({
-  data: {
-    currentValue: 50
-  },
-
-  onDrag(event) {
-    this.setData({
-      currentValue: event.detail.value
-    });
-  }
-});
+.custom-button {
+  width: 26px;
+  color: #fff;
+  font-size: 10px;
+  line-height: 18px;
+  text-align: center;
+  border-radius: 100px;
+  background-color: #ee0a24;
+}
 ```
 
 ## API
@@ -97,15 +165,16 @@ Page({
 | bar-height | 进度条高度，默认单位为 `px` | *string \| number* | `2px` | - |
 | active-color | 进度条激活态颜色 | *string* | `#1989fa` | - |
 | inactive-color | 进度条默认颜色 | *string* | `#e5e5e5` | - |
+| use-button-slot | 是否开启按钮槽 | *boolean* | `false` | - |
 
 ### Events
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:drag | 拖动进度条时触发 | event.detail.value: 当前进度 |
-| bind:change | 进度值改变后触发 | event.detail: 当前进度 |
-| bind:drag-start | 开始拖动时触发 | - |
-| bind:drag-end | 结束拖动时触发 | - |
+| @drag | 拖动进度条时触发 | event.detail.value: 当前进度 |
+| @change | 进度值改变后触发 | event.detail: 当前进度 |
+| @drag-start | 开始拖动时触发 | - |
+| @drag-end | 结束拖动时触发 | - |
 
 ### 外部样式类
 

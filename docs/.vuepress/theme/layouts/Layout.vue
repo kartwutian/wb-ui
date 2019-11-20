@@ -114,12 +114,27 @@ export default {
 
   mounted () {
     console.log(this)
+   this.listenIframeMsg();
     this.$router.afterEach(() => {
       this.isSidebarOpen = false
     })
   },
 
   methods: {
+
+    listenIframeMsg(){
+      // 接收子页面 postMessage 的数据, 根据用户的点击跳转到相应文档
+      const self = this;
+      window.addEventListener('message',function(event){
+        console.log(event);
+        const {data} = event;
+        if(data.path){
+          const strArr = data.path.split('/');
+          self.$router.push(`/vant/${strArr[strArr.length - 1]}`)
+        }
+      }, false);
+    },
+
     toggleSidebar (to) {
       this.isSidebarOpen = typeof to === 'boolean' ? to : !this.isSidebarOpen
       this.$emit('toggle-sidebar', this.isSidebarOpen)

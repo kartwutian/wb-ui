@@ -1,14 +1,64 @@
+---
+title: Tabbar 标签栏
+lang: zh
+vant: true
+---
+
 # Tabbar 标签栏
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-tabbar": "path/to/vant-weapp/dist/tabbar/index",
-  "van-tabbar-item": "path/to/vant-weapp/dist/tabbar-item/index"
+```js
+
+import VanTabbarItem from "../../../components/vant/tabbar-item/index"
+
+export default {
+  components: {VanTabbarItem},
+  data () {
+    return {
+      active: {
+        active1: 0,
+        active2: 'home',
+        active3: 0,
+        active4: 0,
+        active5: 0,
+      },
+      icon: {
+        normal: 'https://img.yzcdn.cn/vant/user-inactive.png',
+        active: 'https://img.yzcdn.cn/vant/user-active.png'
+      }
+    }
+  },
+  onLoad(){
+
+  },
+  onUnload(){
+    
+  },
+  methods: {
+    onChange1 (event) {
+      this.changeActive(event, 1)
+    },
+    onChange2 (event) {
+      this.changeActive(event, 2)
+    },
+    onChange3 (event) {
+      this.changeActive(event, 3)
+    },
+    onChange4 (event) {
+      this.changeActive(event, 4)
+    },
+    onChange5 (event) {
+      this.changeActive(event, 5)
+    },
+    changeActive (event, val) {
+      this.active[`active${val}`] = event
+    }
+  }
 }
+  
 ```
 
 ## 代码演示
@@ -16,109 +66,12 @@
 ### 基础用法
 
 ```html
-<van-tabbar active="{{ active }}" bind:change="onChange">
-  <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-  <van-tabbar-item icon="search">标签</van-tabbar-item>
-  <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
-  <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
-</van-tabbar>
-```
-
-```javascript
-Page({
-  data: {
-    active: 0
-  },
-  // event.detail 的值为当前选中项的索引
-  onChange(event) {
-    console.log(event.detail);
-  }
-});
-```
-
-### 通过名称匹配
-
-在标签指定`name`属性的情况下，`v-model`的值为当前标签的`name`
-
-```html
-<van-tabbar active="{{ active }}" bind:change="onChange">
-  <van-tabbar-item name="home" icon="home-o">标签</van-tabbar-item>
-  <van-tabbar-item name="search" icon="search">标签</van-tabbar-item>
-  <van-tabbar-item name="friends" icon="friends-o">标签</van-tabbar-item>
-  <van-tabbar-item name="setting" icon="setting-o">标签</van-tabbar-item>
-</van-tabbar>
-```
-
-```javascript
-Page({
-  data: {
-    active: 'home'
-  },
-  onChange(event) {
-    console.log(event.detail);
-  }
-});
-```
-
-### 显示徽标
-
-```html
-<van-tabbar active="{{ active }}" bind:change="onChange">
-  <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-  <van-tabbar-item icon="search" dot>标签</van-tabbar-item>
-  <van-tabbar-item icon="friends-o" info="5">标签</van-tabbar-item>
-  <van-tabbar-item icon="setting-o" info="20">标签</van-tabbar-item>
-</van-tabbar>
-```
-
-### 自定义图标
-
-可以通过 slot 自定义图标，其中 icon slot 代表未选中状态下的图标，icon-active slot 代表选中状态下的图标
-
-```html
-<van-tabbar active="{{ active }}" bind:change="onChange">
-  <van-tabbar-item info="3">
-    <image
-      slot="icon"
-      src="{{ icon.normal }}"
-      mode="aspectFit"
-    />
-    <image
-      slot="icon-active"
-      src="{{ icon.active }}"
-      mode="aspectFit"
-    />
-    自定义
-  </van-tabbar-item>
-  <van-tabbar-item icon="search">标签</van-tabbar-item>
-  <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
-</van-tabbar>
-```
-
-```javascript
-Page({
-  data: {
-    active: 0,
-    icon: {
-      normal: '//img.yzcdn.cn/icon-normal.png',
-      active: '//img.yzcdn.cn/icon-active.png'
-    }
-  },
-
-  onChange(event) {
-    console.log(event.detail);
-  }
-});
-```
-
-### 自定义颜色
-
-```html
 <van-tabbar
-  active="{{ active }}"
-  active-color="#07c160"
-  inactive-color="#000"
-  bind:change="onChange"
+  :active="active.active1"
+  data-key="active.active1"
+  custom-class="tabbar"
+  :safe-area-inset-bottom="false"
+  @change="onChange1"
 >
   <van-tabbar-item icon="home-o">标签</van-tabbar-item>
   <van-tabbar-item icon="search">标签</van-tabbar-item>
@@ -127,17 +80,117 @@ Page({
 </van-tabbar>
 ```
 
-```javascript
-Page({
-  data: {
-    active: 0
-  },
-  // event.detail 的值为当前选中项的索引
-  onChange(event) {
-    console.log(event.detail);
-  }
-});
+
+### 通过名称匹配
+
+在标签指定`name`属性的情况下，`v-model`的值为当前标签的`name`
+
+```html
+<van-tabbar
+  :active="active.active2"
+  data-key="active.active2"
+  custom-class="tabbar"
+  :safe-area-inset-bottom="false"
+  @change="onChange2"
+>
+  <van-tabbar-item
+    name="home"
+    icon="home-o"
+  >标签</van-tabbar-item>
+  <van-tabbar-item
+    name="search"
+    icon="search"
+  >标签</van-tabbar-item>
+  <van-tabbar-item
+    name="friends"
+    icon="friends-o"
+  >标签</van-tabbar-item>
+  <van-tabbar-item
+    name="setting"
+    icon="setting-o"
+  >标签</van-tabbar-item>
+</van-tabbar>
 ```
+
+
+### 显示徽标
+
+```html
+<van-tabbar
+  :active="active.active3"
+  data-key="active.active3"
+  custom-class="tabbar"
+  :safe-area-inset-bottom="false"
+  @change="onChange3"
+>
+  <van-tabbar-item icon="home-o">标签</van-tabbar-item>
+  <van-tabbar-item
+    icon="search"
+    dot
+  >标签</van-tabbar-item>
+  <van-tabbar-item
+    icon="friends-o"
+    info="5"
+  >标签</van-tabbar-item>
+  <van-tabbar-item
+    icon="setting-o"
+    info="20"
+  >标签</van-tabbar-item>
+</van-tabbar>
+```
+
+### 自定义图标
+
+可以通过 slot 自定义图标，其中 icon slot 代表未选中状态下的图标，icon-active slot 代表选中状态下的图标
+
+```html
+<van-tabbar
+  :active="active.active4"
+  data-key="active.active4"
+  custom-class="tabbar"
+  :safe-area-inset-bottom="false"
+  @change="onChange4"
+>
+  <van-tabbar-item info="3">
+    <image
+      slot="icon"
+      :src="icon.normal"
+      mode="aspectFit"
+      style="width: 30px; height: 18px;"
+    />
+    <image
+      slot="icon-active"
+      :src="icon.active"
+      mode="aspectFit"
+      style="width: 30px; height: 18px;"
+    />
+    自定义
+  </van-tabbar-item>
+  <van-tabbar-item icon="search">标签</van-tabbar-item>
+  <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+</van-tabbar>
+```
+
+
+### 自定义颜色
+
+```html
+<van-tabbar
+  :active="active.active5"
+  data-key="active.active5"
+  custom-class="tabbar"
+  active-color="#07c160"
+  inactive-color="#000"
+  :safe-area-inset-bottom="false"
+  @change="onChange5"
+>
+  <van-tabbar-item icon="home-o">标签</van-tabbar-item>
+  <van-tabbar-item icon="search">标签</van-tabbar-item>
+  <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
+  <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+</van-tabbar>
+```
+
 
 ### 结合自定义 tabBar
 
