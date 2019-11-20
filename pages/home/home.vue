@@ -49,6 +49,7 @@
 	import VanCollapseItem from "../../components/vant/collapse-item/index";
 	import VanIcon from "../../components/vant/icon/index";
 	import VanCellGroup from "../../components/vant/cell-group/index";
+	import config from '../../config/config';
 	export default {
 		components: {VanCellGroup, VanIcon, VanCell, VanCollapseItem, VanCollapse, VanTag},
 		data(){
@@ -295,9 +296,9 @@
 				// #ifdef  H5
 
 				// 向父级窗口posMessage
-				top.postMessage({path}, 'http://localhost:8081');
-
+				top.postMessage({path}, config.docDomain);
 				// #endif
+
 				uni.navigateTo({
 					url: path,
 				})
