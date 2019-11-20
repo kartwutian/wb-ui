@@ -1,162 +1,205 @@
 <template>
   <view class="pages-transition">
-    <demo-block title="基础用法" padding>
-      <van-cell title="Fade" @click="onClickFade" is-link />
-      <van-cell title="Fade Up" @click="onClickFadeUp" is-link />
-      <van-cell title="Fade Down" @click="onClickFadeDown" is-link />
-      <van-cell title="Fade Left" @click="onClickFadeLeft" is-link />
-      <van-cell title="Fade Right" @click="onClickFadeRight" is-link />
-      <van-cell title="Slide Up" @click="onClickSlideUp" is-link />
-      <van-cell title="Slide Down" @click="onClickSlideDown" is-link />
-      <van-cell title="Slide Left" @click="onClickSlideLeft" is-link />
-      <van-cell title="Slide Right" @click="onClickSlideRight" is-link />
-      <van-cell title="Custom" @click="onClickCustom" is-link />
-
-      <van-transition
-          :show="show"
-          :name="name"
-          custom-class="block"
+    <demo-block
+      title="基础用法"
+      padding
+    >
+      <van-cell
+        title="Fade"
+        @click="onClickFade"
+        is-link
+      />
+      <van-cell
+        title="Fade Up"
+        @click="onClickFadeUp"
+        is-link
+      />
+      <van-cell
+        title="Fade Down"
+        @click="onClickFadeDown"
+        is-link
+      />
+      <van-cell
+        title="Fade Left"
+        @click="onClickFadeLeft"
+        is-link
+      />
+      <van-cell
+        title="Fade Right"
+        @click="onClickFadeRight"
+        is-link
+      />
+      <van-cell
+        title="Slide Up"
+        @click="onClickSlideUp"
+        is-link
+      />
+      <van-cell
+        title="Slide Down"
+        @click="onClickSlideDown"
+        is-link
+      />
+      <van-cell
+        title="Slide Left"
+        @click="onClickSlideLeft"
+        is-link
+      />
+      <van-cell
+        title="Slide Right"
+        @click="onClickSlideRight"
+        is-link
+      />
+      <van-cell
+        title="Custom"
+        @click="onClickCustom"
+        is-link
       />
 
       <van-transition
-          :show="showCustom"
-          name=""
-          :duration="{ enter: 300, leave: 1000 }"
-          custom-class="block"
-          enter-class="van-enter-class"
-          enter-active-class="van-enter-active-class"
-          leave-active-class="van-leave-active-class"
-          leave-to-class="van-leave-to-class"
-          @before-enter="onBeforeEnter"
-          @enter="onEnter"
-          @after-enter="onAfterEnter"
-          @before-leave="onBeforeLeave"
-          @leave="onLeave"
-          @after-leave="onAfterLeave"
+        :show="show"
+        :name="name"
+        custom-class="block"
+      />
+
+      <van-transition
+        :show="showCustom"
+        name=""
+        :duration="{ enter: 300, leave: 1000 }"
+        custom-class="block"
+        enter-class="van-enter-class"
+        enter-active-class="van-enter-active-class"
+        leave-active-class="van-leave-active-class"
+        leave-to-class="van-leave-to-class"
+        @before-enter="onBeforeEnter"
+        @enter="onEnter"
+        @after-enter="onAfterEnter"
+        @before-leave="onBeforeLeave"
+        @leave="onLeave"
+        @after-leave="onAfterLeave"
       />
     </demo-block>
   </view>
 </template>
 
 <script>
-  import DemoBlock from "../../../components/app/demo-block";
-  import VanCell from "../../../components/vant/cell/index";
-  import VanTransition from "../../../components/vant/transition/index";
+import DemoBlock from "@/components/app/demo-block";
+import VanCell from "@/components/vant/cell/index";
+import VanTransition from "@/components/vant/transition/index";
 
-  export default {
-    name: 'pages-transition',
-    components: {VanTransition, VanCell, DemoBlock},
-    data(){
-      return  {
-        show: false,
-        name: 'fade',
-        showCustom: false
-      };
+export default {
+  name: 'pages-transition',
+  components: { VanTransition, VanCell, DemoBlock },
+  data () {
+    return {
+      show: false,
+      name: 'fade',
+      showCustom: false
+    };
+  },
+  onLoad () {
+
+  },
+  onUnload () {
+
+  },
+  methods: {
+    onClickFade () {
+      this.trigger('fade');
     },
-    onLoad(){
 
+    onClickFadeUp () {
+      this.trigger('fade-up');
     },
-    onUnload(){
 
+    onClickFadeDown () {
+      this.trigger('fade-down');
     },
-    methods: {
-      onClickFade() {
-        this.trigger('fade');
-      },
 
-      onClickFadeUp() {
-        this.trigger('fade-up');
-      },
+    onClickFadeLeft () {
+      this.trigger('fade-left');
+    },
 
-      onClickFadeDown() {
-        this.trigger('fade-down');
-      },
+    onClickFadeRight () {
+      this.trigger('fade-right');
+    },
 
-      onClickFadeLeft() {
-        this.trigger('fade-left');
-      },
+    onClickSlideUp () {
+      this.trigger('slide-up');
+    },
 
-      onClickFadeRight() {
-        this.trigger('fade-right');
-      },
+    onClickSlideDown () {
+      this.trigger('slide-down');
+    },
 
-      onClickSlideUp() {
-        this.trigger('slide-up');
-      },
+    onClickSlideLeft () {
+      this.trigger('slide-left');
+    },
 
-      onClickSlideDown() {
-        this.trigger('slide-down');
-      },
+    onClickSlideRight () {
+      this.trigger('slide-right');
+    },
 
-      onClickSlideLeft() {
-        this.trigger('slide-left');
-      },
+    trigger (name) {
+      this.name = name;
+      this.show = true;
+      setTimeout(() => {
+        this.show = false;
+      }, 500);
+    },
 
-      onClickSlideRight() {
-        this.trigger('slide-right');
-      },
+    onClickCustom () {
+      this.showCustom = true;
+      setTimeout(() => {
+        this.showCustom = false;
+      }, 1000);
+    },
 
-      trigger(name) {
-        this.name = name;
-        this.show = true;
-        setTimeout(() => {
-          this.show = false;
-        }, 500);
-      },
+    onBeforeEnter () {
+      console.log('before enter');
+    },
 
-      onClickCustom() {
-        this.showCustom = true;
-        setTimeout(() => {
-          this.showCustom = false;
-        }, 1000);
-      },
+    onEnter () {
+      console.log('enter');
+    },
 
-      onBeforeEnter() {
-        console.log('before enter');
-      },
+    onAfterEnter () {
+      console.log('after enter');
+    },
 
-      onEnter() {
-        console.log('enter');
-      },
+    onBeforeLeave () {
+      console.log('before leave');
+    },
 
-      onAfterEnter() {
-        console.log('after enter');
-      },
+    onLeave () {
+      console.log('leave');
+    },
 
-      onBeforeLeave() {
-        console.log('before leave');
-      },
-
-      onLeave() {
-        console.log('leave');
-      },
-
-      onAfterLeave() {
-        console.log('after leave');
-      },
-    }
+    onAfterLeave () {
+      console.log('after leave');
+    },
   }
+}
 </script>
 
 <style lang="less">
-  .block {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 100px;
-    height: 100px;
-    margin: -50px 0 0 -50px;
-    background-color: #1989fa;
-  }
+.block {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  margin: -50px 0 0 -50px;
+  background-color: #1989fa;
+}
 
-  .van-enter-active-class,
-  .van-leave-active-class {
-    transition-property: background-color, transform;
-  }
+.van-enter-active-class,
+.van-leave-active-class {
+  transition-property: background-color, transform;
+}
 
-  .van-enter-class,
-  .van-leave-to-class {
-    background-color: red;
-    transform: rotate(-360deg) translate3d(-100%, -100%, 0);
-  }
+.van-enter-class,
+.van-leave-to-class {
+  background-color: red;
+  transform: rotate(-360deg) translate3d(-100%, -100%, 0);
+}
 </style>
