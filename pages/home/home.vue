@@ -296,7 +296,7 @@
 				// #ifdef  H5
 
 				// 向父级窗口posMessage
-				top.postMessage({path}, config.docDomain);
+				top.postMessage({path}, location.origin);
 				// #endif
 
 				uni.navigateTo({
