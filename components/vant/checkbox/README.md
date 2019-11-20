@@ -9,45 +9,8 @@ vant: true
 ### 引入
 
 ```js
-
 import VanCheckbox from "@/components/vant/checkbox/index";
 import VanCellGroup from "@/components/vant/cell-group/index";
-
-export default {
-  components: {VanCellGroup, VanCheckbox},
-  data () {
-    return {
-      parentGroup: {},
-      checkbox1: false,
-      checkbox2: true,
-      checkbox3: true,
-      checkboxShape: true,
-      list: ['a', 'b', 'c'],
-      result: ['a', 'b'],
-      result2: [],
-      result3: [],
-      result4: ['a', 'b'],
-      activeIcon: 'https://img.yzcdn.cn/vant/user-active.png',
-      inactiveIcon: 'https://img.yzcdn.cn/vant/user-inactive.png'
-    };
-  },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    onChange(val) {
-      this.checkbox1 = val
-    },
-    toggle(index){
-      this.$refs[`page-checkbox-${index}`][0].toggle();
-    },
-    noop() {}
-  }
-}
-  
 ```
 
 ## 代码演示
@@ -60,12 +23,25 @@ export default {
 <van-checkbox v-model="checkbox1" custom-class="demo-checkbox">复选框</van-checkbox>
 ```
 
+```js
+export default {
+  data(){
+    return {
+      checkbox1: false,
+    }
+  }
+}
+```
+
 ### 禁用状态
 
 通过设置`disabled`属性可以禁用复选框
 
 ```html
 <van-checkbox disabled :value="false" custom-class="demo-checkbox">
+  复选框
+</van-checkbox>
+<van-checkbox disabled :value="true" custom-class="demo-checkbox">
   复选框
 </van-checkbox>
 ```
@@ -80,6 +56,16 @@ export default {
 </van-checkbox>
 ```
 
+```js
+export default {
+  data(){
+    return {
+      checkboxShape: true,
+    }
+  }
+}
+```
+
 ### 自定义颜色
 
 通过`checked-color`属性可以自定义选中状态下的图标颜色
@@ -88,6 +74,16 @@ export default {
 <van-checkbox v-model="checkbox2" checked-color="#07c160" custom-class="demo-checkbox">
   复选框
 </van-checkbox>
+```
+
+```js
+export default {
+  data(){
+    return {
+      checkbox2: true,
+    }
+  }
+}
 ```
 
 ### 自定义图标
@@ -99,6 +95,18 @@ export default {
   自定义图标
   <image slot="icon" class="icon" mode="widthFix" :src="checkbox3 ? activeIcon : inactiveIcon" />
 </van-checkbox>
+```
+
+```js
+export default {
+  data(){
+    return {
+      checkbox3: true,
+      activeIcon: 'https://img.yzcdn.cn/vant/user-active.png',
+      inactiveIcon: 'https://img.yzcdn.cn/vant/user-inactive.png'
+    }
+  }
+}
 ```
 
 ### 复选框组
@@ -118,6 +126,17 @@ export default {
 </van-checkbox-group>
 ```
 
+```js
+export default {
+  data(){
+    return {
+      result: ['a', 'b'],
+      list: ['a', 'b', 'c'],
+    }
+  }
+}
+```
+
 ### 设置最大可选数
 
 ```html
@@ -126,6 +145,16 @@ export default {
   <van-checkbox name="b">复选框 b</van-checkbox>
   <van-checkbox name="c">复选框 c</van-checkbox>
 </van-checkbox-group>
+```
+
+```js
+export default {
+  data(){
+    return {
+      result2: [],
+    }
+  }
+}
 ```
 
 ### 搭配单元格组件使用
@@ -149,21 +178,20 @@ export default {
 </van-checkbox-group>
 ```
 
-```css
-.demo-checkbox-group {
-  margin: 10px 0 0 20px;
-}
-
-.demo-checkbox {
-  margin: 10px 0 0 20px;
-}
-
-.value-class {
-  flex: none !important;
-}
-
-.icon {
-  width: 20px;
+```js
+export default {
+  data(){
+    return {
+      result3: [],
+      list: ['a', 'b', 'c'],
+    }
+  },
+  methods:{
+    toggle (index) {
+      this.$refs[`page-checkbox-${index}`][0].toggle();
+    },
+    noop () { }
+  }
 }
 ```
 

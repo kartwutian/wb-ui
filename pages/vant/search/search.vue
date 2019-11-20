@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanSearch from "../../../components/vant/search/index.vue"
+import DemoBlock from "@/components/app/demo-block";
+import VanSearch from "@/components/vant/search/index.vue"
 import { timeout } from 'q';
 
 export default {
@@ -63,8 +63,6 @@ export default {
         title: '搜索',
         icon: 'none'
       })
-      // console.log(val)
-      // console.log("搜索")
     },
     onCancel () {
       uni.showToast({

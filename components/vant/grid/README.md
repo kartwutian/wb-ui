@@ -15,23 +15,8 @@ vant: true
 在script中引入组件
 
 ```js
-
 import VanGrid from "@/components/vant/grid/index.vue"
 import VanGridItem from "@/components/vant/grid-item/index.vue"
-
-export default {
-  components: {VanGridItem, VanGrid},
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    
-  }
-}
-  
 ```
 
 ## 代码演示
@@ -172,8 +157,7 @@ export default {
 | border | 是否显示边框 | *boolean* | `true` | - |
 | center | 是否将格子内容居中显示 | *boolean* | `true`  | - |
 | square | 是否将格子固定为正方形 | *boolean* | `false` | - |
-| clickable  | 是否开启格子点击反馈 | *boolean* | `false` | - |
-| use-slot | 是否使用自定义内容的插槽 | *boolean* | `false` |
+| clickable  | 是否开启格子点击反馈 | *boolean* | - | - |
 
 ### GridItem Props
 

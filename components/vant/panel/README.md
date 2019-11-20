@@ -11,22 +11,7 @@ vant: true
 在script中引入组件
 
 ```js
-
 import VanPanel from '@/components/vant/panel/index';
-
-export default {
-  components: {VanPanel},
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    
-  }
-}
-  
 ```
 
 ## 代码演示

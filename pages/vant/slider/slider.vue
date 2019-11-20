@@ -15,7 +15,6 @@
         custom-class="slider"
         :min="-50"
         :max="50"
-        @change="onChange"
       />
     </demo-block>
 
@@ -32,7 +31,6 @@
         custom-class="slider"
         v-model="currentValue"
         :step="10"
-        @change="onChange"
       />
     </demo-block>
 
@@ -42,7 +40,6 @@
         custom-class="slider"
         bar-height="4px"
         active-color="#ee0a24"
-        @change="onChange"
       />
     </demo-block>
 

@@ -1,29 +1,45 @@
+---
+title: Loading 加载
+lang: zh
+vant: true
+---
+
 # Loading 加载
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-loading": "path/to/vant-weapp/dist/loading/index"
-}
+```js
+import VanLoading from "@/components/vant/loading/index";
 ```
 
 ## 代码演示
 
-### Circular
+### 加载类型
 
 ```html
-<van-loading />
-<van-loading color="#fff" />
+<van-loading custom-class="demo-loading" />
+<van-loading custom-class="demo-loading" type="spinner" />
 ```
 
-### Spinner
+### 自定义颜色
 
 ```html
-<van-loading type="spinner" />
-<van-loading type="spinner" color="#fff" />
+<van-loading custom-class="demo-loading" color="#1989fa" />
+<van-loading custom-class="demo-loading" type="spinner" color="#1989fa" />
+```
+
+### 加载文案
+
+```html
+<van-loading custom-class="demo-loading" size="24px">加载中...</van-loading>
+```
+
+### 垂直排列
+
+```html
+<van-loading custom-class="demo-loading" size="24px" vertical>加载中...</van-loading>
 ```
 
 ## API

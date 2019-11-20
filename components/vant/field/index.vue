@@ -121,7 +121,7 @@ export default {
 
   props: {
     size: String,
-    icon: String,
+    icon: String,//
     label: String,
     error: Boolean,
     fixed: Boolean,
@@ -238,9 +238,6 @@ export default {
     onInput (event) {
       const { value = '' } = event.detail || {};
       this.emitChange(value);
-      // this.setData({ value }, () => {
-      //   this.emitChange(value);
-      // });
     },
 
     onFocus (event) {

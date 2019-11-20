@@ -12,31 +12,6 @@ vant: true
 
 ```js
 import VanNavBar from "@/components/vant/nav-bar/index.vue"
-
-export default {
-  components: {VanNavBar},
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    onClickLeft () {
-      uni.showToast({
-        title: "点击返回",
-        icon: "none"
-      })
-    },
-    onClickRight () {
-      uni.showToast({
-        title: "点击按钮！！！",
-        icon: "none"
-      })
-    }
-  }
-}
-
 ```
 
 ## 代码演示
@@ -52,6 +27,25 @@ export default {
   @click-left="onClickLeft"
   @click-right="onClickRight"
 />
+```
+
+``` javascript
+export default {
+  methods: {
+    onClickLeft () {
+      uni.showToast({
+        title: "点击返回",
+        icon: "none"
+      })
+    },
+    onClickRight () {
+      uni.showToast({
+        title: "点击按钮！！！",
+        icon: "none"
+      })
+    }
+  }
+}
 ```
 
 
@@ -99,8 +93,8 @@ export default {
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:click-left | 点击左侧按钮时触发 | - |
-| bind:click-right | 点击右侧按钮时触发 | - |
+| @click-left | 点击左侧按钮时触发 | - |
+| @click-right | 点击右侧按钮时触发 | - |
 
 ### 外部样式类
 

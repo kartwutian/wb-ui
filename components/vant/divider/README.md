@@ -15,23 +15,7 @@ vant: true
 在script中引入组件
 
 ```js
-
 import VanDivider from "@/components/vant/divider/index"
-
-export default {
-  components: {VanDivider},
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    
-  }
-}
-  
-```
 ```
 
 ## 代码演示
@@ -84,8 +68,12 @@ export default {
 |-----------|-----------|-----------|-------------|-------------|
 | dashed | 虚线 | *boolean* | false | - |
 | hairline | 细线 | *boolean* | false | - |
-| content-position | 文本位置，`left` `center` `right` | *string* | - | - |
+| content-position | 文本位置，`left` `center` `right` | *string* | `center` | - |
+| fontSize | 自定义文本字体大小 | *string* | - | - |
+| borderColor | 自定义border颜色 | *string* | - | - |
+| textColor | 自定义文本颜色 | *string* | - | - |
 | custom-style | 自定义样式 | *string* | - | - |
+
 
 ### Slot
 

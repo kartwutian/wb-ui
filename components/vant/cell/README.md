@@ -11,23 +11,8 @@ vant: true
 在script中引入组件
 
 ```js
-
 import VanCellGroup from "@/components/vant/cell-group/index";
 import VanCell from "@/components/vant/cell/index";
-
-export default {
-  components: {VanCell, VanCellGroup},
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    
-  }
-}
-  
 ```
 
 ## 代码演示

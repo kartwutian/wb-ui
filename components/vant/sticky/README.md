@@ -1,3 +1,9 @@
+---
+title: Sticky 粘性布局
+lang: zh
+vant: true
+---
+
 # Sticky 粘性布局
 
 ### 介绍
@@ -6,12 +12,10 @@ Sticky 组件与 CSS 中`position: sticky`属性实现的效果一致，当组�
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-sticky": "path/to/vant-weapp/dist/sticky/index"
-}
+```js
+import VanSticky from "@/components/vant/sticky/index";
 ```
 
 ## 代码演示
@@ -31,7 +35,7 @@ Sticky 组件与 CSS 中`position: sticky`属性实现的效果一致，当组�
 通过`offset-top`属性可以设置组件在吸顶时与顶部的距离
 
 ```html
-<van-sticky offset-top="{{ 50 }}">
+<van-sticky :offset-top="50">
   <van-button type="info">吸顶距离</van-button>
 </van-sticky>
 ```
@@ -44,6 +48,7 @@ Sticky 组件与 CSS 中`position: sticky`属性实现的效果一致，当组�
 |-----------|-----------|-----------|-------------|
 | offset-top | 吸顶时与顶部的距离，单位`px` | *number* | `0` |
 | z-index | 吸顶时的 z-index | *number* | `99` |
+| disabled | 是否禁用粘性 | *boolean* | `false` | - |
 
 ### Events
 

@@ -1,14 +1,18 @@
+---
+title: Tab 标签页
+lang: zh
+vant: true
+---
+
 # Tab 标签页
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-tab": "path/to/vant-weapp/dist/tab/index",
-  "van-tabs": "path/to/vant-weapp/dist/tabs/index"
-}
+```js
+import VanTab from "@/components/vant/tab/index";
+import VanTabs from "@/components/vant/tabs/index";
 ```
 
 ## 代码演示
@@ -18,27 +22,41 @@
 通过`active`设定当前激活标签对应的索引值，默认情况下启用第一个标签
 
 ```html
-<van-tabs active="{{ active }}" bind:change="onChange">
-  <van-tab title="标签 1">内容 1</van-tab>
-  <van-tab title="标签 2">内容 2</van-tab>
-  <van-tab title="标签 3">内容 3</van-tab>
-  <van-tab title="标签 4">内容 4</van-tab>
+<van-tabs :active="1" @change="onChange">
+  <van-tab
+      v-for="(item, index) in [1,2,3,4,]"
+      :key="index"
+      :title="'标签 ' + item"
+  >
+    <view class="content">
+      {{ '内容' + item }}
+    </view>
+  </van-tab>
 </van-tabs>
 ```
 
 ```js
-Page({
-  data: {
-    active: 1
+export default {
+  data() {
+    return {
+      tabs: [1, 2, 3, 4],
+      tabsMore: [1, 2, 3, 4, 5, 6, 7, 8],
+      tabsWithName: [
+        {name: 'a', index: 1},
+        {name: 'b', index: 2},
+        {name: 'c', index: 3}
+      ]
+    };
   },
-
-  onChange(event) {
-    wx.showToast({
-      title: `切换到标签 ${event.detail.name}`,
-      icon: 'none'
-    });
+  methods:{
+    onChange(val) {
+      uni.showToast({
+        title: `切换到${val.title}`,
+        icon: 'none'
+      });
+    },
   }
-});
+}
 ```
 
 ### 通过名称匹配
@@ -47,10 +65,31 @@ Page({
 
 ```html
 <van-tabs active="a">
-  <van-tab title="标签 1" name="a">内容 1</van-tab>
-  <van-tab title="标签 2" name="b">内容 2</van-tab>
-  <van-tab title="标签 3" name="c">内容 3</van-tab>
+  <van-tab
+      v-for="(item, index) in tabsWithName"
+      :key="index"
+      :name="item.name"
+      :title="'标签 ' + item.index"
+  >
+    <view class="content">
+      {{ '内容' + item.index}}
+    </view>
+  </van-tab>
 </van-tabs>
+```
+
+```js
+export default {
+  data() {
+    return {
+      tabsWithName: [
+        {name: 'a', index: 1},
+        {name: 'b', index: 2},
+        {name: 'c', index: 3}
+      ]
+    };
+  }
+}
 ```
 
 ### 横向滚动
@@ -58,13 +97,16 @@ Page({
 多于 4 个标签时，Tab 可以横向滚动
 
 ```html
-<van-tabs active="{{ active }}">
-  <van-tab title="标签 1">内容 1</van-tab>
-  <van-tab title="标签 2">内容 2</van-tab>
-  <van-tab title="标签 3">内容 3</van-tab>
-  <van-tab title="标签 4">内容 4</van-tab>
-  <van-tab title="标签 5">内容 5</van-tab>
-  <van-tab title="标签 6">内容 6</van-tab>
+<van-tabs>
+  <van-tab
+      v-for="(item, index) in [1,2,3,4,5,6]"
+      :key="index"
+      :title="'标签 ' + item"
+  >
+    <view class="content">
+      {{ '内容' + item }}
+    </view>
+  </van-tab>
 </van-tabs>
 ```
 
@@ -73,22 +115,31 @@ Page({
 设置`disabled`属性即可禁用标签。如果需要监听禁用标签的点击事件，可以在`van-tabs`上监听`disabled`事件
 
 ```html
-<van-tabs bind:disabled="onClickDisabled">
-  <van-tab title="标签 1">内容 1</van-tab>
-  <van-tab title="标签 2" disabled>内容 2</van-tab>
-  <van-tab title="标签 3">内容 3</van-tab>
+<van-tabs @disabled="onClickDisabled">
+  <van-tab
+      v-for="(item, index) in [1,2,3]"
+      :key="index"
+      :disabled="index === 1"
+      :title="'标签 ' + item"
+  >
+    <view class="content">
+      {{ '内容' + item }}
+    </view>
+  </van-tab>
 </van-tabs>
 ```
 
-```javascript
-Page({
-  onClickDisabled(event) {
-    wx.showToast({
-      title: `标签 ${event.detail.name} 已被禁用`,
-      icon: 'none'
-    });
+```js
+export default {
+  methods:{
+    onClickDisabled(val) {
+      uni.showToast({
+        title: `标签 ${val.name} 已被禁用`,
+        icon: 'none'
+      });
+    },
   }
-});
+}
 ```
 
 ### 样式风格
@@ -96,10 +147,16 @@ Page({
 `Tab`支持两种样式风格：`line`和`card`，默认为`line`样式，可以通过`type`属性修改样式风格
 
 ```html
-<van-tabs type="card">
-  <van-tab title="标签 1">内容 1</van-tab>
-  <van-tab title="标签 2">内容 2</van-tab>
-  <van-tab title="标签 3">内容 3</van-tab>
+<van-tabs type="card" tab-class="tab-class">
+  <van-tab
+      v-for="(item, index) in [1,2,3]"
+      :key="index"
+      :title="'标签 ' + item"
+  >
+    <view class="content-2">
+      {{ '内容' + item }}
+    </view>
+  </van-tab>
 </van-tabs>
 ```
 
@@ -108,21 +165,30 @@ Page({
 可以在`van-tabs`上绑定`click`事件，在回调参数的`event.detail`中可以取得被点击标签的标题和标识符
 
 ```html
-<van-tabs bind:click="onClick">
-  <van-tab title="标签 1">内容 1</van-tab>
-  <van-tab title="标签 2">内容 2</van-tab>
+<van-tabs @click="onClick">
+  <van-tab
+      v-for="(item, index) in [1,2]"
+      :key="index"
+      :title="'标签 ' + item"
+  >
+    <view class="content">
+      {{ '内容' + item }}
+    </view>
+  </van-tab>
 </van-tabs>
 ```
 
-```javascript
-Page({
-  onClick(event) {
-    wx.showToast({
-      title: `点击标签 ${event.detail.name}`,
-      icon: 'none'
-    });
+```js
+export default {
+  methods:{
+    onClick(val) {
+      uni.showToast({
+        title: `点击标签${val.title}`,
+        icon: 'none'
+      });
+    },
   }
-});
+}
 ```
 
 ### 粘性布局
@@ -144,10 +210,15 @@ Page({
 
 ```html
 <van-tabs animated>
-  <van-tab title="标签 1">内容 1</van-tab>
-  <van-tab title="标签 2">内容 2</van-tab>
-  <van-tab title="标签 3">内容 3</van-tab>
-  <van-tab title="标签 4">内容 4</van-tab>
+  <van-tab
+    v-for="(item, index) in [1,2,3,4]"
+    :key="index"
+    :title="'标签 ' + item"
+  >
+    <view class="content">
+      {{ '内容' + item }}
+    </view>
+  </van-tab>
 </van-tabs>
 ```
 
@@ -157,11 +228,59 @@ Page({
 
 ```html
 <van-tabs swipeable>
-  <van-tab title="标签 1">内容 1</van-tab>
-  <van-tab title="标签 2">内容 2</van-tab>
-  <van-tab title="标签 3">内容 3</van-tab>
-  <van-tab title="标签 4">内容 4</van-tab>
+  <van-tab
+      v-for="(item, index) in [1,2,3,4]"
+      :key="index"
+      :title="'标签 ' + item"
+  >
+    <view class="content">
+      {{ '内容' + item }}
+    </view>
+  </van-tab>
 </van-tabs>
+```
+
+### 自定义标题
+
+```html
+<van-tabs :active="1" @change="onChange" tab-class="tab-class" tab-active-class="tab-active-class">
+  <van-icon
+    slot="nav-right"
+    name="search"
+    custom-class="right-nav"
+    @click="onClickNavRight"
+  />
+  <van-tab
+    v-for="(item, index) in [1,2,3,4]"
+    :key="index"
+    :title="'标签 ' + item"
+    :dot="index === 1"
+    :info="index === 2 ? 99 : null"
+  >
+    <view class="content">
+      {{ '内容' + item }}
+    </view>
+  </van-tab>
+</van-tabs>
+```
+
+```js
+export default {
+  methods:{
+    onChange(val) {
+      uni.showToast({
+        title: `切换到${val.title}`,
+        icon: 'none'
+      });
+    },
+    onClickNavRight() {
+      uni.showToast({
+        title: '点击 right nav',
+        icon: 'none'
+      });
+    }
+  }
+}
 ```
 
 ## API
@@ -182,6 +301,7 @@ Page({
 | animated | 是否使用动画切换 Tabs | *boolean* | `false` | - |
 | swipeable | 是否开启手势滑动切换 | *boolean* | `false` | - |
 | sticky | 是否使用粘性定位布局 | *boolean* | `false` | - |
+| offset-top | 粘性定位布局下与顶部的最小距离，单位 px | *number* | `0` | - |
 
 ### Tab API
 
@@ -211,10 +331,10 @@ Page({
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:click | 点击标签时触发 | name：标签标识符，title：标题 |
-| bind:change | 当前激活的标签改变时触发 | name：标签标识符，title：标题 |
-| bind:disabled | 点击被禁用的标签时触发 | name：标签标识符，title：标题 |
-| bind:scroll | 滚动时触发 | { scrollTop: 距离顶部位置, isFixed: 是否吸顶 } |
+| @click | 点击标签时触发 | name：标签标识符，title：标题 |
+| @change | 当前激活的标签改变时触发 | name：标签标识符，title：标题 |
+| @disabled | 点击被禁用的标签时触发 | name：标签标识符，title：标题 |
+| @scroll | 滚动时触发 | { scrollTop: 距离顶部位置, isFixed: 是否吸顶 } |
 
 ### 外部样式类
 

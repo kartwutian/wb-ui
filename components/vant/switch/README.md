@@ -11,27 +11,92 @@ vant: true
 在script中引入组件
 
 ```js
+import VanSwitch from "@/components/vant/switch/index.vue"  
+```
 
-import VanSwitch from "@/components/vant/switch/index.vue"
+## 代码演示
 
+### 基础用法
+
+```html
+<van-switch :checked="checked"  @change="onChange" />
+```
+
+```js
 export default {
-  components: {VanSwitch},
-  data () {
+  data(){
     return {
       checked: true,
-      checked2: true
     }
   },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
+  methods:{
     onChange (detail) {
       this.checked = detail
-    },
+    }
+  }
+}
+```
+
+### 禁用状态
+
+```html
+<van-switch :checked="checked"  @change="onChange" disabled/>
+```
+
+```js
+export default {
+  data(){
+    return {
+      checked: true,
+    }
+  },
+  methods:{
+    onChange (detail) {
+      this.checked = detail
+    }
+  }
+}
+```
+
+### 加载状态
+
+```html
+<van-switch :checked="true" loading />
+```
+
+### 自定义大小
+
+```html
+<van-switch :checked="true" size="24px" />
+```
+
+### 自定义颜色
+
+```html
+<van-switch
+  :checked="true"
+  active-color="#07c160"
+  inactive-color="#ee0a24"
+/>
+```
+
+### 异步控制
+
+```html
+<van-switch
+  :checked="checked2"
+  @change="onChange2"
+/>
+```
+
+```js
+export default {
+  data(){
+    return {
+      checked2: true,
+    }
+  },
+  methods:{
     onChange2 (detail) {
       uni.showModal({
         title: '提醒',
@@ -47,53 +112,6 @@ export default {
     }
   }
 }
-  
-```
-
-## 代码演示
-
-### 基础用法
-
-```html
-<van-switch :checked="checked"  @change="onChange" />
-```
-
-
-### 禁用状态
-
-```html
-<van-switch :checked="checked"  @change="onChange" disabled/>
-```
-
-### 加载状态
-
-```html
-<van-switch :checked="checked" loading />
-```
-
-### 自定义大小
-
-```html
-<van-switch :checked="checked" size="24px" />
-```
-
-### 自定义颜色
-
-```html
-<van-switch
-  :checked="checked"
-  active-color="#07c160"
-  inactive-color="#ee0a24"
-/>
-```
-
-### 异步控制
-
-```html
-<van-switch
-  :checked="checked2"
-  @change="onChange2"
-/>
 ```
 
 

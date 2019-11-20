@@ -1,3 +1,9 @@
+---
+title: Field 输入框
+lang: zh
+vant: true
+---
+
 # Field 输入框
 
 ### 介绍
@@ -6,12 +12,10 @@
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-field": "path/to/vant-weapp/dist/field/index"
-}
+```js
+import VanField from "@/components/vant/field/index.vue"
 ```
 
 ## 代码演示
@@ -21,25 +25,27 @@
 ```html
 <van-cell-group>
   <van-field
-    value="{{ value }}"
+    v-model="value"
     placeholder="请输入用户名"
-    border="{{ false }}"
-    bind:change="onChange"
+    clearable
+    @input="input"
   />
 </van-cell-group>
 ```
 
 ```js
-Page({
-  data: {
-    value: ''
+export default {
+  data(){
+    return {
+      value:"123456"
+    }
   },
-
-  onChange(event) {
-    // event.detail 为当前输入的值
-    console.log(event.detail);
+  methods:{
+    input (val) {
+      console.log(val)
+    }
   }
-});
+}
 ```
 
 ### 自定义类型
@@ -48,24 +54,48 @@ Page({
 ```html
 <van-cell-group>
   <van-field
-    value="{{ username }}"
-    required
-    clearable
+    v-model="username"
     label="用户名"
-    icon="question-o"
     placeholder="请输入用户名"
-    bind:click-icon="onClickIcon"
+    clearable
+    right-icon="question-o"
+    right-icon-class="custom-icon"
+    required
+    @click-icon="onClickIcon"
+    @focus="focus"
+    @blur="blur"
   />
-
   <van-field
-    value="{{ password }}"
+    v-model="password"
     type="password"
     label="密码"
     placeholder="请输入密码"
     required
-    border="{{ false }}"
+    :border="false"
   />
 </van-cell-group>
+```
+
+```js
+export default {
+  data(){
+    return {
+      username:"",
+      password:""
+    }
+  },
+  methods:{
+    focus (val) {
+      console.log(val)
+    },
+    blur (val) {
+      console.log(val)
+    },
+    onClickIcon () {
+      console.log("点击右边的icon图标")
+    },
+  }
+}
 ```
 
 ### 禁用输入框
@@ -73,11 +103,11 @@ Page({
 ```html
 <van-cell-group>
   <van-field
-    value="输入框已禁用"
+    placeholder="输入框已禁用"
     label="用户名"
     left-icon="contact"
     disabled
-    border="{{ false }}"
+    :border="false"
   />
 </van-cell-group>
 ```
@@ -88,19 +118,29 @@ Page({
 ```html
 <van-cell-group>
   <van-field
-    value="{{ username }}"
+    v-model="username2"
     label="用户名"
     placeholder="请输入用户名"
     error
   />
   <van-field
-    value="{{ phone }}"
+    v-model="phone"
     label="手机号"
     placeholder="请输入手机号"
     error-message="手机号格式错误"
-    border="{{ false }}"
   />
 </van-cell-group>
+```
+
+```js
+export default {
+  data(){
+    return {
+      username2:"",
+      phone:"136557789"
+    }
+  }
+}
 ```
 
 ### 高度自适应
@@ -109,14 +149,24 @@ Page({
 ```html
 <van-cell-group>
   <van-field
-    value="{{ message }}"
+    v-model="message"
     label="留言"
     type="textarea"
     placeholder="请输入留言"
     autosize
-    border="{{ false }}"
+    :border="false"
   />
 </van-cell-group>
+```
+
+```js
+export default {
+  data(){
+    return {
+      message:""
+    }
+  }
+}
 ```
 
 ### 插入按钮
@@ -125,17 +175,62 @@ Page({
 ```html
 <van-cell-group>
   <van-field
-    value="{{ sms }}"
+    v-model="sms"
     center
     clearable
     label="短信验证码"
     placeholder="请输入短信验证码"
-    border="{{ false }}"
+    :border="false"
     use-button-slot
+    @clear="clear"
   >
     <van-button slot="button" size="small" type="primary">发送验证码</van-button>
   </van-field>
 </van-cell-group>
+```
+
+```js
+export default {
+  data(){
+    return {
+      sms:""
+    }
+  },
+  methods:{
+    clear (val) {
+      console.log("clear")
+    }
+  }
+}
+```
+
+### 显示数字统计
+设置`maxlength`和`show-word-limit`属性后会在底部显示字数统计
+
+```html
+<van-cell-group>
+  <van-field
+    v-model="messagecount"
+    rows="2"
+    autosize
+    label="留言"
+    type="textarea"
+    :maxlength="50"
+    placeholder="请输入留言"
+    show-word-limit
+  >
+  </van-field>
+</van-cell-group>
+```
+
+```js
+export default {
+  data(){
+    return {
+      messagecount:""
+    }
+  }
+}
 ```
 
 ## 常见问题
@@ -171,7 +266,6 @@ Page({
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
-| name | 在表单内提交时的标识符 | *string* | - | - |
 | label | 输入框左侧文本 | *string* | - | - |
 | size | 单元格大小，可选值为 `large` | *string* | - | - |
 | value | 当前输入的值 | *string \| number* | - | - |
@@ -211,13 +305,13 @@ Page({
 
 | 事件 | 说明 | 回调参数 |
 |-----------|-----------|-----------|
-| bind:input | 输入内容时触发 | value: 当前输入值 |
-| bind:change | 输入内容时触发 | value: 当前输入值 |
-| bind:confirm | 点击完成按钮时触发 | value: 当前输入值 |
-| bind:click-icon | 点击尾部图标时触发 | - |
-| bind:focus | 输入框聚焦时触发 | event.detail.value: 当前输入值; <br>event.detail.height: 键盘高度 |
-| bind:blur | 输入框失焦时触发 | event.detail.value: 当前输入值; <br>event.detail.cursor: 游标位置(如果 `type` 不为 `textarea`，值为 `0`) |
-| bind:clear | 点击清空控件时触发 | - |
+| @input | 输入内容时触发 | value: 当前输入值 |
+| @change | 输入内容时触发 | value: 当前输入值 |
+| @confirm | 点击完成按钮时触发 | value: 当前输入值 |
+| @click-icon | 点击尾部图标时触发 | - |
+| @focus | 输入框聚焦时触发 | event.detail.value: 当前输入值; <br>event.detail.height: 键盘高度 |
+| @blur | 输入框失焦时触发 | event.detail.value: 当前输入值; <br>event.detail.cursor: 游标位置(如果 `type` 不为 `textarea`，值为 `0`) |
+| @clear | 点击清空控件时触发 | - |
 
 ### Slot
 

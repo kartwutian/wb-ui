@@ -74,17 +74,26 @@ export default {
   },
   methods: {
     onClose (val) {
-      uni.showModal({
-        title: '提示',
-        content: '这是一个模态弹窗',
-        success: function (res) {
-          if (res.confirm) {
-            val.instance.close()
-          } else if (res.cancel) {
-            val.instance.close()
-          }
-        }
-      });
+      switch (val.position) {
+        case 'left':
+        case 'cell':
+        case 'outside':
+          val.instance.close();
+          break;
+        case "right":
+          uni.showModal({
+            title: '提示',
+            content: '这是一个模态弹窗',
+            success: function (res) {
+              if (res.confirm) {
+                val.instance.close()
+              } else if (res.cancel) {
+                val.instance.close()
+              }
+            }
+          });
+      }
+
     }
   }
 }

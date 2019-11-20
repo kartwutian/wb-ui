@@ -18,27 +18,6 @@ import VanPopup from "@/components/vant/popup/index";
 
 export default {
   components: {VanPopup},
-  data () {
-    return {
-      show: {
-        basic: false,
-        top: false,
-        bottom: false,
-        left: false,
-        right: false,
-        round: false,
-        closeIcon: false,
-        customCloseIcon: false,
-        customIconPosition: false
-      }
-    };
-  },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
   methods: {
     toggle (type, show) {
       this.show[`${type}`] = show;
@@ -84,6 +63,17 @@ export default {
 <van-popup :show="show.basic" @close="hideBasic" custom-style="padding: 30px 50px">内容</van-popup>
 ```
 
+```js
+export default {
+  data(){
+    return {
+      show:{
+        basic: false,
+      }
+    }
+  }
+}
+```
 
 ### 弹出位置
 
@@ -97,6 +87,18 @@ export default {
   custom-style="height: 20%;"
   @close="hideTop"
 />
+```
+
+```js
+export default {
+  data(){
+    return {
+      show:{
+        top: false,
+      }
+    }
+  }
+}
 ```
 
 ### 关闭图标
@@ -136,6 +138,20 @@ export default {
 />
 ```
 
+```js
+export default {
+  data(){
+    return {
+      show:{
+        closeIcon: false,
+        customCloseIcon: false,
+        customIconPosition: false,
+      }
+    }
+  }
+}
+```
+
 ### 圆角弹窗
 
 设置`round`属性后，弹窗会根据弹出位置添加不同的圆角样式
@@ -149,6 +165,18 @@ export default {
   custom-style="height: 20%"
   @close="hideRound"
 />
+```
+
+```js
+export default {
+  data(){
+    return {
+      show:{
+        round: false,
+      }
+    }
+  }
+}
 ```
 
 ## API
