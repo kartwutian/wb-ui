@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanButton from "../../../components/vant/button/index"
-import VanOverlay from "../../../components/vant/overlay/index.vue"
+import DemoBlock from "@/components/app/demo-block";
+import VanButton from "@/components/vant/button/index"
+import VanOverlay from "@/components/vant/overlay/index.vue"
 
 export default {
   name: 'pages-overlay',
@@ -42,7 +42,6 @@ export default {
       this.show = true
     },
     onClickHide () {
-      console.log("~~~~~~~~~~~~~~~~")
       this.show = false
     }
   }

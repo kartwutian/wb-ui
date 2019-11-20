@@ -1,13 +1,17 @@
+---
+title: Toast 轻提示
+lang: zh
+vant: true
+---
+
 # Toast 轻提示
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-toast": "path/to/vant-weapp/dist/toast/index"
-}
+```js
+import VanToast from "@/components/vant/toast/index";
 ```
 
 ## 代码演示
@@ -15,13 +19,13 @@
 ### 文字提示
 
 ```javascript
-import Toast from 'path/to/vant-weapp/dist/toast/toast';
+import Toast from '@/components/vant/toast/toast'
 
-Toast('我是提示文案，建议不超过十五字~');
+Toast('提示内容');
 ```
 
 ```html
-<van-toast id="van-toast" />
+<van-toast ref="van-toast" />
 ```
 
 ### 加载提示
@@ -43,30 +47,24 @@ Toast.fail('失败文案');
 ### 高级用法
 
 ```javascript
+const text = second => `倒计时 ${second} 秒`;
 const toast = Toast.loading({
-  duration: 0,       // 持续展示 toast
-  forbidClick: true, // 禁用背景点击
-  message: '倒计时 3 秒',
+  duration: 0,
+  forbidClick: true,
   loadingType: 'spinner',
-  selector: '#custom-selector'
+  message: text(3)
 });
 
 let second = 3;
 const timer = setInterval(() => {
   second--;
   if (second) {
-    toast.setData({
-      message: `倒计时 ${second} 秒`
-    });
+    toast.message = text(second);
   } else {
     clearInterval(timer);
     Toast.clear();
   }
 }, 1000);
-```
-
-```html
-<van-toast id="custom-selector" />
 ```
 
 ## API
@@ -95,8 +93,6 @@ const timer = setInterval(() => {
 | loadingType | 加载图标类型, 可选值为 `spinner` | *string* | `circular` | - |
 | zIndex | z-index 层级 | *number* | `1000` | - |
 | duration | 展示时长(ms)，值为 0 时，toast 不会消失 | *number* | `3000` | - |
-| selector | 自定义选择器 | *string* | `van-toast` | - |
-| context | 选择器的选择范围，可以传入自定义组件的 this 作为上下文 | *object* | 当前页面 | - |
 | onClose | 关闭时的回调函数 | *Function* | - | - |
 
 ### Slot

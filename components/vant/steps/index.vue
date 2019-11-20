@@ -66,7 +66,6 @@ export default {
   components: { VanIcon },
   mixins: [basic, button, openType],
   props: {
-    icon: String,
     steps: Array,
     active: Number,
     direction: {

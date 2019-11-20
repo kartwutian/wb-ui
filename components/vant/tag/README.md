@@ -10,30 +10,6 @@ vant: true
 
 ```js
 import VanTag from "@/components/vant/tag/index.vue"
-
-export default {
-  components: {VanTag},
-  data () {
-    return {
-      show: {
-        success: true,
-        primary: true
-      }
-    }
-  },
-  onLoad () {
-
-  },
-  onUnload () {
-
-  },
-  methods: {
-    onClose (type) {
-      this.show[type] = false
-    }
-  }
-}
-
 ```
 
 ## 代码演示
@@ -104,18 +80,60 @@ export default {
 <van-tag class="demo-margin-right" type="danger" size="large">标签</van-tag>
 ```
 
+### 可关闭标签
+
+```html
+<van-tag
+  v-if="show.primary"
+  class="demo-margin-right"
+  type="primary"
+  size="medium"
+  closeable
+  id="primary"
+  @close="onClose('primary')"
+>标签</van-tag>
+<van-tag
+  v-if="show.success"
+  class="demo-margin-right"
+  type="success"
+  size="medium"
+  closeable
+  id="success"
+  @close="onClose('success')"
+>标签</van-tag>
+```
+
+```js
+export default {
+  data() {
+    return {
+      show: {
+        success: true,
+        primary: true
+      }
+    };
+  }，
+  methods: {
+    onClose (type) {
+      this.show[type] = false
+    }
+  }
+};
+```
+
 ## API
 
 ### Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
-| type | 类型，可选值为`primary` `success` `danger` `warning` | *string* | - | - |
+| type | 类型，可选值为`primary` `success` `danger` `warning` | *string* | `default` | - |
 | size | 大小, 可选值为`large` `medium` | *string* | - | - |
 | color | 标签颜色 | *string* | - | - |
 | plain | 是否为空心样式 | *boolean* | `false` | - |
 | round | 是否为圆角样式 | *boolean* | `false` | - |
 | mark | 是否为标记样式 | *boolean* | `false` | - |
+| closeable | 是否为可关闭标签 | *boolean* | `false` | - |
 | text-color | 文本颜色，优先级高于`color`属性 | *string* | `white` | - |
 
 ### Slot

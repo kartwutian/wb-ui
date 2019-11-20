@@ -53,10 +53,10 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanTag from "../../../components/vant/tag/index"
-import VanButton from "../../../components/vant/button/index"
-import VanCard from "../../../components/vant/card/index"
+import DemoBlock from "@/components/app/demo-block";
+import VanTag from "@/components/vant/tag/index"
+import VanButton from "@/components/vant/button/index"
+import VanCard from "@/components/vant/card/index"
 
 export default {
   name: 'pages-card',

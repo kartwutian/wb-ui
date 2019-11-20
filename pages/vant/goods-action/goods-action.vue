@@ -85,10 +85,10 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanGoodsAction from "../../../components/vant/goods-action/index"
-import VanGoodsActionButton from "../../../components/vant/goods-action-button/index"
-import VanGoodsActionIcon from "../../../components/vant/goods-action-icon/index"
+import DemoBlock from "@/components/app/demo-block";
+import VanGoodsAction from "@/components/vant/goods-action/index"
+import VanGoodsActionButton from "@/components/vant/goods-action-button/index"
+import VanGoodsActionIcon from "@/components/vant/goods-action-icon/index"
 
 export default {
   name: 'pages-goods-action',
@@ -101,13 +101,17 @@ export default {
   },
   methods: {
     onClickIcon () {
-      console.log("========onClickIcon")
-      // Toast('点击图标');
+      uni.showToast({
+        title: '点击图标',
+        icon: 'none'
+      });
     },
 
     onClickButton () {
-      console.log("========onClickButton")
-      // Toast('点击按钮');
+      uni.showToast({
+        title: '点击按钮',
+        icon: 'none'
+      });
     }
   }
 }

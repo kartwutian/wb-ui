@@ -1,3 +1,9 @@
+---
+title: DropdownMenu 下拉菜单
+lang: zh
+vant: true
+---
+
 # DropdownMenu 下拉菜单
 
 ### 介绍
@@ -6,13 +12,11 @@
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，默认为`ES6`版本，`ES5`引入方式参见[快速上手](#/quickstart)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-dropdown-menu": "path/to/vant-weapp/dist/dropdown-menu/index",
-  "van-dropdown-item": "path/to/vant-weapp/dist/dropdown-item/index"
-}
+```js
+import VanDropdownItem from "@/components/vant/dropdown-item/index.vue"
+import VanDropdownMenu from "@/components/vant/dropdown-menu/index.vue"
 ```
 
 ## 代码演示
@@ -21,55 +25,74 @@
 
 ```html
 <van-dropdown-menu>
-  <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
-  <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}" />
+  <van-dropdown-item :value="value1" :options="option1" @change="onChange1"/>
+  <van-dropdown-item :value="value2" :options="option2" @change="onChange2"/>
 </van-dropdown-menu>
 ```
 
 ```js
-Page({
-  data: {
-    option1: [
-      { text: '全部商品', value: 0 },
-      { text: '新款商品', value: 1 },
-      { text: '活动商品', value: 2 }
-    ],
-    option2: [
-      { text: '默认排序', value: 'a' },
-      { text: '好评排序', value: 'b' },
-      { text: '销量排序', value: 'c' }
-    ],
-    value1: 0,
-    value2: 'a'
+export default {
+  data(){
+    return {
+      option1: [
+        {text: '全部商品', value: 0},
+        {text: '新款商品', value: 1},
+        {text: '活动商品', value: 2}
+      ],
+      option2: [
+        {text: '默认排序', value: 'a'},
+        {text: '好评排序', value: 'b'},
+        {text: '销量排序', value: 'c'}
+      ],
+      value1: 0,
+      value2: 'a'
+    }
+  },
+  methods:{
+    onChange1(val) {
+      this.value1 = val;
+    },
+    onChange2(val) {
+      this.value2 = val;
+    },
   }
-});
+}
 ```
 
 ### 自定义菜单内容
 
 ```html
-<van-dropdown-menu>
-  <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
-  <van-dropdown-item id="item" title="{{ itemTitle }}">
-    <van-cell title="{{ switchTitle1 }}">
+<van-dropdown-menu ref="custom-drop-down">
+  <van-dropdown-item
+      :value="value1"
+      :options="option1"
+  />
+  <van-dropdown-item
+      :title="itemTitle"
+  >
+    <van-cell :title="switchTitle1">
       <van-switch
-        slot="right-icon"
-        size="24px"
-        style="height: 26px"
-        checked="{{ switch1 }}"
-        bind:change="onSwitch1Change"
+          slot="right-icon"
+          size="24px"
+          style="height: 26px"
+          :checked="switch1"
+          @change="onSwitch1Change"
       />
     </van-cell>
-    <van-cell title="{{ switchTitle2 }}">
+    <van-cell :title="switchTitle2">
       <van-switch
-        slot="right-icon"
-        size="24px"
-        style="height: 26px"
-        checked="{{ switch2 }}"
-        bind:change="onSwitch2Change"
+          slot="right-icon"
+          size="24px"
+          style="height: 26px"
+          :checked="switch2"
+          @change="onSwitch2Change"
       />
     </van-cell>
-    <van-button type="info" block bind:click="onConfirm">
+    <van-button
+        type="info"
+        block
+        @click="onConfirm"
+    >
       确定
     </van-button>
   </van-dropdown-item>
@@ -77,39 +100,52 @@ Page({
 ```
 
 ```js
-Page({
-  data: {
-    switchTitle1: '包邮',
-    switchTitle2: '团购',
-    itemTitle: '筛选',
-    option1: [
-      { text: '全部商品', value: 0 },
-      { text: '新款商品', value: 1 },
-      { text: '活动商品', value: 2 }
-    ],
-    value1: 0,
+export default {
+  data(){
+    return {
+      switchTitle1: '包邮',
+      switchTitle2: '团购',
+      itemTitle: '筛选',
+      option1: [
+        {text: '全部商品', value: 0},
+        {text: '新款商品', value: 1},
+        {text: '活动商品', value: 2}
+      ],
+      option2: [
+        {text: '默认排序', value: 'a'},
+        {text: '好评排序', value: 'b'},
+        {text: '销量排序', value: 'c'}
+      ],
+      switch1: true,
+      switch2: false,
+      value1: 0,
+      value2: 'a'
+    }
   },
+  methods:{
+    onConfirm() {
+      console.log(this.$refs['custom-drop-down'])
+      this.$refs['custom-drop-down'].itemListData[1].showPopup = false;
+      this.$refs['custom-drop-down'].close();
+    },
 
-  onConfirm () {
-    this.selectComponent('#item').toggle();
-  },
+    onSwitch1Change(val) {
+      this.switch1 = val;
+    },
 
-  onSwitch1Change ({ detail }) {
-    this.setData({ switch1: detail });
-  },
-
-  onSwitch2Change ({ detail }) {
-    this.setData({ switch2: detail });
+    onSwitch2Change(val) {
+      this.switch2 = val;
+    }
   }
-});
+}
 ```
 
 ### 自定义选中状态颜色
 
 ```html
 <van-dropdown-menu active-color="#ee0a24">
-  <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
-  <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}" />
+  <van-dropdown-item :value="value1" :options="option1" @change="onChange1"/>
+  <van-dropdown-item :value="value2" :options="option2" @change="onChange2"/>
 </van-dropdown-menu>
 ```
 
@@ -117,8 +153,8 @@ Page({
 
 ```html
 <van-dropdown-menu direction="up">
-  <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
-  <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}" />
+  <van-dropdown-item :value="value1" :options="option1" @change="onChange1"/>
+  <van-dropdown-item :value="value2" :options="option2" @change="onChange2"/>
 </van-dropdown-menu>
 ```
 
@@ -126,8 +162,8 @@ Page({
 
 ```html
 <van-dropdown-menu>
-  <van-dropdown-item value="{{ value1 }}" disabled options="{{ option1 }}" />
-  <van-dropdown-item value="{{ value2 }}" disabled options="{{ option2 }}" />
+  <van-dropdown-item :value="value1" disabled :options="option1"/>
+  <van-dropdown-item :value="value2" disabled :options="option2"/>
 </van-dropdown-menu>
 ```
 
@@ -159,8 +195,8 @@ Page({
 
 | Event  | Description                   | Arguments |
 | ------ | ----------------------------- | --------- |
-| change | 点击选项导致 value 变化时触发 | value     |
-| close  | 关闭菜单栏时触发              | -         |
+| @change | 点击选项导致 value 变化时触发 | value     |
+| @close  | 关闭菜单栏时触发              | -         |
 
 ### DropdownItem Methods
 

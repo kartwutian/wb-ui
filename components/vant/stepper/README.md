@@ -15,36 +15,7 @@ vant: true
 在script中引入组件
 
 ```js
-
 import VanStepper from "@/components/vant/stepper/index";
-
-export default {
-  components: {VanStepper},
-  data () {
-    return {
-      value: 10
-    }
-  },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    onChange (value) {
-      uni.showLoading({
-        title: "加载中..."
-      })
-
-      setTimeout(() => {
-        this.value = value
-        uni.hideLoading()
-      }, 1000)
-    }
-  }
-}
-
 ```
 
 ## 代码演示
@@ -54,7 +25,7 @@ export default {
 通过`value`设置输入值，可以通过`change`事件监听到输入值的变化
 
 ```html
-<van-stepper :value="1" @change="onChange"/>
+<van-stepper :value="1"/>
 ```
 
 
@@ -106,7 +77,22 @@ export default {
 <van-stepper :value="1" async-change @change="onChange" />
 ```
 
+```js
+export default {
+  methods: {
+    onChange (value) {
+      uni.showLoading({
+        title: "加载中..."
+      })
 
+      setTimeout(() => {
+        this.value = value
+        uni.hideLoading()
+      }, 1000)
+    }
+  }
+}
+```
 
 ### 自定义大小
 

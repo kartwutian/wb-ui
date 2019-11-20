@@ -119,10 +119,10 @@
 </template>
 
 <script>
-import DemoBlock from "../../../components/app/demo-block";
-import VanField from "../../../components/vant/field/index.vue"
-import VanCellGroup from "../../../components/vant/cell-group/index"
-import VanButton from "../../../components/vant/button/index"
+import DemoBlock from "@/components/app/demo-block";
+import VanField from "@/components/vant/field/index.vue"
+import VanCellGroup from "@/components/vant/cell-group/index"
+import VanButton from "@/components/vant/button/index"
 
 export default {
   name: 'pages-field',
@@ -130,7 +130,7 @@ export default {
   data () {
     return {
       sms: '',
-      value: '12121',
+      value: '123456',
       password: '',
       username: '',
       username2: '',

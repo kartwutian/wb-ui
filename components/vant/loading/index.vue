@@ -1,32 +1,32 @@
 <template>
-<view :class="'van-loading ' + (vertical ? 'van-loading--vertical' : '') ">
-  <view
-    :class="'van-loading__wrapper ' + customClass"
-    :style="'width: ' + sizeWithUnit + '; height: ' + sizeWithUnit + ';'"
-  >
+  <view :class="'van-loading ' + (vertical ? 'van-loading--vertical' : '') ">
     <view
-      :class="'van-loading__spinner van-loading__spinner--' + type"
-      :style="'color: ' + color + ';'"
+      :class="'van-loading__wrapper ' + customClass"
+      :style="'width: ' + sizeWithUnit + '; height: ' + sizeWithUnit + ';'"
     >
       <view
-        v-if=" type === 'spinner' "
-        v-for="(item, index) in 12"
-        :key="index"
-        class="van-loading__dot"
-      />
+        :class="'van-loading__spinner van-loading__spinner--' + type"
+        :style="'color: ' + color + ';'"
+      >
+        <view
+          v-if=" type === 'spinner' "
+          v-for="(item, index) in 12"
+          :key="index"
+          class="van-loading__dot"
+        />
+      </view>
+    </view>
+    <view
+      :style="'font-size: ' + textSizeWithUnit + ';'"
+      :class="'van-loading__text ' + (vertical ? 'van-loading__text--vertical' : '') "
+    >
+      <slot />
     </view>
   </view>
-  <view
-    :style="'font-size: ' + textSizeWithUnit + ';'"
-    :class="'van-loading__text ' + (vertical ? 'van-loading__text--vertical' : '') "
-  >
-    <slot />
-  </view>
-</view>
 </template>
 
 <script>
-import {basic} from "../mixins/basic";
+import { basic } from "../mixins/basic";
 import { addUnit } from '../common/utils';
 
 export default {
@@ -54,10 +54,10 @@ export default {
 
 
   computed: {
-    sizeWithUnit(){
+    sizeWithUnit () {
       return addUnit(this.size);
     },
-    textSizeWithUnit(){
+    textSizeWithUnit () {
       return addUnit(this.textSize);
     },
   },
@@ -66,5 +66,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>

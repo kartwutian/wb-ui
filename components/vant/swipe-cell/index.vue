@@ -1,8 +1,7 @@
 <template>
   <view
     class="van-swipe-cell"
-    data-key="cell"
-    @tap="onClick"
+    @tap="onClick({key:'cell'})"
     @touchstart="startDrag"
     :catchtouchmove=" catchMove ? 'noop' : '' "
     @touchmove="onDrag"
@@ -13,7 +12,7 @@
       <view
         v-if=" leftWidth "
         class="van-swipe-cell__left"
-        @tap="onClick"
+        @tap.stop="onClick({key:'left'})"
       >
         <slot name="left" />
       </view>
@@ -21,7 +20,7 @@
       <view
         v-if=" rightWidth "
         class="van-swipe-cell__right"
-        @tap="onClick"
+        @tap.stop="onClick({key:'right'})"
       >
         <slot name="right" />
       </view>
@@ -172,7 +171,7 @@ export default {
     },
 
     onClick (event) {
-      const { key: position = 'outside' } = event.currentTarget.dataset;
+      const { key: position = 'outside' } = event;
       this.$emit('click', position);
 
       if (!this.offset) {

@@ -9,43 +9,8 @@ vant: true
 ### 引入
 
 ```js
-
 import VanRadioGroup from "@/components/vant/radio-group/index";
 import VanRadio from "@/components/vant/radio/index";
-
-export default {
-  components: {VanRadioGroup, VanRadio},
-  data () {
-    return {
-      radio1: '1',
-      radio2: '2',
-      radio3: '1',
-      radio4: '1',
-      radio5: '1',
-      icon: {
-        normal:
-          'https://img.yzcdn.cn/public_files/2017/10/13/c547715be149dd3faa817e4a948b40c4.png',
-        active:
-          'https://img.yzcdn.cn/public_files/2017/10/13/793c77793db8641c4c325b7f25bf130d.png'
-      }
-    };
-  },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    onClick(name) {
-      this.radio5 = name;
-    },
-    toggle(){
-      this.$refs['radio-1'].onChange();
-    }
-  }
-}
-  
 ```
 ### 基础用法
 
@@ -58,6 +23,16 @@ export default {
 </van-radio-group>
 ```
 
+```js
+export default {
+  data(){
+    return {
+      radio1: '1',
+    }
+  }
+}
+```
+
 ### 禁用状态
 
 通过`disabled`属性禁止选项切换，在`van-radio`上设置`diabled`可以禁用单个选项
@@ -67,6 +42,16 @@ export default {
   <van-radio name="1" custom-class="demo-radio">单选框 1</van-radio>
   <van-radio name="2">单选框 2</van-radio>
 </van-radio-group>
+```
+
+```js
+export default {
+  data(){
+    return {
+      radio2: '2',
+    }
+  }
+}
 ```
 
 ### 自定义颜色
@@ -101,6 +86,22 @@ export default {
 </van-radio>
 ```
 
+```js
+export default {
+  data(){
+    return {
+      radio4: '1',
+      icon: {
+        normal:
+          'https://img.yzcdn.cn/public_files/2017/10/13/c547715be149dd3faa817e4a948b40c4.png',
+        active:
+          'https://img.yzcdn.cn/public_files/2017/10/13/793c77793db8641c4c325b7f25bf130d.png'
+      }
+    }
+  }
+}
+```
+
 ### 与 Cell 组件一起使用
 
 此时你需要再引入`Cell`和`CellGroup`组件。
@@ -125,13 +126,18 @@ export default {
 </van-radio-group>
 ```
 
-```css
-.demo-radio {
-  margin-bottom: 10px;
-}
-
-.icon {
-  width: 20px;
+```js
+export default {
+  data(){
+    return {
+      radio5: '1'
+    }
+  },
+  methods: {
+    toggle () {
+      this.$refs['radio-1'].onChange();
+    }
+  }
 }
 ```
 

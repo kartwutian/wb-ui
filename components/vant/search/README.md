@@ -1,13 +1,17 @@
+---
+title: Search 搜索
+lang: zh
+vant: true
+---
+
 # Search 搜索
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-search": "path/to/vant-weapp/dist/search/index"
-}
+```js
+import VanSearch from "@/components/vant/search/index.vue"
 ```
 
 ## 代码演示
@@ -17,7 +21,7 @@
 `van-search` 中，value 用于控制搜索框中的文字。background 可以自定义搜索框外部背景色。
 
 ```html
-<van-search value="{{ value }}" placeholder="请输入搜索关键词" />
+<van-search :value="value" placeholder="请输入搜索关键词" />
 ```
 
 ### 监听对应事件
@@ -26,12 +30,29 @@
 
 ```html
 <van-search
-  value="{{ value }}"
+  v-model="value"
   placeholder="请输入搜索关键词"
   show-action
-  bind:search="onSearch"
-  bind:cancel="onCancel"
+  @cancel="onCancel"
 />
+```
+
+```js
+export default {
+  data(){
+    return {
+      value: ''
+    }
+  },
+  methods:{
+    onCancel () {
+      uni.showToast({
+        title: '取消',
+        icon: 'none'
+      })
+    },
+  }
+}
 ```
 
 ### 自定义行动按钮
@@ -40,13 +61,32 @@
 
 ```html
 <van-search
-  value="{{ value }}"
+  v-model="value"
   placeholder="请输入搜索关键词"
   use-action-slot
-  bind:search="onSearch"
+  shape="round"
+  label="地址"
 >
-  <view slot="action" bind:tap="onSearch">搜索</view>
+  <view slot="action" @tap="onSearch" >搜索</view>
 </van-search>
+```
+
+```js
+export default {
+  data(){
+    return {
+      value: ''
+    }
+  },
+  methods:{
+    onSearch (val) {
+      uni.showToast({
+        title: '搜索',
+        icon: 'none'
+      })
+    },
+  }
+}
 ```
 
 ## API
@@ -55,7 +95,6 @@
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
-| name | 在表单内提交时的标识符 | *string* | - | - |
 | label | 搜索框左侧文本 | *string* | - | - |
 | shape | 形状，可选值为 `round` | *string* | `square` | - |
 | value | 当前输入的值 | *string \| number* | - | - |
@@ -81,12 +120,12 @@
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:search | 确定搜索时触发 | event.detail: 当前输入值 |
-| bind:change | 输入内容变化时触发 | event.detail: 当前输入值 |
-| bind:cancel | 取消搜索搜索时触发 | - |
-| bind:focus | 输入框聚焦时触发 | - |
-| bind:blur | 输入框失焦时触发 | - |
-| bind:clear | 点击清空控件时触发 | - |
+| @search | 确定搜索时触发 | event.detail: 当前输入值 |
+| @change | 输入内容变化时触发 | event.detail: 当前输入值 |
+| @cancel | 取消搜索搜索时触发 | - |
+| @focus | 输入框聚焦时触发 | - |
+| @blur | 输入框失焦时触发 | - |
+| @clear | 点击清空控件时触发 | - |
 
 ### Slot
 

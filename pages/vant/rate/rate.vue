@@ -97,10 +97,6 @@ export default {
   methods: {
     onChange (event) {
       console.log(event)
-      // const { key } = event.currentTarget.dataset;
-      // this.setData({
-      //   [key]: event.detail
-      // });
     }
   }
 }

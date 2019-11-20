@@ -1,70 +1,70 @@
 <template>
   <view>
     <van-popup
-        :show=" show "
-        :z-index=" zIndex "
-        :overlay=" overlay "
-        :transition=" transition "
-        :custom-class="'van-dialog' + className "
-        :custom-style="(widthWithUnit ? 'width: ' + widthWithUnit + ';' : '' ) + customStyle "
-        :overlay-style=" overlayStyle "
-        :close-on-click-overlay=" closeOnClickOverlay "
-        @close="onClickOverlay"
+      :show=" show "
+      :z-index=" zIndex "
+      :overlay=" overlay "
+      :transition=" transition "
+      :custom-class="'van-dialog' + className "
+      :custom-style="(widthWithUnit ? 'width: ' + widthWithUnit + ';' : '' ) + customStyle "
+      :overlay-style=" overlayStyle "
+      :close-on-click-overlay=" closeOnClickOverlay "
+      @close="onClickOverlay"
     >
       <view
-          v-if=" title || useTitleSlot  "
-          :class="'van-dialog__header '+( message || useSlot ? '' : 'van-dialog--isolated') "
+        v-if=" title || useTitleSlot  "
+        :class="'van-dialog__header '+( message || useSlot ? '' : 'van-dialog--isolated') "
       >
         <slot
-            v-if=" useTitleSlot "
-            name="title"
+          v-if=" useTitleSlot "
+          name="title"
         />
         <block v-else-if=" title "> {{ title }}</block>
       </view>
 
       <slot v-if=" useSlot " />
       <view
-          v-else-if=" message "
-          :class="'van-dialog__message ' + (title ? 'van-dialog__message--has-title' : '') + (messageAlign ? 'van-dialog__message--' + messageAlign : '')"
+        v-else-if=" message "
+        :class="'van-dialog__message ' + (title ? 'van-dialog__message--has-title' : '') + (messageAlign ? 'van-dialog__message--' + messageAlign : '')"
       >
         <text class="van-dialog__message-text">{{ message }}</text>
       </view>
 
       <view class="van-hairline--top van-dialog__footer">
         <van-button
-            v-if=" showCancelButton "
-            size="large"
-            :loading=" loading.cancel "
-            class="van-dialog__button van-hairline--right"
-            custom-class="van-dialog__cancel"
-            :custom-style="'color:' + cancelButtonColor "
-            @click="onCancel__fix"
+          v-if=" showCancelButton "
+          size="large"
+          :loading=" loading.cancel "
+          class="van-dialog__button van-hairline--right"
+          custom-class="van-dialog__cancel"
+          :custom-style="'color:' + cancelButtonColor "
+          @click="onCancel__fix"
         >
           {{ cancelButtonText }}
         </van-button>
         <van-button
-            v-if=" showConfirmButton "
-            size="large"
-            class="van-dialog__button"
-            :loading=" loading.confirm "
-            custom-class="van-dialog__confirm"
-            :custom-style="'color:' + confirmButtonColor "
-            :open-type=" confirmButtonOpenType "
-            :lang=" lang "
-            :business-id=" businessId "
-            :session-from=" sessionFrom "
-            :send-message-title=" sendMessageTitle "
-            :send-message-path=" sendMessagePath "
-            :send-message-img=" sendMessageImg "
-            :show-message-card=" showMessageCard "
-            :app-parameter=" appParameter "
-            @click="onConfirm__fix"
-            @getuserinfo="bindGetUserInfo"
-            @contact="bindContact"
-            @getphonenumber="bindGetPhoneNumber"
-            @error="bindError"
-            @launchapp="bindLaunchApp"
-            @opensetting="bindOpenSetting"
+          v-if=" showConfirmButton "
+          size="large"
+          class="van-dialog__button"
+          :loading=" loading.confirm "
+          custom-class="van-dialog__confirm"
+          :custom-style="'color:' + confirmButtonColor "
+          :open-type=" confirmButtonOpenType "
+          :lang=" lang "
+          :business-id=" businessId "
+          :session-from=" sessionFrom "
+          :send-message-title=" sendMessageTitle "
+          :send-message-path=" sendMessagePath "
+          :send-message-img=" sendMessageImg "
+          :show-message-card=" showMessageCard "
+          :app-parameter=" appParameter "
+          @click="onConfirm__fix"
+          @getuserinfo="bindGetUserInfo"
+          @contact="bindContact"
+          @getphonenumber="bindGetPhoneNumber"
+          @error="bindError"
+          @launchapp="bindLaunchApp"
+          @opensetting="bindOpenSetting"
         >
           {{ confirmButtonText }}
         </van-button>
@@ -74,8 +74,8 @@
 </template>
 
 <script>
-import {basic} from "../mixins/basic";
-import {set} from "../mixins/set";
+import { basic } from "../mixins/basic";
+import { set } from "../mixins/set";
 import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
 import { addUnit } from '../common/utils';
@@ -97,7 +97,6 @@ export default {
         cancel: false
       },
       widthWithUnit: "",
-
       show: false,
       title: '',
       message: '',

@@ -11,22 +11,7 @@ vant: true
 在script中引入组件
 
 ```js
-
 import VanButton from "@/components/vant/button/index";
-
-export default {
-  components: {VanButton},
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    
-  }
-}
-  
 ```
 
 ## 代码演示

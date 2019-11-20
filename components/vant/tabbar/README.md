@@ -16,27 +16,6 @@ import VanTabbarItem from "../../../components/vant/tabbar-item/index"
 
 export default {
   components: {VanTabbarItem},
-  data () {
-    return {
-      active: {
-        active1: 0,
-        active2: 'home',
-        active3: 0,
-        active4: 0,
-        active5: 0,
-      },
-      icon: {
-        normal: 'https://img.yzcdn.cn/vant/user-inactive.png',
-        active: 'https://img.yzcdn.cn/vant/user-active.png'
-      }
-    }
-  },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
   methods: {
     onChange1 (event) {
       this.changeActive(event, 1)
@@ -68,7 +47,6 @@ export default {
 ```html
 <van-tabbar
   :active="active.active1"
-  data-key="active.active1"
   custom-class="tabbar"
   :safe-area-inset-bottom="false"
   @change="onChange1"
@@ -80,6 +58,18 @@ export default {
 </van-tabbar>
 ```
 
+```js
+export default {
+  data() {
+    return {
+      active: {
+        active1: 0
+      }
+    };
+  }
+}
+```
+
 
 ### 通过名称匹配
 
@@ -88,7 +78,6 @@ export default {
 ```html
 <van-tabbar
   :active="active.active2"
-  data-key="active.active2"
   custom-class="tabbar"
   :safe-area-inset-bottom="false"
   @change="onChange2"
@@ -112,13 +101,23 @@ export default {
 </van-tabbar>
 ```
 
+```js
+export default {
+  data() {
+    return {
+      active: {
+        active2: 'home',
+      }
+    };
+  }
+}
+```
 
 ### 显示徽标
 
 ```html
 <van-tabbar
   :active="active.active3"
-  data-key="active.active3"
   custom-class="tabbar"
   :safe-area-inset-bottom="false"
   @change="onChange3"
@@ -139,6 +138,18 @@ export default {
 </van-tabbar>
 ```
 
+```js
+export default {
+  data() {
+    return {
+      active: {
+        active3: 0
+      }
+    };
+  }
+}
+```
+
 ### 自定义图标
 
 可以通过 slot 自定义图标，其中 icon slot 代表未选中状态下的图标，icon-active slot 代表选中状态下的图标
@@ -146,7 +157,6 @@ export default {
 ```html
 <van-tabbar
   :active="active.active4"
-  data-key="active.active4"
   custom-class="tabbar"
   :safe-area-inset-bottom="false"
   @change="onChange4"
@@ -171,13 +181,28 @@ export default {
 </van-tabbar>
 ```
 
+```js
+export default {
+  data() {
+    return {
+      active: {
+        active4: 0
+      },
+      icon: {
+        normal: 'https://img.yzcdn.cn/vant/user-inactive.png',
+        active: 'https://img.yzcdn.cn/vant/user-active.png'
+      }
+    };
+  }
+}
+```
+
 
 ### 自定义颜色
 
 ```html
 <van-tabbar
   :active="active.active5"
-  data-key="active.active5"
   custom-class="tabbar"
   active-color="#07c160"
   inactive-color="#000"
@@ -189,6 +214,18 @@ export default {
   <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
   <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
 </van-tabbar>
+```
+
+```js
+export default {
+  data() {
+    return {
+      active: {
+        active5: 0
+      }
+    };
+  }
+}
 ```
 
 
@@ -214,7 +251,7 @@ export default {
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:change | 切换标签时触发 | event.detail: 当前选中标签的名称或索引值 |
+| @change | 切换标签时触发 | event.detail: 当前选中标签的名称或索引值 |
 
 ### TabbarItem API
 

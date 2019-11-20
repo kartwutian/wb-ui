@@ -3,7 +3,6 @@
     <demo-block title="基础用法">
       <van-tabbar
         :active="active.active1"
-        data-key="active.active1"
         custom-class="tabbar"
         :safe-area-inset-bottom="false"
         @change="onChange1"
@@ -18,7 +17,6 @@
     <demo-block title="通过名称匹配">
       <van-tabbar
         :active="active.active2"
-        data-key="active.active2"
         custom-class="tabbar"
         :safe-area-inset-bottom="false"
         @change="onChange2"
@@ -45,7 +43,6 @@
     <demo-block title="显示徽标">
       <van-tabbar
         :active="active.active3"
-        data-key="active.active3"
         custom-class="tabbar"
         :safe-area-inset-bottom="false"
         @change="onChange3"
@@ -69,7 +66,6 @@
     <demo-block title="自定义图标">
       <van-tabbar
         :active="active.active4"
-        data-key="active.active4"
         custom-class="tabbar"
         :safe-area-inset-bottom="false"
         @change="onChange4"
@@ -97,7 +93,6 @@
     <demo-block title="自定义颜色">
       <van-tabbar
         :active="active.active5"
-        data-key="active.active5"
         custom-class="tabbar"
         active-color="#07c160"
         inactive-color="#000"

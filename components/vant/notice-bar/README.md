@@ -20,19 +20,9 @@ export default {
     return {
       text: '足协杯战线连续第2年上演广州德比战，上赛季半决赛上恒大以两回合5-3的总比分淘汰富力。'
     }
-  },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    onclick (event) {
-      console.log(event)
-    }
   }
 }
+```
   
 
 ## 代码演示
@@ -43,7 +33,6 @@ export default {
 <van-notice-bar
   :text="text"
   left-icon="//img.yzcdn.cn/public_files/2017/8/10/6af5b7168eed548100d9041f07b7c616.png"
-  @click="onclick"
 />
 ```
 
@@ -78,6 +67,17 @@ export default {
 </van-notice-bar>
 ```
 
+### 自定义样式
+
+```html
+<van-notice-bar
+  :text="text"
+  color="#1989fa"
+  background="#ecf9ff"
+  left-icon="info-o"
+/>
+```
+
 ### 通告栏模式
 默认模式为空，支持`closeable`和`link`。
 
@@ -95,20 +95,13 @@ export default {
 />
 ```
 
-### 通告栏模式
-<van-notice-bar
-  :text="text"
-  color="#1989fa"
-  background="#ecf9ff"
-  left-icon="info-o"
-/>
-
 ## API
 
 ### Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
+| text | 通知文本内容 | *string* | - | - |
 | mode | 通告栏模式，可选值为 `closeable` `link` | *string* | `''` | - |
 | delay | 动画延迟时间 (s) | *number* | `1` | - |
 | speed | 滚动速率 (px/s) | *number* | `50` | - |
@@ -117,12 +110,14 @@ export default {
 | color | 文本颜色 | *string* | `#ed6a0c` | - |
 | backgroundColor | 滚动条背景 | *string* | `#fffbe8` | - |
 | open-type | 微信开放能力 | *string* | `navigate` | - |
+| url | 点击后跳转的链接地址 | *string* | - | - |
+| wrapable | 是否开启文本换行，只在禁用滚动时生效 | *boolean* | `false` | - |
 
 ### Events
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:click | 点击事件回调 | - |
+| @click | 点击事件回调 | - |
 
 ### Slot
 

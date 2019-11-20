@@ -24,15 +24,6 @@ export default {
       active: 0
     };
   },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    
-  }
 }
   
 ```

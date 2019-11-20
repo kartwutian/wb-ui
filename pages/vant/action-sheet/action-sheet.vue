@@ -11,6 +11,7 @@
       <van-action-sheet
         :show="show1"
         :actions="action1"
+        @click-overlay="toggleActionSheet1"
         @select="toggleActionSheet1"
       />
     </demo-block>
@@ -26,8 +27,9 @@
       <van-action-sheet
         :show="show2"
         :actions="action2"
-        @select="toggleActionSheet2"
-      />
+        @close="toggleActionSheet2"
+      >
+      </van-action-sheet>
     </demo-block>
 
     <demo-block

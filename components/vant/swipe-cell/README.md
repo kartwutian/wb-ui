@@ -11,34 +11,7 @@ vant: true
 在script中引入组件
 
 ```js
-
 import VanSwipeCell from "@/components/vant/swipe-cell/index.vue"
-
-export default {
-  components: {VanSwipeCell},
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    onClose (val) {
-      uni.showModal({
-        title: '提示',
-        content: '这是一个模态弹窗',
-        success: function (res) {
-          if (res.confirm) {
-            val.instance.close()
-          } else if (res.cancel) {
-            val.instance.close()
-          }
-        }
-      });
-    }
-  }
-}
-  
 ```
 
 ## 代码演示
@@ -46,29 +19,14 @@ export default {
 ### 基础用法
 
 ```html
-<van-swipe-cell
-  :right-width="120"
-  :left-width="65"
->
-  <view
-    slot="left"
-    class="van-swipe-cell__left"
-  >选择</view>
+<van-swipe-cell :right-width="120" :left-width="65">
+  <view slot="left" class="van-swipe-cell__left" >选择</view>
   <van-cell-group>
-    <van-cell
-      title="单元格"
-      value="内容"
-    />
+    <van-cell title="单元格" value="内容" />
   </van-cell-group>
   <template slot="right">
-    <van-button
-      square
-      type="danger"
-    >删除</van-button>
-    <van-button
-      square
-      type="primary"
-    >收藏</van-button>
+    <van-button square type="danger" >删除</van-button>
+    <van-button square type="primary" >收藏</van-button>
   </template>
 </van-swipe-cell>
 ```
@@ -76,30 +34,42 @@ export default {
 ### 异步关闭
 
 ```html
-<van-swipe-cell
-  id="swipe-cell"
-  :right-width="65"
-  :left-width="65"
-  async-close
-  @close="onClose"
->
-  <view
-    slot="left"
-    class="van-swipe-cell__left"
-  >选择</view>
+<van-swipe-cell id="swipe-cell" :right-width="65" :left-width="65" async-close @close="onClose">
+  <view slot="left" class="van-swipe-cell__left" >选择</view>
   <van-cell-group>
-    <van-cell
-      title="单元格"
-      value="内容"
-    />
+    <van-cell title="单元格" value="内容" />
   </van-cell-group>
-  <view
-    slot="right"
-    class="van-swipe-cell__right"
-  >删除</view>
+  <view slot="right" class="van-swipe-cell__right" >删除</view>
 </van-swipe-cell>
 ```
 
+```js
+export default {
+  methods: {
+    onClose (val) {
+      switch (val.position) {
+        case 'left':
+        case 'cell':
+        case 'outside':
+          val.instance.close();
+          break;
+        case "right":
+          uni.showModal({
+            title: '提示',
+            content: '这是一个模态弹窗',
+            success: function (res) {
+              if (res.confirm) {
+                val.instance.close()
+              } else if (res.cancel) {
+                val.instance.close()
+              }
+            }
+          });
+      }
+    }
+  }
+}
+```
 
 ## API
 
@@ -125,8 +95,8 @@ export default {
 
 | 事件名 | 说明 | 参数 |
 |------|------|------|
-| click | 点击时触发 | 关闭时的点击位置 (`left` `right` `cell` `outside`) |
-| close | 点击时触发 | 整体是一个 Object，包含 `position`, `instance` 两个 key。 |
+| @click | 点击时触发 | 关闭时的点击位置 (`left` `right` `cell` `outside`) |
+| @close | 点击时触发 | 整体是一个 Object，包含 `position`, `instance` 两个 key。 |
 
 ### close 参数
 

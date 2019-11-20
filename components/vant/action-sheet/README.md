@@ -16,31 +16,6 @@ import VanActionSheet from "@/components/vant/action-sheet/index.vue"
 
 export default {
   components: {VanActionSheet},
-  data () {
-    return {
-      show1: false,
-      show2: false,
-      show3: false,
-      show4: false,
-      show5: false,
-      action1: [
-        { name: '选项' },
-        { name: '选项' },
-        { name: '选项', subname: '副文本' }
-      ],
-      action2: [
-        { name: '选项', color: '#07c160' },
-        { loading: true },
-        { name: '禁用选项', disabled: true }
-      ]
-    }
-  },
-  onLoad () {
-
-  },
-  onUnload () {
-
-  },
   methods: {
     toggle (type) {
       this[`${type}`] = !this[`${type}`]
@@ -81,10 +56,25 @@ export default {
 <van-action-sheet
   :show="show1"
   :actions="action1"
+  @click-overlay="toggleActionSheet1"
   @select="toggleActionSheet1"
 />
 ```
 
+```js
+export default {
+  data(){
+    return {
+      show1: false,
+      action1: [
+        { name: '选项' },
+        { name: '选项' },
+        { name: '选项', subname: '副文本' }
+      ],
+    }
+  }
+}
+```
 
 ### 选项状态
 
@@ -94,10 +84,24 @@ export default {
 <van-action-sheet
   :show="show2"
   :actions="action2"
-  @select="toggleActionSheet2"
+  @close="toggleActionSheet2"
 />
 ```
 
+```js
+export default {
+  data(){
+    return {
+      show2: false,
+      action2: [
+        { name: '选项', color: '#07c160' },
+        { loading: true },
+        { name: '禁用选项', disabled: true }
+      ]
+    }
+  }
+}
+```
 
 ### 展示取消按钮
 
@@ -113,6 +117,21 @@ export default {
 >
 ```
 
+```js
+export default {
+  data(){
+    return {
+      show3: false,
+      action1: [
+        { name: '选项' },
+        { name: '选项' },
+        { name: '选项', subname: '副文本' }
+      ],
+    }
+  }
+}
+```
+
 ### 展示描述信息
 
 设置`description`属性后，会在选项上方显示描述信息
@@ -124,6 +143,21 @@ export default {
   description="这是一段描述信息"
   @close="toggleActionSheet4"
 >
+```
+
+```js
+export default {
+  data(){
+    return {
+      show4: false,
+      action1: [
+        { name: '选项' },
+        { name: '选项' },
+        { name: '选项', subname: '副文本' }
+      ],
+    }
+  }
+}
 ```
 
 ### 展示标题栏
@@ -138,12 +172,24 @@ export default {
 >
 ```
 
+```js
+export default {
+  data(){
+    return {
+      show5: false
+    }
+  }
+}
+```
+
 ## API
 
 ### Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
+| show | 是否展示遮罩层 | *boolean* | - | - |
+| description | 选项上方的描述信息 | *string* | - | 1.0.0 |
 | actions | 菜单选项 | *Array* | `[]` | - |
 | title | 标题 | *string* | - | - |
 | description | 选项上方的描述信息 | *string* | - | 1.0.0 |
@@ -159,10 +205,10 @@ export default {
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:select | 选中选项时触发，禁用或加载状态下不会触发 | event.detail: 选项对应的对象 |
-| bind:close | 关闭时触发 | - |
-| bind:cancel | 取消按钮点击时触发 | - |
-| bind:click-overlay | 点击遮罩层时触发 | - |
+| @select | 选中选项时触发，禁用或加载状态下不会触发 | event.detail: 选项对应的对象 |
+| @close | 关闭时触发 | - |
+| @cancel | 取消按钮点击时触发 | - |
+| @click-overlay | 点击遮罩层时触发 | - |
 
 ### actions
 

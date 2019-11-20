@@ -9,34 +9,7 @@ vant: true
 ### 引入
 
 ```js
-
 import VanRate from "@/components/vant/rate/index.vue"
-
-export default {
-  components: {VanRate},
-  data () {
-    return {
-      value: {
-        value1: 3,
-        value2: 3,
-        value3: 3,
-        value4: 2.5,
-        value5: 4,
-        value6: 3
-      }
-    };
-  },
-  onLoad(){
-
-  },
-  onUnload(){
-    
-  },
-  methods: {
-    
-  }
-}
-  
 ```
 ### 基础用法
 
@@ -45,6 +18,18 @@ export default {
   :value="value.value1"
   custom-class="van-rate"
 />
+```
+
+```js
+export default {
+  data(){
+    return {
+      value: {
+        value1: 3
+      }
+    }
+  }
+}
 ```
 
 ### 自定义图标
@@ -56,6 +41,18 @@ export default {
   void-icon="like-o"
   custom-class="van-rate"
 />
+```
+
+```js
+export default {
+  data(){
+    return {
+      value: {
+        value2: 3
+      }
+    }
+  }
+}
 ```
 
 ### 自定义样式
@@ -70,6 +67,23 @@ export default {
   void-icon="star"
   @change="onChange"
 />
+```
+
+```js
+export default {
+  data(){
+    return {
+      value: {
+        value1: 3
+      }
+    }
+  },
+  methods: {
+    onChange (event) {
+      console.log(event)
+    }
+  }
+}
 ```
 
 ### 半星
@@ -88,6 +102,23 @@ export default {
 />
 ```
 
+```js
+export default {
+  data(){
+    return {
+      value: {
+        value4: 3.5
+      }
+    }
+  },
+  methods: {
+    onChange (event) {
+      console.log(event)
+    }
+  }
+}
+```
+
 ### 自定义数量
 
 ```html
@@ -96,6 +127,23 @@ export default {
   :value="value.value5"
   :count="6"
   @change="onChange"
+```
+
+```js
+export default {
+  data(){
+    return {
+      value: {
+        value5: 4
+      }
+    }
+  },
+  methods: {
+    onChange (event) {
+      console.log(event)
+    }
+  }
+}
 ```
 
 ### 禁用状态
@@ -108,6 +156,18 @@ export default {
 />
 ```
 
+```js
+export default {
+  data(){
+    return {
+      value: {
+        value6: 3
+      }
+    }
+  }
+}
+```
+
 ### 只读状态
 
 ```html
@@ -117,13 +177,16 @@ export default {
   readonly
 />
 ```
-```css
-page {
-  background-color: #fff;
-}
 
-.van-rate {
-  margin-left: 15px;
+```js
+export default {
+  data(){
+    return {
+      value: {
+        value6: 3
+      }
+    }
+  }
 }
 ```
 
