@@ -33,7 +33,7 @@ export default modelGenerate({
   actions: {
     async delayChange({commit}, payload){
       await delay(2);
-      commit('updateShallowState', payload)
+      commit('updateState', payload)
     },
     async getData({commit}, payload){
       return  await getData(payload);

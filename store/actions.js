@@ -5,7 +5,7 @@ export default {
     // 第一个参数为上下文环境
     try {
       await delay(payload);
-			commit('updateShallowState', {
+			commit('updateState', {
 				name: 'hello updated vuex'
 			});
     } catch (e) {

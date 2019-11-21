@@ -32,13 +32,13 @@
         })
       },
       handleTabChange(index){
-        this.updateShallowState({
+        this.updateState({
           currentTabIndex: index,
         })
       },
       ...mapMutations('tabbar', {
         resetState: 'reset',
-        updateShallowState: 'updateShallowState'
+        updateState: 'updateState'
       }),
       ...mapActions('tabbar', {
         delayChange: 'delayChange'

@@ -1,15 +1,20 @@
 import Vue from 'vue'
+import {resetState} from "../utils/helper";
 
 export default {
 
   /**
-   * 浅更新，只改变一级状态
+   * 按payload更新state的值
    * @param {Object} state
    * @param {Object} payload
    */
-  updateShallowState(state, payload) {
-    Object.keys(payload).forEach(key => {
-      state[key] = payload[key]
+  updateState(state, payload) {
+    let realPayload = payload;
+    if(payload.payload){
+      realPayload = payload.payload
+    }
+    Object.keys(realPayload).forEach(key => {
+      resetState(state[key], realPayload)
     })
   },
 };

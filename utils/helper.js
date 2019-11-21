@@ -92,82 +92,74 @@ export function isArray(obj) {
  */
 export function generateDefaultValue(data, defaultvalue = '--') {
   if (!isObject(data)) return data;
-  if(isArray(data)){
-    return data.map(item => {
-      if(item === null || item === undefined || item === '') return defaultvalue;
-      if(isObject(item)) {
-        return generateDefaultValue(item, defaultvalue)
-      }
-      return item;
-    })
+  const newData = new data.constructor();
+
+  for (let key in Object.getOwnPropertyDescriptors(data)) {
+    if(data[key] === null || data[key] === undefined || data[key] === ''){
+      newData[key] = defaultvalue;
+    }else{
+      newData[key] = generateDefaultValue(data[key]);
+    }
   }
-  return Object.keys(data).reduce((result, item) => {
-    if(data[item] === null || data[item] === undefined || data[item] === ''){
-      result[item] = defaultvalue;
-      return result;
-    }
-    if(isObject(data[item])){
-      result[item] = generateDefaultValue(data[item], defaultvalue)
-      return result;
-    }
-    result[item] = data[item];
-    return result;
-  },{});
+  return newData;
 }
 
 /**
  * 深拷贝
  * @param data
- * @returns {Uint8Array | BigInt64Array | any[] | Float64Array | Int8Array | Float32Array | Int32Array | Uint32Array | Uint8ClampedArray | BigUint64Array | Int16Array | Uint16Array|{}|*}
  */
 export function deepCopy(data) {
   if (!isObject(data)) return data;
-  if(isArray(data)){
-    return data.map(item => {
-      if(isObject(item)) {
-        return deepCopy(item)
-      }
-      return item;
-    })
+  const newData = new data.constructor();
+
+  for (let key in Object.getOwnPropertyDescriptors(data)) {
+    newData[key] = deepCopy(data[key])
   }
-  return Object.keys(data).reduce((result, item) => {
-    if(isObject(data[item])){
-      result[item] = deepCopy(data[item])
-      return result;
-    }
-    result[item] = data[item];
-    return result;
-  },{});
+  return newData;
 }
 
+/**
+ * 深度比较两个数是否相等
+ * @param a
+ * @param b
+ * @returns {boolean}
+ */
+export function deepCompare(a, b){
+  if(!isObject(a) || !isObject(b)){
+    return a === b;
+  }
+
+  const propsA = Object.getOwnPropertyDescriptors(a);
+  const propsB = Object.getOwnPropertyDescriptors(b);
+  if(Object.keys(propsA).length !== Object.keys(propsB).length){
+    return false
+  }
+
+  return Object.keys(propsA).every(key => deepCompare(a[key], b[key]));
+
+}
+
+/**
+ * 重置状态，在原state上直接改变数值为initialState的值
+ * @param state
+ * @param initialState
+ * @returns {*}
+ */
 export function resetState(state, initialState){
-  if (!isObject(initialState)){
-    console.error('please use object as argument');
-    return;
+
+  if(!isObject(state) || !isObject(initialState)){
+    return initialState;
   }
-  if(isArray(initialState)){
-    // 注意改变state自身, 不能重新赋值[]
-    state = (()=>{
-      while(state.length){
-        state.pop()
-      }
-      JSON.parse(JSON.stringify(initialState)).forEach((item)=>{
-        state.push(item)
-      })
-    })();
+  const propsState = Object.getOwnPropertyDescriptors(state);
+
+  for (let key in Object.getOwnPropertyDescriptors(propsState)) {
+    if(initialState[key] === undefined){
+      delete state[key];
+    }else{
+      state[key] = resetState(state[key], initialState[key])
+    }
   }
-  if(isObject(state)){
-    Object.keys(state).forEach(key => {
-      if(isObject(initialState[key])) {
-        return resetState(state[key], initialState[key])
-      }
-      if(initialState[key] === undefined){
-        delete state[key];
-        return;
-      }
-      state[key] = initialState[key];
-    });
-  }
+  return state;
 }
 
 export function getUrl(url){
@@ -211,7 +203,7 @@ export function fetchErrorMsg(data) {
 /**
  * 生成model
  * @param options
- * @returns {{mutations: (options.mutations|{}|{updateShallowState(Object, Object): void}), state: (Uint8Array|BigInt64Array|any[]|Float64Array|Int8Array|Float32Array|Int32Array|Uint32Array|Uint8ClampedArray|BigUint64Array|Int16Array|Uint16Array|{}|*), getters: U, actions: (options.actions|{}), namespaced: boolean}}
+ * @returns {{mutations: (options.mutations|{}|{updateState(Object, Object): void, reset(*=): void}), state: *, getters: U, actions: (options.actions|{}), namespaced: boolean}}
  */
 export const modelGenerate = (options = {
   namespaced: true,
@@ -229,17 +221,17 @@ export const modelGenerate = (options = {
     },
     mutations: {
       /**
-       * 浅更新，只改变一级状态
+       * 按payload更新state的值
        * @param {Object} state
        * @param {Object} payload
        */
-      updateShallowState(state, payload) {
+      updateState(state, payload) {
         let realPayload = payload;
         if(payload.payload){
           realPayload = payload.payload
         }
         Object.keys(realPayload).forEach(key => {
-          state[key] = realPayload[key]
+          resetState(state[key], realPayload)
         })
       },
       reset(state) {

@@ -10,7 +10,7 @@ export default modelGenerate({
   actions: {
     async delayChange({commit}, payload){
       await delay(2);
-      commit('updateShallowState', payload)
+      commit('updateState', payload)
     },
     async login({ commit }, {payload}) {
       // 第一个参数为上下文环境

@@ -285,10 +285,17 @@
 		},
 		computed: {
 		},
+
 		onLoad(){
 			// this.getData({});
 		},
+
 		onUnload(){
+		},
+
+		// 开启页面分享
+		onShareAppMessage(){
+
 		},
 		methods: {
 
