@@ -1,13 +1,17 @@
+---
+title: Transition 动画
+lang: zh
+vant: true
+---
+
 # Transition 动画
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-transition": "path/to/vant-weapp/dist/transition/index"
-}
+```js
+import VanTransition from "@/components/vant/transition/index";
 ```
 
 ## 代码演示
@@ -27,7 +31,22 @@
 transition 组件内置了多种动画，可以通过`name`字段指定动画类型
 
 ```html
-<van-transition name="fade-up" />
+<van-transition
+    :show="show"
+    :name="name"
+    custom-class="block"
+/>
+```
+
+```js
+export default {
+  data(){
+    return {
+      show: false,
+      name: 'fade',
+    }
+  }
+}
 ```
 
 ### 高级用法
@@ -36,26 +55,55 @@ transition 组件内置了多种动画，可以通过`name`字段指定动画类
 
 ```html
 <van-transition
-  show="{{ show }}"
-  name=""
-  duration="{{ { enter: 300, leave: 1000 } }}"
-  enter-class="van-enter-class"
-  enter-active-class="van-enter-active-class"
-  leave-active-class="van-leave-active-class"
-  leave-to-class="van-leave-to-class"
+    :show="showCustom"
+    name=""
+    :duration="{ enter: 300, leave: 1000 }"
+    custom-class="block"
+    enter-class="van-enter-class"
+    enter-active-class="van-enter-active-class"
+    leave-active-class="van-leave-active-class"
+    leave-to-class="van-leave-to-class"
+    @before-enter="onBeforeEnter"
+    @enter="onEnter"
+    @after-enter="onAfterEnter"
+    @before-leave="onBeforeLeave"
+    @leave="onLeave"
+    @after-leave="onAfterLeave"
 />
 ```
 
-```css
-.van-enter-active-class,
-.van-leave-active-class {
-  transition-property: background-color, transform;
-}
+```js
+export default {
+  data(){
+    return {
+      showCustom: false
+    }
+  },
+  methods:{
+    onBeforeEnter() {
+      console.log('before enter');
+    },
 
-.van-enter-class,
-.van-leave-to-class {
-  background-color: red;
-  transform: rotate(-360deg) translate3d(-100%, -100%, 0);
+    onEnter() {
+      console.log('enter');
+    },
+
+    onAfterEnter() {
+      console.log('after enter');
+    },
+
+    onBeforeLeave() {
+      console.log('before leave');
+    },
+
+    onLeave() {
+      console.log('leave');
+    },
+
+    onAfterLeave() {
+      console.log('after leave');
+    },
+  }
 }
 ```
 
@@ -74,12 +122,12 @@ transition 组件内置了多种动画，可以通过`name`字段指定动画类
 
 | 事件名 | 说明 | 参数 |
 |-----------|-----------|-----------|
-| bind:before-enter | 进入前触发 | - |
-| bind:enter | 进入中触发 | - |
-| bind:after-enter | 进入后触发 | - |
-| bind:before-leave | 离开前触发 | - |
-| bind:leave | 离开中触发 | - |
-| bind:after-leave | 离开后触发 | - |
+| @before-enter | 进入前触发 | - |
+| @enter | 进入中触发 | - |
+| @after-enter | 进入后触发 | - |
+| @before-leave | 离开前触发 | - |
+| @leave | 离开中触发 | - |
+| @after-leave | 离开后触发 | - |
 
 ### 外部样式类
 
