@@ -1,16 +1,17 @@
 import baseConfig from './config.base';
 import devConfig from './config.dev';
 import prodConfig from './config.prod';
+import {deepAssign} from "../utils/helper";
 
 let config = {};
 
 // uEnvDev
 if (process.env.NODE_ENV === 'development') {
-	config = Object.assign(baseConfig, devConfig);
+	config = deepAssign(baseConfig, devConfig);
 }
 // uEnvProd
 if (process.env.NODE_ENV === 'production') {
-	config = Object.assign(baseConfig, prodConfig);
+	config = deepAssign(baseConfig, prodConfig);
 }
 
 export default config;

@@ -140,6 +140,44 @@ export function deepCompare(a, b){
 }
 
 /**
+ * 用来合并a，b两个对象，会改变a的值
+ * @param a
+ * @param b
+ * @returns {*}
+ */
+function deepCombine(a, b){
+  if(!isObject(b)){
+    return b;
+  }
+
+  const propsB = Object.getOwnPropertyDescriptors(b);
+
+  for (let key in propsB){
+    if(a[key] === undefined){
+      a[key] = b[key];
+    }else{
+      a[key] = deepCombine(a[key], b[key]);
+    }
+  }
+  return a;
+}
+
+/**
+ * 用于深度合并，返回值为一个新的结果，不会改变传入参数
+ * @param args
+ * @returns {*}
+ */
+export function deepAssign(...args) {
+  if(!args.length) return;
+  if(args.length === 1) return deepCopy(...args);
+  let result = {};
+  for (let i = 0; i < args.length; i++){
+    deepCombine(result, args[i]);
+  }
+  return result;
+}
+
+/**
  * 重置状态，在原state上直接改变数值为initialState的值
  * @param state
  * @param initialState
