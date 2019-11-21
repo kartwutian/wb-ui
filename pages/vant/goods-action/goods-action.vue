@@ -121,4 +121,7 @@ export default {
 .goods-action {
   position: relative !important;
 }
+/deep/.van-info {
+  right: 15px !important;
+}
 </style>

@@ -144,6 +144,7 @@ export default {
 
   methods: {
     onClickThumb () {
+      this.$emit("click-thumb")
       this.jumpLink('thumbLink');
     }
   }
