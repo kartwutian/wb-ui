@@ -268,9 +268,7 @@ export const modelGenerate = (options = {
         if(payload.payload){
           realPayload = payload.payload
         }
-        Object.keys(realPayload).forEach(key => {
-          resetState(state[key], realPayload)
-        })
+        deepCombine(state, realPayload);
       },
       reset(state) {
         // 重置state
