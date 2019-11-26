@@ -274,7 +274,7 @@ export const modelGenerate = (options = {
         }
         deepCombine(state, realPayload);
       },
-      reset(state) {
+      resetState(state) {
         // 重置state
         resetState(state, initialState);
       },

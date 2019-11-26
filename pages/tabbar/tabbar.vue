@@ -37,7 +37,7 @@
         })
       },
       ...mapMutations('tabbar', {
-        resetState: 'reset',
+        resetState: 'resetState',
         updateState: 'updateState'
       }),
       ...mapActions('tabbar', {
