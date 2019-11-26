@@ -84,6 +84,10 @@ export function isArray(obj) {
   return Array.isArray(obj);
 }
 
+export function isFuc(f) {
+  return typeof f === 'function';
+}
+
 /**
  *公用添加默认值的方法
  * @param data 对象 or 数组
