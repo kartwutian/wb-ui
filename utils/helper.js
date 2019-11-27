@@ -84,6 +84,10 @@ export function isArray(obj) {
   return Array.isArray(obj);
 }
 
+export function isFuc(f) {
+  return typeof f === 'function';
+}
+
 /**
  *公用添加默认值的方法
  * @param data 对象 or 数组
@@ -137,6 +141,44 @@ export function deepCompare(a, b){
 
   return Object.keys(propsA).every(key => deepCompare(a[key], b[key]));
 
+}
+
+/**
+ * 用来合并a，b两个对象，会改变a的值
+ * @param a
+ * @param b
+ * @returns {*}
+ */
+function deepCombine(a, b){
+  if(!isObject(b)){
+    return b;
+  }
+
+  const propsB = Object.getOwnPropertyDescriptors(b);
+
+  for (let key in propsB){
+    if(a[key] === undefined){
+      a[key] = b[key];
+    }else{
+      a[key] = deepCombine(a[key], b[key]);
+    }
+  }
+  return a;
+}
+
+/**
+ * 用于深度合并，返回值为一个新的结果，不会改变传入参数
+ * @param args
+ * @returns {*}
+ */
+export function deepAssign(...args) {
+  if(!args.length) return;
+  if(args.length === 1) return deepCopy(...args);
+  let result = {};
+  for (let i = 0; i < args.length; i++){
+    deepCombine(result, args[i]);
+  }
+  return result;
 }
 
 /**
@@ -230,11 +272,9 @@ export const modelGenerate = (options = {
         if(payload.payload){
           realPayload = payload.payload
         }
-        Object.keys(realPayload).forEach(key => {
-          resetState(state[key], realPayload)
-        })
+        deepCombine(state, realPayload);
       },
-      reset(state) {
+      resetState(state) {
         // 重置state
         resetState(state, initialState);
       },

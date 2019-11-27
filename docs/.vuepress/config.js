@@ -25,14 +25,15 @@ module.exports = {
       '/vant/': [
         {
           title: '起步',
-          collapsable: true,
+          collapsable: false,
           children: [
+            "/vant/",
             "/vant/common",
           ]
         },
         {
           title: '基础组件',
-          collapsable: true,
+          collapsable: false,
           children: [
             "/vant/button",
             "/vant/cell",
@@ -45,7 +46,7 @@ module.exports = {
         },
         {
           title: '表单组件',
-          collapsable: true,
+          collapsable: false,
           children: [
             "/vant/checkbox",
             "/vant/datetime-picker",
@@ -62,7 +63,7 @@ module.exports = {
         },
         {
           title: '反馈组件',
-          collapsable: true,
+          collapsable: false,
           children: [
             "/vant/action-sheet",
             "/vant/dialog",
@@ -76,7 +77,7 @@ module.exports = {
         },
         {
           title: '展示组件',
-          collapsable: true,
+          collapsable: false,
           children: [
             "/vant/circle",
             "/vant/collapse",
@@ -93,7 +94,7 @@ module.exports = {
         },
         {
           title: '导航组件',
-          collapsable: true,
+          collapsable: false,
           children: [
             "/vant/grid",
             "/vant/sidebar",
@@ -104,7 +105,7 @@ module.exports = {
         },
         {
           title: '业务组件',
-          collapsable: true,
+          collapsable: false,
           children: [
             // '/vant/',
             // "/vant/area",
@@ -117,7 +118,7 @@ module.exports = {
       '/pro/': [
         {
           title: 'uni-app pro',
-          collapsable: true,
+          collapsable: false,
           children: [
             '/pro/'
           ]

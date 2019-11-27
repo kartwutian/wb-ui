@@ -13,19 +13,7 @@ vant: true
 ### 引入
 
 ```js
-
 import VanIcon from "@/components/vant/icon/index.vue"
-
-export default {
-  components: {VanIcon},
-  data () {
-    return {
-      icons,
-      active: 0
-    };
-  },
-}
-  
 ```
 
 ## 代码演示

@@ -12,13 +12,11 @@ Layout 提供了`van-row`和`van-col`两个组件来进行行列布局
 
 ### 引入
 
-在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
+在script中引入组件
 
-```json
-"usingComponents": {
-  "van-row": "path/to/vant-weapp/dist/row/index",
-  "van-col": "path/to/vant-weapp/dist/col/index"
-}
+```js
+import VanRow from "@/components/vant/row/index";
+import VanCol from "@/components/vant/col/index";
 ```
 
 ## 代码演示
@@ -30,18 +28,18 @@ Layout 组件提供了`24列栅格`，通过在`Col`上添加`span`属性设置�
 
 ```html
 <van-row>
-  <van-col span="8">span: 8</van-col>
-  <van-col span="8">span: 8</van-col>
-  <van-col span="8">span: 8</van-col>
+  <van-col span="8" custom-class="dark">span: 8</van-col>
+  <van-col span="8" custom-class="light">span: 8</van-col>
+  <van-col span="8" custom-class="dark">span: 8</van-col>
 </van-row>
 
 <van-row>
-  <van-col span="4">span: 4</van-col>
-  <van-col span="10" offset="4">offset: 4, span: 10</van-col>
+  <van-col span="4" custom-class="dark">span: 4</van-col>
+  <van-col span="10" offset="4" custom-class="light">offset: 4, span: 10</van-col>
 </van-row>
 
 <van-row>
-  <van-col offset="12" span="12">offset: 12, span: 12</van-col>
+  <van-col offset="12" span="12" custom-class="dark">offset: 12, span: 12</van-col>
 </van-row>
 ```
 
@@ -51,9 +49,9 @@ Layout 组件提供了`24列栅格`，通过在`Col`上添加`span`属性设置�
 
 ```html
 <van-row gutter="20">
-  <van-col span="8">span: 8</van-col>
-  <van-col span="8">span: 8</van-col>
-  <van-col span="8">span: 8</van-col>
+  <van-col span="8" custom-class="dark" gutter="20">span: 8</van-col>
+  <van-col span="8" custom-class="light" gutter="20">span: 8</van-col>
+  <van-col span="8" custom-class="dark" gutter="20">span: 8</van-col>
 </van-row>
 ```
 
@@ -63,7 +61,7 @@ Layout 组件提供了`24列栅格`，通过在`Col`上添加`span`属性设置�
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
-| gutter | 列元素之间的间距（单位为px） | *string \| number* | - | - |
+| gutter | 列元素之间的间距（单位为px） | *string \| number* | `0` | - |
 
 ### Col API
 
