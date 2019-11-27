@@ -24,6 +24,7 @@
         confirm-type="search"
         :class="'van-search__field' +  fieldClass"
         :value=" values "
+        :titleWidth="titleWidth"
         :disabled=" disabled "
         :readonly=" readonly "
         :clearable=" clearable "
@@ -99,6 +100,10 @@ export default {
     useActionSlot: Boolean,
     useLeftIconSlot: Boolean,
     useRightIconSlot: Boolean,
+    titleWidth: {
+      type: String,
+      default: "0"
+    },
     leftIcon: {
       type: String,
       default: 'search'
@@ -157,7 +162,18 @@ export default {
 
   data () {
     return {
-      values: this.value
+      values: ""
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.values = this.value;
+    })
+  },
+
+  watch: {
+    value (val) {
+      this.values = val;
     }
   },
 
