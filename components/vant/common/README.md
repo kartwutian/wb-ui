@@ -6,10 +6,10 @@ Vant 中默认包含了一些常用样式，可以直接通过 className 的方�
 
 ### 引入
 
-在 app.wxss 中引入内置样式
+在 app.vue 中引入内置样式
 
-```css
-@import "path/to/vant-weapp/dist/common/index.wxss";
+```less
+@import "./components/vant/index.less";
 ```
 
 ## 代码演示

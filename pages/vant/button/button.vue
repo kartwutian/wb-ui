@@ -1,6 +1,7 @@
 <template>
   <view class="pages-button">
     <demo-block title="按钮类型" padding>
+
       <view class="row">
         <van-button class="demo-margin-right">默认按钮</van-button>
         <van-button type="primary" class="demo-margin-right">主要按钮</van-button>
@@ -77,7 +78,6 @@
 
 <style lang="less">
   .row {
-    height: 44px;
     margin-bottom: 15px;
   }
 </style>

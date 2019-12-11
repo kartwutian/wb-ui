@@ -6,7 +6,7 @@ import config from '../config/config';
  * @param timeout
  * @returns {Promise<any>}
  */
-export const delay = (timeout = .3) => new Promise(resolve => setTimeout(resolve, timeout*1000));
+export const delay = (timeout = .3) => new Promise(resolve => setTimeout(resolve, timeout * 1000));
 
 /**
  * 讲枚举数组转化为枚举对象
@@ -14,12 +14,15 @@ export const delay = (timeout = .3) => new Promise(resolve => setTimeout(resolve
  * @param options {key: 'key',val: 'name'}
  * @returns {{}}
  */
-export const exchangeToEnum = (arr = [], options = { key: 'id', val: 'name' }) => {
-  if(!Array.isArray(arr)){
+export const exchangeToEnum = (arr = [], options = {
+  key: 'id',
+  val: 'name'
+}) => {
+  if (!Array.isArray(arr)) {
     console.error('第一个参数必须为数组');
     return {};
   }
-  return arr.reduce((result, item)=>{
+  return arr.reduce((result, item) => {
     result[item[options.key]] = item[options.val];
     return result;
   }, {});
@@ -30,16 +33,16 @@ export const exchangeToEnum = (arr = [], options = { key: 'id', val: 'name' }) =
  * @param fn // async函数
  * @returns {Promise<void>}
  */
-export const commonLoading = async (fn, errorHandle) =>{
+export const commonLoading = async (fn, errorHandle) => {
   try {
     uni.showLoading({
       title: '加载中',
     });
     return await fn();
-  }catch (e) {
+  } catch (e) {
     console.error(e);
-    if(errorHandle) errorHandle(e)
-  }finally {
+    if (errorHandle) errorHandle(e)
+  } finally {
     uni.hideLoading();
   }
 };
@@ -49,10 +52,10 @@ export const commonLoading = async (fn, errorHandle) =>{
  * @param fn // async函数
  * @returns {Promise<void>}
  */
-export const commonError = async fn =>{
+export const commonError = async fn => {
   try {
     await fn();
-  }catch (e) {
+  } catch (e) {
     console.error(e);
   }
 };
@@ -76,7 +79,7 @@ export function removeToken() {
  * Objects from primitive values when we know the value
  * is a JSON-compliant type.
  */
-export function isObject (obj) {
+export function isObject(obj) {
   return obj !== null && typeof obj === 'object'
 }
 
@@ -99,9 +102,9 @@ export function generateDefaultValue(data, defaultvalue = '--') {
   const newData = new data.constructor();
 
   for (let key in Object.getOwnPropertyDescriptors(data)) {
-    if(data[key] === null || data[key] === undefined || data[key] === ''){
+    if (data[key] === null || data[key] === undefined || data[key] === '') {
       newData[key] = defaultvalue;
-    }else{
+    } else {
       newData[key] = generateDefaultValue(data[key]);
     }
   }
@@ -128,14 +131,14 @@ export function deepCopy(data) {
  * @param b
  * @returns {boolean}
  */
-export function deepCompare(a, b){
-  if(!isObject(a) || !isObject(b)){
+export function deepCompare(a, b) {
+  if (!isObject(a) || !isObject(b)) {
     return a === b;
   }
 
   const propsA = Object.getOwnPropertyDescriptors(a);
   const propsB = Object.getOwnPropertyDescriptors(b);
-  if(Object.keys(propsA).length !== Object.keys(propsB).length){
+  if (Object.keys(propsA).length !== Object.keys(propsB).length) {
     return false
   }
 
@@ -147,20 +150,25 @@ export function deepCompare(a, b){
  * 用来合并a，b两个对象，会改变a的值
  * @param a
  * @param b
+ * @param isWatch Boolean，是否监听变化，用于vue store等
  * @returns {*}
  */
-function deepCombine(a, b){
-  if(!isObject(b)){
+function deepCombine(a, b, isWatch = false) {
+  if (!isObject(b)) {
     return b;
   }
 
   const propsB = Object.getOwnPropertyDescriptors(b);
 
-  for (let key in propsB){
-    if(a[key] === undefined){
-      a[key] = b[key];
-    }else{
-      a[key] = deepCombine(a[key], b[key]);
+  for (let key in propsB) {
+    if (a[key] === undefined) {
+      if(isWatch){
+        Vue.set(a, key, b[key]);
+      }else{
+        a[key] = b[key];
+      }
+    } else {
+      a[key] = deepCombine(a[key], b[key], isWatch);
     }
   }
   return a;
@@ -172,10 +180,10 @@ function deepCombine(a, b){
  * @returns {*}
  */
 export function deepAssign(...args) {
-  if(!args.length) return;
-  if(args.length === 1) return deepCopy(...args);
+  if (!args.length) return;
+  if (args.length === 1) return deepCopy(...args);
   let result = {};
-  for (let i = 0; i < args.length; i++){
+  for (let i = 0; i < args.length; i++) {
     deepCombine(result, args[i]);
   }
   return result;
@@ -187,25 +195,25 @@ export function deepAssign(...args) {
  * @param initialState
  * @returns {*}
  */
-export function resetState(state, initialState){
+export function resetState(state, initialState) {
 
-  if(!isObject(state) || !isObject(initialState)){
+  if (!isObject(state) || !isObject(initialState)) {
     return initialState;
   }
   const propsState = Object.getOwnPropertyDescriptors(state);
 
   for (let key in Object.getOwnPropertyDescriptors(propsState)) {
-    if(initialState[key] === undefined){
+    if (initialState[key] === undefined) {
       delete state[key];
-    }else{
+    } else {
       state[key] = resetState(state[key], initialState[key])
     }
   }
   return state;
 }
 
-export function getUrl(url){
-  if(url.startsWith('/')){
+export function getUrl(url) {
+  if (url.startsWith('/')) {
     return config.imageUrl + url
   }
   return config + '/' + url;
@@ -214,8 +222,8 @@ export function getUrl(url){
 export function validate(data, rules) {
   const res = {};
   Object.keys(rules).forEach(field => {
-    for(let i = 0; i < rules[field].length; i++){
-      if(data[field] && !data[field].toString().match( rules[field][i].reg)){
+    for (let i = 0; i < rules[field].length; i++) {
+      if (data[field] && !data[field].toString().match(rules[field][i].reg)) {
         res[field] = rules[field][i].msg; // 有错误，则赋值错误，跳出循环
         break
       }
@@ -226,17 +234,17 @@ export function validate(data, rules) {
 }
 
 export function fetchErrorMsg(data) {
-  if(isArray(data)){
-    for(let i = 0; i< data.length; i++){
+  if (isArray(data)) {
+    for (let i = 0; i < data.length; i++) {
       const errField = Object.keys(data[i]).filter(field => data[i][field] !== null);
-      if(errField.length){
+      if (errField.length) {
         return data[i][errField[0]];
       }
     }
     return false;
   }
   const errField = Object.keys(data).filter(field => data[field] !== null);
-  if(errField.length){
+  if (errField.length) {
     return data[errField[0]];
   }
   return false
@@ -254,7 +262,13 @@ export const modelGenerate = (options = {
   actions: {},
   getters: {},
 }) => {
-  const {namespaced, state:initialState, mutations, actions, getters} = options;
+  const {
+    namespaced,
+    state: initialState,
+    mutations,
+    actions,
+    getters
+  } = options;
   return {
     namespaced: namespaced || true,
 
@@ -269,10 +283,10 @@ export const modelGenerate = (options = {
        */
       updateState(state, payload) {
         let realPayload = payload;
-        if(payload.payload){
+        if (payload.payload) {
           realPayload = payload.payload
         }
-        deepCombine(state, realPayload);
+        deepCombine(state, realPayload, true);
       },
       resetState(state) {
         // 重置state
@@ -293,13 +307,13 @@ export const modelGenerate = (options = {
  * @param getters
  * @returns {U}
  */
-export function gettersGenerate(initialState,getters) {
-  const normalGetters = Object.keys(initialState).reduce((res, next)=>{
+export function gettersGenerate(initialState, getters) {
+  const normalGetters = Object.keys(initialState).reduce((res, next) => {
     res[next] = function (state) {
       return state[next]
     };
     return res
-  },{});
+  }, {});
   return {
     ...normalGetters,
     ...getters,
@@ -312,12 +326,12 @@ export function gettersGenerate(initialState,getters) {
  * @param options
  * @param enhancer   // 增强子, 增强的配置项必须是函数（处理生命周期）;增强子可以是函数，也可以是对象，函数的话默认为before，在配置项之前执行;是对象的话，可以配置before 和 after，控制执行的顺序
  */
-export function page(options, enhancer = {} ) {
+export function page(options, enhancer = {}) {
 
-  Object.keys(enhancer).forEach((k)=>{
-    if(options[k] && isFuc(options[k])){
+  Object.keys(enhancer).forEach((k) => {
+    if (options[k] && isFuc(options[k])) {
       const temp = options[k];
-      const before = isObject(enhancer[k]) ? enhancer[k].before : enhancer[k] ;
+      const before = isObject(enhancer[k]) ? enhancer[k].before : enhancer[k];
       const after = isObject(enhancer[k]) ? enhancer[k].after : undefined;
 
       options[k] = function (...args) {
@@ -340,7 +354,7 @@ export function page(options, enhancer = {} ) {
  */
 export function pageIntercept(options) {
   const enhancer = {
-    onLoad(){
+    onLoad() {
       console.log('you has not login in')
     }
   };
