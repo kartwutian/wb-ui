@@ -290,6 +290,15 @@
 			// this.getData({});
 		},
 
+		onShow(){
+			if(this.$$isNeedReload()){
+				this.$store.dispatch('home/delayChange',{
+					currentTabIndex: 1
+				});
+				console.log('i had refreshed')
+			}
+		},
+
 		onUnload(){
 		},
 

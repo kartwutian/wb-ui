@@ -123,6 +123,8 @@ import VanButton from "@/components/vant/button/index";
 | loading-type | 加载状态图标类型，可选值为 `spinner` | *string* | `circular` | - |
 | loading-size | 加载图标大小 | *string* | `20px` | - |
 | custom-style | 自定义样式 | *string* | - | - |
+| hover-star-time | 按住后多久出现点击态，单位毫秒 | *number* | 20 | - |
+| hover-stay-time | 手指松开后点击态保留时间，单位毫秒 | *number* | 70 | - |
 | open-type | 微信开放能力，具体支持可参考 [微信官方文档](https://mp.weixin.qq.com/debug/wxadoc/dev/component/button.html) | *string* | - | - |
 | app-parameter | 打开 APP 时，向 APP 传递的参数 | *string* | - | - |
 | lang | 指定返回用户信息的语言，zh_CN 简体中文，<br>zh_TW 繁体中文，en 英文 | *string* | `en` | - | - |
@@ -144,7 +146,6 @@ import VanButton from "@/components/vant/button/index";
 | @error | 当使用开放能力时，发生错误的回调 | - |
 | @opensetting | 在打开授权设置页后回调 | - |
 
-> Button 提供的是 click 事件而不是原生 tap 事件，按钮禁用时，click 事件不会触发，tap 事件依然会触发。
 
 ### 外部样式类
 

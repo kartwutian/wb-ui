@@ -55,6 +55,10 @@
       <van-button color="#7232dd" class="demo-margin-right" plain>单色按钮</van-button>
       <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">渐变色按钮</van-button>
     </demo-block>
+
+    <demo-block title="页面reload例子" padding>
+      <van-button block color="linear-gradient(to right, #4bb0ff, #6149f6)" @tap="refreshHome">刷新首页</van-button>
+    </demo-block>
   </view>
 </template>
 
@@ -71,7 +75,12 @@
 
     },
     methods: {
-
+      refreshHome(){
+        // 告诉系统哪个页面需要刷新, 相应的在那个页面的onShow里面执行判断及刷新逻辑（必须有执行dispatch方法，才会销毁需要刷新的路由），
+        this.$store.commit('createIsShouldReloadRoutes',{
+          routes: ['/pages/home/home']
+        })
+      }
     }
   }
 </script>

@@ -29,7 +29,7 @@ const reloadPlugin = async store => {
       // debugger
       if(Object.keys($$isShouldReloadRoutes).length !== 0){
         const pages = getCurrentPages();
-        console.log(pages)
+        // console.log(pages)
         store.commit('removeIsShouldReloadRoutes', {
           currentRoute: pages[pages.length-1].route,
         });

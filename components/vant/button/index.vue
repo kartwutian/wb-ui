@@ -15,6 +15,8 @@
     :show-message-card=" showMessageCard "
     :app-parameter=" appParameter "
     :aria-label=" ariaLabel "
+    :hover-star-time="hoverStarTime"
+    :hover-stay-time="hoverStayTime"
     @tap="onClick"
     @getuserinfo="bindGetUserInfo"
     @contact="bindContact"
@@ -76,7 +78,18 @@ export default {
     hairline: Boolean,
     disabled: Boolean,
     loadingText: String,
-    customStyle: String,
+    hoverStarTime: { // 按住后多久出现点击态，单位毫秒
+      type: Number,
+      default: 20
+    },
+    hoverStayTime: { // 手指松开后点击态保留时间，单位毫秒
+      type: Number,
+      default: 70
+    },
+    customStyle: {
+      type: String,
+      default: '',
+    },
     hoverClass: {
       type: String,
       default: '',
@@ -137,7 +150,7 @@ export default {
   methods: {
     onClick () {
       if (!this.disabled && !this.loading) {
-        this.$emit('click');
+        this.$emit('click'); // 事件名不能为tap，否则外面监听不到tap
       }
     }
   },
