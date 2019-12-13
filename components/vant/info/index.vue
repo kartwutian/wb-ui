@@ -18,7 +18,10 @@ export default {
   props: {
     dot: Boolean,
     info: null,
-    customStyle: String
+    customStyle: {
+      type: String,
+      default: ''
+    }
   },
   computed: {
     classes () {

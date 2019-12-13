@@ -21,10 +21,12 @@
 
 <script>
 import { addUnit } from '../common/utils';
+import {basic} from "../mixins/basic";
 import VanInfo from "../info/index";
 
 export default {
   name: 'van-icon',
+  mixins: [basic],
   components: { VanInfo },
   props: {
     dot: {
@@ -37,8 +39,10 @@ export default {
       default: '1em',
     },
     color: String,
-    customStyle: String,
-    customClass: String,
+    customStyle: {
+      type: String,
+      default: ''
+    },
     classPrefix: {
       type: String,
       default: 'van-icon'

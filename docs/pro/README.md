@@ -45,3 +45,108 @@ wb-uni-pro是一套通用的uni-app项目开发模板,抽象了一些通用的�
 └── package.json
 
 ```
+## vuex plugin
+
+### reload
+> 场景举例：有两个页面，pageA展示用户信息，pageB可以编辑修改用户信息，从pageA能够跳到pageB，
+此时，当我们在pageB修改了用户信息之后，返回到pageA页面，需要重新请求接口，重新获取用户的最新
+信息，更新视图，基于这种类似使用场景，基于vuex封装了reload插件，简化逻辑
+
+#### 依赖引入
+
+store/index.js
+```js
+import Vue from 'vue';
+import Vuex from 'vuex';
+import actions from './actions';
+import * as getters from './getters';
+import state from './state';
+import mutations from './mutations';
+import loadingPlugin from "./plugins/loading/loadingPlugin";
+import reloadPlugin from "./plugins/reload/reloadPlugin"; // reload插件
+
+import home from '../pages/home/models/home';
+import tabbar from '../pages/tabbar/models/tabbar';
+import login from '../pages/login/models/login';
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+    actions,
+    getters,
+    state,
+    mutations,
+    plugins: [loadingPlugin, reloadPlugin],
+    modules: {
+        home,
+        tabbar,
+        login,
+    
+    },
+});
+
+```
+#### 使用举例
+
+从/pages/home/home跳转到/pages/vant/button/button后，点击按钮，store记录需要刷新的routes，
+回到home时，在onShow生命周期里面执行this.$$isNeedReload()获取当前页面是否需要刷新的状态，
+从而控制业务逻辑，在dispatch之后，当前页面的route从store里面清除
+
+/pages/vant/button/button
+```vue
+    <template>
+      <view class="pages-button">
+        <demo-block title="页面reload例子" padding>
+          <van-button block color="linear-gradient(to right, #4bb0ff, #6149f6)" @tap="refreshHome">刷新首页</van-button>
+        </demo-block>
+      </view>
+    </template>
+    
+    <script>
+      import DemoBlock from "../../../components/app/demo-block";
+      import VanButton from "@/components/vant/button/index";
+      export default {
+        name: 'pages-button',
+        components: {VanButton, DemoBlock},
+        onLoad(){
+    
+        },
+        onUnload(){
+    
+        },
+        methods: {
+          refreshHome(){
+            // 告诉系统哪个页面需要刷新, 相应的在那个页面的onShow里面执行判断及刷新逻辑（必须有执行dispatch方法，才会销毁需要刷新的路由），
+            this.$store.commit('createIsShouldReloadRoutes',{
+              routes: ['/pages/home/home']
+            })
+          }
+        }
+      }
+    </script>
+    
+    <style lang="less">
+      .row {
+        margin-bottom: 15px;
+      }
+    </style>
+
+```
+/pages/home/home
+```js
+export default {
+    onShow(){
+      // 使用this.$$isNeedReload()获取是否需要刷新的状态
+        if(this.$$isNeedReload()){
+            this.$store.dispatch('home/delayChange',{
+                currentTabIndex: 1
+            });
+            console.log('i had refreshed')
+        }
+    },
+
+}
+```
+
+### loading
+每次dispatch,会记录dispatch的type作为key，存储dispatch是否结束的状态

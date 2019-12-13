@@ -50,6 +50,17 @@ import VanIcon from "@/components/vant/icon/index.vue"
 | size | 图标大小，如 `20px`，`2em`，默认单位为`px` | *string \| number* | `inherit` | - |
 | custom-style | 自定义样式 | *string* | - | - |
 | class-prefix | 类名前缀 | *string* | `van-icon` | - |
+>项目中需要自己引入*iconfont*字体图标库的，可以直接在app.vue中直接引入字体图标样式，用van-icon配置 class-prefix
+为icon，custom-class配置为iconfont，这时候就能直接引自定义的字体图标了，name配置为自己项目中的icon名
+
+```vue
+  <van-icon
+      class-prefix="icon"
+      name="success"
+      size="32px"
+      custom-class="iconfont"
+  />  
+```
 
 ### Events
 

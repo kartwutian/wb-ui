@@ -46,15 +46,26 @@
         vertical
       >加载中...</van-loading>
     </demo-block>
+
+    <demo-block>
+      <view class="loading-line">
+        <van-loading
+            custom-class="demo-loading"
+            type="spinner"
+        >加载中...</van-loading>
+      </view>
+
+    </demo-block>
   </view>
 </template>
 
 <script>
 import DemoBlock from "@/components/app/demo-block";
 import VanLoading from "@/components/vant/loading/index";
+import VanDivider from "../../../components/vant/divider/index";
 export default {
   name: 'pages-loading',
-  components: { VanLoading, DemoBlock },
+  components: {VanDivider, VanLoading, DemoBlock },
   onLoad () {
 
   },
@@ -68,4 +79,11 @@ export default {
 </script>
 
 <style lang="less">
+  .pages-loading{
+    background-color: #fff;
+    .loading-line{
+      padding: 20rpx;
+      text-align: center;
+    }
+  }
 </style>

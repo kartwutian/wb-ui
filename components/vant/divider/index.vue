@@ -14,6 +14,7 @@ import utils from '../wxs/utils';
 
 
 export default {
+  name: 'van-divider',
   props: {
     dashed: {
       type: Boolean,

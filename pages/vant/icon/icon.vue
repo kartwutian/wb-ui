@@ -9,6 +9,7 @@
         title="基础图标"
         custom-class="demo-tab-pane"
       >
+
         <van-col
           v-for="(item, index) in icons.basic"
           :key="index"
