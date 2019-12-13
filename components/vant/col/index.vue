@@ -2,7 +2,7 @@
 
 <view
   :class="classes"
-  :style=" style "
+  :style=" styles "
 >
   <slot />
 </view>
@@ -35,7 +35,7 @@
     classes(){
       return `${this.customClass} ${utils.bem('col', [this.span])} ${this.offset ? 'van-col--offset-' + this.offset : ''}`
     },
-    style(){
+    styles(){
       const padding = `${this.gutter / 2}px`;
       return  this.gutter ? `padding-left: ${padding}; padding-right: ${padding};` : '';
     }

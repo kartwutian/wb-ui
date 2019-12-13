@@ -11,7 +11,7 @@
     :mode=" mode "
     :src=" src "
     :lazy-load=" lazyLoad "
-    :show-menu-by-longpress=" showMenuByLongpress "
+    :fade-show="fadeShadow"
     @load="onImageLoad"
     @error="onImageError"
   />
@@ -91,7 +91,10 @@ export default {
       type: Boolean,
       default: true
     },
-    showMenuByLongpress: Boolean,
+    fadeShadow: {
+      type: Boolean,
+      default: true
+    }, // 仅App-nvue 2.3.4+ Android有效
 
     // 受小程序slot限制所需要的属性
     useLoadingSlot: Boolean,
@@ -115,8 +118,20 @@ export default {
         fill: 'scaleToFill',
         none: 'center',
 
-        // TODO: 这个没有原生的属性，需要后面实现，暂时先用contain;
-        'scale-down': 'aspectFit'
+        // 适配uni-app mode
+        scaleToFill: 'scaleToFill',
+        aspectFit: 'aspectFit',
+        aspectFill: 'aspectFill',
+        widthFix: 'widthFix',
+        top: 'top',
+        bottom: 'bottom',
+        center: 'center',
+        left: 'left',
+        right: 'right',
+        'top-left': 'top left',
+        'top-right': 'top right',
+        'bottom-left': 'bottom left',
+        'bottom-right': 'bottom right',
       },
       loading: true,
       error: false
