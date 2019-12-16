@@ -35,6 +35,24 @@ export const transition = function (showDefaultValue) {
       }
     },
 
+    computed: {
+      transitionName(){
+        // 用于popup传入positon，未传name的情况，自动fix name, 出现相应过度动画
+        switch (this.position) {
+          case 'top':
+            return 'slide-down';
+          case 'bottom':
+            return 'slide-up';
+          case 'left':
+            return 'slide-left';
+          case 'right':
+            return 'slide-right';
+          default:
+            return this.name
+        }
+      },
+    },
+
     data() {
       return {
         type: '',
@@ -61,10 +79,11 @@ export const transition = function (showDefaultValue) {
       enter() {
         const {
           duration,
-          name
+          name,
+          transitionName,
         } = this;
 
-        const classNames = getClassNames.call(this, name);
+        const classNames = getClassNames.call(this, transitionName);
         const currentDuration = isObj(duration) ? duration.enter : duration;
 
         this.status = 'enter';
@@ -107,9 +126,10 @@ export const transition = function (showDefaultValue) {
 
         const {
           duration,
-          name
+          name,
+          transitionName,
         } = this;
-        const classNames = getClassNames.call(this, name);
+        const classNames = getClassNames.call(this, transitionName);
         const currentDuration = isObj(duration) ? duration.leave : duration;
 
         this.status = 'leave';
