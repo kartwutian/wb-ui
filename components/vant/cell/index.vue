@@ -62,6 +62,7 @@
 
 <script>
 import utils from '../wxs/utils';
+import { basic } from '../mixins/basic';
 import { link } from '../mixins/link';
 import VanIcon from "../icon/index";
 
@@ -76,10 +77,9 @@ export default {
 
   name: 'van-cell',
   components: { VanIcon },
-  // mixins: [link],
+  mixins: [basic, link],
 
   props: {
-    ...link.props,
     title: null,
     value: null,
     icon: String,
@@ -91,10 +91,6 @@ export default {
     clickable: Boolean,
     titleWidth: String,
     customStyle: String,
-    customClass: {
-      type: String,
-      default: '',
-    },
     titleClass: {
       type: String,
       default: '',
@@ -119,7 +115,7 @@ export default {
     useLabelSlot: Boolean,
     border: {
       type: Boolean,
-      value: true
+      default: true
     }
   },
 
@@ -130,7 +126,6 @@ export default {
   },
 
   methods: {
-    ...link.methods,
     onClick (event) {
       // console.log(event)
       this.$emit('click', event.detail);
