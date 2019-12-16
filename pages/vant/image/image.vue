@@ -59,7 +59,7 @@
     </demo-block>
 
     <demo-block
-      title="加载中提示"
+      title="加载中提示示例"
       padding
     >
       <van-row gutter="20">
@@ -143,7 +143,26 @@ export default {
   components: { VanImage, VanLoading, VanCol, VanRow, DemoBlock },
   data () {
     return {
-      fits: ['contain', 'cover', 'fill', 'none', 'scale-down'],
+      fits: [
+        'contain',
+        'cover',
+        'fill',
+        'none',
+
+        'aspectFit',
+        'aspectFill',
+        'scaleToFill',
+        'center',
+        'widthFix',
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'top-left',
+        'top-right',
+        'bottom-left',
+        'bottom-right',
+      ],
       src: 'https://img.yzcdn.cn/vant/cat.jpeg',
     };
   },

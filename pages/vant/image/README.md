@@ -1,3 +1,9 @@
+---
+title: Image 图片
+lang: zh
+vant: true
+---
+
 # Image 图片
 
 ### 介绍
@@ -117,7 +123,6 @@ import VanImage from "@/components/vant/image/index";
 | cover | 保持宽高缩放图片，使图片的短边能完全显示出来，裁剪长边 |
 | fill | 拉伸图片，使图片填满元素 |
 | none | 保持图片原有尺寸 |
-| scale-down | 取`none`或`contain`中较小的一个 |
 
 ### Events
 

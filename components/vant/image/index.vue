@@ -111,7 +111,6 @@ export default {
     return {
       mode: '',
       style: '',
-      fitWeapp: 'aspectFit',
       FIT_MODE_MAP: {
         contain: 'aspectFit',
         cover: 'aspectFill',
@@ -119,13 +118,14 @@ export default {
         none: 'center',
 
         // 适配uni-app mode
-        scaleToFill: 'scaleToFill',
         aspectFit: 'aspectFit',
         aspectFill: 'aspectFill',
+        scaleToFill: 'scaleToFill',
+        center: 'center',
+
         widthFix: 'widthFix',
         top: 'top',
         bottom: 'bottom',
-        center: 'center',
         left: 'left',
         right: 'right',
         'top-left': 'top left',
@@ -184,6 +184,7 @@ export default {
     },
 
     onClick(event) {
+      console.log(event)
       this.$emit('click', event.detail);
     },
   }
