@@ -13,7 +13,13 @@ const getClassNames = function (name) {
 
 const nextTick = () => new Promise(resolve => setTimeout(resolve, 1000 / 30));
 
-export const transition = function (showDefaultValue) {
+/**
+ *
+ * @param showDefaultValue // show的默认值
+ * @param isUseComputedPropTransitionName // 是否使用计算属性transitionName
+ * @returns {{computed: {transitionName(): (string|*)}, data(): *, watch: {show(*=, *): void}, methods: {checkStatus(*): void, leave(): (undefined), enter(): void, observeShow(*): void, onTransitionEnd(): (undefined)}, beforeCreate(): void, props: {duration: {default: number, type: null}, customStyle: StringConstructor, show: {default: *, type: BooleanConstructor}, name: {default: string, type: StringConstructor}}}|string|{inited: boolean, display: boolean, classes: string, currentDuration: number, type: string}}
+ */
+export const transition = function (showDefaultValue, isUseComputedPropTransitionName = true) {
   return {
     props: {
       customStyle: String,
@@ -48,7 +54,7 @@ export const transition = function (showDefaultValue) {
           case 'right':
             return 'slide-right';
           default:
-            return this.name
+            return this.transition === 'none' ? '' : this.transition
         }
       },
     },
@@ -83,8 +89,9 @@ export const transition = function (showDefaultValue) {
           transitionName,
         } = this;
 
-        const classNames = getClassNames.call(this, transitionName);
-        const currentDuration = isObj(duration) ? duration.enter : duration;
+        const classNames = getClassNames.call(this, isUseComputedPropTransitionName ? transitionName : name);
+        const currentDuration = (isUseComputedPropTransitionName && this.transitionName === '') ? 0 :
+          (isObj(duration) ? duration.enter : duration);
 
         this.status = 'enter';
         this.$emit('before-enter');
@@ -129,8 +136,9 @@ export const transition = function (showDefaultValue) {
           name,
           transitionName,
         } = this;
-        const classNames = getClassNames.call(this, transitionName);
-        const currentDuration = isObj(duration) ? duration.leave : duration;
+        const classNames = getClassNames.call(this, isUseComputedPropTransitionName ? transitionName : name);
+        const currentDuration = (isUseComputedPropTransitionName && this.transitionName === '') ? 0 :
+          (isObj(duration) ? duration.enter : duration);
 
         this.status = 'leave';
         this.$emit('before-leave');
