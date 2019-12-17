@@ -83,7 +83,7 @@
           <van-cell
             title="单选框 1"
             clickable
-            @tap="toggle"
+            @tap="toggle('radio-1')"
           >
             <van-radio
               slot="right-icon"
@@ -94,6 +94,7 @@
           <van-cell
             title="单选框 2"
             clickable
+            @tap="toggle('radio-2')"
           >
             <van-radio
               slot="right-icon"
@@ -142,8 +143,8 @@ export default {
     onClick (name) {
       this.radio5 = name;
     },
-    toggle () {
-      this.$refs['radio-1'].onChange();
+    toggle (refName) {
+      this.$refs[refName].onChange();
     }
   }
 }
