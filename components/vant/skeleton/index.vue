@@ -22,6 +22,7 @@
             :style="'width:' + (isArray ? rowWidth[index] : rowWidth)"
         />
       </view>
+      <view v-if="animate" class="van-skeleton__light"></view>
     </view>
     <view v-else class="van-skeleton__content">
       <slot />

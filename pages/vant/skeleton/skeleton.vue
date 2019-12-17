@@ -4,6 +4,7 @@
       <van-skeleton
         title
         :row="3"
+        :animate="false"
         :row-width="['100%', '100%', '80%']"
       />
     </demo-block>
@@ -13,6 +14,7 @@
         title
         avatar
         :row="3"
+        :animate="false"
       />
     </demo-block>
 

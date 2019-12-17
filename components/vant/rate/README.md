@@ -97,7 +97,6 @@ export default {
   color="#ee0a24"
   void-color="#eee"
   void-icon="star"
-  :touchable="false"
   @change="onChange"
 />
 ```

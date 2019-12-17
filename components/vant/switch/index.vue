@@ -23,7 +23,6 @@ import { basic } from '../mixins/basic';
 
 import { BLUE, GRAY_DARK } from '../common/color';
 import VanLoading from "../../vant/loading/index"
-import { type } from 'os';
 
 export default {
   name: "van-switch",
@@ -68,34 +67,26 @@ export default {
     checked (value) {
       const loadingColor = this.getLoadingColor(value);
       // this.setData({ value, loadingColor });
-      this.value = value
+      this.value = value;
       this.loadingColor = loadingColor
     }
   },
 
   computed: {
     switchs () {
-      // custom-class {{ utils.bem('switch', { on: value === activeValue, disabled }) }}
       return `${this.customClass} ${utils.bem('switch', { on: this.value === this.activeValue, disabled: this.disabled })}`
     },
     styles () {
-      // font-size: {{ size }}; {{ (checked ? activeColor : inactiveColor) ? 'background-color: ' + (checked ? activeColor : inactiveColor ) : '' }}
       return `font-size: ${this.size}; ${(this.checked ? this.activeColor : this.inactiveColor) ? 'background-color: ' + (this.checked ? this.activeColor : this.inactiveColor) : ''}`
     }
   },
 
-  // created () {
-  //   const { checked: value } = this.data;
-  //   const loadingColor = this.getLoadingColor(value);
-
-  //   this.setData({ value, loadingColor });
-  // },
 
   beforeCreate () {
     this.$nextTick(() => {
       const { checked } = this;
       const loadingColor = this.getLoadingColor(checked);
-      this.value = checked
+      this.value = checked;
       this.loadingColor = loadingColor
     })
   },

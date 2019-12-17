@@ -1,7 +1,7 @@
 <template>
 
   <view
-    class="van-rate custom-class"
+    :class="'van-rate ' + customClass"
     @touchmove="onTouchMove"
   >
     <view
@@ -26,7 +26,7 @@
         :custom-class="iconClass"
         :data-score=" index - 0.5 "
         :color=" disabled ? disabledColor : index + 0.5 <= innerValue ? color : voidColor "
-        @click="onSelect"
+        @click="onSelect(index - 0.5)"
       />
     </view>
   </view>
@@ -40,7 +40,6 @@ import { basic } from '../mixins/basic';
 // import { Weapp } from 'definitions/weapp';
 import { addUnit } from '../common/utils';
 import VanIcon from "../icon/index"
-import { type } from 'os';
 
 export default {
   name: "van-rate",
@@ -138,7 +137,7 @@ export default {
     },
 
     onSelect (score) {
-      const scores = parseInt(score)
+      const scores = parseFloat(score);
       if (!this.disabled && !this.readonly) {
         this.innerValue = scores + 1
         this.$emit('input', scores + 1);
@@ -147,11 +146,11 @@ export default {
     },
 
     onTouchMove (event) {
+
       const { touchable } = this;
       if (!touchable) return;
 
       const { clientX } = event.touches[0];
-
       this.getRect('.van-rate__icon', true).then(
         (list) => {
           const target = list

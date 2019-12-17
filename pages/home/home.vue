@@ -98,18 +98,18 @@
 								path: '/checkbox',
 								title: 'Checkbox 复选框'
 							},
-							{
-								path: '/datetime-picker',
-								title: 'DatetimePicker 时间选择'
-							},
+							// {
+							// 	path: '/datetime-picker',
+							// 	title: 'DatetimePicker 时间选择'
+							// },
 							{
 								path: '/field',
 								title: 'Field 输入框'
 							},
-							{
-								path: '/picker',
-								title: 'Picker 选择器'
-							},
+							// {
+							// 	path: '/picker',
+							// 	title: 'Picker 选择器'
+							// },
 							{
 								path: '/radio',
 								title: 'Radio 单选框'
@@ -122,10 +122,10 @@
 								path: '/search',
 								title: 'Search 搜索'
 							},
-							{
-								path: '/slider',
-								title: 'Slider 滑块'
-							},
+							// {
+							// 	path: '/slider',
+							// 	title: 'Slider 滑块'
+							// },
 							{
 								path: '/stepper',
 								title: 'Stepper 步进器'

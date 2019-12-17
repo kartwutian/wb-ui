@@ -4,7 +4,10 @@ lang: zh
 vant: true
 ---
 
+
 # Slider 滑块
+
+## 请优先使用uni-app自带的slider
 
 ### 引入
 

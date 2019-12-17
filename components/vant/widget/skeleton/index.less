@@ -2,6 +2,7 @@
 @import '../common/style/theme.less';
 
 .van-skeleton {
+  position: relative;
   display: flex;
   box-sizing: border-box;
   width: 100%;
@@ -46,12 +47,41 @@
   }
 
   &--animate {
-    animation: van-skeleton-blink @skeleton-animation-duration ease-in-out infinite;
+    //animation: van-skeleton-blink @skeleton-animation-duration ease-in-out infinite;
+  }
+  &__light {
+    position: absolute;
+    left: 0;
+    top: -1000px;
+    bottom: -1000px;
+    width: 200px;
+    //background-color: rgba(255,255,255,.8);
+    background-image: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,.6), rgba(255,255,255,0));;
+    transform: rotateZ(-45deg);
+    animation: van-skeleton-light @skeleton-animation-duration*2 ease infinite;
   }
 }
 
 @keyframes van-skeleton-blink {
+  0% {
+    opacity: .3;
+  }
   50% {
     opacity: .6;
+  }
+  100% {
+    opacity: .3;
+  }
+}
+
+@keyframes van-skeleton-light {
+  0% {
+    left: -50%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 150%;
   }
 }

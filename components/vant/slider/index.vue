@@ -147,8 +147,6 @@ export default {
 
       this.values = value
       this.barStyle = `width: ${width}; height: ${addUnit(barHeight)};${drag ? 'transition: none;' : ''}`
-      var obj = new Object(this.barStyle)
-
 
       if (drag) {
         this.$emit('drag', value);
