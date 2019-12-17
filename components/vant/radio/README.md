@@ -108,21 +108,30 @@ export default {
 
 ```html
 <van-radio-group v-model="radio5">
-  <van-cell-group>
-    <van-cell
+    <van-cell-group>
+      <van-cell
         title="单选框 1"
         clickable
-        @tap="toggle"
-    >
-      <van-radio slot="right-icon" name="1" ref="radio-1" />
-    </van-cell>
-    <van-cell
+        @tap="toggle('radio-1')"
+      >
+        <van-radio
+          slot="right-icon"
+          name="1"
+          ref="radio-1"
+        />
+      </van-cell>
+      <van-cell
         title="单选框 2"
         clickable
-    >
-      <van-radio slot="right-icon" name="2" ref="radio-2" />
-    </van-cell>
-  </van-cell-group>
+        @tap="toggle('radio-2')"
+      >
+        <van-radio
+          slot="right-icon"
+          name="2"
+          ref="radio-2"
+        />
+      </van-cell>
+    </van-cell-group>
 </van-radio-group>
 ```
 
@@ -134,8 +143,8 @@ export default {
     }
   },
   methods: {
-    toggle () {
-      this.$refs['radio-1'].onChange();
+    toggle (refName) {
+      this.$refs[refName].onChange();
     }
   }
 }
