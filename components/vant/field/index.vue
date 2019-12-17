@@ -100,6 +100,9 @@
     >
       {{ errorMessage }}
     </view>
+    <view v-if="showWordLimit" class="van-field__word-limit">
+      {{value.length}}/{{maxlength}}
+    </view>
   </van-cell>
 
 </template>
@@ -147,6 +150,7 @@ export default {
     arrowDirection: String,
     placeholderStyle: String,
     errorMessageAlign: String,
+    showWordLimit: Boolean,
     selectionEnd: {
       type: Number,
       default: -1

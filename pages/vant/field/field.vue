@@ -10,7 +10,6 @@
         />
       </van-cell-group>
     </demo-block>
-
     <demo-block title="自定义类型">
       <van-cell-group>
         <van-field
@@ -165,6 +164,10 @@ export default {
     //清除
     clear (val) {
       console.log("clear")
+    },
+
+    formSubmit(e){
+      console.log(e)
     }
   }
 }
