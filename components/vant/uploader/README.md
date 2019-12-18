@@ -193,6 +193,7 @@ export default {
 | accept | 接受的文件类型, 可选值为`all` `image` `file` | _string_ | `image` |
 | preview-size | 预览图和上传区域的尺寸，默认单位为`px` | _string \| number_ | `90px` |
 | preview-image | 是否在上传完成后展示预览图 | _boolean_ | `true` |
+| preview-image-radius | 预览图片的border-radius | _string_ | `4px` |
 | preview-full-image | 是否在点击预览图后展示全屏图片预览 | _boolean_ | `true` |
 | multiple | 是否开启图片多选，部分安卓机型不支持 | _boolean_ | `false` |
 | capture | 图片选取模式，当`accept`为`image`类型时设置`capture`可选值为`camera`可以直接调起摄像头 | _string \| Array_ | `['album', 'camera']` |

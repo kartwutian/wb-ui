@@ -1,6 +1,6 @@
 <template>
 
-  <view :class="stepsbody">
+  <view :class="stepsContainerClass">
     <view class="van-step__wrapper">
       <view
         v-for=" (item,index) in steps "
@@ -83,7 +83,7 @@ export default {
     inactiveIcon: String
   },
   computed: {
-    stepsbody () {
+    stepsContainerClass () {
       // custom-class {{ utils.bem('steps', [direction]) }}
       return `${this.customClass} ${utils.bem('steps', [this.direction])}`
     },

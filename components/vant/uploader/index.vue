@@ -15,7 +15,7 @@
             :src=" item.url || item.path "
             :alt=" item.name || ('图片' + index) "
             class="van-uploader__preview-image"
-            :style="'width: '+ computedPreviewSize + 'px; height: ' + computedPreviewSize + 'px;'"
+            :style="'width: '+ computedPreviewSize + 'px; height: ' + computedPreviewSize + 'px;' + (previewImageRadius ? 'border-radius: ' + previewImageRadius : '') "
             @tap="doPreviewImage(item)"
           />
           <view
@@ -124,6 +124,10 @@ export default {
     previewImage: {
       type: Boolean,
       default: true
+    },
+    previewImageRadius: {
+      type: String,
+      default: '4px'
     },
     previewFullImage: {
       type: Boolean,

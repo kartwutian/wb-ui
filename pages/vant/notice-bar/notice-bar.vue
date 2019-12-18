@@ -8,17 +8,6 @@
       />
     </demo-block>
 
-    <demo-block title="通告栏模式">
-      <van-notice-bar
-        mode="closeable"
-        :text="text"
-      />
-      <van-notice-bar
-        mode="link"
-        :text="text"
-      />
-    </demo-block>
-
     <demo-block title="禁用滚动">
       <van-notice-bar
         :scrollable="false"
@@ -47,6 +36,17 @@
         color="#1989fa"
         background="#ecf9ff"
         left-icon="info-o"
+      />
+    </demo-block>
+
+    <demo-block title="通告栏模式">
+      <van-notice-bar
+          mode="closeable"
+          :text="text"
+      />
+      <van-notice-bar
+          mode="link"
+          :text="text"
       />
     </demo-block>
   </view>
