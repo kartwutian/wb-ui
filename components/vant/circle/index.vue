@@ -68,7 +68,7 @@
 
     data(){
       return {
-        style: 'width: 100px; height: 100px;',
+        style: 'width: 200rpx; height: 200rpx;',
         hoverColor: BLUE
       }
     },

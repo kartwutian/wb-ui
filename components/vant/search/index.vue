@@ -33,7 +33,7 @@
         :input-class="inputClass"
         :placeholder=" placeholder "
         :placeholder-style=" placeholderStyle "
-        custom-style="padding: 5px 10px 5px 0; background-color: transparent;"
+        custom-style="padding: 10rpx 20rpx 10rpx 0; background-color: transparent;"
         @blur="onBlur"
         @focus="onFocus"
         @change="onChange"

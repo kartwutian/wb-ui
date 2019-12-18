@@ -57,7 +57,7 @@ import VanDivider from "@/components/vant/divider/index"
 ### 自定义样式
 
 ```html
-<van-divider contentPosition="center" customStyle="color: #1989fa;border-color: #1989fa;font-size: 18px;">文本</van-divider>
+<van-divider contentPosition="center" customStyle="color: #1989fa;border-color: #1989fa;font-size: 36rpx;">文本</van-divider>
 ```
 
 ## API

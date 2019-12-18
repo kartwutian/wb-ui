@@ -21,7 +21,7 @@
 
     &--line {
       box-sizing: content-box;
-      height: calc(100% + 15px); /* 15px padding to hide scrollbar in mobile safari */
+      height: calc(100% + 30rpx); /* 30rpx padding to hide scrollbar in mobile safari */
     }
 
     &--card {
@@ -97,7 +97,7 @@
   flex: 1;
   box-sizing: border-box;
   min-width: 0; /* hack for flex ellipsis */
-  padding: 0 5px;
+  padding: 0 10rpx;
   text-align: center;
   cursor: pointer;
   .theme(color, @tab-text-color);
@@ -116,7 +116,7 @@
   &__title {
     &__info {
       position: relative !important;
-      top: -1px !important;
+      top: -2rpx !important;
       display: inline-block;
       transform: translateX(0) !important;
     }

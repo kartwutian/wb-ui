@@ -6,7 +6,7 @@
   .theme(background-color, @white);
 
   &--horizontal {
-    padding: 10px;
+    padding: 20rpx;
 
     .van-step__wrapper {
       position: relative;
@@ -16,10 +16,10 @@
   }
 
   &--vertical {
-    padding-left: 10px;
+    padding-left: 20rpx;
 
     .van-step__wrapper {
-      padding: 0 0 0 20px;
+      padding: 0 0 0 40rpx;
     }
   }
 }
@@ -27,7 +27,7 @@
 .van-step {
   position: relative;
   flex: 1;
-  font-size: 14px;
+  font-size: 28rpx;
   .theme(color, @gray-dark);
 
   &--finish {
@@ -35,14 +35,14 @@
   }
 
   &__circle {
-    width: 5px;
-    height: 5px;
+    width: 10rpx;
+    height: 10rpx;
     border-radius: 50%;
     .theme(background-color, @gray-dark);
   }
 
   &--horizontal {
-    padding-bottom: 14px;
+    padding-bottom: 28rpx;
 
     &:first-child {
       .van-step__title {
@@ -50,7 +50,7 @@
       }
 
       .van-step__circle-container {
-        padding: 0 8px 0 0;
+        padding: 0 16rpx 0 0;
         transform: translate3d(0, 50%, 0);
       }
     }
@@ -67,32 +67,32 @@
 
       .van-step__circle-container {
         right: 0;
-        padding: 0 0 0 8px;
+        padding: 0 0 0 16rpx;
         transform: translate3d(0, 50%, 0);
       }
     }
 
     .van-step__circle-container {
       position: absolute;
-      bottom: 6px;
+      bottom: 12rpx;
       z-index: 1;
-      padding: 0 8px;
+      padding: 0 16rpx;
       transform: translate3d(-50%, 50%, 0);
       .theme(background-color, @white);
     }
 
     .van-step__title {
       display: inline-block;
-      font-size: 12px;
+      font-size: 24rpx;
       transform: translate3d(-50%, 0, 0);
     }
 
     .van-step__line {
       position: absolute;
       right: 0;
-      bottom: 6px;
+      bottom: 12rpx;
       left: 0;
-      height: 1px;
+      height: 2rpx;
       transform: translate3d(0, 50%, 0);
       .theme(background-color, @border-color);
     }
@@ -102,19 +102,19 @@
 
       .van-step__icon {
         display: block;
-        font-size: 12px;
+        font-size: 24rpx;
         line-height: 1;
       }
     }
   }
 
   &--vertical {
-    padding: 10px 10px 10px 0;
-    font-size: 14px;
-    line-height: 18px;
+    padding: 20rpx 20rpx 20rpx 0;
+    font-size: 28rpx;
+    line-height: 36rpx;
 
     &::after {
-      border-bottom-width: 1px;
+      border-bottom-width: 2rpx;
     }
 
     &:last-child::after {
@@ -125,10 +125,10 @@
       &::before {
         position: absolute;
         top: 0;
-        left: -15px;
+        left: -30rpx;
         z-index: 1;
-        width: 1px;
-        height: 20px;
+        width: 2rpx;
+        height: 40rpx;
         content: '';
         .theme(background-color, @white);
       }
@@ -138,20 +138,20 @@
     .van-step__circle,
     .van-step__line {
       position: absolute;
-      top: 19px;
-      left: -14px;
+      top: 38rpx;
+      left: -28rpx;
       z-index: 2;
       transform: translate3d(-50%, -50%, 0);
     }
 
     .van-step__icon {
-      font-size: 12px;
+      font-size: 24rpx;
       line-height: 1;
     }
 
     .van-step__line {
       z-index: 1;
-      width: 1px;
+      width: 2rpx;
       height: 100%;
       transform: translate3d(-50%, 0, 0);
       .theme(background-color, @border-color);

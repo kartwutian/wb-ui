@@ -58,7 +58,7 @@
       },
       avatarSize: {
         type: String,
-        default: '32px'
+        default: '64rpx'
       },
       avatarShape: {
         type: String,

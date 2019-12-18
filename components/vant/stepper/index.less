@@ -9,22 +9,22 @@
     position: relative;
     display: inline-block;
     box-sizing: border-box;
-    width: 28px;
-    height: 28px;
-    margin: 1px;
-    padding: 5px;
+    width: 56rpx;
+    height: 56rpx;
+    margin: 2rpx;
+    padding: 10rpx;
     vertical-align: middle;
     border: 0;
     .theme(background-color, @stepper-background-color);
 
     &::before {
-      width: 9px;
-      height: 1px;
+      width: 18rpx;
+      height: 2rpx;
     }
 
     &::after {
-      width: 1px;
-      height: 9px;
+      width: 2rpx;
+      height: 18rpx;
     }
 
     &::before,
@@ -72,18 +72,18 @@
   &__input {
     display: inline-block;
     box-sizing: border-box;
-    width: 32px;
-    height: 28px;
+    width: 64rpx;
+    height: 56rpx;
     // 覆盖 common style 中 input 的 min-height: 1.4rem;
     // 避免 button-size 对 input 设置的 height 不生效
     min-height: 0;
-    margin: 1px;
-    padding: 1px;
-    font-size: 14px;
+    margin: 2rpx;
+    padding: 2rpx;
+    font-size: 28rpx;
     text-align: center;
     vertical-align: middle;
     border: 0;
-    border-width: 1px 0;
+    border-width: 2rpx 0;
     border-radius: 0;
     -webkit-appearance: none;
     .theme(color, @text-color);

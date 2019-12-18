@@ -103,7 +103,7 @@ export default {
     return {
       innerValue: 0,
       gutterWithUnit: undefined,
-      sizeWithUnit: '20px'
+      sizeWithUnit: '40rpx'
     }
   },
 

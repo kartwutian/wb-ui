@@ -6,7 +6,7 @@
     <view class="van-submit-bar__tip">
       <van-icon
         v-if=" tipIcon "
-        size="12px"
+        size="24rpx"
         :name=" tipIcon "
         custom-class="van-submit-bar__tip-icon"
       />

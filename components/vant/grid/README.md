@@ -66,7 +66,7 @@ import VanGridItem from "@/components/vant/grid-item/index.vue"
     :key="index"
   >
     <image
-      style="width: 100%; height: 90px;"
+      style="width: 100%; height: 180rpx;"
       :src="'https://img.yzcdn.cn/vant/apple-' +(index + 1) + '.jpg'"
     />
   </van-grid-item>

@@ -78,7 +78,7 @@
       },
       iconSize: {
         type: null,
-        default: '20px'
+        default: '40rpx'
       }
     },
 

@@ -33,13 +33,13 @@ import VanLoading from "@/components/vant/loading/index";
 ### 加载文案
 
 ```html
-<van-loading custom-class="demo-loading" size="24px">加载中...</van-loading>
+<van-loading custom-class="demo-loading" size="48rpx">加载中...</van-loading>
 ```
 
 ### 垂直排列
 
 ```html
-<van-loading custom-class="demo-loading" size="24px" vertical>加载中...</van-loading>
+<van-loading custom-class="demo-loading" size="48rpx" vertical>加载中...</van-loading>
 ```
 
 ## API
@@ -50,8 +50,8 @@ import VanLoading from "@/components/vant/loading/index";
 |-----------|-----------|-----------|-------------|-------------|
 | color | 颜色 | *string* | `#c9c9c9` | - |
 | type | 类型，可选值为 `spinner` | *string* | `circular` | - |
-| size | 加载图标大小，默认单位为 `px` | *string \| number* | `30px` | - |
-| text-size | 文字大小，默认单位为为 `px` | *string \| number* | `14px` | 1.0 |
+| size | 加载图标大小，默认单位为 `px` | *string \| number* | `60rpx` | - |
+| text-size | 文字大小，默认单位为为 `px` | *string \| number* | `28rpx` | 1.0 |
 | vertical | 是否垂直排列图标和文字内容 | *boolean* | `false` | 1.0 |
 
 

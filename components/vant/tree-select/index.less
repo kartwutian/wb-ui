@@ -3,7 +3,7 @@
 
 .van-tree-select {
   position: relative;
-  font-size: 14px;
+  font-size: 28rpx;
   user-select: none;
 
   &__nav {
@@ -12,21 +12,21 @@
     bottom: 0;
     left: 0;
     width: 35%;
-    min-width: 120px;
+    min-width: 240rpx;
     .theme(background-color, @background-color-light);
   }
 
   &__nitem {
     position: relative;
-    padding: 0 9px 0 15px;
-    line-height: 44px;
+    padding: 0 18rpx 0 30rpx;
+    line-height: 88rpx;
 
     &--active::after {
       position: absolute;
       top: 0;
       bottom: 0;
       left: 0;
-      width: 3.6px;
+      width: 3.12rpx;
       content: '';
       .theme(background-color, @red);
     }
@@ -45,14 +45,14 @@
     box-sizing: border-box;
     width: 65%;
     margin-left: 35%;
-    padding-left: 15px;
+    padding-left: 30rpx;
     .theme(background-color, @white);
   }
 
   &__item {
     position: relative;
     font-weight: bold;
-    line-height: 44px;
+    line-height: 88rpx;
 
     &--active {
       .theme(color, @red);
@@ -66,10 +66,10 @@
   &__selected {
     position: absolute;
     top: 0;
-    right: 15px;
+    right: 30rpx;
     bottom: 0;
-    height: 24px;
+    height: 48rpx;
     margin: auto 0;
-    line-height: 24px;
+    line-height: 48rpx;
   }
 }

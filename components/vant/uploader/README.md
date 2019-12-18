@@ -191,9 +191,9 @@ export default {
 |-----------|-----------|-----------|-----------|-----------|
 | name | 标识符，可以在回调函数的第二项参数中获取 | _string \| number_ | - |
 | accept | 接受的文件类型, 可选值为`all` `image` `file` | _string_ | `image` |
-| preview-size | 预览图和上传区域的尺寸，默认单位为`px` | _string \| number_ | `90px` |
+| preview-size | 预览图和上传区域的尺寸，默认单位为`px` | _string \| number_ | `180rpx` |
 | preview-image | 是否在上传完成后展示预览图 | _boolean_ | `true` |
-| preview-image-radius | 预览图片的border-radius | _string_ | `4px` |
+| preview-image-radius | 预览图片的border-radius | _string_ | `8rpx` |
 | preview-full-image | 是否在点击预览图后展示全屏图片预览 | _boolean_ | `true` |
 | multiple | 是否开启图片多选，部分安卓机型不支持 | _boolean_ | `false` |
 | capture | 图片选取模式，当`accept`为`image`类型时设置`capture`可选值为`camera`可以直接调起摄像头 | _string \| Array_ | `['album', 'camera']` |
@@ -202,7 +202,7 @@ export default {
 | max-count | 文件上传数量限制 | _number_ | - |
 | upload-text | 上传区域文字提示 | _string_ | - |
 | image-fit | 预览图裁剪模式，可选值参考小程序`image`组件的`mode`属性 | _string_ | `scaleToFill` |
-| unloadfontSize | 上传文件图标icon字体大小 | _string_ | `24px` |
+| unloadfontSize | 上传文件图标icon字体大小 | _string_ | `48rpx` |
 | file-list | 存放图片路径数组 | _array_ | [] |
 | use-slot | 是否使用插槽 | _boolean_ | - |
 | use-before-read | 是否在上传前进行校验 | _boolean_ | - |

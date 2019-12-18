@@ -112,7 +112,7 @@ export default {
     },
     loadingSize: {
       type: String,
-      default: '20px'
+      default: '40rpx'
     },
     color: {
       type: String,

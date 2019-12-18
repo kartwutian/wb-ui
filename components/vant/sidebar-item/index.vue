@@ -10,7 +10,7 @@
           v-if="info !== null || dot"
           :dot="dot"
           :info="info"
-          custom-style="right: 4px"
+          custom-style="right: 8rpx"
       />
       {{ title }}
     </view>

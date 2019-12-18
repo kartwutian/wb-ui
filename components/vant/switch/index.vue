@@ -40,7 +40,7 @@ export default {
     inactiveColor: String,
     size: {
       type: String,
-      default: '30px'
+      default: '60rpx'
     },
     activeValue: {
       type: null,

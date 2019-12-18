@@ -8,7 +8,7 @@
   >
     <van-icon
       v-if=" leftIcon "
-      size="16px"
+      size="32rpx"
       :name=" leftIcon "
       class="van-notice-bar__left-icon"
     />

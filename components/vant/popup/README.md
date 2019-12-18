@@ -60,7 +60,7 @@ export default {
 ```html
 <van-cell title="展示弹出层" is-link @click="showBasic" />
 
-<van-popup :show="show.basic" @close="hideBasic" custom-style="padding: 30px 50px">内容</van-popup>
+<van-popup :show="show.basic" @close="hideBasic" custom-style="padding: 60rpx 100rpx">内容</van-popup>
 ```
 
 ```js

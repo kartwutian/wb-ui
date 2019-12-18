@@ -114,13 +114,13 @@ export default {
 ```css
 .item {
   display: inline-block;
-  width: 22px;
-  margin-right: 5px;
+  width: 44rpx;
+  margin-right: 10rpx;
   color: #fff;
-  font-size: 12px;
+  font-size: 24rpx;
   text-align: center;
   background-color: #1989fa;
-  border-radius: 2px;
+  border-radius: 4rpx;
 }
 ```
 

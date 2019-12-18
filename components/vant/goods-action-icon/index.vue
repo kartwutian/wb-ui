@@ -26,7 +26,7 @@
     <view class="van-goods-action-icon__content">
       <van-icon
         v-if=" icon "
-        size="20px"
+        size="40rpx"
         :name=" icon "
         :dot=" dot "
         :info=" info "

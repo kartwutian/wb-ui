@@ -35,7 +35,7 @@ export default {
   props: {
     size: {
       type: String,
-      default: '30px',
+      default: '60rpx',
     },
     type: {
       type: String,
@@ -47,7 +47,7 @@ export default {
     },
     textSize: {
       type: String,
-      default: '14px',
+      default: '28rpx',
     },
     vertical: Boolean
   },

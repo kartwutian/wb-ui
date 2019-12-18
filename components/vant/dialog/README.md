@@ -117,7 +117,7 @@ Dialog.confirm({
 |-----------|-----------|-----------|-------------|-------------|
 | show | 是否展示遮罩层 | *boolean* | `false` | - |
 | title | 标题 | *string* | - | - |
-| width | 弹窗宽度，默认单位为`px` | *string \| number* | `320px` | 1.0.0 |
+| width | 弹窗宽度，默认单位为`px` | *string \| number* | `640rpx` | 1.0.0 |
 | message | 文本内容，支持通过`\n`换行 | *string* | - | 1.0.0 |
 | messageAlign | 内容对齐方式，可选值为`left` `right` | *string* | `center` | - |
 | use-slot | 是否使用插槽 | *boolean* | `false` | - |
@@ -161,7 +161,7 @@ Dialog.confirm({
 |-----------|-----------|-----------|-------------|
 | show | 是否显示弹窗 | *boolean* | - |
 | title | 标题 | *string* | - |
-| width | 弹窗宽度，默认单位为`px` | *string \| number* | `320px` | 1.0.0 |
+| width | 弹窗宽度，默认单位为`px` | *string \| number* | `640rpx` | 1.0.0 |
 | message | 文本内容，支持通过`\n`换行 | *string* | - |
 | message-align | 内容对齐方式，可选值为`left` `right` | *string* | `center` |
 | z-index | z-index 层级 | *number* | `100` |

@@ -7,12 +7,12 @@
     align-items: center;
 
     &--textarea {
-      min-height: 24px;
+      min-height: 48rpx;
       line-height: 1.4em;
     }
 
     &--textarea&--ios {
-      //margin-top: -4.5px;
+      //margin-top: -4.10rpx;
     }
   }
 
@@ -21,8 +21,8 @@
     display: block;
     box-sizing: border-box;
     width: 100%;
-    height: 24px;
-    min-height: 24px;
+    height: 48rpx;
+    min-height: 48rpx;
     margin: 0;
     padding: 0;
     line-height: inherit;
@@ -33,8 +33,8 @@
     .theme(color, @text-color);
 
     &--textarea {
-      height: 18px;
-      min-height: 18px;
+      height: 36rpx;
+      min-height: 36rpx;
     }
 
     &--error {
@@ -71,13 +71,13 @@
   &__icon-root {
     display: flex;
     align-items: center;
-    min-height: 24px;
+    min-height: 48rpx;
   }
 
   &__clear-root,
   &__icon-container {
-    margin-right: -10px;
-    padding: 0 10px;
+    margin-right: -20rpx;
+    padding: 0 20rpx;
     line-height: inherit;
     vertical-align: middle;
   }
@@ -101,7 +101,7 @@
   }
 
   &__button {
-    padding-left: 10px;
+    padding-left: 20rpx;
 
     &:empty {
       display: none;
@@ -109,7 +109,7 @@
   }
 
   &__error-message {
-    font-size: 12px;
+    font-size: 24rpx;
     text-align: left;
     .theme(color, @red);
 
@@ -123,10 +123,10 @@
   }
 
   &__word-limit{
-    margin-top: 4px;
+    margin-top: 8rpx;
     color: #646566;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 24rpx;
+    line-height: 32rpx;
     text-align: right;
   }
 }

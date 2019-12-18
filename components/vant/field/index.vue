@@ -71,7 +71,7 @@
       />
       <van-icon
         v-if=" clearable && focused && value && !readonly "
-        size="16px"
+        size="32rpx"
         name="clear"
         class="van-field__clear-root van-field__icon-root"
         @click="onClear"
@@ -82,7 +82,7 @@
       >
         <van-icon
           v-if=" rightIcon || icon "
-          size="16px"
+          size="32rpx"
           :name=" rightIcon || icon "
           :class="'van-field__icon-root ' + iconClass "
           :custom-class="rightIconClass"
@@ -185,7 +185,7 @@ export default {
     },
     titleWidth: {
       type: String,
-      default: '90px'
+      default: '180rpx'
     },
     inputClass: {
       type: String,

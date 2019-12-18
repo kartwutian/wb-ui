@@ -11,7 +11,7 @@
       <block v-if=" leftArrow || leftText ">
         <van-icon
           v-if=" leftArrow "
-          size="16px"
+          size="32rpx"
           name="arrow-left"
           custom-class="van-nav-bar__arrow"
         />

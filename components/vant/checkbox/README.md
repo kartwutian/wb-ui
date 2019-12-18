@@ -209,7 +209,7 @@ export default {
 | label-position | 文本位置，可选值为 `left` | *string* | `right` | - |
 | use-icon-slot | 是否使用 icon slot | *boolean* | `false` | - |
 | checked-color | 选中状态颜色 | *string* | `#1989fa` | - |
-| icon-size | icon 大小 | *string \| number* | `20px` |
+| icon-size | icon 大小 | *string \| number* | `40rpx` |
 
 ### CheckboxGroup API
 

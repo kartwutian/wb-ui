@@ -24,7 +24,7 @@
       <van-info
         v-if=" info !== null "
         :info=" info "
-        custom-style="margin-top: 2px"
+        custom-style="margin-top: 4rpx"
       />
     </view>
     <view class="van-tabbar-item__text">

@@ -48,31 +48,31 @@
   &--default {
     .theme(color, @button-default-color);
     .theme(background-color, @button-default-background-color);
-    border: 1px solid @button-default-border-color;
+    border: 2rpx solid @button-default-border-color;
   }
 
   &--primary {
     .theme(color, @button-primary-color);
     .theme(background-color, @button-primary-background-color);
-    border: 1px solid @button-primary-border-color
+    border: 2rpx solid @button-primary-border-color
   }
 
   &--info {
     .theme(color, @button-info-color);
     .theme(background-color, @button-info-background-color);
-    border: 1px solid @button-info-border-color;
+    border: 2rpx solid @button-info-border-color;
   }
 
   &--danger {
     .theme(color, @button-danger-color);
     .theme(background-color, @button-danger-background-color);
-    border: 1px solid @button-danger-border-color;
+    border: 2rpx solid @button-danger-border-color;
   }
 
   &--warning {
     .theme(color, @button-warning-color);
     .theme(background-color, @button-warning-background-color);
-    border: 1px solid @button-warning-border-color;
+    border: 2rpx solid @button-warning-border-color;
   }
 
   &--plain {
@@ -102,7 +102,7 @@
   }
 
   &--normal {
-    padding: 0 15px;
+    padding: 0 30rpx;
     .theme(font-size, @button-normal-font-size);
   }
 
@@ -114,7 +114,7 @@
     padding: 0 @padding-xs
   }
 
-  // mini图标默认宽度50px，文字不能超过4个
+  // mini图标默认宽度100rpx，文字不能超过4个
   &--mini {
     display: inline-block;
     .theme(min-width, @button-mini-min-width);
@@ -123,7 +123,7 @@
     .theme(line-height, @button-mini-line-height);
 
     & + .van-button--mini {
-      margin-left: 5px;
+      margin-left: 10rpx;
     }
   }
 
@@ -150,7 +150,7 @@
 
   &__loading-text {
     display: inline-block;
-    margin-left: 5px;
+    margin-left: 10rpx;
     vertical-align: middle;
   }
 
@@ -162,17 +162,17 @@
 
   &__icon + &__text:not(:empty) {
     display: inline-block;
-    margin-left: 5px;
+    margin-left: 10rpx;
     vertical-align: top;
   }
 
   &--hairline {
-    padding-top: 1px; // add 1px padding for text vertical align middle
+    padding-top: 2rpx; // add 2rpx padding for text vertical align middle
     border-width: 0;
 
     &::after {
       border-color: inherit;
-      border-width: 1px;
+      border-width: 2rpx;
       border-radius: calc(@button-border-radius * 2)
     }
 

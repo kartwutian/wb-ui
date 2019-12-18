@@ -39,7 +39,7 @@ import VanButton from "@/components/vant/button/index";
 
 ### 细边框
 
-设置`hairline`属性可以开启 0.5px 边框，基于伪类实现
+设置`hairline`属性可以开启 0.10rpx 边框，基于伪类实现
 
 ```html
 <van-button plain hairline type="primary">细边框按钮</van-button>
@@ -117,11 +117,11 @@ import VanButton from "@/components/vant/button/index";
 | round | 是否为圆形按钮 | *boolean* | `false` | - |
 | square | 是否为方形按钮 | *boolean* | `false` | - |
 | disabled | 是否禁用按钮 | *boolean* | `false` | - |
-| hairline | 是否使用 0.5px 边框 | *boolean* | `false` | - |
+| hairline | 是否使用 0.10rpx 边框 | *boolean* | `false` | - |
 | loading | 是否显示为加载状态 | *boolean* | `false` | - |
 | loading-text | 加载状态提示文字 | *string* | - | - |
 | loading-type | 加载状态图标类型，可选值为 `spinner` | *string* | `circular` | - |
-| loading-size | 加载图标大小 | *string* | `20px` | - |
+| loading-size | 加载图标大小 | *string* | `40rpx` | - |
 | custom-style | 自定义样式 | *string* | - | - |
 | hover-star-time | 按住后多久出现点击态，单位毫秒 | *number* | 20 | - |
 | hover-stay-time | 手指松开后点击态保留时间，单位毫秒 | *number* | 70 | - |

@@ -47,7 +47,7 @@ import VanIcon from "@/components/vant/icon/index.vue"
 | dot | 是否显示图标右上角小红点 | *boolean* | `false` | - |
 | info | 图标右上角文字提示 | *string \| number* | - | - |
 | color | 图标颜色 | *string* | `inherit` | - |
-| size | 图标大小，如 `20px`，`2em`，默认单位为`px` | *string \| number* | `inherit` | - |
+| size | 图标大小，如 `40rpx`，`2em`，默认单位为`px` | *string \| number* | `inherit` | - |
 | custom-style | 自定义样式 | *string* | - | - |
 | class-prefix | 类名前缀 | *string* | `van-icon` | - |
 >项目中需要自己引入*iconfont*字体图标库的，可以直接在app.vue中直接引入字体图标样式，用van-icon配置 class-prefix
@@ -57,7 +57,7 @@ import VanIcon from "@/components/vant/icon/index.vue"
   <van-icon
       class-prefix="icon"
       name="success"
-      size="32px"
+      size="64rpx"
       custom-class="iconfont"
   />  
 ```

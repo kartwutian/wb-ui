@@ -73,8 +73,8 @@ export default {
     <van-cell :title="switchTitle1">
       <van-switch
           slot="right-icon"
-          size="24px"
-          style="height: 26px"
+          size="48rpx"
+          style="height: 52rpx"
           :checked="switch1"
           @change="onSwitch1Change"
       />
@@ -82,8 +82,8 @@ export default {
     <van-cell :title="switchTitle2">
       <van-switch
           slot="right-icon"
-          size="24px"
-          style="height: 26px"
+          size="48rpx"
+          style="height: 52rpx"
           :checked="switch2"
           @change="onSwitch2Change"
       />

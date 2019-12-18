@@ -30,7 +30,7 @@
       <van-icon
         v-if="Array.isArray(activeId) ? activeId.indexOf(it.id) > -1 : activeId === it.id "
         name="checked"
-        size="16px"
+        size="32rpx"
         class="van-tree-select__selected"
       />
     </view>

@@ -63,7 +63,7 @@ export default {
     },
     barHeight: {
       type: null,
-      default: '2px'
+      default: '4rpx'
     }
   },
 

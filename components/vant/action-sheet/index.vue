@@ -50,7 +50,7 @@
         </block>
         <van-loading
           v-else
-          size="20px"
+          size="40rpx"
         />
       </button>
     </view>

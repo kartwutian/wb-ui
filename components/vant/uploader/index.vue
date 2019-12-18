@@ -31,7 +31,7 @@
           </view>
           <van-icon
             name="clear"
-            size="18px"
+            size="36rpx"
             class="van-uploader__preview-delete"
             @tap="deleteItem(index)"
           />
@@ -127,7 +127,7 @@ export default {
     },
     previewImageRadius: {
       type: String,
-      default: '4px'
+      default: '8rpx'
     },
     previewFullImage: {
       type: Boolean,
@@ -141,7 +141,7 @@ export default {
     useBeforeRead: Boolean,
     unloadfontSize: {
       type: String,
-      default: '24px'
+      default: '48rpx'
     }
   },
   data () {

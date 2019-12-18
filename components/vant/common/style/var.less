@@ -25,7 +25,7 @@
 @background-color-light: #fafafa;
 
 // Padding
-@padding-base: 4px;
+@padding-base: 8rpx;
 @padding-xs: @padding-base * 2;
 @padding-sm: @padding-base * 3;
 @padding-md: @padding-base * 4;
@@ -33,10 +33,10 @@
 @padding-xl: @padding-base * 8;
 
 // Font
-@font-size-xs: 10px;
-@font-size-sm: 12px;
-@font-size-md: 14px;
-@font-size-lg: 16px;
+@font-size-xs: 20rpx;
+@font-size-sm: 24rpx;
+@font-size-md: 28rpx;
+@font-size-lg: 32rpx;
 @font-weight-bold: 500;
 
 // Animation
@@ -45,46 +45,46 @@
 
 // Border
 @border-color: #ebedf0;
-@border-width-base: 1px;
-@border-radius-sm: 2px;
-@border-radius-md: 4px;
-@border-radius-max: 999px;
+@border-width-base: 2rpx;
+@border-radius-sm: 4rpx;
+@border-radius-md: 8rpx;
+@border-radius-max: 1998rpx;
 
 //ActionSheet
 @action-sheet-max-height: 90%;
-@action-sheet-header-height: 44px;
+@action-sheet-header-height: 88rpx;
 @action-sheet-header-font-size: @font-size-lg;
 @action-sheet-description-color: @gray-darker;
 @action-sheet-description-font-size: @font-size-md;
-@action-sheet-description-line-height: 20px;
-@action-sheet-item-height: 50px;
+@action-sheet-description-line-height: 40rpx;
+@action-sheet-item-height: 100rpx;
 @action-sheet-item-background: @white;
 @action-sheet-item-font-size: @font-size-lg;
 @action-sheet-item-text-color: @text-color;
 @action-sheet-item-disabled-text-color: @gray;
 @action-sheet-subname-color: @gray-darker;
 @action-sheet-subname-font-size: @font-size-sm;
-@action-sheet-close-icon-size: 18px;
+@action-sheet-close-icon-size: 36rpx;
 @action-sheet-close-icon-color: @gray-dark;
 @action-sheet-close-icon-padding: 0 @padding-sm;
 @action-sheet-cancel-padding-top: @padding-xs;
 @action-sheet-cancel-padding-color: @background-color;
 
 // Button
-@button-mini-height: 22px;
-@button-mini-min-width: 50px;
+@button-mini-height: 44rpx;
+@button-mini-min-width: 100rpx;
 @button-mini-font-size: @font-size-xs;
-@button-mini-line-height: 20px;
-@button-small-height: 30px;
+@button-mini-line-height: 40rpx;
+@button-small-height: 60rpx;
 @button-small-font-size: @font-size-sm;
-@button-small-min-width: 60px;
-@button-small-line-height: 28px;
+@button-small-min-width: 120rpx;
+@button-small-line-height: 56rpx;
 @button-normal-font-size: @font-size-md;
-@button-large-height: 50px;
-@button-large-line-height: 48px;
+@button-large-height: 100rpx;
+@button-large-line-height: 96rpx;
 @button-default-color: @text-color;
-@button-default-height: 44px;
-@button-default-line-height: 42px;
+@button-default-height: 88rpx;
+@button-default-line-height: 84rpx;
 @button-default-font-size: @font-size-lg;
 @button-default-background-color: @white;
 @button-default-border-color: @border-color;
@@ -110,19 +110,19 @@
 @card-font-size: @font-size-sm;
 @card-text-color: @text-color;
 @card-background-color: @background-color-light;
-@card-thumb-size: 90px;
-@card-title-line-height: 16px;
+@card-thumb-size: 180rpx;
+@card-title-line-height: 32rpx;
 @card-desc-color: @gray-darker;
-@card-desc-line-height: 20px;
+@card-desc-line-height: 40rpx;
 @card-price-color: @red;
 @card-origin-price-color: @gray-darker;
 @card-origin-price-font-size: @font-size-xs;
 
 // Checkbox
-@checkbox-size: 20px;
+@checkbox-size: 40rpx;
 @checkbox-border-color: @gray-light;
 @checkbox-transition-duration: .2s;
-@checkbox-label-margin: 10px;
+@checkbox-label-margin: 20rpx;
 @checkbox-label-color: @text-color;
 @checkbox-checked-icon-color: @blue;
 @checkbox-disabled-icon-color: @gray;
@@ -134,8 +134,8 @@
 
 // Collapse
 @collapse-item-transition-duration: .3s;
-@collapse-item-content-padding: 15px;
-@collapse-item-content-font-size: 13px;
+@collapse-item-content-padding: 30rpx;
+@collapse-item-content-font-size: 26rpx;
 @collapse-item-content-line-height: 1.5;
 @collapse-item-content-text-color: @gray-dark;
 @collapse-item-content-background-color: @white;
@@ -144,7 +144,7 @@
 // CountDown
 @count-down-text-color: @text-color;
 @count-down-font-size: @font-size-md;
-@count-down-line-height: 20px;
+@count-down-line-height: 40rpx;
 
 // Image
 @image-placeholder-text-color: @gray-dark;
@@ -152,24 +152,24 @@
 @image-placeholder-background-color: @background-color;
 
 // Info
-@info-size: 16px;
+@info-size: 32rpx;
 @info-color: @white;
-@info-padding: 0 3px;
-@info-font-size: 12px;
+@info-padding: 0 6rpx;
+@info-font-size: 24rpx;
 @info-font-weight: 500;
-@info-border-width: 1px;
+@info-border-width: 2rpx;
 @info-background-color: @red;
 @info-dot-color: @red;
-@info-dot-size: 8px;
+@info-dot-size: 16rpx;
 @info-font-family: PingFang SC, Helvetica Neue, Arial, sans-serif;
 
 // NavBar
-@nav-bar-height: 44px;
+@nav-bar-height: 88rpx;
 
 // Notify
-@notify-padding: 6px 15px;
-@notify-font-size: 14px;
-@notify-line-height: 20px;
+@notify-padding: 12rpx 30rpx;
+@notify-font-size: 28rpx;
+@notify-line-height: 40rpx;
 @notify-primary-background-color: @blue;
 @notify-success-background-color: @green;
 @notify-danger-background-color: @red;
@@ -179,17 +179,17 @@
 @overlay-background-color: rgba(0, 0, 0, 0.7);
 
 // Popup
-@popup-round-border-radius: 20px;
-@popup-close-icon-size: 18px;
+@popup-round-border-radius: 40rpx;
+@popup-close-icon-size: 36rpx;
 @popup-close-icon-color: @gray-dark;
-@popup-close-icon-margin: 16px;
+@popup-close-icon-margin: 32rpx;
 @popup-close-icon-z-index: 1;
 
 // Radio
-@radio-size: 20px;
+@radio-size: 40rpx;
 @radio-border-color: @gray-light;
 @radio-transition-duration: .2s;
-@radio-label-margin: 10px;
+@radio-label-margin: 20rpx;
 @radio-label-color: @text-color;
 @radio-checked-icon-color: @blue;
 @radio-disabled-icon-color: @gray;
@@ -197,7 +197,7 @@
 @radio-disabled-background-color: @border-color;
 
 // Rate
-@rate-horizontal-padding: 2px;
+@rate-horizontal-padding: 4rpx;
 
 // Switch
 @switch-width: 2em;
@@ -205,25 +205,25 @@
 @switch-node-size: 1em;
 @switch-node-z-index: 1;
 @switch-node-background-color: @white;
-@switch-node-box-shadow: 0 3px 1px 0 rgba(0, 0, 0, .05), 0 2px 2px 0 rgba(0, 0, 0, .1), 0 3px 3px 0 rgba(0, 0, 0, .05);
+@switch-node-box-shadow: 0 6rpx 2rpx 0 rgba(0, 0, 0, .05), 0 4rpx 4rpx 0 rgba(0, 0, 0, .1), 0 6rpx 6rpx 0 rgba(0, 0, 0, .05);
 @switch-background-color: @white;
 @switch-on-background-color: @blue;
 @switch-transition-duration: .3s;
 @switch-disabled-opacity: .4;
-@switch-border: 1px solid rgba(0, 0, 0, .1);
+@switch-border: 2rpx solid rgba(0, 0, 0, .1);
 
 // Search
 @search-background-color: #f7f8fA;
 
 // Sidebar
-@sidebar-width: 85px;
+@sidebar-width: 170rpx;
 
 // SidebarItem
 @sidebar-font-size: @font-size-md;
-@sidebar-line-height: 20px;
+@sidebar-line-height: 40rpx;
 @sidebar-text-color: @text-color;
 @sidebar-disabled-text-color: @gray;
-@sidebar-padding: 20px @padding-sm 20px @padding-xs;
+@sidebar-padding: 40rpx @padding-sm 40rpx @padding-xs;
 @sidebar-active-color: @active-color;
 @sidebar-background-color: @background-color-light;
 @sidebar-selected-font-weight: @font-weight-bold;
@@ -236,27 +236,27 @@
 @stepper-background-color: @active-color;
 @stepper-button-disabled-color: #f7f8fa;
 @stepper-input-disabled-color: @active-color;
-@stepper-border-radius: 4px;
+@stepper-border-radius: 8rpx;
 
 // SubmitBar
-@submit-bar-height: 50px;
+@submit-bar-height: 100rpx;
 @submit-bar-z-index: 100;
 @submit-bar-background-color: @white;
-@submit-bar-button-width: 110px;
+@submit-bar-button-width: 220rpx;
 @submit-bar-price-color: @red;
-@submit-bar-price-font-size: 18px;
-@submit-bar-currency-font-size: 14px;
+@submit-bar-price-font-size: 36rpx;
+@submit-bar-currency-font-size: 28rpx;
 @submit-bar-text-color: @text-color;
-@submit-bar-text-font-size: 14px;
-@submit-bar-tip-padding: 10px;
-@submit-bar-tip-font-size: 12px;
+@submit-bar-text-font-size: 28rpx;
+@submit-bar-tip-padding: 20rpx;
+@submit-bar-tip-font-size: 24rpx;
 @submit-bar-tip-line-height: 1.5;
 @submit-bar-tip-color: #f56723;
 @submit-bar-tip-background-color: #fff7cc;
-@submit-bar-tip-icon-size: 12px;
+@submit-bar-tip-icon-size: 24rpx;
 
 // Tabbar
-@tabbar-height: 50px;
+@tabbar-height: 100rpx;
 @tabbar-background-color: @white;
 
 // TabbarItem
@@ -264,8 +264,8 @@
 @tabbar-item-text-color: @gray-darker;
 @tabbar-item-active-color: @blue;
 @tabbar-item-line-height: 1;
-@tabbar-item-icon-size: 18px;
-@tabbar-item-margin-bottom: 5px;
+@tabbar-item-icon-size: 36rpx;
+@tabbar-item-margin-bottom: 10rpx;
 
 // Tab
 @tab-text-color: @gray-darker;
@@ -275,10 +275,10 @@
 
 // Tabs
 @tabs-default-color: @red;
-@tabs-line-height: 44px;
-@tabs-card-height: 30px;
+@tabs-line-height: 88rpx;
+@tabs-card-height: 60rpx;
 @tabs-nav-background-color: @white;
-@tabs-bottom-bar-height: 3px;
+@tabs-bottom-bar-height: 6rpx;
 @tabs-bottom-bar-color: @tabs-default-color;
 
 // Tag
@@ -291,23 +291,23 @@
 
 // Toast
 @toast-max-width: 70%;
-@toast-font-size: 14px;
+@toast-font-size: 28rpx;
 @toast-text-color: @white;
-@toast-line-height: 20px;
-@toast-border-radius: 4px;
+@toast-line-height: 40rpx;
+@toast-border-radius: 8rpx;
 @toast-background-color: rgba(@text-color, .88);
-@toast-icon-size: 48px;
-@toast-text-min-width: 96px;
-@toast-text-padding: 8px 12px;
-@toast-default-padding: 15px;
-@toast-default-width: 90px;
-@toast-default-min-height: 90px;
+@toast-icon-size: 96rpx;
+@toast-text-min-width: 192rpx;
+@toast-text-padding: 16rpx 24rpx;
+@toast-default-padding: 30rpx;
+@toast-default-width: 180rpx;
+@toast-default-min-height: 180rpx;
 
 // GridItem
 @grid-item-content-padding: @padding-md @padding-xs;
 @grid-item-content-background-color: @white;
 @grid-item-content-active-color: @active-color;
-@grid-item-icon-size: 26px;
+@grid-item-icon-size: 52rpx;
 @grid-item-text-color: @gray-darker;
 @grid-item-text-font-size: @font-size-sm;
 
@@ -315,15 +315,15 @@
 @divider-margin: @padding-md 0;
 @divider-text-color: @gray-dark;
 @divider-font-size: @font-size-md;
-@divider-line-height: 24px;
+@divider-line-height: 48rpx;
 @divider-border-color: @border-color;
 @divider-content-padding: @padding-md;
 @divider-content-left-width: 10%;
 @divider-content-right-width: 10%;
 
 // Uploader
-@uploader-size: 80px;
-@uploader-icon-size: 24px;
+@uploader-size: 160rpx;
+@uploader-icon-size: 48rpx;
 @uploader-icon-color: @gray-dark;
 @uploader-text-color: @gray-dark;
 @uploader-text-font-size: @font-size-sm;
@@ -332,20 +332,20 @@
 @uploader-delete-color: @white;
 @uploader-delete-background-color: rgba(0, 0, 0, .45);
 @uploader-file-background-color: @background-color;
-@uploader-file-icon-size: 20px;
+@uploader-file-icon-size: 40rpx;
 @uploader-file-icon-color: @gray-darker;
 @uploader-file-name-font-size: @font-size-sm;
 @uploader-file-name-text-color: @gray-darker;
 
 // DropdownMenu
-@dropdown-menu-height: 50px;
+@dropdown-menu-height: 100rpx;
 @dropdown-menu-background-color: @white;
-@dropdown-menu-title-font-size: 15px;
+@dropdown-menu-title-font-size: 30rpx;
 @dropdown-menu-title-text-color: @text-color;
 @dropdown-menu-title-active-text-color: @blue;
 @dropdown-menu-title-disabled-text-color: @gray-dark;
 @dropdown-menu-title-padding: 0 @padding-xs;
-@dropdown-menu-title-line-height: 18px;
+@dropdown-menu-title-line-height: 36rpx;
 @dropdown-menu-option-active-color: @blue;
 
 // TreeSelect
@@ -353,13 +353,13 @@
 @tree-select-nav-background-color: @background-color-light;
 @tree-select-content-background-color: @white;
 @tree-select-nav-item-padding: @padding-sm @padding-xs @padding-sm @padding-sm;
-@tree-select-item-height: 44px;
+@tree-select-item-height: 88rpx;
 @tree-select-item-active-color: @red;
 @tree-select-item-disabled-color: @gray;
 
 // skeleton
 @skeleton-padding: 0 @padding-md;
-@skeleton-row-height: 16px;
+@skeleton-row-height: 32rpx;
 @skeleton-row-background-color: @active-color;
 @skeleton-row-margin-top: @padding-sm;
 @skeleton-avatar-background-color: @active-color;
