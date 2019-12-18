@@ -22,7 +22,7 @@
             :style="'width:' + (isArray ? rowWidth[index] : rowWidth)"
         />
       </view>
-      <view v-if="animate" class="van-skeleton__light"></view>
+      <view v-if="animate && animateType === 'light'" class="van-skeleton__light"></view>
     </view>
     <view v-else class="van-skeleton__content">
       <slot />
@@ -52,6 +52,10 @@
         type: Boolean,
         default: true
       },
+      animateType: {
+        type: String,
+        default: 'opacity'
+      },
       avatarSize: {
         type: String,
         default: '32px'
@@ -76,7 +80,7 @@
         return this.rowWidth instanceof Array
       },
       classes(){
-        return `${this.customClass} ${utils.bem('skeleton', [{animate: this.animate}])}`
+        return `${this.customClass} ${utils.bem('skeleton', [{animate: this.animate && this.animateType === 'opacity'}])}`
       },
       avatarClass(){
         return `${utils.bem('skeleton__avatar', [this.avatarShape])}`

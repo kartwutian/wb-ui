@@ -4,7 +4,8 @@
       <van-skeleton
         title
         :row="3"
-        :animate="false"
+        animate
+        animate-type="light"
         :row-width="['100%', '100%', '80%']"
       />
     </demo-block>
