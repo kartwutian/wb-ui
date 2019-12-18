@@ -2,11 +2,13 @@
 @import '../common/style/theme.less';
 
 .van-tag {
-  display: inline-block;
+  display: inline-flex;
   padding: 0.2em 0.5em;
   font-size: 10px;
   line-height: normal;
   border-radius: 0.2em;
+  align-items: center;
+  vertical-align: center;
   .theme(color, @white);
 
   &::after {
@@ -81,5 +83,10 @@
 
   &--large {
     font-size: 14px;
+  }
+
+  &__close{
+    display: block;
+    margin-left: 2px;
   }
 }
