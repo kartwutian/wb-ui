@@ -30,7 +30,8 @@
             <view class="van-uploader__file-name van-ellipsis">{{ item.name || item.url || item.path }}</view>
           </view>
           <van-icon
-            name="delete"
+            name="clear"
+            size="18px"
             class="van-uploader__preview-delete"
             @tap="deleteItem(index)"
           />
