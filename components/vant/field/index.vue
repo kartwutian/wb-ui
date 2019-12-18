@@ -250,8 +250,11 @@ export default {
     },
 
     onBlur (event) {
-      this.onClear()
-      this.focused = false
+      // bug fix click clear icon can't trigger click event
+      setTimeout(()=>{
+        this.focused = false;
+      }, 16.7);
+
       this.$emit('blur', event.detail);
     },
 
