@@ -211,15 +211,10 @@ export default {
       child.index = this.children.length;
       this.children.push(child);
       // 把子项data映射过来
-      this.updateTabs(this.tabs.concat({
-        ...child.$data,
-        ...child.$props,
-      }));
+      this.updateTabs();
     },
     unlinked(child) {
       const index = this.children.indexOf(child);
-      const { tabs } = this;
-      tabs.splice(index, 1);
       this.children.splice(index, 1);
 
       let i = index;
@@ -229,14 +224,18 @@ export default {
         i++;
       }
 
-      this.updateTabs(tabs);
+      this.updateTabs();
     },
 
-    updateTabs(tabs) {
-      tabs = tabs || this.tabs;
-      this.tabs = tabs;
+    updateTabs() {
+      this.tabs = this.children.map((child) => {
+        return {
+          ...child.$data,
+          ...child.$props,
+        }
+      });
       // debugger
-      this.scrollable = tabs.length > this.swipeThreshold;
+      this.scrollable = this.tabs.length > this.swipeThreshold;
       this.setActiveTab();
     },
 
