@@ -39,6 +39,7 @@
   @import "./components/wanbo/styles/index.less";
   @import "./components/vant/index.less";
   @import "./components/app/styles/iconfont.css";
+  @import "./pages.less";
   // 对应uni-page-body标签的样式，所有页面最外层的样式
   page{
     background-color: #f1f1f1;

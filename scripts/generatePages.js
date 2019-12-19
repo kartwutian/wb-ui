@@ -12,10 +12,13 @@
   const paths = pages.map(item => item.path);
 
   const templatePage = fs.readFileSync(path.resolve(__dirname, './template/template.page.ejs'));
+  const templateLess = fs.readFileSync(path.resolve(__dirname, './template/template.less.ejs'));
   const templateModels = fs.readFileSync(path.resolve(__dirname, './template/template.models.ejs'));
   const templateServices = fs.readFileSync(path.resolve(__dirname, './template/template.services.ejs'));
   const templateStore = fs.readFileSync(path.resolve(__dirname, './template/template.store.index.ejs'));
+  const templateLessEntry = fs.readFileSync(path.resolve(__dirname, './template/template.less.entry.ejs'));
   const models = [];
+  const pageGlobalStyles = [];
 
   const api = require('./fetch/api.json');
 
@@ -95,6 +98,9 @@
     const modelsName = arr[len-1]; // 模块的名称，以.vue文件所在目录的目录名作为model的名字
     const realLastFilePath = path.resolve(__dirname, '../', route + '.vue');
     const realLastFileStat = await getStat(realLastFilePath);
+    const realLastStyleFilePath = path.resolve(__dirname, '../', route + '.less');
+    const realLastStyleFileStat = await getStat(realLastStyleFilePath);
+    pageGlobalStyles.push(path.relative(path.resolve(__dirname, '../'), realLastStyleFilePath).split('\\').join('/'));
     const realDirPath = path.resolve(__dirname, '../', arr.join('/')); // 最后一个文件所在目录的绝对路径
     const storePath = path.resolve(__dirname, '../store'); // store目录的绝对路径
     const utilsPath = path.resolve(__dirname, '../utils'); // store目录的绝对路径
@@ -114,12 +120,20 @@
     // console.log('isCommonModels:' + isCommonModels);
     if(!isCommonModels){
       models.push({
-        name: modelsName,
+        name: modelsName.replace(/-(\w)/g, function (match, p) {
+          return p.toUpperCase()
+        }),
         path: modelFileRelativePathInStore
       });
     }
 
     await dirExists(realDirPath); // 没有目录则递归创建,有则什么都不干
+
+    if(!realLastStyleFileStat){
+      fs.writeFileSync(realLastStyleFilePath, ejs.render(templateLess.toString(), {
+        name: last,
+      }));
+    }
 
     if(!realLastFileStat){
       fs.writeFileSync(realLastFilePath, ejs.render(templatePage.toString(), {
@@ -150,10 +164,16 @@
     await generatePages(paths[i])
   }
 
-  console.log(models);
+  // console.log(models);
+  // console.log(pageGlobalStyles);
   // 生成store下的index文件
   fs.writeFileSync(path.resolve(__dirname, '../store/index.js'), ejs.render(templateStore.toString(), {
     models,
+  }));
+
+  // 自动引入pages的样式
+  fs.writeFileSync(path.resolve(__dirname, '../pages.less'), ejs.render(templateLessEntry.toString(), {
+    pageGlobalStyles,
   }));
 
   console.log('ok！')
