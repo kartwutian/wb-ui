@@ -156,7 +156,7 @@
           :key="index"
           :title="'标签 ' + item"
           :dot="index === 1"
-          :info="index === 2 ? 99 : null"
+          :info="index === 2 ? num : null"
         >
           <view class="content">
             {{ '内容' + item }}
@@ -184,13 +184,19 @@ export default {
         { name: 'a', index: 1 },
         { name: 'b', index: 2 },
         { name: 'c', index: 3 }
-      ]
+      ],
+      num: 100,
     };
   },
 
 
   onLoad () {
-
+    setInterval(()=>{
+      if(this.num < 0){
+        this.num = 100
+      }
+      this.num -= 1
+    }, 1000)
   },
   onUnload () {
 
