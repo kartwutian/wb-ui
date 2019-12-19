@@ -93,6 +93,17 @@
 
     const arr = route.split('/');
     const last = arr.pop(); // 最后一个要生成的文件
+    const pageClassName = (()=>{
+      let p = [];
+      arr.forEach((item, i)=>{
+        if(i === arr.length - 1 && item === last){
+          return
+        }
+        p.push(item);
+      });
+      p.push(last);
+      return p.join('-');
+    })();
     // 此时arr为目录数组
     let len = arr.length;
     const modelsName = arr[len-1]; // 模块的名称，以.vue文件所在目录的目录名作为model的名字
@@ -131,13 +142,13 @@
 
     if(!realLastStyleFileStat){
       fs.writeFileSync(realLastStyleFilePath, ejs.render(templateLess.toString(), {
-        name: last,
+        name: pageClassName,
       }));
     }
 
     if(!realLastFileStat){
       fs.writeFileSync(realLastFilePath, ejs.render(templatePage.toString(), {
-        name: last,
+        name: pageClassName,
       }));
 
       await dirExists(modelDirPath); // 创建model目录

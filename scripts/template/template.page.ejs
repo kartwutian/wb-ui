@@ -1,12 +1,12 @@
 <template>
-  <view class="pages-<%= name%>">
+  <view class="<%= name%>">
 
   </view>
 </template>
 
 <script>
   export default {
-    name: 'pages-<%= name%>',
+    name: '<%= name%>',
     onLoad(){
 
     },
@@ -20,7 +20,7 @@
 </script>
 
 <style lang="less">
-  .pages-<%= name%>{
+  .<%= name%>{
 
   }
 </style>
