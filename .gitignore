@@ -2,6 +2,7 @@
 /dist/
 /build/
 /unpackage/
+/docs/.vuepress/dist/
 
 .idea
 package-lock.json
