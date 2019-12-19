@@ -296,7 +296,7 @@ export default {
 | border | 是否展示外边框，仅在`line`风格下生效 | *boolean* | `true` | - |
 | duration | 动画时间 (单位秒)  | *number* | `0.3` | - |
 | line-width | 底部条宽度 (px) | *string \| number* | 与当前标签等宽 | - |
-| line-height | 底部条高度 (px) | *string \| number* | `3px` | - |
+| line-height | 底部条高度 (px) | *string \| number* | `6rpx` | - |
 | swipe-threshold | 滚动阈值，设置标签数量超过多少个可滚动 | *number* | `4` | - |
 | animated | 是否使用动画切换 Tabs | *boolean* | `false` | - |
 | swipeable | 是否开启手势滑动切换 | *boolean* | `false` | - |

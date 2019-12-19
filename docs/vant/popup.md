@@ -60,7 +60,7 @@ export default {
 ```html
 <van-cell title="展示弹出层" is-link @click="showBasic" />
 
-<van-popup :show="show.basic" @close="hideBasic" custom-style="padding: 30px 50px">内容</van-popup>
+<van-popup :show="show.basic" @close="hideBasic" custom-style="padding: 60rpx 100rpx">内容</van-popup>
 ```
 
 ```js
@@ -82,7 +82,6 @@ export default {
 ```html
 <van-popup
   :show="show.top"
-  name="slide-down"
   position="top"
   custom-style="height: 20%;"
   @close="hideTop"
@@ -109,7 +108,6 @@ export default {
 <van-popup
   :show="show.closeIcon"
   closeable
-  name="slide-up"
   position="bottom"
   custom-style="height: 20%"
   @close="hideCloseIcon"
@@ -120,7 +118,6 @@ export default {
   :show="show.customCloseIcon"
   closeable
   close-icon="close"
-  name="slide-up"
   position="bottom"
   custom-style="height: 20%"
   @close="hideCustomCloseIcon"
@@ -131,7 +128,6 @@ export default {
   :show="show.customIconPosition"
   closeable
   close-icon-position="top-left"
-  name="slide-up"
   position="bottom"
   custom-style="height: 20%"
   @close="hideCustomIconPosition"
@@ -160,7 +156,6 @@ export default {
 <van-popup
   :show="show.round"
   round
-  name="slide-up"
   position="bottom"
   custom-style="height: 20%"
   @close="hideRound"

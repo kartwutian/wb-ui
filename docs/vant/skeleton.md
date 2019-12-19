@@ -70,7 +70,8 @@ export default {
 | title | 是否显示标题占位图 | *boolean* | `false` | - |
 | title-width | 标题占位图宽度 | *string \| number* | `40%` | - |
 | avatar | 是否显示头像占位图 | *boolean* | `false` | - |
-| avatar-size | 头像占位图大小 | *string \| number* | `32px` | - |
+| avatar-size | 头像占位图大小 | *string \| number* | `64rpx` | - |
 | avatar-shape | 头像占位图形状，可选值为`square` | *string* | `round` | - |
 | loading | 是否显示占位图，传`false`时会展示子组件内容 | *boolean* | `true` | - |
 | animate | 是否开启动画 | *boolean* | `true` | - |
+| animate-type | 动画类型（opacity , light） | *string* | `opacity` | - |

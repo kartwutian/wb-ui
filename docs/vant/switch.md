@@ -67,7 +67,7 @@ export default {
 ### 自定义大小
 
 ```html
-<van-switch :checked="true" size="24px" />
+<van-switch :checked="true" size="48rpx" />
 ```
 
 ### 自定义颜色
@@ -124,7 +124,7 @@ export default {
 | checked | 开关选中状态 | *any* | `false` | - |
 | loading | 是否为加载状态 | *boolean* | `false` | - |
 | disabled | 是否为禁用状态 | *boolean* | `false` | - |
-| size | 开关尺寸 | *string* | `30px` | - |
+| size | 开关尺寸 | *string* | `60rpx` | - |
 | active-color | 打开时的背景色 | *string* | `#1989fa` | - |
 | inactive-color | 关闭时的背景色 | *string* | `#fff` | - |
 | active-value | 打开时的值 | *any* | `true` | - |

@@ -4,7 +4,10 @@ lang: zh
 vant: true
 ---
 
+
 # Slider 滑块
+
+## 请优先使用uni-app自带的slider
 
 ### 引入
 
@@ -98,7 +101,7 @@ export default {
 <van-slider
   v-model="currentValue"
   custom-class="slider"
-  bar-height="4px"
+  bar-height="8rpx"
   active-color="#ee0a24"
 />
 ```
@@ -147,7 +150,7 @@ export default {
 | max | 最大值 | *number* | `100` | - |
 | min | 最小值 | *number* | `0` | - |
 | step | 步长 | *number* | `1` | - |
-| bar-height | 进度条高度，默认单位为 `px` | *string \| number* | `2px` | - |
+| bar-height | 进度条高度，默认单位为 `px` | *string \| number* | `4rpx` | - |
 | active-color | 进度条激活态颜色 | *string* | `#1989fa` | - |
 | inactive-color | 进度条默认颜色 | *string* | `#e5e5e5` | - |
 | use-button-slot | 是否开启按钮槽 | *boolean* | `false` | - |

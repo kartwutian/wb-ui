@@ -97,7 +97,6 @@ export default {
   color="#ee0a24"
   void-color="#eee"
   void-icon="star"
-  :touchable="false"
   @change="onChange"
 />
 ```
@@ -198,8 +197,8 @@ export default {
 |------|------|------|------|------|
 | value | 当前分值 | *number* | - | - |
 | count | 图标总数 | *number* | `5` | - |
-| size | 图标大小，默认单位为 `px` | *string \| number* | `20px` | - |
-| gutter | 图标间距，默认单位为 `px` | *string \| number* | `4px` |
+| size | 图标大小，默认单位为 `px` | *string \| number* | `40rpx` | - |
+| gutter | 图标间距，默认单位为 `px` | *string \| number* | `8rpx` |
 | color | 选中时的颜色 | *string* | `#ffd21e` | - |
 | void-color | 未选中时的颜色 | *string* | `#c7c7c7` | - |
 | icon | 选中时的图标名称或图片链接，可选值见 [Icon 组件](#/icon) | *string* | `star` | - |

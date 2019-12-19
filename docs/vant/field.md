@@ -279,7 +279,7 @@ export default {
 | clickable | 是否开启点击反馈 | *boolean* | `false` | - |
 | required | 是否显示表单必填星号 | *boolean* | `false` | - |
 | password | 是否是密码类型 | *boolean* | `false` | - |
-| title-width | 标题宽度 | *string* | `90px` | - |
+| title-width | 标题宽度 | *string* | `180rpx` | - |
 | maxlength | 最大输入长度，设置为 -1 的时候不限制最大长度 | *number* | `-1` | - |
 | placeholder | 输入框为空时占位符 | *string* | - | - |
 | placeholder-style | 指定 placeholder 的样式 | *string* | - | - |

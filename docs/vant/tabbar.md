@@ -166,13 +166,13 @@ export default {
       slot="icon"
       :src="icon.normal"
       mode="aspectFit"
-      style="width: 30px; height: 18px;"
+      style="width: 60rpx; height: 36rpx;"
     />
     <image
       slot="icon-active"
       :src="icon.active"
       mode="aspectFit"
-      style="width: 30px; height: 18px;"
+      style="width: 60rpx; height: 36rpx;"
     />
     自定义
   </van-tabbar-item>

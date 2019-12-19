@@ -108,21 +108,30 @@ export default {
 
 ```html
 <van-radio-group v-model="radio5">
-  <van-cell-group>
-    <van-cell
+    <van-cell-group>
+      <van-cell
         title="单选框 1"
         clickable
-        @tap="toggle"
-    >
-      <van-radio slot="right-icon" name="1" ref="radio-1" />
-    </van-cell>
-    <van-cell
+        @tap="toggle('radio-1')"
+      >
+        <van-radio
+          slot="right-icon"
+          name="1"
+          ref="radio-1"
+        />
+      </van-cell>
+      <van-cell
         title="单选框 2"
         clickable
-    >
-      <van-radio slot="right-icon" name="2" ref="radio-2" />
-    </van-cell>
-  </van-cell-group>
+        @tap="toggle('radio-2')"
+      >
+        <van-radio
+          slot="right-icon"
+          name="2"
+          ref="radio-2"
+        />
+      </van-cell>
+    </van-cell-group>
 </van-radio-group>
 ```
 
@@ -134,8 +143,8 @@ export default {
     }
   },
   methods: {
-    toggle () {
-      this.$refs['radio-1'].onChange();
+    toggle (refName) {
+      this.$refs[refName].onChange();
     }
   }
 }
@@ -151,7 +160,7 @@ export default {
 | value | 当前选中项的 name | *any* | - | - |
 | shape | 形状，可选值为 `round` `square` | *string* | `round` | - |
 | disabled | 是否为禁用状态 | *boolean* | `false` | - |
-| icon-size | 图标大小，默认单位为`px` | *string \| number* | `20px` | - |
+| icon-size | 图标大小，默认单位为`px` | *string \| number* | `40rpx` | - |
 | label-disabled | 是否禁用文本内容点击 | *boolean* | `false` | - |
 | label-position | 文本位置，可选值为 `left` | *string* | `right` | - |
 | use-icon-slot | 是否使用 icon slot | *boolean* | `false` | - |

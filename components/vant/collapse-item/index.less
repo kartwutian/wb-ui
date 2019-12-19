@@ -5,6 +5,9 @@
   &__title {
     .van-cell__right-icon {
       transform: rotate(90deg);
+      /*  #ifdef APP-PLUS */
+      transform: rotate(45deg);
+      /*  #endif  */
       transition: transform @collapse-item-transition-duration;
     }
 

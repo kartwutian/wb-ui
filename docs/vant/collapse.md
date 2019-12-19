@@ -110,10 +110,10 @@ export default {
 
 ``` css
 .van-icon-question {
-  margin-left: 5px;
-  font-size: 15px !important;
+  margin-left: 10rpx;
+  font-size: 30rpx !important;
   color: #1989fa;
-  vertical-align: -3px;
+  vertical-align: -6rpx;
 }
 ```
 

@@ -4,10 +4,10 @@ import {
 
 const getClassNames = function (name) {
   return {
-    enter: `van-${name}-enter van-${name}-enter-active ${this.enterClass} enter-active-class`,
-    'enter-to': `van-${name}-enter-to van-${name}-enter-active ${this.enterToClass} enter-active-class`,
-    leave: `van-${name}-leave van-${name}-leave-active ${this.leaveClass} leave-active-class`,
-    'leave-to': `van-${name}-leave-to van-${name}-leave-active ${this.leaveToClass} leave-active-class`
+    enter: `van-${name}-enter van-${name}-enter-active ${this.enterClass} ${this.enterActiveClass}`,
+    'enter-to': `van-${name}-enter-to van-${name}-enter-active ${this.enterToClass} ${this.enterActiveClass}`,
+    leave: `van-${name}-leave van-${name}-leave-active ${this.leaveClass} ${this.leaveActiveClass}`,
+    'leave-to': `van-${name}-leave-to van-${name}-leave-active ${this.leaveToClass} ${this.leaveActiveClass}`
   }
 };
 
@@ -16,13 +16,15 @@ const nextTick = () => new Promise(resolve => setTimeout(resolve, 1000 / 30));
 /**
  *
  * @param showDefaultValue // show的默认值
- * @param isUseComputedPropTransitionName // 是否使用计算属性transitionName
  * @returns {{computed: {transitionName(): (string|*)}, data(): *, watch: {show(*=, *): void}, methods: {checkStatus(*): void, leave(): (undefined), enter(): void, observeShow(*): void, onTransitionEnd(): (undefined)}, beforeCreate(): void, props: {duration: {default: number, type: null}, customStyle: StringConstructor, show: {default: *, type: BooleanConstructor}, name: {default: string, type: StringConstructor}}}|string|{inited: boolean, display: boolean, classes: string, currentDuration: number, type: string}}
  */
-export const transition = function (showDefaultValue, isUseComputedPropTransitionName = true) {
+export const transition = function (showDefaultValue) {
   return {
     props: {
-      customStyle: String,
+      customStyle: {
+        type: String,
+        default: ''
+      },
       // @ts-ignore
       show: {
         type: Boolean,
@@ -33,12 +35,35 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
       duration: {
         type: null,
         default: 300,
-        // observer: 'observeDuration'
       },
       name: {
         type: String,
         default: 'fade'
-      }
+      },
+      enterClass: {
+        type: String,
+        default: ""
+      },
+      enterActiveClass: {
+        type: String,
+        default: ""
+      },
+      enterToClass: {
+        type: String,
+        default: ""
+      },
+      leaveClass: {
+        type: String,
+        default: ""
+      },
+      leaveActiveClass: {
+        type: String,
+        default: ""
+      },
+      leaveToClass: {
+        type: String,
+        default: ""
+      },
     },
 
     computed: {
@@ -54,9 +79,12 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
           case 'right':
             return 'slide-right';
           default:
-            return this.transition === 'none' ? '' : this.transition
+            return null
         }
       },
+      styles(){
+        return `-webkit-transition-duration: ${this.currentDuration}ms;transition-duration: ${this.currentDuration}ms;${this.display ? '' : 'display: none;'} ${this.customStyle}`
+      }
     },
 
     data() {
@@ -65,7 +93,7 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
         inited: false,
         display: false,
         classes: '',
-        currentDuration: 0
+        currentDuration: 0,
       }
     },
 
@@ -88,9 +116,8 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
           name,
           transitionName,
         } = this;
-
-        const classNames = getClassNames.call(this, isUseComputedPropTransitionName ? transitionName : name);
-        const currentDuration = (isUseComputedPropTransitionName && this.transitionName === '') ? 0 :
+        const classNames = getClassNames.call(this, transitionName || name);
+        const currentDuration =
           (isObj(duration) ? duration.enter : duration);
 
         this.status = 'enter';
@@ -106,12 +133,7 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
             this.display = true;
             this.classes = classNames.enter;
             this.currentDuration = currentDuration
-            // this.setData({
-            //   inited: true,
-            //   display: true,
-            //   classes: classNames.enter,
-            //   currentDuration
-            // });
+
           })
           .then(nextTick)
           .then(() => {
@@ -119,9 +141,7 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
             this.transitionEnded = false;
 
             this.classes = classNames['enter-to']
-            // this.setData({
-            //   classes: classNames['enter-to']
-            // });
+
           })
           .catch(() => {});
       },
@@ -136,8 +156,8 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
           name,
           transitionName,
         } = this;
-        const classNames = getClassNames.call(this, isUseComputedPropTransitionName ? transitionName : name);
-        const currentDuration = (isUseComputedPropTransitionName && this.transitionName === '') ? 0 :
+        const classNames = getClassNames.call(this, transitionName || name);
+        const currentDuration =
           (isObj(duration) ? duration.enter : duration);
 
         this.status = 'leave';
@@ -151,10 +171,7 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
 
             this.classes = classNames.leave
             this.currentDuration = currentDuration
-            // this.setData({
-            //   classes: classNames.leave,
-            //   currentDuration
-            // });
+
           })
           .then(nextTick)
           .then(() => {
@@ -163,9 +180,7 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
             setTimeout(() => this.onTransitionEnd(), this.currentDuration);
 
             this.classes = classNames['leave-to']
-            // this.setData({
-            //   classes: classNames['leave-to']
-            // });
+
           })
           .catch(() => {});
       },
@@ -190,9 +205,6 @@ export const transition = function (showDefaultValue, isUseComputedPropTransitio
         } = this;
         if (!show && display) {
           this.display = false
-          // this.setData({
-          //   display: false
-          // });
         }
       }
     },
