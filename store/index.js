@@ -8,8 +8,6 @@ import loadingPlugin from "./plugins/loading/loadingPlugin";
 import reloadPlugin from "./plugins/reload/reloadPlugin";
 
 import home from '../pages/home/models/home';
-import tabbar from '../pages/tabbar/models/tabbar';
-import login from '../pages/login/models/login';
 
 
 Vue.use(Vuex);
@@ -21,8 +19,6 @@ mutations,
 plugins: [loadingPlugin, reloadPlugin],
 modules: {
     home,
-    tabbar,
-    login,
 
 },
 });

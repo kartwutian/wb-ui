@@ -5,29 +5,17 @@
   "main": "main.js",
   "scripts": {
     "generateApis": "node ./scripts/fetch/index.js",
-    "generatePages": "node ./scripts/generatePages.js",
-    "generateDocs": "node ./scripts/generateDocs.js",
-    "docs:dev": "cross-env NODE_ENV=development vuepress dev docs",
-    "docs:build": "cross-env NODE_ENV=production vuepress build docs"
+    "generatePages": "node ./scripts/generatePages.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@vant/icons": "^1.1.15",
     "qs": "^6.9.0",
     "vue-i18n": "^8.14.1"
   },
   "devDependencies": {
     "cross-env": "^6.0.3",
-    "ejs": "^2.7.1",
-    "gulp": "^4.0.2",
-    "gulp-file-include": "^2.1.0",
-    "gulp-footer": "^2.0.2",
-    "gulp-header": "^2.0.9",
-    "gulp-rename": "^1.4.0",
-    "gulp-replace": "^1.0.0",
-    "vuepress": "^1.2.0",
-    "woff2base64": "^2.0.0"
+    "ejs": "^2.7.1"
   }
 }

@@ -183,7 +183,7 @@
   }));
 
   // 自动引入pages的样式
-  fs.writeFileSync(path.resolve(__dirname, '../pages.less'), ejs.render(templateLessEntry.toString(), {
+  fs.writeFileSync(path.resolve(__dirname, '../styles/pages.less'), ejs.render(templateLessEntry.toString(), {
     pageGlobalStyles,
   }));
 

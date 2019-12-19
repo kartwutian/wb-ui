@@ -1,6 +1,6 @@
 {
-    "name" : "wb-ui",
-    "appid" : "__UNI__7590120",
+    "name" : "wb-ui", // 改为你自己的项目名
+    "appid" : "__UNI__7590120", // 改为自己项目的appid,在hbuilder平台注册
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
