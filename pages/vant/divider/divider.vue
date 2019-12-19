@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style lang="less">
-page {
+.pages-divider {
   background-color: white;
 }
 </style>
