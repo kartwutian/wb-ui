@@ -196,12 +196,24 @@ export default {
 通过`sticky`属性可以开启粘性布局，粘性布局下，当 Tab 滚动到顶部时会自动吸顶
 
 ```html
-<van-tabs sticky>
-  <van-tab title="标签 1">内容 1</van-tab>
-  <van-tab title="标签 2">内容 2</van-tab>
-  <van-tab title="标签 3">内容 3</van-tab>
-  <van-tab title="标签 4">内容 4</van-tab>
-</van-tabs>
+<view id="my-sticky">
+    <van-tabs
+        sticky
+        wrap-id="my-sticky"
+        :z-index="10000"
+        @scroll="onScroll"
+    >
+      <van-tab
+          v-for="(item, index) in [1,2,3,4]"
+          :key="index"
+          :title="'标签 ' + item"
+      >
+        <view class="content">
+          {{ '内容' + item }}
+        </view>
+      </van-tab>
+    </van-tabs>
+</view>
 ```
 
 ### 切换动画
@@ -302,7 +314,7 @@ export default {
 | swipeable | 是否开启手势滑动切换 | *boolean* | `false` | - |
 | sticky | 是否使用粘性定位布局 | *boolean* | `false` | - |
 | offset-top | 粘性定位布局下与顶部的最小距离，单位 px | *number* | `0` | - |
-
+| wrap-id | 当前组件外层元素的id，保证能获取当前.van-sticky,H5端页面存在多个van-sticky时必须传 | *string* | `` | - |
 ### Tab API
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
