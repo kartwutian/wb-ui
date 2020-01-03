@@ -94,20 +94,25 @@
     </demo-block>
 
     <demo-block title="粘性布局">
-      <van-tabs
-        sticky
-        @scroll="onScroll"
-      >
-        <van-tab
-          v-for="(item, index) in [1,2,3,4]"
-          :key="index"
-          :title="'标签 ' + item"
+      <view id="my-sticky">
+        <van-tabs
+            sticky
+            wrap-id="my-sticky"
+            :z-index="10000"
+            @scroll="onScroll"
         >
-          <view class="content">
-            {{ '内容' + item }}
-          </view>
-        </van-tab>
-      </van-tabs>
+          <van-tab
+              v-for="(item, index) in [1,2,3,4]"
+              :key="index"
+              :title="'标签 ' + item"
+          >
+            <view class="content">
+              {{ '内容' + item }}
+            </view>
+          </van-tab>
+        </van-tabs>
+      </view>
+
     </demo-block>
 
     <demo-block title="切换动画">
@@ -164,6 +169,7 @@
         </van-tab>
       </van-tabs>
     </demo-block>
+    <view style="height: 2000px;"></view>
   </view>
 </template>
 

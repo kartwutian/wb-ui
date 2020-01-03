@@ -49,6 +49,7 @@ import VanSticky from "@/components/vant/sticky/index";
 | offset-top | 吸顶时与顶部的距离，单位`px` | *number* | `0` |
 | z-index | 吸顶时的 z-index | *number* | `99` |
 | disabled | 是否禁用粘性 | *boolean* | `false` | - |
+| wrap-id | 当前组件外层元素的id，保证能获取当前.van-sticky | *string* | `` | - |
 
 ### Events
 
