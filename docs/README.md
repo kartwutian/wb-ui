@@ -16,8 +16,14 @@ footer: MIT Licensed | Copyright © 2019-present
 
 ```bash
 
-# 克隆项目
-$ git clone http://183.131.202.93:9080/baohz/wb-ui-uniapp.git
+# 安装脚手架
+$ npm i -g wanbo-cli
+
+# 生成wb-uni-pro项目
+$ wanbo init wb-uni-pro
+
+# 进入到项目根目录
+$ cd wb-uni-pro
 
 # Install deps 安装依赖
 $ yarn add # or npm install
