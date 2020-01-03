@@ -302,7 +302,7 @@ export default {
 | swipeable | 是否开启手势滑动切换 | *boolean* | `false` | - |
 | sticky | 是否使用粘性定位布局 | *boolean* | `false` | - |
 | offset-top | 粘性定位布局下与顶部的最小距离，单位 px | *number* | `0` | - |
-
+| wrap-id | 当前组件外层元素的id，保证能获取当前.van-sticky,H5端页面存在多个van-sticky时必须传 | *string* | `` | - |
 ### Tab API
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |

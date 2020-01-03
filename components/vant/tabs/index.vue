@@ -1,7 +1,7 @@
 <template>
 
 <view :class="tabsClass">
-  <van-sticky :disabled="!sticky" :z-index="zIndex" :offset-top="offsetTop" @scroll="onTouchScroll">
+  <van-sticky :disabled="!sticky" :z-index="zIndex" :offset-top="offsetTop" :wrap-id="wrapId" @scroll="onTouchScroll">
     <view
       :style="'z-index: ' + zIndex + '; ' + wrapStyle"
       :class="tabsWrapClass"
@@ -93,6 +93,10 @@ export default {
     sticky: Boolean,
     animated: Boolean,
     swipeable: Boolean,
+    wrapId: {
+      type: String,
+      default: ''
+    },
     navClass: {
       type: String,
       default: ''

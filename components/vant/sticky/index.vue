@@ -32,6 +32,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    wrapId: {
+      type: String,
+      default: '',
     }
   },
 
@@ -70,13 +74,21 @@ export default {
       });
       this.intersectionObserver = intersectionObserver;
       intersectionObserver.relativeToViewport({ top: -offsetTop });
+      let selector = '.van-sticky';
+      // 兼容不同平台，H5平台多个.van-sticky节点的情况下无法准确获取当前节点的情况
+      //#ifdef APP-PLUS || H5
+      if(this.wrapId){
+        selector = '#' + this.wrapId +  ' ' + selector;
+      }
+      //#endif
+
       intersectionObserver.observe(
-        '.van-sticky',
+        selector,
         (res) => {
           if (this.disabled) {
             return;
           }
-          console.log(res)
+          // console.log(res)
 
           // @ts-ignore
           const { top, height } = res.boundingClientRect;
