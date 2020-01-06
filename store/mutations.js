@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import {resetState} from "../utils/helper";
+import {deepCombine} from "../utils/helper";
 
 export default {
 
@@ -13,8 +13,6 @@ export default {
     if(payload.payload){
       realPayload = payload.payload
     }
-    Object.keys(realPayload).forEach(key => {
-      resetState(state[key], realPayload)
-    })
+    deepCombine(state, realPayload, true);
   },
 };
