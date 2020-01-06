@@ -153,7 +153,7 @@ export function deepCompare(a, b) {
  * @param isWatch Boolean，是否监听变化，用于vue store等
  * @returns {*}
  */
-function deepCombine(a, b, isWatch = false) {
+export function deepCombine(a, b, isWatch = false) {
   if (!isObject(b)) {
     return b;
   }
