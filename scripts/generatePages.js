@@ -140,11 +140,11 @@
 
     await dirExists(realDirPath); // 没有目录则递归创建,有则什么都不干
 
-    if(!realLastStyleFileStat){
-      fs.writeFileSync(realLastStyleFilePath, ejs.render(templateLess.toString(), {
-        name: pageClassName,
-      }));
-    }
+    // if(!realLastStyleFileStat){
+    //   fs.writeFileSync(realLastStyleFilePath, ejs.render(templateLess.toString(), {
+    //     name: pageClassName,
+    //   }));
+    // }
 
     if(!realLastFileStat){
       fs.writeFileSync(realLastFilePath, ejs.render(templatePage.toString(), {
@@ -183,9 +183,9 @@
   }));
 
   // 自动引入pages的样式
-  fs.writeFileSync(path.resolve(__dirname, '../pages.less'), ejs.render(templateLessEntry.toString(), {
-    pageGlobalStyles,
-  }));
+  // fs.writeFileSync(path.resolve(__dirname, '../pages.less'), ejs.render(templateLessEntry.toString(), {
+  //   pageGlobalStyles,
+  // }));
 
   console.log('ok！')
 })();
