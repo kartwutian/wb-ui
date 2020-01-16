@@ -28,6 +28,9 @@
     "gulp-rename": "^1.4.0",
     "gulp-replace": "^1.0.0",
     "vuepress": "^1.2.0",
-    "woff2base64": "^2.0.0"
+    "woff2base64": "^2.0.0",
+    "husky": "^4.0.10",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1"
   }
 }
