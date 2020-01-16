@@ -5,7 +5,9 @@
   "main": "main.js",
   "scripts": {
     "generateApis": "node ./scripts/fetch/index.js",
-    "generatePages": "node ./scripts/generatePages.js"
+    "generatePages": "node ./scripts/generatePages.js",
+    "prettier": "prettier --write ./**/**",
+    "prettier:staged": "lint-staged"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,20 @@
   },
   "devDependencies": {
     "cross-env": "^6.0.3",
-    "ejs": "^2.7.1"
+    "ejs": "^2.7.1",
+    "husky": "^4.0.10",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,json,md,vue}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

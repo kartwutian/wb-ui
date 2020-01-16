@@ -1,0 +1,17 @@
+/node_modules/
+/dist/
+/build/
+/unpackage/
+/docs/.vuepress/dist/
+/scripts/template/
+/static/
+
+.idea
+package-lock.json
+package.json
+yarn.lock
+.editorconfig
+.gitignore
+.prettierignore
+/**/*.min.js
+/**/*.md
