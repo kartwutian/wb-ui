@@ -1,9 +1,8 @@
-
 export const touch = {
   methods: {
     touchStart(event) {
       const touch = event.touches[0];
-      this.direction = '';
+      this.direction = "";
       this.deltaX = 0;
       this.deltaY = 0;
       this.offsetX = 0;
@@ -20,10 +19,10 @@ export const touch = {
       this.offsetY = Math.abs(this.deltaY);
       this.direction =
         this.offsetX > this.offsetY
-          ? 'horizontal'
+          ? "horizontal"
           : this.offsetX < this.offsetY
-            ? 'vertical'
-            : '';
+          ? "vertical"
+          : "";
     }
   }
 };

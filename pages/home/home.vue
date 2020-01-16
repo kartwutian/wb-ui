@@ -5,22 +5,15 @@
 </template>
 
 <script>
-  export default {
-    name: 'pages-home',
-    onLoad(){
-
-    },
-    onUnload(){
-
-    },
-    methods: {
-
-    }
-  }
+export default {
+  name: "pages-home",
+  onLoad() {},
+  onUnload() {},
+  methods: {}
+};
 </script>
 
 <style lang="less">
-  .pages-home{
-
-  }
+.pages-home {
+}
 </style>

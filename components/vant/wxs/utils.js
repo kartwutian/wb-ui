@@ -1,5 +1,5 @@
-import bem from './bem'
-import memoize from './memoize'
+import bem from "./bem";
+import memoize from "./memoize";
 
 export default {
   bem: memoize(bem),

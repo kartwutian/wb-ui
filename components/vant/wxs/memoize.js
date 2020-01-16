@@ -6,10 +6,10 @@
 function isPrimitive(value) {
   var type = typeof value;
   return (
-    type === 'boolean' ||
-    type === 'number' ||
-    type === 'string' ||
-    type === 'undefined' ||
+    type === "boolean" ||
+    type === "number" ||
+    type === "string" ||
+    type === "undefined" ||
     value === null
   );
 }
@@ -33,7 +33,7 @@ function serializer(args) {
   }
   var obj = {};
   for (var i = 0; i < args.length; i++) {
-    obj['key' + i] = args[i];
+    obj["key" + i] = args[i];
   }
   return JSON.stringify(obj);
 }
@@ -52,4 +52,3 @@ function memoize(fn) {
 }
 
 export default memoize;
-

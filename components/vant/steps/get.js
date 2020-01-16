@@ -1,11 +1,11 @@
 function get(index, active) {
   if (index < active) {
-    return 'finish';
+    return "finish";
   } else if (index === active) {
-    return 'process';
+    return "process";
   }
 
-  return '';
+  return "";
 }
 
 module.exports = get;

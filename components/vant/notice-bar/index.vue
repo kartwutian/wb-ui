@@ -1,64 +1,52 @@
 <template>
-
   <view
-    v-if=" show "
+    v-if="show"
     :class="noticeBar"
-    :style="'color:'+ color + '; background-color:' + backgroundColor "
+    :style="'color:' + color + '; background-color:' + backgroundColor"
     @tap="onClick"
   >
     <van-icon
-      v-if=" leftIcon "
+      v-if="leftIcon"
       size="32rpx"
-      :name=" leftIcon "
+      :name="leftIcon"
       class="van-notice-bar__left-icon"
     />
-    <slot
-      v-else
-      name="left-icon"
-    />
+    <slot v-else name="left-icon" />
 
     <view class="van-notice-bar__wrap">
       <view
-        :class="'van-notice-bar__content' + (!scrollable && !wrapable ? 'van-ellipsis' : '') "
-        :animation=" animationData "
+        :class="
+          'van-notice-bar__content' +
+            (!scrollable && !wrapable ? 'van-ellipsis' : '')
+        "
+        :animation="animationData"
       >
         {{ text }}
       </view>
     </view>
 
     <van-icon
-      v-if=" mode === 'closeable' "
+      v-if="mode === 'closeable'"
       class="van-notice-bar__right-icon"
       name="cross"
       @tap="onClickIcon"
     />
-    <navigator
-      v-else-if=" mode === 'link' "
-      :url=" url "
-      :open-type=" openType "
-    >
-      <van-icon
-        class="van-notice-bar__right-icon"
-        name="arrow"
-      />
+    <navigator v-else-if="mode === 'link'" :url="url" :open-type="openType">
+      <van-icon class="van-notice-bar__right-icon" name="arrow" />
     </navigator>
-    <slot
-      v-else
-      name="right-icon"
-    />
+    <slot v-else name="right-icon" />
   </view>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-import { basic } from '../mixins/basic';
-import VanIcon from "../icon/index"
+import utils from "../wxs/utils";
+import { basic } from "../mixins/basic";
+import VanIcon from "../icon/index";
 
 // import { Weapp } from 'definitions/weapp';
 
-const FONT_COLOR = '#ed6a0c';
-const BG_COLOR = '#fffbe8';
+const FONT_COLOR = "#ed6a0c";
+const BG_COLOR = "#fffbe8";
 
 export default {
   name: "van-notice-bar",
@@ -67,19 +55,19 @@ export default {
   props: {
     text: {
       type: String,
-      default: ''
+      default: ""
     },
     mode: {
       type: String,
-      default: ''
+      default: ""
     },
     url: {
       type: String,
-      default: ''
+      default: ""
     },
     openType: {
       type: String,
-      default: 'navigate'
+      default: "navigate"
     },
     delay: {
       type: Number,
@@ -95,7 +83,7 @@ export default {
     },
     leftIcon: {
       type: String,
-      default: ''
+      default: ""
     },
     color: {
       type: String,
@@ -108,46 +96,48 @@ export default {
     wrapable: Boolean
   },
 
-  data () {
+  data() {
     return {
       show: true,
       animationData: {}
-    }
+    };
   },
 
   watch: {
-    text () {
-      this.init()
+    text() {
+      this.init();
     }
   },
 
-  beforeCreate () {
+  beforeCreate() {
     this.$nextTick(() => {
       this.resetAnimation = uni.createAnimation({
         duration: 0,
-        timingFunction: 'linear'
-      })
-      this.init()
-    })
-
+        timingFunction: "linear"
+      });
+      this.init();
+    });
   },
 
   computed: {
-    noticeBar () {
-      return `${this.customClass} ${utils.bem('notice-bar', { withicon: this.mode, wrapable: this.wrapable })}`
+    noticeBar() {
+      return `${this.customClass} ${utils.bem("notice-bar", {
+        withicon: this.mode,
+        wrapable: this.wrapable
+      })}`;
     }
   },
 
-  destroyed () {
+  destroyed() {
     this.timer && clearTimeout(this.timer);
   },
 
   methods: {
-    init () {
+    init() {
       Promise.all([
-        this.getRect('.van-notice-bar__content'),
-        this.getRect('.van-notice-bar__wrap')
-      ]).then((rects) => {
+        this.getRect(".van-notice-bar__content"),
+        this.getRect(".van-notice-bar__wrap")
+      ]).then(rects => {
         const [contentRect, wrapRect] = rects;
         if (
           contentRect == null ||
@@ -168,7 +158,7 @@ export default {
           this.duration = duration;
           this.animation = uni.createAnimation({
             duration,
-            timingFunction: 'linear',
+            timingFunction: "linear",
             delay
           });
 
@@ -177,20 +167,20 @@ export default {
       });
     },
 
-    scroll () {
+    scroll() {
       this.timer && clearTimeout(this.timer);
       this.timer = null;
 
       this.animationData = this.resetAnimation
         .translateX(this.wrapWidth)
         .step()
-        .export()
+        .export();
 
       setTimeout(() => {
         this.animationData = this.animation
           .translateX(-this.contentWidth)
           .step()
-          .export()
+          .export();
       }, 20);
 
       this.timer = setTimeout(() => {
@@ -198,21 +188,19 @@ export default {
       }, this.duration);
     },
 
-    onClickIcon () {
+    onClickIcon() {
       this.timer && clearTimeout(this.timer);
       this.timer = null;
 
       // this.setData({ show: false });
-      this.show = false
+      this.show = false;
     },
 
-    onClick (event) {
-      this.$emit('click', event);
+    onClick(event) {
+      this.$emit("click", event);
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

@@ -1,63 +1,47 @@
 <template>
-
   <view :class="customClass + ' van-card'">
     <view :class="cardHealper">
-      <view
-        class="van-card__thumb"
-        @tap="onClickThumb"
-      >
+      <view class="van-card__thumb" @tap="onClickThumb">
         <image
-          v-if=" thumb "
-          :src=" thumb "
-          :mode=" thumbMode "
-          :lazy-load=" lazyLoad "
+          v-if="thumb"
+          :src="thumb"
+          :mode="thumbMode"
+          :lazy-load="lazyLoad"
           :class="'van-card__img ' + thumbClass"
         />
         <slot name="thumb" />
-        <van-tag
-          v-if=" tag "
-          mark
-          type="danger"
-          custom-class="van-card__tag"
-        >
+        <van-tag v-if="tag" mark type="danger" custom-class="van-card__tag">
           {{ tag }}
         </van-tag>
       </view>
 
       <view class="van-card__content">
-        <view
-          v-if=" title "
-          :class="'van-card__title ' + titleClass"
-        >{{ title }}</view>
-        <slot
-          v-else
-          name="title"
-        />
+        <view v-if="title" :class="'van-card__title ' + titleClass">{{
+          title
+        }}</view>
+        <slot v-else name="title" />
 
-        <view
-          v-if=" desc "
-          :class="'van-card__desc ' + descClass"
-        >{{ desc }}</view>
-        <slot
-          v-else
-          name="desc"
-        />
+        <view v-if="desc" :class="'van-card__desc ' + descClass">{{
+          desc
+        }}</view>
+        <slot v-else name="desc" />
 
         <slot name="tags" />
 
         <view class="van-card__bottom">
           <view
-            v-if=" price || price === 0 "
+            v-if="price || price === 0"
             :class="'van-card__price ' + priceClass"
-          >{{ currency }} {{ price }}</view>
+            >{{ currency }} {{ price }}</view
+          >
           <view
-            v-if=" originPrice || originPrice === 0 "
+            v-if="originPrice || originPrice === 0"
             :class="'van-card__origin-price ' + originpriceClass"
-          >{{ currency }} {{ originPrice }}</view>
-          <view
-            v-if=" num "
-            :class="'van-card__num ' + numClass"
-          >x {{ num }}</view>
+            >{{ currency }} {{ originPrice }}</view
+          >
+          <view v-if="num" :class="'van-card__num ' + numClass"
+            >x {{ num }}</view
+          >
           <slot name="bottom" />
         </view>
       </view>
@@ -67,14 +51,13 @@
       <slot name="footer" />
     </view>
   </view>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-import { link } from '../mixins/link';
-import { basic } from '../mixins/basic';
-import VanTag from "../tag/index"
+import utils from "../wxs/utils";
+import { link } from "../mixins/link";
+import { basic } from "../mixins/basic";
+import VanTag from "../tag/index";
 
 export default {
   name: "van-card",
@@ -103,54 +86,52 @@ export default {
     originPrice: String,
     thumbMode: {
       type: String,
-      default: 'aspectFit'
+      default: "aspectFit"
     },
     currency: {
       type: String,
-      default: '¥'
+      default: "¥"
     },
     numClass: {
       type: String,
-      default: ''
+      default: ""
     },
     descClass: {
       type: String,
-      default: ''
+      default: ""
     },
     thumbClass: {
       type: String,
-      default: ''
+      default: ""
     },
     titleClass: {
       type: String,
-      default: ''
+      default: ""
     },
     priceClass: {
       type: String,
-      default: ''
+      default: ""
     },
     originpriceClass: {
       type: String,
-      default: ''
+      default: ""
     }
   },
 
   computed: {
-    cardHealper () {
+    cardHealper() {
       // {{ utils.bem('card__header', { center: centered }) }}
-      return `${utils.bem('card__header', { center: this.centered })}`
+      return `${utils.bem("card__header", { center: this.centered })}`;
     }
   },
 
   methods: {
-    onClickThumb () {
-      this.$emit("click-thumb")
-      this.jumpLink('thumbLink');
+    onClickThumb() {
+      this.$emit("click-thumb");
+      this.jumpLink("thumbLink");
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

@@ -74,31 +74,31 @@ const Dialog = options => {
       });
       queue.push(dialog);
     } else {
-      console.warn('未找到 van-dialog 节点，请确认 ref 及 context 是否正确');
+      console.warn("未找到 van-dialog 节点，请确认 ref 及 context 是否正确");
     }
   });
 };
 
 Dialog.defaultOptions = {
   show: true,
-  title: '',
+  title: "",
   width: null,
-  message: '',
+  message: "",
   zIndex: 100,
   overlay: true,
-  refName: 'van-dialog',
-  className: '',
+  refName: "van-dialog",
+  className: "",
   asyncClose: false,
-  transition: 'scale',
-  customStyle: '',
-  messageAlign: '',
-  overlayStyle: '',
-  confirmButtonText: '确认',
-  cancelButtonText: '取消',
+  transition: "scale",
+  customStyle: "",
+  messageAlign: "",
+  overlayStyle: "",
+  confirmButtonText: "确认",
+  cancelButtonText: "取消",
   showConfirmButton: true,
   showCancelButton: false,
   closeOnClickOverlay: false,
-  confirmButtonOpenType: ''
+  confirmButtonOpenType: ""
 };
 
 Dialog.alert = Dialog;

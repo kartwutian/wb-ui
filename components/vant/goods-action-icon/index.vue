@@ -1,20 +1,20 @@
 <template>
   <van-button
     square
-    :id=" id "
+    :id="id"
     size="large"
-    :lang=" lang "
-    :loading=" loading "
-    :disabled=" disabled "
-    :open-type=" openType "
-    :business-id=" businessId "
+    :lang="lang"
+    :loading="loading"
+    :disabled="disabled"
+    :open-type="openType"
+    :business-id="businessId"
     custom-class="van-goods-action-icon"
-    :session-from=" sessionFrom "
-    :app-parameter=" appParameter "
-    :send-message-img=" sendMessageImg "
-    :send-message-path=" sendMessagePath "
-    :show-message-card=" showMessageCard "
-    :send-message-title=" sendMessageTitle "
+    :session-from="sessionFrom"
+    :app-parameter="appParameter"
+    :send-message-img="sendMessageImg"
+    :send-message-path="sendMessagePath"
+    :show-message-card="showMessageCard"
+    :send-message-title="sendMessageTitle"
     @click="onClick"
     @error="bindError"
     @contact="bindContact"
@@ -25,11 +25,11 @@
   >
     <view class="van-goods-action-icon__content">
       <van-icon
-        v-if=" icon "
+        v-if="icon"
         size="40rpx"
-        :name=" icon "
-        :dot=" dot "
-        :info=" info "
+        :name="icon"
+        :dot="dot"
+        :info="info"
         class="van-goods-action-icon__icon"
         :custom-class="iconClass"
       />
@@ -37,18 +37,16 @@
       <text :class="textClass">{{ text }}</text>
     </view>
   </van-button>
-
 </template>
 
 <script>
-
-import { link } from '../mixins/link';
-import { button } from '../mixins/button';
-import { openType } from '../mixins/open-type';
+import { link } from "../mixins/link";
+import { button } from "../mixins/button";
+import { openType } from "../mixins/open-type";
 // import { Weapp } from 'definitions/weapp';
-import { type } from 'os';
-import VanIcon from "../icon/index"
-import VanButton from "../button/index"
+import { type } from "os";
+import VanIcon from "../icon/index";
+import VanButton from "../button/index";
 
 export default {
   name: "van-goods-action-icon",
@@ -70,18 +68,16 @@ export default {
     textClass: {
       type: String,
       default: ""
-    },
+    }
   },
 
   methods: {
-    onClick (event) {
-      this.$emit('click');
+    onClick(event) {
+      this.$emit("click");
       this.jumpLink();
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

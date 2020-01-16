@@ -1,34 +1,31 @@
 <template>
-    <view :class="'van-sidebar van-hairline--top-bottom ' + customClass">
-  <slot />
-</view>
-
+  <view :class="'van-sidebar van-hairline--top-bottom ' + customClass">
+    <slot />
+  </view>
 </template>
 
 <script>
-
-import {basic} from "../mixins/basic";
+import { basic } from "../mixins/basic";
 
 export default {
-  name: 'van-sidebar',
+  name: "van-sidebar",
   mixins: [basic],
   relation: {
-    name: 'sidebar-item',
-    type: 'descendant',
-
+    name: "sidebar-item",
+    type: "descendant"
   },
 
   props: {
     active: {
       type: Number,
-      default: 0,
+      default: 0
     }
   },
 
-  data(){
+  data() {
     return {
-      currentActive: -1,
-    }
+      currentActive: -1
+    };
   },
 
   methods: {
@@ -66,12 +63,9 @@ export default {
   },
 
   watch: {
-    active: 'setActive',
+    active: "setActive"
   }
 };
-
 </script>
 
-<style lang="less">
-
-</style>
+<style lang="less"></style>

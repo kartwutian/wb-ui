@@ -3,12 +3,12 @@ export const link = {
     url: String,
     linkType: {
       type: String,
-      default: 'navigateTo'
+      default: "navigateTo"
     }
   },
 
   methods: {
-    jumpLink(urlKey = 'url') {
+    jumpLink(urlKey = "url") {
       const url = this[urlKey];
       if (url) {
         uni[this.linkType]({ url });

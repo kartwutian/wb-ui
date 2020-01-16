@@ -1,45 +1,53 @@
 <template>
-
-  <view
-    :class="'van-rate ' + customClass"
-    @touchmove="onTouchMove"
-  >
+  <view :class="'van-rate ' + customClass" @touchmove="onTouchMove">
     <view
       class="van-rate__item"
-      v-for=" (item,index) in count "
+      v-for="(item, index) in count"
       :key="index"
-      :style="'font-size:' + sizeWithUnit + ';padding-right:' + (index !== count - 1 ? gutterWithUnit : '') "
+      :style="
+        'font-size:' +
+          sizeWithUnit +
+          ';padding-right:' +
+          (index !== count - 1 ? gutterWithUnit : '')
+      "
     >
       <van-icon
-        :name=" index + 1 <= innerValue ? icon : voidIcon "
+        :name="index + 1 <= innerValue ? icon : voidIcon"
         class="van-rate__icon"
         :custom-class="iconClass"
-        :data-score=" index "
-        :color=" disabled ? disabledColor : index + 1 <= innerValue ? color : voidColor "
+        :data-score="index"
+        :color="
+          disabled ? disabledColor : index + 1 <= innerValue ? color : voidColor
+        "
         @click="onSelect(index)"
       />
 
       <van-icon
-        v-if=" allowHalf "
-        :name=" index + 0.5 <= innerValue ? icon : voidIcon "
+        v-if="allowHalf"
+        :name="index + 0.5 <= innerValue ? icon : voidIcon"
         :class="rateIcon"
         :custom-class="iconClass"
-        :data-score=" index - 0.5 "
-        :color=" disabled ? disabledColor : index + 0.5 <= innerValue ? color : voidColor "
+        :data-score="index - 0.5"
+        :color="
+          disabled
+            ? disabledColor
+            : index + 0.5 <= innerValue
+            ? color
+            : voidColor
+        "
         @click="onSelect(index - 0.5)"
       />
     </view>
   </view>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-import { basic } from '../mixins/basic';
+import utils from "../wxs/utils";
+import { basic } from "../mixins/basic";
 
 // import { Weapp } from 'definitions/weapp';
-import { addUnit } from '../common/utils';
-import VanIcon from "../icon/index"
+import { addUnit } from "../common/utils";
+import VanIcon from "../icon/index";
 
 export default {
   name: "van-rate",
@@ -47,41 +55,40 @@ export default {
   components: { VanIcon },
   mixins: [basic],
 
-
   props: {
     value: Number,
     readonly: Boolean,
     disabled: Boolean,
     allowHalf: Boolean,
     size: {
-      type: null,
+      type: null
     },
     icon: {
       type: String,
-      default: 'star'
+      default: "star"
     },
     voidIcon: {
       type: String,
-      default: 'star-o'
+      default: "star-o"
     },
     color: {
       type: String,
-      default: '#ffd21e'
+      default: "#ffd21e"
     },
     voidColor: {
       type: String,
-      default: '#c7c7c7'
+      default: "#c7c7c7"
     },
     disabledColor: {
       type: String,
-      default: '#bdbdbd'
+      default: "#bdbdbd"
     },
     count: {
       type: Number,
       default: 5
     },
     gutter: {
-      type: null,
+      type: null
     },
     touchable: {
       type: Boolean,
@@ -89,83 +96,78 @@ export default {
     },
     iconClass: {
       type: String,
-      default: ''
-    },
+      default: ""
+    }
   },
 
   computed: {
-    rateIcon () {
-      return `${utils.bem('rate__icon', ['half'])}`
+    rateIcon() {
+      return `${utils.bem("rate__icon", ["half"])}`;
     }
   },
 
-  data () {
+  data() {
     return {
       innerValue: 0,
       gutterWithUnit: undefined,
-      sizeWithUnit: '40rpx'
-    }
+      sizeWithUnit: "40rpx"
+    };
   },
 
-  beforeCreate () {
+  beforeCreate() {
     this.$nextTick(() => {
-      this.innerValue = this.value
-    })
+      this.innerValue = this.value;
+    });
   },
 
   watch: {
-    value (value) {
+    value(value) {
       if (value !== this.innerValue) {
-        this.innerValue = value
+        this.innerValue = value;
       }
     },
-    size () {
-      this.setSizeWithUnit()
+    size() {
+      this.setSizeWithUnit();
     },
-    gutter () {
-      this.setGutterWithUnit()
+    gutter() {
+      this.setGutterWithUnit();
     }
   },
 
   methods: {
-    setSizeWithUnit (val) {
-      this.sizeWithUnit = addUnit(val)
+    setSizeWithUnit(val) {
+      this.sizeWithUnit = addUnit(val);
     },
 
-    setGutterWithUnit (val) {
-      this.gutterWithUnit = addUnit(val)
+    setGutterWithUnit(val) {
+      this.gutterWithUnit = addUnit(val);
     },
 
-    onSelect (score) {
+    onSelect(score) {
       const scores = parseFloat(score);
       if (!this.disabled && !this.readonly) {
-        this.innerValue = scores + 1
-        this.$emit('input', scores + 1);
-        this.$emit('change', scores + 1);
+        this.innerValue = scores + 1;
+        this.$emit("input", scores + 1);
+        this.$emit("change", scores + 1);
       }
     },
 
-    onTouchMove (event) {
-
+    onTouchMove(event) {
       const { touchable } = this;
       if (!touchable) return;
 
       const { clientX } = event.touches[0];
-      this.getRect('.van-rate__icon', true).then(
-        (list) => {
-          const target = list
-            .sort(item => item.right - item.left)
-            .find(item => clientX >= item.left && clientX <= item.right);
-          if (target != null) {
-            this.onSelect(target.dataset.score);
-          }
+      this.getRect(".van-rate__icon", true).then(list => {
+        const target = list
+          .sort(item => item.right - item.left)
+          .find(item => clientX >= item.left && clientX <= item.right);
+        if (target != null) {
+          this.onSelect(target.dataset.score);
         }
-      );
+      });
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

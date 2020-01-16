@@ -1,8 +1,7 @@
-import Vue from 'vue'
-import {deepCombine} from "../utils/helper";
+import Vue from "vue";
+import { deepCombine } from "../utils/helper";
 
 export default {
-
   /**
    * 按payload更新state的值
    * @param {Object} state
@@ -10,9 +9,9 @@ export default {
    */
   updateState(state, payload) {
     let realPayload = payload;
-    if(payload.payload){
-      realPayload = payload.payload
+    if (payload.payload) {
+      realPayload = payload.payload;
     }
     deepCombine(state, realPayload, true);
-  },
+  }
 };

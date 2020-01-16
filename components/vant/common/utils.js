@@ -4,7 +4,7 @@ export function isDef(value) {
 
 export function isObj(x) {
   const type = typeof x;
-  return x !== null && (type === 'object' || type === 'function');
+  return x !== null && (type === "object" || type === "function");
 }
 
 export function isNumber(value) {
@@ -40,14 +40,17 @@ export function addUnit(value) {
 }
 
 export function queryParentComponent(currentComponent, tagName) {
-  if(!currentComponent) throw Error('请先传入要查找的组件');
-  if(!tagName) throw Error('缺少tagName');
-  if(!currentComponent.$parent){
+  if (!currentComponent) throw Error("请先传入要查找的组件");
+  if (!tagName) throw Error("缺少tagName");
+  if (!currentComponent.$parent) {
     return null;
   }
-  if(currentComponent.$parent.$options._componentTag === tagName || currentComponent.$parent.$options.name === tagName){
+  if (
+    currentComponent.$parent.$options._componentTag === tagName ||
+    currentComponent.$parent.$options.name === tagName
+  ) {
     return currentComponent.$parent;
-  }else{
+  } else {
     return queryParentComponent(currentComponent.$parent, tagName);
   }
 }

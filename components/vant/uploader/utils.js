@@ -1,4 +1,4 @@
-const IMAGE_EXT = ['jpeg', 'jpg', 'gif', 'png', 'svg'];
+const IMAGE_EXT = ["jpeg", "jpg", "gif", "png", "svg"];
 
 export function isImageUrl(url) {
   return IMAGE_EXT.some(ext => url.indexOf(`.${ext}`) !== -1);
@@ -6,7 +6,7 @@ export function isImageUrl(url) {
 
 export function isImageFile(item) {
   if (item.type) {
-    return item.type.indexOf('image') === 0;
+    return item.type.indexOf("image") === 0;
   }
 
   if (item.path) {

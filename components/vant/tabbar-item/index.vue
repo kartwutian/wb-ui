@@ -1,29 +1,18 @@
 <template>
-
   <view
     :class="tabbarItem"
-    :style="'color:' + (active ? activeColor : inactiveColor) "
+    :style="'color:' + (active ? activeColor : inactiveColor)"
     @tap="onClick"
   >
     <view :class="tabbarItemIcon">
-      <van-icon
-        v-if=" icon "
-        :name=" icon "
-        custom-style="display: block"
-      />
+      <van-icon v-if="icon" :name="icon" custom-style="display: block" />
       <block v-else>
-        <slot
-          v-if=" active "
-          name="icon-active"
-        />
-        <slot
-          v-else
-          name="icon"
-        />
+        <slot v-if="active" name="icon-active" />
+        <slot v-else name="icon" />
       </block>
       <van-info
-        v-if=" info !== null "
-        :info=" info "
+        v-if="info !== null"
+        :info="info"
         custom-style="margin-top: 4rpx"
       />
     </view>
@@ -31,17 +20,15 @@
       <slot />
     </view>
   </view>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-import { basic } from '../mixins/basic';
-import { set } from '../mixins/set';
-import { queryParentComponent } from '../common/utils';
+import utils from "../wxs/utils";
+import { basic } from "../mixins/basic";
+import { set } from "../mixins/set";
+import { queryParentComponent } from "../common/utils";
 import VanIcon from "../icon/index";
-import VanInfo from "../info/index"
-
+import VanInfo from "../info/index";
 
 export default {
   name: "van-tabbar-item",
@@ -55,28 +42,28 @@ export default {
   },
 
   relation: {
-    name: 'tabbar',
-    type: 'ancestor'//祖先
+    name: "tabbar",
+    type: "ancestor" //祖先
   },
 
-  data () {
+  data() {
     return {
       active: false,
       inactiveColor: "",
       activeColor: "",
-      hasParent: false, // 标记是否有父元素
-    }
+      hasParent: false // 标记是否有父元素
+    };
   },
 
-  mounted () {
-    this.parent = queryParentComponent(this, 'van-tabbar');
+  mounted() {
+    this.parent = queryParentComponent(this, "van-tabbar");
     if (this.parent) {
       this.hasParent = true;
       this.parent.linked(this);
     }
   },
 
-  destroyed () {
+  destroyed() {
     if (this.parent) {
       this.parent.unlinked(this);
       this.parent = null;
@@ -85,23 +72,25 @@ export default {
   },
 
   computed: {
-    tabbarItem () {
-      return `${utils.bem('tabbar-item', { active: this.active })} ${this.customClass}`
+    tabbarItem() {
+      return `${utils.bem("tabbar-item", { active: this.active })} ${
+        this.customClass
+      }`;
     },
-    tabbarItemIcon () {
-      return `${utils.bem('tabbar-item__icon', { dot: this.dot })}`
+    tabbarItemIcon() {
+      return `${utils.bem("tabbar-item__icon", { dot: this.dot })}`;
     }
   },
 
   methods: {
-    onClick () {
+    onClick() {
       if (this.parent) {
         this.parent.onChange(this);
       }
-      this.$emit('click');
+      this.$emit("click");
     },
 
-    updateFromParent () {
+    updateFromParent() {
       const { parent } = this;
       if (!parent) {
         return;
@@ -129,8 +118,6 @@ export default {
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

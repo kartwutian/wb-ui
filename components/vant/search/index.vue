@@ -1,38 +1,28 @@
 <template>
-
-  <view
-    :class="searchAction"
-    :style="{'background':background}"
-  >
+  <view :class="searchAction" :style="{ background: background }">
     <view :class="searchContent">
-      <view
-        class="van-search__label"
-        v-if=" label "
-      >{{ label }}</view>
-      <slot
-        v-else
-        name="label"
-      />
+      <view class="van-search__label" v-if="label">{{ label }}</view>
+      <slot v-else name="label" />
 
       <van-field
         type="search"
-        :left-icon=" !useLeftIconSlot ? leftIcon : '' "
-        :right-icon=" !useRightIconSlot ? rightIcon : '' "
-        :focus=" focus "
-        :error=" error "
-        :border=" false "
+        :left-icon="!useLeftIconSlot ? leftIcon : ''"
+        :right-icon="!useRightIconSlot ? rightIcon : ''"
+        :focus="focus"
+        :error="error"
+        :border="false"
         confirm-type="search"
-        :class="'van-search__field' +  fieldClass"
-        :value=" values "
+        :class="'van-search__field' + fieldClass"
+        :value="values"
         :titleWidth="titleWidth"
-        :disabled=" disabled "
-        :readonly=" readonly "
-        :clearable=" clearable "
-        :maxlength=" maxlength "
-        :input-align=" inputAlign "
+        :disabled="disabled"
+        :readonly="readonly"
+        :clearable="clearable"
+        :maxlength="maxlength"
+        :input-align="inputAlign"
         :input-class="inputClass"
-        :placeholder=" placeholder "
-        :placeholder-style=" placeholderStyle "
+        :placeholder="placeholder"
+        :placeholder-style="placeholderStyle"
         custom-style="padding: 10rpx 20rpx 10rpx 0; background-color: transparent;"
         @blur="onBlur"
         @focus="onFocus"
@@ -40,43 +30,27 @@
         @confirm="onSearch"
         @clear="onClear"
       >
-        <slot
-          v-if=" useLeftIconSlot "
-          name="left-icon"
-          slot="left-icon"
-        />
-        <slot
-          v-if=" useRightIconSlot "
-          name="right-icon"
-          slot="right-icon"
-        />
+        <slot v-if="useLeftIconSlot" name="left-icon" slot="left-icon" />
+        <slot v-if="useRightIconSlot" name="right-icon" slot="right-icon" />
       </van-field>
     </view>
 
     <view
-      v-if=" showAction || useActionSlot "
+      v-if="showAction || useActionSlot"
       class="van-search__action"
       hover-class="van-search__action--hover"
       :hover-stay-time="70"
     >
-      <slot
-        v-if=" useActionSlot "
-        name="action"
-      />
-      <view
-        v-else
-        @tap="onCancel"
-        :class="cancelClass"
-      >{{ actionText }}</view>
+      <slot v-if="useActionSlot" name="action" />
+      <view v-else @tap="onCancel" :class="cancelClass">{{ actionText }}</view>
     </view>
   </view>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-import { basic } from '../mixins/basic';
-import VanField from "../field/index"
+import utils from "../wxs/utils";
+import { basic } from "../mixins/basic";
+import VanField from "../field/index";
 
 // import { Weapp } from 'definitions/weapp';
 
@@ -86,8 +60,6 @@ export default {
   components: { VanField },
   // classes: ['field-class', 'input-class', 'cancel-class'],
   mixins: [basic],
-
-
 
   props: {
     label: String,
@@ -106,18 +78,18 @@ export default {
     },
     leftIcon: {
       type: String,
-      default: 'search'
+      default: "search"
     },
     rightIcon: String,
     placeholder: String,
     placeholderStyle: String,
     actionText: {
       type: String,
-      default: '取消'
+      default: "取消"
     },
     background: {
       type: String,
-      default: '#ffffff'
+      default: "#ffffff"
     },
     maxlength: {
       type: Number,
@@ -125,7 +97,7 @@ export default {
     },
     shape: {
       type: String,
-      default: 'square'
+      default: "square"
     },
     clearable: {
       type: Boolean,
@@ -150,72 +122,72 @@ export default {
   },
 
   computed: {
-    searchAction () {
+    searchAction() {
       // {{ utils.bem('search', { withaction: showAction || useActionSlot }) }} custom-class
-      return `${utils.bem('search', { withaction: this.showAction || this.useActionSlot })} ${this.customClass}`
+      return `${utils.bem("search", {
+        withaction: this.showAction || this.useActionSlot
+      })} ${this.customClass}`;
     },
-    searchContent () {
+    searchContent() {
       // utils.bem('search__content', [shape])
-      return `${utils.bem('search__content', [this.shape])}`
+      return `${utils.bem("search__content", [this.shape])}`;
     }
   },
 
-  data () {
+  data() {
     return {
       values: ""
-    }
+    };
   },
-  mounted () {
+  mounted() {
     setTimeout(() => {
       this.values = this.value;
-    })
+    });
   },
 
   watch: {
-    value (val) {
+    value(val) {
       this.values = val;
     }
   },
 
   methods: {
-    onChange (event) {
-      this.values = event
+    onChange(event) {
+      this.values = event;
       // this.setData({ value: event.detail });
-      this.$emit('change', event);
+      this.$emit("change", event);
     },
 
-    onCancel () {
+    onCancel() {
       /**
        * 修复修改输入框值时，输入框失焦和赋值同时触发，赋值失效
        * https://github.com/youzan/vant-weapp/issues/1768
        */
       setTimeout(() => {
         // this.setData({ value: '' });
-        this.$emit('cancel');
+        this.$emit("cancel");
         // this.$emit('change', '');
-        this.onChange("")
+        this.onChange("");
       }, 200);
     },
 
-    onSearch (val) {
-      this.$emit('search', val);
+    onSearch(val) {
+      this.$emit("search", val);
     },
 
-    onFocus (val) {
-      this.$emit('focus', val);
+    onFocus(val) {
+      this.$emit("focus", val);
     },
 
-    onBlur (val) {
-      this.$emit('blur', val);
+    onBlur(val) {
+      this.$emit("blur", val);
     },
 
-    onClear () {
-      this.$emit('clear');
-    },
+    onClear() {
+      this.$emit("clear");
+    }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

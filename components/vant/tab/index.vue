@@ -1,26 +1,20 @@
 <template>
-
-<view
-  v-if=" animated || inited "
-  :class="classes"
-  :style="style"
->
-  <slot />
-</view>
-
+  <view v-if="animated || inited" :class="classes" :style="style">
+    <slot />
+  </view>
 </template>
 
 <script>
-  import {basic} from '../mixins/basic'
-  import utils from '../wxs/utils';
-  import {queryParentComponent} from "../common/utils";
+import { basic } from "../mixins/basic";
+import utils from "../wxs/utils";
+import { queryParentComponent } from "../common/utils";
 
-  export default {
-  name: 'van-tab',
+export default {
+  name: "van-tab",
   mixins: [basic],
   relation: {
-    name: 'tabs',
-    type: 'ancestor'
+    name: "tabs",
+    type: "ancestor"
   },
 
   props: {
@@ -31,7 +25,7 @@
     titleStyle: String,
     name: {
       type: Number | String,
-      default: '',
+      default: ""
     }
   },
 
@@ -42,34 +36,38 @@
       active: false,
       animated: false,
 
-      hasParent: false, // 标记是否有父元素
+      hasParent: false // 标记是否有父元素
     };
   },
 
   computed: {
-    classes(){
-      return `${this.customClass} ${utils.bem('tab__pane', { active: this.active, inactive: !this.active })}`
+    classes() {
+      return `${this.customClass} ${utils.bem("tab__pane", {
+        active: this.active,
+        inactive: !this.active
+      })}`;
     },
-    style(){
-      return `${this.animated || this.active ? '' : 'display: none;'} ${this.width ? 'width:' + this.width + 'px;' : ''}`
-    },
+    style() {
+      return `${this.animated || this.active ? "" : "display: none;"} ${
+        this.width ? "width:" + this.width + "px;" : ""
+      }`;
+    }
     // computedName(){
     //   return this.name || this.index;
     // },
   },
 
-
   mounted() {
-    this.parent = queryParentComponent(this, 'van-tabs');
+    this.parent = queryParentComponent(this, "van-tabs");
 
-    if(this.parent){
+    if (this.parent) {
       this.hasParent = true;
       this.parent.linked(this);
     }
   },
 
   destroyed() {
-    if(this.parent){
+    if (this.parent) {
       this.parent.unlinked(this);
       this.parent = null;
       this.hasParent = false;
@@ -77,11 +75,11 @@
   },
 
   watch: {
-    title: 'update',
-    disabled: 'update',
-    dot: 'update',
-    info: 'update',
-    titleStyle: 'update'
+    title: "update",
+    disabled: "update",
+    dot: "update",
+    info: "update",
+    titleStyle: "update"
   },
 
   methods: {
@@ -94,7 +92,7 @@
     },
 
     getComputedName() {
-      if (this.name !== '') {
+      if (this.name !== "") {
         return this.name;
       }
       return this.index;
@@ -107,9 +105,6 @@
     }
   }
 };
-
 </script>
 
-<style lang="less">
-
-</style>
+<style lang="less"></style>

@@ -1,19 +1,15 @@
 <template>
-
   <view :class="'van-submit-bar ' + customClass">
     <slot name="top" />
 
     <view class="van-submit-bar__tip">
       <van-icon
-        v-if=" tipIcon "
+        v-if="tipIcon"
         size="24rpx"
-        :name=" tipIcon "
+        :name="tipIcon"
         custom-class="van-submit-bar__tip-icon"
       />
-      <view
-        v-if=" hasTip "
-        class="van-submit-bar__tip-text"
-      >
+      <view v-if="hasTip" class="van-submit-bar__tip-text">
         {{ tip }}
       </view>
       <slot name="tip" />
@@ -21,11 +17,8 @@
 
     <view :class="barCount">
       <slot />
-      <view
-        v-if=" hasPrice "
-        class="van-submit-bar__text"
-      >
-        <text>{{ label || '合计：' }}</text>
+      <view v-if="hasPrice" class="van-submit-bar__text">
+        <text>{{ label || "合计：" }}</text>
         <text class="van-submit-bar__price price-class">
           <text class="van-submit-bar__currency">{{ currency }} </text>
           <text>{{ priceStr }}</text>
@@ -35,27 +28,25 @@
       <van-button
         square
         size="large"
-        :type=" buttonType "
-        :loading=" loading "
-        :disabled=" disabled "
+        :type="buttonType"
+        :loading="loading"
+        :disabled="disabled"
         class="van-submit-bar__button"
         custom-class="button-class"
         @tap="onSubmit"
       >
-        {{ loading ? '' : buttonText }}
+        {{ loading ? "" : buttonText }}
       </van-button>
     </view>
   </view>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-import { basic } from '../mixins/basic';
+import utils from "../wxs/utils";
+import { basic } from "../mixins/basic";
 import VanIcon from "../icon/index";
-import VanButton from "../button/index"
+import VanButton from "../button/index";
 // import { Weapp } from 'definitions/weapp';
-
 
 export default {
   name: "van-submit-bar",
@@ -69,13 +60,13 @@ export default {
 
   props: {
     tip: {
-      type: null,
+      type: null
       // observer: 'updateTip'
     },
     tipIcon: String,
     type: Number,
     price: {
-      type: null,
+      type: null
       // observer: 'updatePrice'
     },
     label: String,
@@ -84,15 +75,15 @@ export default {
     buttonText: String,
     currency: {
       type: String,
-      default: '¥'
+      default: "¥"
     },
     buttonType: {
       type: String,
-      default: 'danger'
+      default: "danger"
     },
     decimalLength: {
       type: Number,
-      default: 2,
+      default: 2
       // observer: 'updatePrice'
     },
     suffixLabel: String,
@@ -116,30 +107,29 @@ export default {
 
   computed: {
     // bar-class {{ utils.bem('submit-bar__bar', { safe: safeAreaInsetBottom }) }}
-    barCount () {
-      return `bar-class ${utils.bem('submit-bar__bar', { safe: this.safeAreaInsetBottom })}`
+    barCount() {
+      return `bar-class ${utils.bem("submit-bar__bar", {
+        safe: this.safeAreaInsetBottom
+      })}`;
     },
-    hasPrice () {
-      return (typeof this.price === 'number' || typeof this.price === "string");
+    hasPrice() {
+      return typeof this.price === "number" || typeof this.price === "string";
     },
 
-    priceStr () {
+    priceStr() {
       return (this.price / 100).toFixed(this.decimalLength);
     },
-    hasTip () {
-      return (typeof this.tip === 'string');
+    hasTip() {
+      return typeof this.tip === "string";
     }
   },
 
   methods: {
-
-    onSubmit (val) {
-      this.$emit('submit', this.price);
+    onSubmit(val) {
+      this.$emit("submit", this.price);
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

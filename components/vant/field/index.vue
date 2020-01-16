@@ -1,90 +1,80 @@
 <template>
-
   <van-cell
-    :size=" size "
-    :icon=" leftIcon "
-    :title=" label "
-    :center=" center "
-    :border=" border "
-    :is-link=" isLink "
-    :required=" required "
-    :clickable=" clickable "
-    :title-width=" titleWidth "
-    :custom-style=" customStyle "
-    :arrow-direction=" arrowDirection "
+    :size="size"
+    :icon="leftIcon"
+    :title="label"
+    :center="center"
+    :border="border"
+    :is-link="isLink"
+    :required="required"
+    :clickable="clickable"
+    :title-width="titleWidth"
+    :custom-style="customStyle"
+    :arrow-direction="arrowDirection"
     custom-class="van-field"
   >
-    <slot
-      name="left-icon"
-      slot="icon"
-    />
-    <slot
-      name="label"
-      slot="title"
-    />
+    <slot name="left-icon" slot="icon" />
+    <slot name="label" slot="title" />
     <view :class="fieldBody">
       <textarea
-        v-if=" type === 'textarea' "
+        v-if="type === 'textarea'"
         :class="fieldInputType"
-        :fixed=" fixed "
-        :focus=" focus "
-        :value=" value "
-        :disabled=" disabled || readonly "
-        :maxlength=" maxlength "
-        :placeholder=" placeholder "
-        :placeholder-style=" placeholderStyle "
+        :fixed="fixed"
+        :focus="focus"
+        :value="value"
+        :disabled="disabled || readonly"
+        :maxlength="maxlength"
+        :placeholder="placeholder"
+        :placeholder-style="placeholderStyle"
         :placeholder-class="fieldPlaceholder"
-        :auto-height=" autosize "
-        :cursor-spacing=" cursorSpacing "
-        :adjust-position=" adjustPosition "
-        :show-confirm-bar=" showConfirmBar "
-        :selection-end=" selectionEnd "
-        :selection-start=" selectionStart "
+        :auto-height="autosize"
+        :cursor-spacing="cursorSpacing"
+        :adjust-position="adjustPosition"
+        :show-confirm-bar="showConfirmBar"
+        :selection-end="selectionEnd"
+        :selection-start="selectionStart"
         @input="onInput"
         @blur="onBlur"
         @focus="onFocus"
         @confirm="onConfirm"
       >
-    </textarea>
+      </textarea>
       <input
         v-else
         :class="fieldInput"
-        :type=" type "
-        :focus=" focus "
-        :value=" value "
-        :disabled=" disabled || readonly "
-        :maxlength=" maxlength "
-        :placeholder=" placeholder "
-        :placeholder-style=" placeholderStyle "
+        :type="type"
+        :focus="focus"
+        :value="value"
+        :disabled="disabled || readonly"
+        :maxlength="maxlength"
+        :placeholder="placeholder"
+        :placeholder-style="placeholderStyle"
         :placeholder-class="fieldPlaceholder"
-        :confirm-type=" confirmType "
-        :confirm-hold=" confirmHold "
-        :cursor-spacing=" cursorSpacing "
-        :adjust-position=" adjustPosition "
-        :selection-end=" selectionEnd "
-        :selection-start=" selectionStart "
-        :password=" password || type === 'password' "
+        :confirm-type="confirmType"
+        :confirm-hold="confirmHold"
+        :cursor-spacing="cursorSpacing"
+        :adjust-position="adjustPosition"
+        :selection-end="selectionEnd"
+        :selection-start="selectionStart"
+        :password="password || type === 'password'"
         @input="onInput"
         @blur="onBlur"
         @focus="onFocus"
         @confirm="onConfirm"
       />
       <van-icon
-        v-if=" clearable && focused && value && !readonly "
+        v-if="clearable && focused && value && !readonly"
         size="32rpx"
         name="clear"
         class="van-field__clear-root van-field__icon-root"
         @click="onClear"
       />
-      <view
-        class="van-field__icon-container"
-        @tap="onClickIcon"
-      >
+      <view class="van-field__icon-container" @tap="onClickIcon">
         <van-icon
-          v-if=" rightIcon || icon "
+          v-if="rightIcon || icon"
           size="32rpx"
-          :name=" rightIcon || icon "
-          :class="'van-field__icon-root ' + iconClass "
+          :name="rightIcon || icon"
+          :class="'van-field__icon-root ' + iconClass"
           :custom-class="rightIconClass"
         />
         <slot name="right-icon" />
@@ -94,27 +84,22 @@
         <slot name="button" />
       </view>
     </view>
-    <view
-      v-if=" errorMessage "
-      :class="fieldError"
-    >
+    <view v-if="errorMessage" :class="fieldError">
       {{ errorMessage }}
     </view>
     <view v-if="showWordLimit" class="van-field__word-limit">
-      {{value.length}}/{{maxlength}}
+      {{ value.length }}/{{ maxlength }}
     </view>
   </van-cell>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-import VanCell from "../cell/index.vue"
-import VanIcon from "../icon/index"
+import utils from "../wxs/utils";
+import VanCell from "../cell/index.vue";
+import VanIcon from "../icon/index";
 
 // import { Weapp } from 'definitions/weapp';
-import { getSystemInfoSync } from '../common/utils';
-
+import { getSystemInfoSync } from "../common/utils";
 
 export default {
   name: "van-filed",
@@ -124,7 +109,7 @@ export default {
 
   props: {
     size: String,
-    icon: String,//
+    icon: String, //
     label: String,
     error: Boolean,
     fixed: Boolean,
@@ -177,7 +162,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'text'
+      default: "text"
     },
     border: {
       type: Boolean,
@@ -185,7 +170,7 @@ export default {
     },
     titleWidth: {
       type: String,
-      default: '180rpx'
+      default: "180rpx"
     },
     inputClass: {
       type: String,
@@ -197,7 +182,7 @@ export default {
     },
     value: {
       type: String,
-      default: '',
+      default: ""
     }
   },
 
@@ -206,83 +191,92 @@ export default {
   //   system: getSystemInfoSync().system.split(' ').shift().toLowerCase()
   // },
 
-  data () {
+  data() {
     return {
       focused: false,
-      system: getSystemInfoSync().system.split(' ').shift().toLowerCase()
-    }
+      system: getSystemInfoSync()
+        .system.split(" ")
+        .shift()
+        .toLowerCase()
+    };
   },
 
-
   computed: {
-    fieldError () {
+    fieldError() {
       // van-field__error-message {{ utils.bem('field__error', [errorMessageAlign, { disabled, error }]) }}
-      return `van-field__error-message ${utils.bem('field__error', [this.errorMessageAlign, { disabled: this.disabled, error: this.error }])}`
+      return `van-field__error-message ${utils.bem("field__error", [
+        this.errorMessageAlign,
+        { disabled: this.disabled, error: this.error }
+      ])}`;
     },
-    fieldPlaceholder () {
+    fieldPlaceholder() {
       // {{ utils.bem('field__placeholder', { error }) }}
-      return `${utils.bem('field__placeholder', { error: this.error })}`
+      return `${utils.bem("field__placeholder", { error: this.error })}`;
     },
-    fieldInput () {
+    fieldInput() {
       // input-class {{ utils.bem('field__input', [inputAlign, { disabled, error }]) }}
-      return `${this.inputClass} ${utils.bem('field__input', [this.inputAlign, { disabled: this.disabled, error: this.error }])}`
+      return `${this.inputClass} ${utils.bem("field__input", [
+        this.inputAlign,
+        { disabled: this.disabled, error: this.error }
+      ])}`;
     },
-    fieldInputType () {
+    fieldInputType() {
       // input-class {{ utils.bem('field__input', [inputAlign, type, { disabled, error }]) }}
-      return `${this.inputClass} ${utils.bem('field__input', [this.inputAlign, this.type, { disabled: this.disabled, error: this.error }])}`
+      return `${this.inputClass} ${utils.bem("field__input", [
+        this.inputAlign,
+        this.type,
+        { disabled: this.disabled, error: this.error }
+      ])}`;
     },
-    fieldBody () {
+    fieldBody() {
       // utils.bem('field__body', [type, system])
-      return `${utils.bem('field__body', [this.type, this.system])}`
+      return `${utils.bem("field__body", [this.type, this.system])}`;
     }
-
   },
 
   methods: {
-    onInput (event) {
-      const { value = '' } = event.detail || {};
+    onInput(event) {
+      const { value = "" } = event.detail || {};
       this.emitChange(value);
     },
 
-    onFocus (event) {
-      this.focused = true
-      this.$emit('focus', event.detail);
+    onFocus(event) {
+      this.focused = true;
+      this.$emit("focus", event.detail);
     },
 
-    onBlur (event) {
+    onBlur(event) {
       // bug fix click clear icon can't trigger click event
-      setTimeout(()=>{
+      setTimeout(() => {
         this.focused = false;
       }, 16.7);
 
-      this.$emit('blur', event.detail);
+      this.$emit("blur", event.detail);
     },
 
-    onClickIcon () {
-      this.$emit('click-icon');
+    onClickIcon() {
+      this.$emit("click-icon");
     },
 
-    onClear () {
-      this.emitChange('');
-      this.$emit('clear', '');
+    onClear() {
+      this.emitChange("");
+      this.$emit("clear", "");
       // this.setData({ value: '' }, () => {
       //   this.emitChange('');
       //   this.$emit('clear', '');
       // });
     },
 
-    onConfirm () {
-      this.$emit('confirm', this.value);
+    onConfirm() {
+      this.$emit("confirm", this.value);
     },
 
-    emitChange (value) {
-      this.$emit('input', value);
-      this.$emit('change', value);
+    emitChange(value) {
+      this.$emit("input", value);
+      this.$emit("change", value);
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

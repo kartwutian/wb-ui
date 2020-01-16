@@ -5,11 +5,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'app-slot'
-  }
+export default {
+  name: "app-slot"
+};
 </script>
 
-<style lang="less">
-
-</style>
+<style lang="less"></style>

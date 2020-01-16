@@ -1,14 +1,13 @@
 export const button = {
-
   props: {
     id: String,
     lang: {
       type: String,
-      default: 'en'
+      default: "en"
     },
     hoverClass: {
       type: String,
-      default: ''
+      default: ""
     },
     businessId: Number,
     sessionFrom: String,

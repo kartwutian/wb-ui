@@ -1,9 +1,6 @@
 <template>
   <view>
-    <view
-      v-if=" title "
-      class="van-cell-group__title"
-    >
+    <view v-if="title" class="van-cell-group__title">
       {{ title }}
     </view>
     <view :class="classes">
@@ -16,7 +13,7 @@
 import { basic } from "../mixins/basic";
 
 export default {
-  name: 'van-cell-group',
+  name: "van-cell-group",
   mixins: [basic],
   props: {
     title: String,
@@ -26,14 +23,13 @@ export default {
     }
   },
   computed: {
-    classes () {
-      return `${this.customClass} van-cell-group ${this.border ? 'van-hairline--top-bottom' : ''}`
+    classes() {
+      return `${this.customClass} van-cell-group ${
+        this.border ? "van-hairline--top-bottom" : ""
+      }`;
     }
   }
-
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

@@ -1,12 +1,13 @@
-import Vue from 'vue';
-import config from '../config/config';
+import Vue from "vue";
+import config from "../config/config";
 
 /**
  * 通用延时函数
  * @param timeout
  * @returns {Promise<any>}
  */
-export const delay = (timeout = .3) => new Promise(resolve => setTimeout(resolve, timeout * 1000));
+export const delay = (timeout = 0.3) =>
+  new Promise(resolve => setTimeout(resolve, timeout * 1000));
 
 /**
  * 讲枚举数组转化为枚举对象
@@ -14,12 +15,15 @@ export const delay = (timeout = .3) => new Promise(resolve => setTimeout(resolve
  * @param options {key: 'key',val: 'name'}
  * @returns {{}}
  */
-export const exchangeToEnum = (arr = [], options = {
-  key: 'id',
-  val: 'name'
-}) => {
+export const exchangeToEnum = (
+  arr = [],
+  options = {
+    key: "id",
+    val: "name"
+  }
+) => {
   if (!Array.isArray(arr)) {
-    console.error('第一个参数必须为数组');
+    console.error("第一个参数必须为数组");
     return {};
   }
   return arr.reduce((result, item) => {
@@ -36,12 +40,12 @@ export const exchangeToEnum = (arr = [], options = {
 export const commonLoading = async (fn, errorHandle) => {
   try {
     uni.showLoading({
-      title: '加载中',
+      title: "加载中"
     });
     return await fn();
   } catch (e) {
     console.error(e);
-    if (errorHandle) errorHandle(e)
+    if (errorHandle) errorHandle(e);
   } finally {
     uni.hideLoading();
   }
@@ -63,15 +67,15 @@ export const commonError = async fn => {
 // token相关
 const token_key = "app_token";
 export function setToken(token) {
-  uni.setStorageSync(token_key, token)
+  uni.setStorageSync(token_key, token);
 }
 
 export function getToken() {
-  return uni.getStorageSync(token_key) || ""
+  return uni.getStorageSync(token_key) || "";
 }
 
 export function removeToken() {
-  uni.clearStorageSync()
+  uni.clearStorageSync();
 }
 
 /**
@@ -80,7 +84,7 @@ export function removeToken() {
  * is a JSON-compliant type.
  */
 export function isObject(obj) {
-  return obj !== null && typeof obj === 'object'
+  return obj !== null && typeof obj === "object";
 }
 
 export function isArray(obj) {
@@ -88,7 +92,7 @@ export function isArray(obj) {
 }
 
 export function isFuc(f) {
-  return typeof f === 'function';
+  return typeof f === "function";
 }
 
 /**
@@ -97,12 +101,12 @@ export function isFuc(f) {
  * @param defaultvalue 默认值（替换null和undefined）
  * @returns {Uint8Array | BigInt64Array | any[] | Float64Array | Int8Array | Float32Array | Int32Array | Uint32Array | Uint8ClampedArray | BigUint64Array | Int16Array | Uint16Array|{}|*}
  */
-export function generateDefaultValue(data, defaultvalue = '--') {
+export function generateDefaultValue(data, defaultvalue = "--") {
   if (!isObject(data)) return data;
   const newData = new data.constructor();
 
   for (let key in Object.getOwnPropertyDescriptors(data)) {
-    if (data[key] === null || data[key] === undefined || data[key] === '') {
+    if (data[key] === null || data[key] === undefined || data[key] === "") {
       newData[key] = defaultvalue;
     } else {
       newData[key] = generateDefaultValue(data[key]);
@@ -120,7 +124,7 @@ export function deepCopy(data) {
   const newData = new data.constructor();
 
   for (let key in Object.getOwnPropertyDescriptors(data)) {
-    newData[key] = deepCopy(data[key])
+    newData[key] = deepCopy(data[key]);
   }
   return newData;
 }
@@ -139,11 +143,10 @@ export function deepCompare(a, b) {
   const propsA = Object.getOwnPropertyDescriptors(a);
   const propsB = Object.getOwnPropertyDescriptors(b);
   if (Object.keys(propsA).length !== Object.keys(propsB).length) {
-    return false
+    return false;
   }
 
   return Object.keys(propsA).every(key => deepCompare(a[key], b[key]));
-
 }
 
 /**
@@ -162,9 +165,9 @@ export function deepCombine(a, b, isWatch = false) {
 
   for (let key in propsB) {
     if (a[key] === undefined) {
-      if(isWatch){
+      if (isWatch) {
         Vue.set(a, key, b[key]);
-      }else{
+      } else {
         a[key] = b[key];
       }
     } else {
@@ -196,7 +199,6 @@ export function deepAssign(...args) {
  * @returns {*}
  */
 export function resetState(state, initialState) {
-
   if (!isObject(state) || !isObject(initialState)) {
     return initialState;
   }
@@ -206,17 +208,17 @@ export function resetState(state, initialState) {
     if (initialState[key] === undefined) {
       delete state[key];
     } else {
-      state[key] = resetState(state[key], initialState[key])
+      state[key] = resetState(state[key], initialState[key]);
     }
   }
   return state;
 }
 
 export function getUrl(url) {
-  if (url.startsWith('/')) {
-    return config.imageUrl + url
+  if (url.startsWith("/")) {
+    return config.imageUrl + url;
   }
-  return config + '/' + url;
+  return config + "/" + url;
 }
 
 export function validate(data, rules) {
@@ -225,18 +227,20 @@ export function validate(data, rules) {
     for (let i = 0; i < rules[field].length; i++) {
       if (data[field] && !data[field].toString().match(rules[field][i].reg)) {
         res[field] = rules[field][i].msg; // 有错误，则赋值错误，跳出循环
-        break
+        break;
       }
       res[field] = null; // 没有错误，则赋值为null
     }
   });
-  return res
+  return res;
 }
 
 export function fetchErrorMsg(data) {
   if (isArray(data)) {
     for (let i = 0; i < data.length; i++) {
-      const errField = Object.keys(data[i]).filter(field => data[i][field] !== null);
+      const errField = Object.keys(data[i]).filter(
+        field => data[i][field] !== null
+      );
       if (errField.length) {
         return data[i][errField[0]];
       }
@@ -247,7 +251,7 @@ export function fetchErrorMsg(data) {
   if (errField.length) {
     return data[errField[0]];
   }
-  return false
+  return false;
 }
 
 /**
@@ -255,13 +259,15 @@ export function fetchErrorMsg(data) {
  * @param options
  * @returns {{mutations: (options.mutations|{}|{updateState(Object, Object): void, reset(*=): void}), state: *, getters: U, actions: (options.actions|{}), namespaced: boolean}}
  */
-export const modelGenerate = (options = {
-  namespaced: true,
-  state: {},
-  mutations: {},
-  actions: {},
-  getters: {},
-}) => {
+export const modelGenerate = (
+  options = {
+    namespaced: true,
+    state: {},
+    mutations: {},
+    actions: {},
+    getters: {}
+  }
+) => {
   const {
     namespaced,
     state: initialState,
@@ -273,7 +279,7 @@ export const modelGenerate = (options = {
     namespaced: namespaced || true,
 
     state: {
-      ...deepCopy(initialState),
+      ...deepCopy(initialState)
     },
     mutations: {
       /**
@@ -284,7 +290,7 @@ export const modelGenerate = (options = {
       updateState(state, payload) {
         let realPayload = payload;
         if (payload.payload) {
-          realPayload = payload.payload
+          realPayload = payload.payload;
         }
         deepCombine(state, realPayload, true);
       },
@@ -297,9 +303,9 @@ export const modelGenerate = (options = {
     actions: {
       ...actions
     },
-    getters: gettersGenerate(initialState, getters),
-  }
-}
+    getters: gettersGenerate(initialState, getters)
+  };
+};
 
 /**
  * 生成 getters
@@ -309,17 +315,16 @@ export const modelGenerate = (options = {
  */
 export function gettersGenerate(initialState, getters) {
   const normalGetters = Object.keys(initialState).reduce((res, next) => {
-    res[next] = function (state) {
-      return state[next]
+    res[next] = function(state) {
+      return state[next];
     };
-    return res
+    return res;
   }, {});
   return {
     ...normalGetters,
-    ...getters,
-  }
+    ...getters
+  };
 }
-
 
 /**
  *
@@ -327,24 +332,23 @@ export function gettersGenerate(initialState, getters) {
  * @param enhancer   // 增强子, 增强的配置项必须是函数（处理生命周期）;增强子可以是函数，也可以是对象，函数的话默认为before，在配置项之前执行;是对象的话，可以配置before 和 after，控制执行的顺序
  */
 export function page(options, enhancer = {}) {
-
-  Object.keys(enhancer).forEach((k) => {
+  Object.keys(enhancer).forEach(k => {
     if (options[k] && isFuc(options[k])) {
       const temp = options[k];
       const before = isObject(enhancer[k]) ? enhancer[k].before : enhancer[k];
       const after = isObject(enhancer[k]) ? enhancer[k].after : undefined;
 
-      options[k] = function (...args) {
+      options[k] = function(...args) {
         before && before(...args);
         temp(...args);
         after && after(...args);
-      }
+      };
     }
   });
 
   return {
-    ...options,
-  }
+    ...options
+  };
 }
 
 /**
@@ -355,8 +359,8 @@ export function page(options, enhancer = {}) {
 export function pageIntercept(options) {
   const enhancer = {
     onLoad() {
-      console.log('you has not login in')
+      console.log("you has not login in");
     }
   };
-  return page(options, enhancer)
+  return page(options, enhancer);
 }

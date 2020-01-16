@@ -1,4 +1,3 @@
-
 export const openType = {
   props: {
     openType: String
@@ -6,27 +5,27 @@ export const openType = {
 
   methods: {
     bindGetUserInfo(event) {
-      this.$emit('getuserinfo', event.detail);
+      this.$emit("getuserinfo", event.detail);
     },
 
     bindContact(event) {
-      this.$emit('contact', event.detail);
+      this.$emit("contact", event.detail);
     },
 
     bindGetPhoneNumber(event) {
-      this.$emit('getphonenumber', event.detail);
+      this.$emit("getphonenumber", event.detail);
     },
 
     bindError(event) {
-      this.$emit('error', event.detail);
+      this.$emit("error", event.detail);
     },
 
     bindLaunchApp(event) {
-      this.$emit('launchapp', event.detail);
+      this.$emit("launchapp", event.detail);
     },
 
     bindOpenSetting(event) {
-      this.$emit('opensetting', event.detail);
-    },
+      this.$emit("opensetting", event.detail);
+    }
   }
 };

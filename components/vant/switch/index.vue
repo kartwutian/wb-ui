@@ -1,28 +1,22 @@
 <template>
-
-  <view
-    :class="switchs"
-    :style="styles"
-    @tap="onClick"
-  >
+  <view :class="switchs" :style="styles" @tap="onClick">
     <view :class="'van-switch__node ' + nodeClass">
       <van-loading
-        v-if=" loading "
-        :color=" loadingColor "
+        v-if="loading"
+        :color="loadingColor"
         size="50%"
         custom-class="van-switch__loading"
       />
     </view>
   </view>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-import { basic } from '../mixins/basic';
+import utils from "../wxs/utils";
+import { basic } from "../mixins/basic";
 
-import { BLUE, GRAY_DARK } from '../common/color';
-import VanLoading from "../../vant/loading/index"
+import { BLUE, GRAY_DARK } from "../common/color";
+import VanLoading from "../../vant/loading/index";
 
 export default {
   name: "van-switch",
@@ -40,7 +34,7 @@ export default {
     inactiveColor: String,
     size: {
       type: String,
-      default: '60rpx'
+      default: "60rpx"
     },
     activeValue: {
       type: null,
@@ -56,60 +50,67 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       value: false,
       loadingColor: ""
-    }
+    };
   },
 
   watch: {
-    checked (value) {
+    checked(value) {
       const loadingColor = this.getLoadingColor(value);
       // this.setData({ value, loadingColor });
       this.value = value;
-      this.loadingColor = loadingColor
+      this.loadingColor = loadingColor;
     }
   },
 
   computed: {
-    switchs () {
-      return `${this.customClass} ${utils.bem('switch', { on: this.value === this.activeValue, disabled: this.disabled })}`
+    switchs() {
+      return `${this.customClass} ${utils.bem("switch", {
+        on: this.value === this.activeValue,
+        disabled: this.disabled
+      })}`;
     },
-    styles () {
-      return `font-size: ${this.size}; ${(this.checked ? this.activeColor : this.inactiveColor) ? 'background-color: ' + (this.checked ? this.activeColor : this.inactiveColor) : ''}`
+    styles() {
+      return `font-size: ${this.size}; ${
+        (this.checked
+        ? this.activeColor
+        : this.inactiveColor)
+          ? "background-color: " +
+            (this.checked ? this.activeColor : this.inactiveColor)
+          : ""
+      }`;
     }
   },
 
-
-  beforeCreate () {
+  beforeCreate() {
     this.$nextTick(() => {
       const { checked } = this;
       const loadingColor = this.getLoadingColor(checked);
       this.value = checked;
-      this.loadingColor = loadingColor
-    })
+      this.loadingColor = loadingColor;
+    });
   },
 
   methods: {
-    getLoadingColor (checked) {
+    getLoadingColor(checked) {
       const { activeColor, inactiveColor } = this;
       return checked ? activeColor || BLUE : inactiveColor || GRAY_DARK;
     },
 
-    onClick () {
+    onClick() {
       const { activeValue, inactiveValue } = this;
       if (!this.disabled && !this.loading) {
         const checked = this.checked === activeValue;
         const value = checked ? inactiveValue : activeValue;
-        this.$emit('input', value);
-        this.$emit('change', value);
+        this.$emit("input", value);
+        this.$emit("change", value);
       }
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

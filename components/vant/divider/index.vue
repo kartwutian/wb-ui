@@ -1,20 +1,14 @@
 <template>
-
-  <view
-    :class="divider"
-    :style="styles"
-  >
+  <view :class="divider" :style="styles">
     <slot />
   </view>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-
+import utils from "../wxs/utils";
 
 export default {
-  name: 'van-divider',
+  name: "van-divider",
   props: {
     dashed: {
       type: Boolean,
@@ -26,7 +20,7 @@ export default {
     },
     contentPosition: {
       type: String,
-      default: 'center'
+      default: "center"
     },
     fontSize: {
       type: String,
@@ -34,30 +28,35 @@ export default {
     },
     borderColor: {
       type: String,
-      default: ''
+      default: ""
     },
     textColor: {
       type: String,
-      default: ''
+      default: ""
     },
     customStyle: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   computed: {
-    divider () {
+    divider() {
       // custom-class {{ utils.bem('divider', [{dashed, hairline}, contentPosition]) }}
-      return `${this.customClass} ${utils.bem('divider', [{ dashed: this.dashed, hairline: this.hairline }, this.contentPosition])}`
+      return `${this.customClass} ${utils.bem("divider", [
+        { dashed: this.dashed, hairline: this.hairline },
+        this.contentPosition
+      ])}`;
     },
-    styles () {
+    styles() {
       // {{ borderColor  ? 'border-color: ' + borderColor + ';' : '' }}{{ textColor ? 'color: ' + textColor + ';' : '' }} {{ fontSize ? 'font-size: ' + fontSize + 'px;' : '' }} {{ customStyle }}
-      return `${this.borderColor ? 'border-color: ' + this.borderColor + ';' : ''} ${this.textColor ? 'color: ' + this.textColor + ';' : ''} ${this.fontSize ? 'font-size: ' + this.fontSize + 'px;' : ''} ${this.customStyle}`
+      return `${
+        this.borderColor ? "border-color: " + this.borderColor + ";" : ""
+      } ${this.textColor ? "color: " + this.textColor + ";" : ""} ${
+        this.fontSize ? "font-size: " + this.fontSize + "px;" : ""
+      } ${this.customStyle}`;
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

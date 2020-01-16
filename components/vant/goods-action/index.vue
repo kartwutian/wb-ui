@@ -1,25 +1,21 @@
 <template>
-
   <view :class="goodsAction">
     <slot />
   </view>
-
 </template>
 
 <script>
-import utils from '../wxs/utils';
-import { basic } from '../mixins/basic';
-
+import utils from "../wxs/utils";
+import { basic } from "../mixins/basic";
 
 export default {
   name: "van-goods-action",
   mixins: [basic],
   relation: {
-    type: 'descendant',
-    name: 'goods-action-button',
-
+    type: "descendant",
+    name: "goods-action-button"
   },
-  beforeCreate () {
+  beforeCreate() {
     this.children = [];
   },
   props: {
@@ -30,22 +26,22 @@ export default {
   },
 
   computed: {
-    goodsAction () {
+    goodsAction() {
       // custom-class {{ utils.bem('goods-action', { safe: safeAreaInsetBottom }) }}
-      return `${this.customClass} ${utils.bem('goods-action', { safe: this.safeAreaInsetBottom })}`
+      return `${this.customClass} ${utils.bem("goods-action", {
+        safe: this.safeAreaInsetBottom
+      })}`;
     }
   },
   methods: {
-    linked (child) {
+    linked(child) {
       this.children.push(child);
     },
-    unlinked (child) {
-      this.children = this.children.filter((item) => item !== child);
+    unlinked(child) {
+      this.children = this.children.filter(item => item !== child);
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

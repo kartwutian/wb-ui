@@ -3,11 +3,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'wb-btn',
-  }
+export default {
+  name: "wb-btn"
+};
 </script>
 
-<style lang="less">
-
-</style>
+<style lang="less"></style>

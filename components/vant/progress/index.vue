@@ -1,31 +1,39 @@
 <template>
   <view
     :class="'van-progress ' + customClass"
-    :style="[{'height': strokeWidthUnit }, (trackColor ? 'background: '+ trackColor : '' )]"
+    :style="[
+      { height: strokeWidthUnit },
+      trackColor ? 'background: ' + trackColor : ''
+    ]"
   >
     <view
       class="van-progress__portion"
-      :style="[{'width':  percentage + '%'}, {'background': ( inactive ? '#cacaca' : color )}]"
+      :style="[
+        { width: percentage + '%' },
+        { background: inactive ? '#cacaca' : color }
+      ]"
     >
       <view
-        v-if=" showPivot "
+        v-if="showPivot"
         class="van-progress__pivot"
-        :style="[{'color': textColor }, {'background': ( pivotColor ? pivotColor : (inactive ? '#cacaca' : color ))}]"  
+        :style="[
+          { color: textColor },
+          { background: pivotColor ? pivotColor : inactive ? '#cacaca' : color }
+        ]"
       >
         {{ showText }}
       </view>
     </view>
   </view>
-
 </template>
 
 <script>
-import {basic} from '../mixins/basic';
-import { BLUE } from '../common/color';
-import { addUnit } from '../common/utils';
+import { basic } from "../mixins/basic";
+import { BLUE } from "../common/color";
+import { addUnit } from "../common/utils";
 
 export default {
-  name: 'van-progress',
+  name: "van-progress",
   mixins: [basic],
   props: {
     inactive: {
@@ -46,7 +54,7 @@ export default {
     },
     textColor: {
       type: String,
-      default: '#fff'
+      default: "#fff"
     },
     strokeWidth: {
       type: Number,
@@ -55,26 +63,18 @@ export default {
   },
 
   data() {
-    return{
-
-    }
+    return {};
   },
   computed: {
     showText() {
-      return this.pivotText || this.percentage + '%';
+      return this.pivotText || this.percentage + "%";
     },
     strokeWidthUnit() {
-      return this.strokeWidth + 'px';
+      return this.strokeWidth + "px";
     }
   },
-  methods: {
-
-  }
+  methods: {}
 };
-
 </script>
 
-<style lang="less">
-
-</style>
-
+<style lang="less"></style>

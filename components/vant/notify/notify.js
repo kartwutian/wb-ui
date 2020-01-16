@@ -1,4 +1,4 @@
-import { WHITE } from '../common/color';
+import { WHITE } from "../common/color";
 
 /*interface NotifyOptions {
   type?: 'primary' | 'success' | 'danger' | 'warning';
@@ -16,10 +16,10 @@ import { WHITE } from '../common/color';
 }*/
 
 const defaultOptions = {
-  refName: 'van-notify',
-  type: 'danger',
-  message: '',
-  background: '',
+  refName: "van-notify",
+  type: "danger",
+  message: "",
+  background: "",
   duration: 3000,
   zIndex: 110,
   color: WHITE,
@@ -30,7 +30,7 @@ const defaultOptions = {
 };
 
 function parseOptions(message) {
-  return typeof message === 'string' ? { message } : message;
+  return typeof message === "string" ? { message } : message;
 }
 
 function getContext() {
@@ -50,6 +50,6 @@ export default function Notify(options) {
     notify.set(options);
     notify.show();
   } else {
-    console.warn('未找到 van-notify 节点，请确认 ref 及 context 是否正确');
+    console.warn("未找到 van-notify 节点，请确认 ref 及 context 是否正确");
   }
 }

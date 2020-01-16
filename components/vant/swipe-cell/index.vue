@@ -1,37 +1,35 @@
 <template>
   <view
     class="van-swipe-cell"
-    @tap="onClick({key:'cell'})"
+    @tap="onClick({ key: 'cell' })"
     @touchstart="startDrag"
-    :catchtouchmove=" catchMove ? 'noop' : '' "
+    :catchtouchmove="catchMove ? 'noop' : ''"
     @touchmove="onDrag"
     @touchend="endDrag"
     @touchcancel="endDrag"
   >
-    <view :style=" wrapperStyle ">
+    <view :style="wrapperStyle">
       <view
-        v-if=" leftWidth "
+        v-if="leftWidth"
         class="van-swipe-cell__left"
-        @tap.stop="onClick({key:'left'})"
+        @tap.stop="onClick({ key: 'left' })"
       >
         <slot name="left" />
       </view>
       <slot />
       <view
-        v-if=" rightWidth "
+        v-if="rightWidth"
         class="van-swipe-cell__right"
-        @tap.stop="onClick({key:'right'})"
+        @tap.stop="onClick({ key: 'right' })"
       >
         <slot name="right" />
       </view>
     </view>
   </view>
-
 </template>
 
 <script>
-
-import { touch } from '../mixins/touch';
+import { touch } from "../mixins/touch";
 // import { Weapp } from 'definitions/weapp';
 
 const THRESHOLD = 0.3;
@@ -52,67 +50,67 @@ export default {
     asyncClose: Boolean,
     name: {
       type: [Number, String],
-      default: ''
+      default: ""
     }
   },
 
   mixins: [touch],
 
-  data () {
+  data() {
     return {
       catchMove: false,
       wrapperStyle: ""
-    }
+    };
   },
 
-  beforeCreate () {
+  beforeCreate() {
     this.$nextTick(() => {
       this.offset = 0;
       ARRAY.push(this);
-    })
+    });
   },
 
-  destroyed () {
+  destroyed() {
     ARRAY = ARRAY.filter(item => item !== this);
   },
 
   methods: {
-    open (position) {
+    open(position) {
       const { leftWidth, rightWidth } = this;
-      const offset = position === 'left' ? leftWidth : -rightWidth;
+      const offset = position === "left" ? leftWidth : -rightWidth;
       this.swipeMove(offset);
     },
 
-    close () {
+    close() {
       this.swipeMove(0);
     },
 
-    swipeMove (offset) {
+    swipeMove(offset) {
       this.offset = offset;
 
       const transform = `translate3d(${offset}px, 0, 0)`;
       const transition = this.draging
-        ? 'none'
-        : 'transform .6s cubic-bezier(0.18, 0.89, 0.32, 1)';
+        ? "none"
+        : "transform .6s cubic-bezier(0.18, 0.89, 0.32, 1)";
 
-      this.wrapperStyle = `-webkit-transform:${transform}; -webkit-transition:${transition}; transform:${transform}; transition${transition}`
+      this.wrapperStyle = `-webkit-transform:${transform}; -webkit-transition:${transition}; transform:${transform}; transition${transition}`;
     },
 
-    swipeLeaveTransition () {
+    swipeLeaveTransition() {
       const { leftWidth, rightWidth } = this;
       const { offset } = this;
 
       if (rightWidth > 0 && -offset > rightWidth * THRESHOLD) {
-        this.open('right');
+        this.open("right");
       } else if (leftWidth > 0 && offset > leftWidth * THRESHOLD) {
-        this.open('left');
+        this.open("left");
       } else {
         this.swipeMove(0);
       }
-      this.catchMove = false
+      this.catchMove = false;
     },
 
-    startDrag (event) {
+    startDrag(event) {
       if (this.disabled) {
         return;
       }
@@ -125,13 +123,13 @@ export default {
 
       this.draging = true;
       this.startOffset = this.offset;
-      this.firstDirection = '';
+      this.firstDirection = "";
       this.touchStart(event);
     },
 
-    noop () { },
+    noop() {},
 
-    onDrag (event) {
+    onDrag(event) {
       if (this.disabled) {
         return;
       }
@@ -140,10 +138,10 @@ export default {
 
       if (!this.firstDirection) {
         this.firstDirection = this.direction;
-        this.catchMove = this.firstDirection === 'horizontal'
+        this.catchMove = this.firstDirection === "horizontal";
       }
 
-      if (this.firstDirection === 'vertical') {
+      if (this.firstDirection === "vertical") {
         return;
       }
 
@@ -161,7 +159,7 @@ export default {
       this.swipeMove(offset);
     },
 
-    endDrag () {
+    endDrag() {
       if (this.disabled) {
         return;
       }
@@ -170,24 +168,22 @@ export default {
       this.swipeLeaveTransition();
     },
 
-    onClick (event) {
-      const { key: position = 'outside' } = event;
-      this.$emit('click', position);
+    onClick(event) {
+      const { key: position = "outside" } = event;
+      this.$emit("click", position);
 
       if (!this.offset) {
         return;
       }
 
       if (this.asyncClose) {
-        this.$emit('close', { position, instance: this, name: this.name });
+        this.$emit("close", { position, instance: this, name: this.name });
       } else {
         this.swipeMove(0);
       }
     }
   }
 };
-
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

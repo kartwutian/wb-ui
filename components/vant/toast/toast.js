@@ -1,4 +1,4 @@
-import { isObj } from '../common/utils';
+import { isObj } from "../common/utils";
 
 // type ToastMessage = string | number;
 //
@@ -18,16 +18,16 @@ import { isObj } from '../common/utils';
 // }
 
 const defaultOptions = {
-  type: 'text',
+  type: "text",
   mask: false,
-  message: '',
+  message: "",
   show: true,
   zIndex: 1000,
   duration: 3000,
-  position: 'middle',
+  position: "middle",
   forbidClick: false,
-  loadingType: 'circular',
-  refName: 'van-toast',
+  loadingType: "circular",
+  refName: "van-toast"
 };
 
 let queue = [];
@@ -51,7 +51,7 @@ function Toast(toastOptions) {
   const context = options.context || getContext();
   const toast = context.$vm.$refs[options.refName];
   if (!toast) {
-    console.warn('未找到 van-toast 节点，请确认 ref 及 context 是否正确');
+    console.warn("未找到 van-toast 节点，请确认 ref 及 context 是否正确");
     return;
   }
 
@@ -67,7 +67,7 @@ function Toast(toastOptions) {
   };
 
   queue.push(toast);
-  Object.keys(options).forEach(k =>{
+  Object.keys(options).forEach(k => {
     toast[k] = options[k];
   });
   clearTimeout(toast.timer);
@@ -82,15 +82,15 @@ function Toast(toastOptions) {
   return toast;
 }
 
-const createMethod = (type) => (options) =>
+const createMethod = type => options =>
   Toast({
     type,
     ...parseOptions(options)
   });
 
-Toast.loading = createMethod('loading');
-Toast.success = createMethod('success');
-Toast.fail = createMethod('fail');
+Toast.loading = createMethod("loading");
+Toast.success = createMethod("success");
+Toast.fail = createMethod("fail");
 
 Toast.clear = () => {
   queue.forEach(toast => {
@@ -99,7 +99,7 @@ Toast.clear = () => {
   queue = [];
 };
 
-Toast.setDefaultOptions = (options) => {
+Toast.setDefaultOptions = options => {
   Object.assign(currentOptions, options);
 };
 
