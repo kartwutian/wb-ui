@@ -33,12 +33,15 @@
 
   // 存储所有model信息，用于生产store.js
   const models = [];
+  // 存储所有全局样式的路径
+  const pageGlobalStyles = [];
 
   const api = require("./fetch/api.json");
 
   const pagesPath = path.resolve(__dirname, "../pages");
   const utilsPath = path.resolve(__dirname, "../utils");
   const storePath = path.resolve(__dirname, "../store");
+  const globalStylesPath = path.resolve(__dirname, "../styles");
   const sourceCodePath = path.resolve(__dirname, "../");
 
   const generatePages = async pageConfig => {
@@ -114,7 +117,7 @@
         config: pageConfig
       })
     });
-    const modelsFilePath = `${dirname}/models/${filename}.js`;
+    const modelFilePath = `${dirname}/models/${filename}.js`;
     // 生成model文件
     await generateFile({
       filePath: modelFilePath,
@@ -122,9 +125,9 @@
         modelName,
         servicePath: `../services/_service.${serviceName}.js`,
         config: pageConfig,
-        list: api[modelsName] || [],
+        list: api[modelName] || [],
         utilsPath: `${path
-          .relative(modelFilePath, utilsPath)
+          .relative(path.dirname(modelFilePath), utilsPath)
           .split("\\")
           .join("/")}`
       })
@@ -137,7 +140,7 @@
         name: modelName,
         list: api[modelName] || [],
         utilsPath: `${path
-          .relative(servicesFilePath, utilsPath)
+          .relative(path.dirname(servicesFilePath), utilsPath)
           .split("\\")
           .join("/")}`,
         config: pageConfig
@@ -151,6 +154,13 @@
         .split("\\")
         .join("/")}`
     });
+
+    pageGlobalStyles.push(
+      path
+        .relative(globalStylesPath, basePath)
+        .split("\\")
+        .join("/")
+    );
   };
 
   // 注意forEach不支持async await
@@ -164,6 +174,15 @@
       filePath: path.resolve(storePath, "index.js"),
       template: ejs.render(templateStore.toString(), {
         models
+      })
+    },
+    true
+  );
+  await generateFile(
+    {
+      filePath: path.resolve(globalStylesPath, "pages.less"),
+      template: ejs.render(templateStore.toString(), {
+        pageGlobalStyles
       })
     },
     true
