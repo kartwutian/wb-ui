@@ -1,7 +1,10 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 (async () => {
   const path = require("path");
   const fs = require("fs");
   const ejs = require("ejs");
+  const { generateFile, getStat } = require("./generateFile.js");
 
   const str = fs.readFileSync(path.resolve(__dirname, "../pages.json"));
   const fakeScript = "return " + str.toString();
@@ -9,19 +12,17 @@
   const generatePagesObj = new Function(fakeScript);
   const pages = generatePagesObj().pages;
 
-  const paths = pages.map(item => item.path);
-
-  const templatePage = fs.readFileSync(
+  const defaultTemplatePage = fs.readFileSync(
     path.resolve(__dirname, "./template/template.page.ejs")
+  );
+  const defaultTemplateModel = fs.readFileSync(
+    path.resolve(__dirname, "./template/template.model.ejs")
   );
   const templateLess = fs.readFileSync(
     path.resolve(__dirname, "./template/template.less.ejs")
   );
-  const templateModels = fs.readFileSync(
-    path.resolve(__dirname, "./template/template.models.ejs")
-  );
-  const templateServices = fs.readFileSync(
-    path.resolve(__dirname, "./template/template.services.ejs")
+  const templateService = fs.readFileSync(
+    path.resolve(__dirname, "./template/template.service.ejs")
   );
   const templateStore = fs.readFileSync(
     path.resolve(__dirname, "./template/template.store.index.ejs")
@@ -29,226 +30,167 @@
   const templateLessEntry = fs.readFileSync(
     path.resolve(__dirname, "./template/template.less.entry.ejs")
   );
+
+  // 存储所有model信息，用于生产store.js
   const models = [];
+  // 存储所有全局样式的路径
   const pageGlobalStyles = [];
 
   const api = require("./fetch/api.json");
 
-  const taskQueue = []; // 存放promise
+  const pagesPath = path.resolve(__dirname, "../pages");
+  const utilsPath = path.resolve(__dirname, "../utils");
+  const storePath = path.resolve(__dirname, "../store");
+  const globalStylesPath = path.resolve(__dirname, "../styles");
+  const sourceCodePath = path.resolve(__dirname, "../");
 
-  /**
-   * 读取路径信息
-   * @param {string} path 路径
-   */
-  function getStat(path) {
-    return new Promise((resolve, reject) => {
-      fs.stat(path, (err, stats) => {
-        if (err) {
-          resolve(false);
-        } else {
-          resolve(stats);
-        }
-      });
-    });
-  }
+  const generatePages = async pageConfig => {
+    let { path: route } = pageConfig;
+    const { template } = pageConfig;
+    let templatePage = defaultTemplatePage;
+    let templateModel = defaultTemplateModel;
 
-  /**
-   * 创建路径
-   * @param {string} dir 路径
-   */
-  function mkdir(dir) {
-    return new Promise((resolve, reject) => {
-      fs.mkdir(dir, err => {
-        if (err) {
-          resolve(false);
-        } else {
-          resolve(true);
-        }
-      });
-    });
-  }
-
-  /**
-   * 路径是否存在，不存在则创建
-   * @param {string} dir 路径
-   */
-  async function dirExists(dir) {
-    let isExists = await getStat(dir);
-    // console.log(isExists)
-    //如果该路径且不是文件，返回true
-    if (isExists && isExists.isDirectory()) {
-      return true;
-    } else if (isExists) {
-      //如果该路径存在但是文件，返回false
-      return false;
+    // 如果存在自定义模板，则选自定义模板为输入
+    if (template) {
+      const templatePagePath = path.resolve(
+        __dirname,
+        `./template/${template}/template.page.ejs`
+      );
+      const templateModelPath = path.resolve(
+        __dirname,
+        `./template/${template}/template.model.ejs`
+      );
+      if (await getStat(templatePagePath)) {
+        console.log(`使用 ${template} page模板`);
+        templatePage = fs.readFileSync(templatePagePath);
+      }
+      if (await getStat(templateModelPath)) {
+        console.log(`使用 ${template} model模板`);
+        templateModel = fs.readFileSync(templateModelPath);
+      }
     }
-    //如果该路径不存在
-    let tempDir = path.parse(dir).dir; //拿到上级路径
-    //递归判断，如果上级目录也不存在，则会代码会在此处继续循环执行，直到目录存在
-    let status = await dirExists(tempDir);
-    let mkdirStatus;
-    if (status) {
-      mkdirStatus = await mkdir(dir);
-    }
-    // console.log('do -----------------')
-    return mkdirStatus;
-  }
 
-  const generatePages = async route => {
-    console.log(route);
     // 做一些初始路由处理
     if (route.startsWith("/")) {
       route = route.slice(1);
     }
-    if (route.endsWith(".vue")) {
-      route = route.slice(0, -4);
-    }
 
-    const arr = route.split("/");
-    const last = arr.pop(); // 最后一个要生成的文件
-    const pageClassName = (() => {
-      let p = [];
-      arr.forEach((item, i) => {
-        if (i === arr.length - 1 && item === last) {
-          return;
-        }
-        p.push(item);
-      });
-      p.push(last);
-      return p.join("-");
+    const fullPath = path.resolve(sourceCodePath, route);
+    const extname = path.extname(fullPath);
+    let basePath = fullPath; // 页面文件去除扩展名之后的绝对路径
+    if (extname) {
+      basePath = fullPath.replace(extname, "");
+    }
+    const filename = path.win32.basename(basePath);
+    const dirname = path.dirname(basePath);
+    console.log(basePath);
+    // 注入page的参数, 过滤掉最后的index
+    const modelName = path.win32.basename(dirname);
+    const pageStylePrefix = (() => {
+      const arr = path
+        .relative(pagesPath, basePath)
+        .split("\\")
+        .map(str => str[0].toLowerCase() + str.substr(1));
+      const len = arr.length;
+      if (arr[len - 2] === arr[len - 1]) {
+        arr.pop();
+      }
+      return `page-${arr.join("-")}`;
     })();
-    // 此时arr为目录数组
-    let len = arr.length;
-    const modelsName = arr[len - 1]; // 模块的名称，以.vue文件所在目录的目录名作为model的名字
-    const realLastFilePath = path.resolve(__dirname, "../", route + ".vue");
-    const realLastFileStat = await getStat(realLastFilePath);
-    const realLastStyleFilePath = path.resolve(
-      __dirname,
-      "../",
-      route + ".less"
-    );
-    const realLastStyleFileStat = await getStat(realLastStyleFilePath);
+    console.log(modelName);
+    const serviceName = path.win32.basename(dirname);
+
+    // path.relative(sourceCodePath, basePath);
+
+    // 生成页面文件
+    await generateFile({
+      filePath: `${basePath}.vue`,
+      template: ejs.render(templatePage.toString(), {
+        modelName,
+        pageStylePrefix,
+        config: pageConfig
+      })
+    });
+    const lessFilePath = `${basePath}.less`;
+    // 生成less文件
+    await generateFile({
+      filePath: lessFilePath,
+      template: ejs.render(templateLess.toString(), {
+        pageStylePrefix,
+        config: pageConfig
+      })
+    });
+    const modelFilePath = `${dirname}/models/${filename}.js`;
+    // 生成model文件
+    await generateFile({
+      filePath: modelFilePath,
+      template: ejs.render(templateModel.toString(), {
+        modelName,
+        servicePath: `../services/_service.${serviceName}.js`,
+        config: pageConfig,
+        list: api[modelName] || [],
+        utilsPath: `${path
+          .relative(path.dirname(modelFilePath), utilsPath)
+          .split("\\")
+          .join("/")}`
+      })
+    });
+    const servicesFilePath = `${dirname}/services/${filename}.js`;
+    // 生成service文件
+    await generateFile({
+      filePath: servicesFilePath,
+      template: ejs.render(templateService.toString(), {
+        name: modelName,
+        list: api[modelName] || [],
+        utilsPath: `${path
+          .relative(path.dirname(servicesFilePath), utilsPath)
+          .split("\\")
+          .join("/")}`,
+        config: pageConfig
+      })
+    });
+
+    models.push({
+      name: modelName,
+      path: `${path
+        .relative(storePath, modelFilePath)
+        .split("\\")
+        .join("/")}`
+    });
+
     pageGlobalStyles.push(
       path
-        .relative(path.resolve(__dirname, "../"), realLastStyleFilePath)
+        .relative(globalStylesPath, lessFilePath)
         .split("\\")
         .join("/")
     );
-    const realDirPath = path.resolve(__dirname, "../", arr.join("/")); // 最后一个文件所在目录的绝对路径
-    const storePath = path.resolve(__dirname, "../store"); // store目录的绝对路径
-    const utilsPath = path.resolve(__dirname, "../utils"); // store目录的绝对路径
-    const modelFilePath = path.resolve(
-      __dirname,
-      "../",
-      [...arr, "models", modelsName].join("/")
-    ); // 模块文件的绝对路径
-    const modelFilePathFullName = modelFilePath + ".js"; // 模块文件的绝对路径全名
-    const modelFilePathStat = await getStat(modelFilePathFullName);
-    const modelDirPath = path.resolve(
-      __dirname,
-      "../",
-      [...arr, "models"].join("/")
-    ); // 模块目录文件的绝对路径
-    const servicesFilePath = path.resolve(
-      __dirname,
-      "../",
-      [...arr, "services", modelsName].join("/")
-    ); // services文件的绝对路径
-    const servicesFilePathFullName = servicesFilePath + ".js"; // services文件的绝对路径全名
-    const servicesFilePathStat = await getStat(servicesFilePathFullName);
-    const serviceDirPath = path.resolve(
-      __dirname,
-      "../",
-      [...arr, "services"].join("/")
-    ); // services目录的绝对路径
-    const modelFileRelativePathInStore = path
-      .relative(storePath, modelFilePath)
-      .split("\\")
-      .join("/"); // 模块文件相对于在store目录中的相对路径
-    const modelFileRelativePathInUtils = path
-      .relative(modelDirPath, utilsPath)
-      .split("\\")
-      .join("/"); // 模块文件相对于在store目录中的相对路径
-    const isCommonModels = models
-      .map(item => item.path)
-      .some(relativePath => {
-        return relativePath.indexOf(modelFileRelativePathInStore) >= 0; // 判断是否是同一个文件夹下的文件，是则共用一个模块
-      });
-    // console.log('isCommonModels:' + isCommonModels);
-    if (!isCommonModels) {
-      models.push({
-        name: modelsName.replace(/-(\w)/g, function(match, p) {
-          return p.toUpperCase();
-        }),
-        path: modelFileRelativePathInStore
-      });
-    }
-
-    await dirExists(realDirPath); // 没有目录则递归创建,有则什么都不干
-
-    if (!realLastStyleFileStat) {
-      fs.writeFileSync(
-        realLastStyleFilePath,
-        ejs.render(templateLess.toString(), {
-          name: pageClassName
-        })
-      );
-    }
-
-    if (!realLastFileStat) {
-      fs.writeFileSync(
-        realLastFilePath,
-        ejs.render(templatePage.toString(), {
-          name: pageClassName
-        })
-      );
-
-      await dirExists(modelDirPath); // 创建model目录
-      await dirExists(serviceDirPath); // 创建service目录
-      if (!modelFilePathStat) {
-        fs.writeFileSync(
-          modelFilePathFullName,
-          ejs.render(templateModels.toString(), {
-            name: modelsName,
-            list: api[modelsName] || [],
-            utilsPath: modelFileRelativePathInUtils
-          })
-        );
-      }
-      if (!servicesFilePathStat) {
-        fs.writeFileSync(
-          servicesFilePathFullName,
-          ejs.render(templateServices.toString(), {
-            name: modelsName,
-            list: api[modelsName] || [],
-            utilsPath: modelFileRelativePathInUtils
-          })
-        );
-      }
-    }
+    console.log(models);
+    console.log(pageGlobalStyles);
   };
 
   // 注意forEach不支持async await
-  for (let i = 0; i < paths.length; i++) {
-    await generatePages(paths[i]);
+  for (let i = 0; i < pages.length; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    await generatePages(pages[i]);
   }
 
-  // console.log(models);
-  // console.log(pageGlobalStyles);
-  // 生成store下的index文件
-  fs.writeFileSync(
-    path.resolve(__dirname, "../store/index.js"),
-    ejs.render(templateStore.toString(), {
-      models
-    })
+  await generateFile(
+    {
+      filePath: path.resolve(storePath, "index.js"),
+      template: ejs.render(templateStore.toString(), {
+        models
+      })
+    },
+    true
   );
-
-  // 自动引入pages的样式
-  fs.writeFileSync(
-    path.resolve(__dirname, "../styles/pages.less"),
-    ejs.render(templateLessEntry.toString(), {
-      pageGlobalStyles
-    })
+  await generateFile(
+    {
+      filePath: path.resolve(globalStylesPath, "pages.less"),
+      template: ejs.render(templateLessEntry.toString(), {
+        pageGlobalStyles
+      })
+    },
+    true
   );
 
   console.log("ok！");
