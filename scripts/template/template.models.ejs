@@ -4,7 +4,7 @@ import {<% if(list.length === 0) { %>
   <% } %>
   <% list.forEach(function(item){ %><%=item.name%>,
   <% })
-  -%>} from '../services/<%= name%>'
+  -%>} from '../services/<%= modelName%>'
 
 export default modelGenerate({
   state: {
