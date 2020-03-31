@@ -83,20 +83,17 @@
     }
     const filename = path.win32.basename(basePath);
     const dirname = path.dirname(basePath);
-    console.log(basePath);
+    // console.log(basePath);
     // 注入page的参数, 过滤掉最后的index
     const modelName = (() => {
       let tempArr = path.relative(pagesPath, basePath).split("\\");
       tempArr.pop();
-      console.log(tempArr);
       tempArr = tempArr.map(str => str[0].toUpperCase() + str.substr(1));
-      console.log(tempArr);
-
       let strName = tempArr.join("");
       return strName[0].toLowerCase() + strName.substr(1);
     })();
     const serviceName = modelName;
-    console.log(modelName);
+    // console.log(modelName);
 
     const pageStylePrefix = (() => {
       const arr = path
@@ -129,7 +126,7 @@
         config: pageConfig
       })
     });
-    const modelFilePath = `${dirname}/models/${modelName}.js`;
+    const modelFilePath = path.resolve(dirname, `models/${modelName}.js`);
     // 生成model文件
     await generateFile({
       filePath: modelFilePath,
@@ -143,7 +140,7 @@
           .join("/")}`
       })
     });
-    const servicesFilePath = `${dirname}/services/${modelName}.js`;
+    const servicesFilePath = path.resolve(dirname, `services/${modelName}.js`);
     // 生成service文件
     await generateFile({
       filePath: servicesFilePath,
@@ -171,8 +168,8 @@
         .split("\\")
         .join("/")
     );
-    console.log(models);
-    console.log(pageGlobalStyles);
+    // console.log(models);
+    // console.log(pageGlobalStyles);
   };
 
   // 注意forEach不支持async await

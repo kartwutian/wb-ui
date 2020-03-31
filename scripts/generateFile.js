@@ -95,11 +95,12 @@ const generateFile = async ({ filePath, template }, rewrite = false) => {
   try {
     await beforeGenerateFile(filePath);
     fs.writeFileSync(filePath, template);
+    console.info(`${filePath} 已生成`);
   } catch (error) {
-    console.log(JSON.stringify(error));
+    // console.info(JSON.stringify(error));
     if (rewrite) {
       fs.writeFileSync(filePath, template);
-      console.log(`${filePath} 被重写了`);
+      console.warn(`${filePath} 被重写了`);
     }
   }
 };
