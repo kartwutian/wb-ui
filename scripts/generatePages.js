@@ -85,7 +85,16 @@
     const dirname = path.dirname(basePath);
     console.log(basePath);
     // 注入page的参数, 过滤掉最后的index
-    const modelName = path.win32.basename(dirname);
+    const modelName = (() => {
+      const tempArr = path
+        .relative(pagesPath, basePath)
+        .split("\\")
+        .pop();
+      return tempArr.join("_");
+    })();
+    const serviceName = modelName;
+    console.log(modelName);
+
     const pageStylePrefix = (() => {
       const arr = path
         .relative(pagesPath, basePath)
@@ -97,8 +106,6 @@
       }
       return `page-${arr.join("-")}`;
     })();
-    console.log(modelName);
-    const serviceName = path.win32.basename(dirname);
 
     // path.relative(sourceCodePath, basePath);
 
@@ -106,7 +113,6 @@
     await generateFile({
       filePath: `${basePath}.vue`,
       template: ejs.render(templatePage.toString(), {
-        modelName,
         pageStylePrefix,
         config: pageConfig
       })
@@ -120,13 +126,12 @@
         config: pageConfig
       })
     });
-    const modelFilePath = `${dirname}/models/${filename}.js`;
+    const modelFilePath = `${dirname}/models/${modelName}.js`;
     // 生成model文件
     await generateFile({
       filePath: modelFilePath,
       template: ejs.render(templateModel.toString(), {
-        modelName,
-        servicePath: `../services/_service.${serviceName}.js`,
+        servicePath: `../services/${serviceName}.js`,
         config: pageConfig,
         list: api[modelName] || [],
         utilsPath: `${path
@@ -135,12 +140,11 @@
           .join("/")}`
       })
     });
-    const servicesFilePath = `${dirname}/services/${filename}.js`;
+    const servicesFilePath = `${dirname}/services/${modelName}.js`;
     // 生成service文件
     await generateFile({
       filePath: servicesFilePath,
       template: ejs.render(templateService.toString(), {
-        name: modelName,
         list: api[modelName] || [],
         utilsPath: `${path
           .relative(path.dirname(servicesFilePath), utilsPath)
