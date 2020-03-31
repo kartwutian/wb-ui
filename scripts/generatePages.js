@@ -86,11 +86,14 @@
     console.log(basePath);
     // 注入page的参数, 过滤掉最后的index
     const modelName = (() => {
-      const tempArr = path
-        .relative(pagesPath, basePath)
-        .split("\\")
-        .pop();
-      return tempArr.join("_");
+      let tempArr = path.relative(pagesPath, basePath).split("\\");
+      tempArr.pop();
+      console.log(tempArr);
+      tempArr = tempArr.map(str => str[0].toUpperCase() + str.substr(1));
+      console.log(tempArr);
+
+      let strName = tempArr.join("");
+      return strName[0].toLowerCase() + strName.substr(1);
     })();
     const serviceName = modelName;
     console.log(modelName);
