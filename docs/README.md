@@ -1,33 +1,44 @@
 ---
 home: true
 actionText: Get Started →
-actionLink: /pro/
+actionLink: /mobx-admin/
 features:
-  - title: 集成vuex
-    details: 使用vuex 全局状态管理，实现了基于vuex的loading及reload插件
-  - title: 支持自动创建路由结构及依赖
-    details: 基于page.json,运行`npm run generatePages`命令，会根据page.json文件的路由配置，生成相应的页面文件
-  - title: 支持自动生成service及modules文件内容
-    details: 运行`npm run generateApis`命令，基于Yapi接口，自动生成service及module文件,注意cookie需要自己在相应脚本位置配置
+  - title: mobx-admin
+    details: 基于react+mobx+antd+hooks的admin项目模板
+  - title: next-portail
+    details: 基于next+mobx的ssr项目模板
+  - title: uni-app-pro
+    details: 基于uni-app的项目模板
 footer: MIT Licensed | Copyright © 2019-present
 ---
+## 万博内部项目的脚手架
 
-### Getting started is very simple
+```
+// 全局安装
+npm i -g wanbo-cli
 
-```bash
+// 显示help
+wanbo --help
 
-# 安装脚手架
-$ npm i -g wanbo-cli
+// 显示init子命令的help
+wanbo init -h
 
-# 生成wb-uni-pro项目
-$ wanbo init wb-uni-pro
+// 初始化uni-app项目
+wanbo init [project-name]
 
-# 进入到项目根目录
-$ cd wb-uni-pro
+// 初始化admin项目
+wanbo init --type=admin [project-name]
 
-# Install deps 安装依赖
-$ yarn add # or npm install
+// 初始化porta项目
+wanbo init --type=portail [project-name]
 
-# 打开hbuilderX, 导入项目，安装less插件等，运行项目
+
+// 自定义仓库, 只支持github
+
+wanbo init demo --repo=kartwutian/vscode_snippet_tempalte_generate
+
+// 自定义分支
+
+wanbo init demo --repo=kartwutian/wb-ui -b=wb-uni-pro
 
 ```

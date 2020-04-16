@@ -13,15 +13,44 @@ const config = {
 
 module.exports = {
   base: '/static-resource/wb-uni-pro/',
-  title: 'wb-uni-pro(uni-app)',
-  description: 'wb-uni-pro的使用文档',
+  title: 'wb-pro',
+  description: '万博内部项目开发脚手架',
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Pro', link: '/pro/' },
-      { text: 'Vant', link: '/vant/' },
+      { text: 'mobx-admin', link: '/mobx-admin/' },
+      { text: 'next-portail', link: '/next-portail/' },
+      { text: 'uni-pro', link: '/uni-pro/' },
+      { text: 'uni-Vant', link: '/vant/' },
     ],
     sidebar: {
+      '/mobx-admin/': [
+        {
+          title: 'admin-template',
+          collapsable: false,
+          children: [
+            '/mobx-admin/'
+          ]
+        }
+      ],
+      '/next-portail/': [
+        {
+          title: 'portail-template',
+          collapsable: false,
+          children: [
+            '/next-portail/'
+          ]
+        }
+      ],
+      '/uni-pro/': [
+        {
+          title: 'uni-app pro',
+          collapsable: false,
+          children: [
+            '/uni-pro/'
+          ]
+        }
+      ],
       '/vant/': [
         {
           title: '起步',
@@ -115,15 +144,7 @@ module.exports = {
             ]
         },
       ],
-      '/pro/': [
-        {
-          title: 'uni-app pro',
-          collapsable: false,
-          children: [
-            '/pro/'
-          ]
-        }
-      ]
+      
 
     },
     lastUpdated: '上次更新 ', // string | boolean
