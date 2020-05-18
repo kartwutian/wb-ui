@@ -178,11 +178,18 @@
     await generatePages(pages[i]);
   }
 
+  const modelsObj = models.reduce((result, next) => {
+    result[next.name] = next;
+    return result;
+  }, {});
+
+  const uniModels = Object.keys(modelsObj).map(prop => modelsObj[prop]); // 去重后的models
+
   await generateFile(
     {
       filePath: path.resolve(storePath, "index.js"),
       template: ejs.render(templateStore.toString(), {
-        models
+        models: uniModels
       })
     },
     true
