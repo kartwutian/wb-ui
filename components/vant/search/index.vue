@@ -156,6 +156,7 @@ export default {
       this.values = event;
       // this.setData({ value: event.detail });
       this.$emit("change", event);
+      this.$emit("input", event);
     },
 
     onCancel() {
