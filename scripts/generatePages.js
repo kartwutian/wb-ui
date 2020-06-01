@@ -86,7 +86,7 @@
     // console.log(basePath);
     // 注入page的参数, 过滤掉最后的index
     const modelName = (() => {
-      let tempArr = path.relative(pagesPath, basePath).split("\\");
+      let tempArr = path.relative(pagesPath, basePath).split(path.sep);
       tempArr.pop();
       tempArr = tempArr.map(str => str[0].toUpperCase() + str.substr(1));
       let strName = tempArr.join("");
@@ -98,7 +98,7 @@
     const pageStylePrefix = (() => {
       const arr = path
         .relative(pagesPath, basePath)
-        .split("\\")
+        .split(path.sep)
         .map(str => str[0].toLowerCase() + str.substr(1));
       const len = arr.length;
       if (arr[len - 2] === arr[len - 1]) {
@@ -136,7 +136,7 @@
         list: api[modelName] || [],
         utilsPath: `${path
           .relative(path.dirname(modelFilePath), utilsPath)
-          .split("\\")
+          .split(path.sep)
           .join("/")}`
       })
     });
@@ -148,7 +148,7 @@
         list: api[modelName] || [],
         utilsPath: `${path
           .relative(path.dirname(servicesFilePath), utilsPath)
-          .split("\\")
+          .split(path.sep)
           .join("/")}`,
         config: pageConfig
       })
@@ -158,14 +158,14 @@
       name: modelName,
       path: `${path
         .relative(storePath, modelFilePath)
-        .split("\\")
+        .split(path.sep)
         .join("/")}`
     });
 
     pageGlobalStyles.push(
       path
         .relative(globalStylesPath, lessFilePath)
-        .split("\\")
+        .split(path.sep)
         .join("/")
     );
     // console.log(models);
